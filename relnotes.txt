@@ -9,3 +9,7 @@ Changes between version 1.0 and version 1.1:
  - Improved output routines.
  - Added `Density'.
 
+Changes between version 1.1 and version 1.2:
+
+ - Added `AllResidueClassesModulo'.
+
