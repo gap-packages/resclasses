@@ -113,7 +113,7 @@ DeclareGlobalFunction( "AllGFqPolynomialsModDegree" );
 ##
 ##  The underlying ring of the object <obj>.
 ##
-DeclareAttribute( "UnderlyingRing", IsObject );
+DeclareAttribute( "UnderlyingRing", IsFamily );
 
 #############################################################################
 ##
@@ -212,4 +212,5 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
 
