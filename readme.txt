@@ -17,13 +17,14 @@ A recent version of the package `GAPDoc' is needed.
 The package `ResClasses' must be installed in the pkg/ - subdirectory
 of the GAP distribution.
 
-After extracting the distribution file in the proper place,
+By default, `ResClasses' is autoloaded, otherwise
 you can load the package via LoadPackage( "resclasses" );
 
-Then you can build the manual by issueing BuildResClassesManual( );
-(this works only under UNIX, but should not be necessary
-unless you got the package from CVS, since the distribution file
-already contains all files produced by this function).
+After loading the package you can build the manual by issueing
+BuildResClassesManual( ); (this works only under UNIX, but should
+not be necessary unless you got the package from CVS, since the
+distribution file already contains all files produced by this
+function).
 
 For further advice on questions of technical nature please see
 the chapter `Auxiliary functions' in the manual.
