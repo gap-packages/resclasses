@@ -12,7 +12,7 @@
 <!-- #################################################################### -->
 
 <Section Label="sec:DefiningUnionsOfResidueClasses">
-<Heading>Defining unions of residue classes</Heading>
+<Heading>Entering residue classes and unions thereof</Heading>
 
 <ManSection>
   <Func Name="ResidueClass" Arg="R, m, r" Label="R, m, r"/>
@@ -133,37 +133,10 @@ gap> AllResidues(R,x^4+x^2);
   </Description>
 </ManSection>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
-The components of a residue class union as given as arguments
-in <Ref Func="ResidueClassUnion" Label="R, m, r"/>
-can be extracted as follows.
-
-<ManSection>
-  <Meth Name="Modulus" Arg="U" Label="U"/>
-  <Meth Name="Mod" Arg="U" Label="U"/>
-  <Returns> The modulus <A>m</A> of&nbsp;<A>U</A>. </Returns>
-</ManSection>
-
-<ManSection>
-  <Oper Name="Residues" Arg="U" Label="U"/>
-  <Returns> The set of residues <A>r</A> of&nbsp;<A>U</A>. </Returns>
-</ManSection>
-
-<ManSection>
-  <Oper Name="IncludedElements" Arg="U" Label="U"/>
-  <Returns>
-    The set <A>included</A> of single elements of&nbsp;<A>U</A>.
-  </Returns>
-</ManSection>
-
-<ManSection>
-  <Oper Name="ExcludedElements" Arg="U" Label="U"/>
-  <Returns>
-    The set <A>excluded</A> of single elements explicitly not
-    contained in&nbsp;<A>U</A>.
-  </Returns>
-</ManSection>
+For extracting the components of a residue class union as given as
+arguments in <Ref Func="ResidueClassUnion" Label="R, m, r"/>, there are
+operations <C>Modulus</C>, <C>Residues</C>, <C>IncludedElements</C> and
+<C>ExcludedElements</C>.
 
 </Section>
 
@@ -172,28 +145,9 @@ can be extracted as follows.
 <Section Label="sec:MethodsForResidueClassUnions">
 <Heading>Methods for unions of residue classes</Heading>
 
-<ManSection>
-  <Meth Name="String" Arg="U" Label="U"/>
-  <Meth Name="String" Arg="U, lng" Label="U, lng"/>
-  <Returns>
-    A string representation of the residue class union&nbsp;<A>U</A>.
-  </Returns>
-  <Description>
-    If the argument <A>lng</A> is given its absolute value denotes the
-    length of the returned string; if <A>lng</A> is negative, the result
-    is flushed left, otherwise it is flushed right.
-<Example>
-<![CDATA[
-gap> String(C);
-"ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )"
-gap> String(F);
-"ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )"
-gap> String(H);
-"ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )"
-]]>
-</Example>
-  </Description>
-</ManSection>
+There are methods for <C>Print</C>, <C>String</C> and <C>Display</C>
+which are applicable to unions of residue classes. As an example, the
+former is shown in a little more detail:
 
 <ManSection>
   <Meth Name="Print" Arg="U" Label="U"/>
@@ -214,52 +168,8 @@ ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )
   </Description>
 </ManSection>
 
-<ManSection>
-  <Meth Name="Display" Arg="U" Label="U"/>
-  <Returns> Nothing. </Returns>
-  <Description>
-    Displays the residue class union&nbsp;<A>U</A> in a nice,
-    human-readable form.
-<Example>
-<![CDATA[
-gap> Display(F);
-
-The union of the residue classes r ( mod 5 ) of Z for r =
-
- 1 2
-
-and the elements
-
- 3 8
-
-without the elements
-
- -4  1
-
-gap> Display(G);
-
-The union of the residue classes r ( mod x ) of GF(7)[x] for r =
-
-Z(7)^0  -Z(7)^0 Z(7)^5  
-
-and the element
-
-0*Z(7) 
-
-without the element
-
-Z(7)^0 
-
-gap> Display(H);
-
-The union of the residue classes r ( mod 8 ) of Z_( 2, 3 ) for r =
-
- 3 5
-
-]]>
-</Example>
-  </Description>
-</ManSection>
+There is a method for <C>in</C> to test membership in a union of
+residue classes:
 
 <ManSection>
   <Meth Name="\in" Arg="el, U" Label="el, U"/>
@@ -272,12 +182,8 @@ The union of the residue classes r ( mod 8 ) of Z_( 2, 3 ) for r =
 <![CDATA[
 gap> 20 in A;
 true
-gap> -20 in A;
-false
 gap> 1/3 in B;
 true
-gap> 1/5 in B;
-false
 gap> x in G;
 false
 ]]>
@@ -285,49 +191,12 @@ false
   </Description>
 </ManSection>
 
-<ManSection>
-  <Meth Name="IsSubset" Arg="U1, U2" Label="U1, U2"/>
-  <Returns>
-    <C>true</C> if the residue class union&nbsp;<A>U2</A> is a subset of
-    the residue class union&nbsp;<A>U1</A> and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> IsSubset(A,D);
-false
-gap> IsSubset(H,ResidueClass(Z_pi([2,3]),16,11));
-true
-]]>
-</Example>
-  </Description>
-</ManSection>
+There is a method for <C>IsSubset</C> available for unions of residue
+classes. As described in detail in the sequel, there are methods for
+computing set-theoretic unions, intersections and differences of unions
+of residue classes:
 
-<ManSection>
-  <Oper Name="Density" Arg="U" Label="U"/>
-  <Returns>
-    The natural density of&nbsp;<A>U</A> as a subset of the
-    underlying ring.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> G;
-<union of 3 residue classes (mod x) of GF(7)[x]> U [ 0*Z(7) ] \ [ Z(7)^0 ]
-gap> Density(G);
-3/7
-gap> ResidueClassUnion(Integers,12,[3,5,9]);
-Union of the residue classes 3(6) and 5(12) of Z
-gap> Density(last);
-1/4
-gap> 2*last2;
-Union of the residue classes 6(12) and 10(24) of Z
-gap> Density(last);
-1/8
-]]>
-</Example>
-  </Description>
-</ManSection>
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Meth Name="Union" Arg="U1, U2" Label="U1, U2"/>
@@ -422,6 +291,39 @@ Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
   </Description>
 </ManSection>
 
+If the underlying ring has a residue class ring of some cardinality
+<M>t</M>, then a residue class can be written as a disjoint union of
+<M>t</M> residue classes with equal moduli:
+
+<ManSection>
+  <Oper Name="SplittedClass" Arg="cl, t" Label="cl, t"/>
+  <Returns>
+    A partition of the residue class <A>cl</A> into <A>t</A> residue
+    classes with equal moduli, provided that such a partition exists.
+    Otherwise <C>fail</C>.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> SplittedClass(ResidueClass(2,3),5);
+[ The residue class 2(15) of Z, The residue class 5(15) of Z, 
+  The residue class 8(15) of Z, The residue class 11(15) of Z, 
+  The residue class 14(15) of Z ]
+gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),2);
+[ The residue class 2(6) of Z_( 2, 3 ), The residue class 5(6) of Z_( 2, 3 ) ]
+gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),5);
+fail
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+Sometimes one wants to know a partition of a given union of residue
+classes into <Q>few</Q> residue classes. Ensuring to get always a
+partition of minimal possible length seems to be algorithmically
+difficult. The following yields usually <Q>reasonably short</Q>
+partitions:
+
 <ManSection>
   <Oper Name="AsUnionOfFewClasses" Arg="U" Label="U"/>
   <Returns>
@@ -444,42 +346,8 @@ gap> AsUnionOfFewClasses(K);
   </Description>
 </ManSection>
 
-<ManSection>
-  <Meth Name="Iterator" Arg="U" Label="U"/>
-  <Returns>
-    An iterator of the residue class union&nbsp;<A>U</A>.
-  </Returns>
-  <Description>
-    Currently, iterators are only implemented for residue class unions of
-    the integers.
-<Example>
-<![CDATA[
-gap> it := Iterator(F);
-<iterator of a residue class union of Z>
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Meth Name="NextIterator" Arg="iter" Label="iter"/>
-  <Returns>
-    The next element delivered by the iterator <A>iter</A> of
-    some residue class union.
-  </Returns>
-  <Description>
-    Currently, iterators are only implemented for residue class unions of
-    the integers.
-<Example>
-<![CDATA[
-gap> l := List([1..16],i->NextIterator(it));
-[ 3, 8, 2, -3, 6, -9, 7, -8, 11, -14, 12, -13, 16, -19, 17, -18 ]
-gap> Difference(l,Intersection(F,[-20..20]));
-[  ]
-]]>
-</Example>
-  </Description>
-</ManSection>
+One can add / subtract a constant to / from all elements of a union of
+residue classes, and one can multiply or divide the elements by a constant:
 
 <ManSection>
   <Meth Name="\+" Arg="U, x" Label="U, x"/>
@@ -562,6 +430,35 @@ Union of the residue classes 1(6) and 5(6) of Z
 </Example>
   </Description>
 </ManSection>
+
+The natural density of a residue class <M>r(m)</M> of a ring
+<M>R</M> is defined by <M>1/|R/mR|</M>, and the natural density of
+a union <M>U</M> of finitely many residue classes is defined as the
+sum of the densities of the elements of a partition of <M>U</M>
+into finitely many residue classes:
+
+<ManSection>
+  <Oper Name="Density" Arg="U" Label="U"/>
+  <Returns>
+    The natural density of&nbsp;<A>U</A> as a subset of the underlying ring.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> Density(G); G;
+3/7
+<union of 3 residue classes (mod x) of GF(7)[x]> U [ 0*Z(7) ] \ [ Z(7)^0 ]
+gap> ResidueClassUnion(Integers,12,[3,5,9]);
+Union of the residue classes 3(6) and 5(12) of Z
+gap> List([last,2*last],Density);
+[ 1/4, 1/8 ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+For looping over unions of residue classes of the integers, there are
+methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 
 </Section>
 
