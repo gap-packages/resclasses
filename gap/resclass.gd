@@ -260,6 +260,7 @@ DeclareSynonym( "ResidueClassWithFixedRep",
 #O  Modulus( <obj> ) . . . . modulus of a residue class union or other object
 ##
 DeclareOperation( "Modulus", [ IsObject ] );
+DeclareSynonym( "Mod", Modulus );
 
 #############################################################################
 ##

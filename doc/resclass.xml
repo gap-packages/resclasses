@@ -103,6 +103,7 @@ can be extracted as follows.
 
 <ManSection>
   <Meth Name="Modulus" Arg="U"/>
+  <Meth Name="Mod" Arg="U"/>
   <Returns> The modulus <A>m</A> of&nbsp;<A>U</A>. </Returns>
 </ManSection>
 
