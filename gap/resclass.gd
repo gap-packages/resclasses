@@ -187,6 +187,12 @@ DeclareOperation( "ExcludedElements", [ IsUnionOfResidueClasses ] );
 
 #############################################################################
 ##
+#O  Density( <S> ) . .  natural density of the set <S> in the underlying ring
+##
+DeclareOperation( "Density", [ IsListOrCollection ] );
+
+#############################################################################
+##
 #O  AsUnionOfFewClasses( <U> ) . . . . .  write <U> as a union of few classes
 ##
 DeclareOperation( "AsUnionOfFewClasses", [ IsUnionOfResidueClasses ] );

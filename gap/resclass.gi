@@ -785,6 +785,48 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  Density( <l> ) . . . . . . . . . . . . . . . . . . . . . . for empty list
+##
+InstallMethod( Density,
+               "for empty list (ResClasses)", true,
+               [ IsList and IsEmpty ], 0, l -> 0 );
+
+#############################################################################
+##
+#M  Density( <l> ) . . . . . . . . . . . . . . .  for finite list of elements
+##
+InstallMethod( Density,
+               "for finite list of elements (ResClasses)", true,
+               [ IsList and IsCollection ], 0,
+
+  function ( l )
+    if   not IsFinite(DefaultRing(l[1]))
+    then return 0; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  Density( <R> ) . . . . . . . . . . . . . . . . . . .  for whole base ring
+##
+InstallMethod( Density,
+               "for whole base ring (ResClasses)", true,
+               [ IsRing ], 0, R -> 1 );
+
+#############################################################################
+##
+#M  Density( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
+##
+InstallMethod( Density,
+               "for residue class unions (ResClasses)", true,
+               [ IsResidueClassUnionInSparseRep ], 0,
+
+  function ( U )
+    return Length(U!.r)/
+           Length(AllResidues(UnderlyingRing(FamilyObj(U)),U!.m));
+  end );
+
+#############################################################################
+##
 #M  Union2( <U1>, <U2> ) . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( Union2,
