@@ -14,7 +14,7 @@ Revision.resclaux_g :=
 InstallMethod( String, "for Integers (ResClasses)", true, [ IsIntegers ], 0,
                Ints -> "Integers" );
 
-RESCLASSES_VIEWING_FORMAT := "short";
+RESCLASSES_VIEWING_FORMAT := "long";
 MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
 
 #############################################################################
@@ -76,4 +76,5 @@ MakeReadOnlyGlobal( "ResClassesTest" );
 #############################################################################
 ##
 #E  resclaux.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
