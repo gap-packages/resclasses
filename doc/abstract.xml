@@ -8,7 +8,7 @@
 
 <Abstract>
 
-  This package for &GAP; 4 (at least version 4.3) implements unions of
+  This package for &GAP; 4 (at least version 4.4) implements unions of
   residue classes of the integers, of polynomial rings in one variable
   over some finite field and of the semilocalisations <M>\Z_{(\pi)}</M> of
   the integers at some finite set of primes <M>\pi</M> as &GAP; domains and
@@ -28,3 +28,4 @@
 </Abstract>
 
 <!-- #################################################################### -->
+
