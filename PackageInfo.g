@@ -1,13 +1,13 @@
 ####################################################################################################
 ##
-##  PkgInfo.g                        GAP4 Package `ResClasses'                           Stefan Kohl
+##  PackageInfo.g                      GAP4 Package `ResClasses'                         Stefan Kohl
 ##  
 #H  @(#)$Id$
 ##
 
 SetPackageInfo( rec(
 
-PkgName          := "ResClasses",
+PackageName      := "ResClasses",
 Version          := "1.0",
 Date             := "24/02/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/resclasses-1.0",
@@ -34,7 +34,7 @@ CommunicatedBy   := "",
 AcceptDate       := "",
 README_URL       := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/",
                                   "~kohlsn/resclasses/README.resclasses"),
-PkgInfoURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/PkgInfo.g",
+PackageInfoURL   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/PackageInfo.g",
 AbstractHTML     := Concatenation("This package allows to do computations with set-theoretic ",
                                   "unions of residue classes."),
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses.html",
@@ -67,4 +67,4 @@ Keywords         := [ "residue classes", "integers", "number theory" ]
 
 ####################################################################################################
 ##
-#E  PkgInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  PackageInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
