@@ -239,7 +239,7 @@ true
 gap> Difference(ResidueClass(Integers,6,1),Integers);
 [  ]
 gap> Difference(Integers,ResidueClass(Integers,6,1));
-Union of the residue classes 0(6), 2(6), 3(6), 4(6) and 5(6)
+Union of the residue classes 0(2), 3(6) and 5(6)
 gap> Difference(Integers,Integers);
 [  ]
 gap> Intersection(Integers,ResidueClass(Integers,6,1));
@@ -303,6 +303,7 @@ gap> STOP_TEST( "resclass.tst", 200000000 );
 #############################################################################
 ##
 #E  resclass.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 
 
