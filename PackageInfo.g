@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
 Version          := "2.0.0",
-Date             := "26/05/2004",
+Date             := "03/06/2004",
 ArchiveURL       := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/",
                                   "resclasses/resclasses-2.0.0"),
 ArchiveFormats   := ".tar.gz",
