@@ -250,30 +250,6 @@ true
   </ManSection>
 
   <ManSection>
-    <Meth Name="Complement" Arg="U"/>
-    <Returns>
-      the complement of the residue class union <A>U</A>
-      in the ring it is defined over.
-    </Returns>
-    <Description>
-<Example>
-<![CDATA[
-gap> Complement(A);
-Union of the residue classes 0(3) and 1(3)
-gap> Complement(B);
-The residue class 0(2) of Z_( 2, 5 )
-gap> Complement(C);
-<union of 6 residue classes (mod x+Z(7)^0) of GF(7)[x]>
-gap> Complement(F);
-Union of the residue classes 0(5), 3(5) and 4(5), +2/-2 elements
-gap> Complement(H);
-<union of 6 residue classes (mod 8) of Z_( 2, 3 )>
-]]>
-</Example>
-    </Description>
-  </ManSection>
-
-  <ManSection>
     <Meth Name="Union" Arg="U1, U2"/>
     <Meth Name="Union" Arg="U, S"/>
     <Returns>
@@ -493,3 +469,4 @@ Union of the residue classes 1(6) and 5(6)
 </Chapter>
 
 <!-- #################################################################### -->
+
