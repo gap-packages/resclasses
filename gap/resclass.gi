@@ -129,7 +129,8 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
 #M  String( <R> ) . . . . . for univariate polynomial ring over finite field
 ##
 InstallMethod( String,
-               "for univariate polynomial rings over finite fields",
+               Concatenation("for univariate polynomial rings ",
+                             "over finite fields (ResClasses)"),
                true, [ IsUnivariatePolynomialRing ], 0,
 
   function ( R )
@@ -151,7 +152,8 @@ InstallMethod( String,
 #M  ViewObj( <R> ) . . . . . for univariate polynomial ring over finite field
 ##
 InstallMethod( ViewObj,
-               "for univariate polynomial rings over finite fields",
+               Concatenation("for univariate polynomial rings ",
+                             "over finite fields (ResClasses)"),
                true, [ IsUnivariatePolynomialRing ], 100,
 
   function ( R )
@@ -248,9 +250,9 @@ MakeReadOnlyGlobal( "ReduceResidueClassUnion" );
 #M  ResidueClassUnionCons( <filter>, <R>, <m>, <r>, <included>, <excluded> )
 ##
 InstallMethod( ResidueClassUnionCons,
-               "sparse rep., for Z, Z_pi and GF(q)[x]", ReturnTrue,
-               [ IsUnionOfResidueClasses, IsRing, IsRingElement,
-                 IsList, IsList, IsList ], 0,
+               "sparse rep., for Z, Z_pi and GF(q)[x] (ResClasses)",
+               ReturnTrue, [ IsUnionOfResidueClasses, IsRing, IsRingElement,
+                             IsList, IsList, IsList ], 0,
 
   function ( filter, R, m, r, included, excluded )
 
@@ -336,7 +338,7 @@ InstallGlobalFunction( ResidueClassUnion,
 #M  Modulus( <U> ) . . . . . . . . . . . . . . . . .  for residue class union
 ##
 InstallMethod( Modulus,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.m );
 
 #############################################################################
@@ -344,7 +346,7 @@ InstallMethod( Modulus,
 #M  Modulus( <R> ) . . . . . . . . . . . . . . . . . . . . . .  for base ring
 ##
 InstallOtherMethod( Modulus,
-                    "for base ring", true,
+                    "for base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> One( R ) );
 
 #############################################################################
@@ -352,7 +354,7 @@ InstallOtherMethod( Modulus,
 #M  Residues( <U> ) . . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( Residues,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.r );
 
 #############################################################################
@@ -360,7 +362,7 @@ InstallMethod( Residues,
 #M  Residues( <R> ) . . . . . . . . . . . . . . . . . . . . . . for base ring
 ##
 InstallOtherMethod( Residues,
-                    "for base ring", true,
+                    "for base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> [ Zero( R ) ] );
 
 #############################################################################
@@ -368,7 +370,7 @@ InstallOtherMethod( Residues,
 #M  Residues( <l> ) . . . . . . . . . . . . . . . for finite list of elements
 ##
 InstallOtherMethod( Residues,
-                    "for finite list of elements", true,
+                    "for finite list of elements (ResClasses)", true,
                     [ IsList ], 0, l -> [  ] );
 
 #############################################################################
@@ -376,7 +378,7 @@ InstallOtherMethod( Residues,
 #M  IncludedElements( <U> ) . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( IncludedElements,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.included );
 
 #############################################################################
@@ -384,14 +386,15 @@ InstallMethod( IncludedElements,
 #M  IncludedElements( <R> ) . . . . . . . . . . . . . . . . . . for base ring
 ##
 InstallOtherMethod( IncludedElements,
-                    "for base ring", true, [ IsRing ], 0, R -> [ ] );
+                    "for base ring (ResClasses)", true, [ IsRing ], 0,
+                    R -> [ ] );
 
 #############################################################################
 ##
 #M  IncludedElements( <l> ) . . . . . . . . . . . for finite list of elements
 ##
 InstallOtherMethod( IncludedElements,
-                    "for finite list of elements", true,
+                    "for finite list of elements (ResClasses)", true,
                     [ IsList ], 0, l -> l );
 
 #############################################################################
@@ -399,7 +402,7 @@ InstallOtherMethod( IncludedElements,
 #M  ExcludedElements( <U> ) . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( ExcludedElements,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.excluded );
 
 #############################################################################
@@ -407,14 +410,15 @@ InstallMethod( ExcludedElements,
 #M  ExcludedElements( <R> ) . . . . . . . . . . . . . . . . . . for base ring
 ##
 InstallOtherMethod( ExcludedElements,
-                    "for base ring", true, [ IsRing ], 0, R -> [ ] );
+                    "for base ring (ResClasses)", true, [ IsRing ], 0,
+                    R -> [ ] );
 
 #############################################################################
 ##
 #M  ExcludedElements( <l> ) . . . . . . . . . . . for finite list of elements
 ##
 InstallOtherMethod( ExcludedElements,
-                    "for finite list of elements", true,
+                    "for finite list of elements (ResClasses)", true,
                     [ IsList ], 0, l -> [ ] );
 
 #############################################################################
@@ -422,7 +426,7 @@ InstallOtherMethod( ExcludedElements,
 #M  AsUnionOfFewClasses( <U> ) . . . . . . . . . for residue class union of Z
 ##
 InstallMethod( AsUnionOfFewClasses,
-               "for residue class unions of Z", true,
+               "for residue class unions of Z (ResClasses)", true,
                [ IsUnionOfResidueClassesOfZ ], 0,
 
   function ( U )
@@ -454,8 +458,8 @@ InstallMethod( AsUnionOfFewClasses,
 #M  ViewObj( <U> ) . . . . . . . . . . . . . . . . .  for residue class union
 ##
 InstallMethod( ViewObj,
-               "for residue class unions", true, [ IsUnionOfResidueClasses ],
-               0,
+               "for residue class unions (ResClasses)", true,
+               [ IsUnionOfResidueClasses ], 0,
 
   function ( U )
 
@@ -505,7 +509,7 @@ InstallMethod( ViewObj,
 #M  String( <U> ) . . . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( String,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsUnionOfResidueClasses ], 0,
 
   function ( U )
@@ -528,7 +532,7 @@ InstallMethod( String,
 #M  PrintObj( <U> ) . . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( PrintObj,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsUnionOfResidueClasses ], 0,
 
  function ( U )
@@ -566,8 +570,8 @@ MakeReadOnlyGlobal( "DisplayArray" );
 #M  Display( <U> ) . . . . . . . . . . . . . . . . .  for residue class union
 ##
 InstallMethod( Display,
-               "for residue class unions", true, [ IsUnionOfResidueClasses ],
-               0,
+               "for residue class unions (ResClasses)", true,
+               [ IsUnionOfResidueClasses ], 0,
 
   function ( U )
 
@@ -600,7 +604,7 @@ InstallMethod( Display,
 #M  \=( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( \=,
-               "for two residue class unions", IsIdenticalObj,
+               "for two residue class unions (ResClasses)", IsIdenticalObj,
                [ IsResidueClassUnionInSparseRep,
                  IsResidueClassUnionInSparseRep ], 0,
 
@@ -616,7 +620,7 @@ InstallMethod( \=,
 ##  Total ordering of residue class unions (for tech. purposes, only).
 ##
 InstallMethod( \<,
-               "for two residue class unions", IsIdenticalObj,
+               "for two residue class unions (ResClasses)", IsIdenticalObj,
                [ IsResidueClassUnionInSparseRep,
                  IsResidueClassUnionInSparseRep ], 0,
 
@@ -632,8 +636,9 @@ InstallMethod( \<,
 #M  \in( <n>, <U> ) . . . . . . . .  for ring element and residue class union
 ##
 InstallMethod( \in,
-               "for ring element and residue class union", ReturnTrue,
-               [ IsRingElement, IsResidueClassUnionInSparseRep ], 0,
+               "for ring element and residue class union (ResClasses)",
+               ReturnTrue, [ IsRingElement, IsResidueClassUnionInSparseRep ],
+               0,
 
   function ( n, U )
     if not n in UnderlyingRing(FamilyObj(U)) then return false; fi;
@@ -647,7 +652,7 @@ InstallMethod( \in,
 #M  Iterator( <U> ) . . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( Iterator,
-               "for residue class unions", true,
+               "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInSparseRep ], 0,
 
   function ( U )
@@ -668,7 +673,7 @@ InstallMethod( Iterator,
 #M  NextIterator( <iter> ) . . . . . for iterator of residue class union of Z
 ##
 InstallMethod( NextIterator,
-               "for iterators of residue class unions", true,
+               "for iterators of residue class unions (ResClasses)", true,
                [     IsIterator and IsMutable
                  and IsResidueClassUnionsIteratorRep ], 0,
 
@@ -710,7 +715,7 @@ InstallMethod( NextIterator,
 #M  IsDoneIterator( <iter> ) . . . . . .  for iterator of residue class union
 ##
 InstallMethod( IsDoneIterator,
-               "for iterators of residue class unions", true,
+               "for iterators of residue class unions (ResClasses)", true,
                [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
                ReturnFalse );
 
@@ -719,7 +724,7 @@ InstallMethod( IsDoneIterator,
 #M  ShallowCopy( <iter> ) . . . . . . . . for iterator of residue class union
 ##
 InstallMethod( ShallowCopy,
-               "for iterators of residue class unions", true,
+               "for iterators of residue class unions (ResClasses)", true,
                [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
 
   iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
@@ -735,7 +740,7 @@ InstallMethod( ShallowCopy,
 #M  ViewObj( <iter> ) . . . . . . . . . . for iterator of residue class union
 ##
 InstallMethod( ViewObj,
-               "for iterators of residue class unions", true,
+               "for iterators of residue class unions (ResClasses)", true,
                [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
 
   function ( iter )
@@ -752,7 +757,7 @@ InstallMethod( ViewObj,
 #M  Union2( <U1>, <U2> ) . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( Union2,
-               "for two residue class unions", IsIdenticalObj,
+               "for two residue class unions (ResClasses)", IsIdenticalObj,
                [ IsResidueClassUnionInSparseRep,
                  IsResidueClassUnionInSparseRep ], 0,
 
@@ -779,7 +784,7 @@ InstallMethod( Union2,
 #M  Intersection2( <U1>, <U2> ) . . . . . . . . . .  for residue class unions
 ##
 InstallMethod( Intersection2,
-               "for two residue class unions", IsIdenticalObj,
+               "for two residue class unions (ResClasses)", IsIdenticalObj,
                [ IsResidueClassUnionInSparseRep,
                  IsResidueClassUnionInSparseRep ], 0,
 
@@ -811,7 +816,7 @@ InstallMethod( Intersection2,
 #M  Difference( <U1>, <U2> ) . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( Difference,
-               "for two residue class unions", IsIdenticalObj,
+               "for two residue class unions (ResClasses)", IsIdenticalObj,
                [ IsResidueClassUnionInSparseRep,
                  IsResidueClassUnionInSparseRep ], 0,
 
@@ -837,8 +842,8 @@ InstallMethod( Difference,
 #M  Union2( <U>, <S> ) . . . . . . . . for residue class union and finite set
 ##
 InstallMethod( Union2,
-               "for residue class union and finite set", ReturnTrue,
-               [ IsResidueClassUnionInSparseRep, IsList ], 0,
+               "for residue class union and finite set (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsList ], 0,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
@@ -851,8 +856,8 @@ InstallMethod( Union2,
 #M  Union2( <S>, <U> ) . . . . . . . . for finite set and residue class union
 ##
 InstallMethod( Union2,
-               "for finite set and residue class union", ReturnTrue,
-               [ IsList, IsUnionOfResidueClasses ], 0,
+               "for finite set and residue class union (ResClasses)",
+               ReturnTrue, [ IsList, IsUnionOfResidueClasses ], 0,
                function ( S, U ) return Union2( U, S ); end );
 
 #############################################################################
@@ -860,7 +865,7 @@ InstallMethod( Union2,
 #M  Union2( <S1>, <S2> ) . . . . . . . . . . . . . . . . . for set and subset
 ##
 InstallMethod( Union2,
-               "for set and subset", ReturnTrue,
+               "for set and subset (ResClasses)", ReturnTrue,
                [ IsListOrCollection, IsListOrCollection ], 20,
 
   function ( S1, S2 )
@@ -874,8 +879,8 @@ InstallMethod( Union2,
 #M  Intersection2( <U>, <S> ) . . . .  for residue class union and finite set
 ##
 InstallMethod( Intersection2,
-               "for residue class union and finite set", ReturnTrue,
-               [ IsResidueClassUnionInSparseRep, IsList ], 0,
+               "for residue class union and finite set (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsList ], 0,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
@@ -888,8 +893,8 @@ InstallMethod( Intersection2,
 #M  Intersection2( <S>, <U> ) . . . .  for finite set and residue class union
 ##
 InstallMethod( Intersection2,
-               "for finite set and residue class union", ReturnTrue,
-               [ IsList, IsUnionOfResidueClasses ], 0,
+               "for finite set and residue class union (ResClasses)",
+               ReturnTrue, [ IsList, IsUnionOfResidueClasses ], 0,
                function ( S, U ) return Intersection2( U, S ); end );
 
 #############################################################################
@@ -897,8 +902,8 @@ InstallMethod( Intersection2,
 #M  Intersection2( <U>, <R> ) . . . . . for residue class union and base ring
 ##
 InstallMethod( Intersection2,
-               "for residue class union and base ring", ReturnTrue,
-               [ IsUnionOfResidueClasses, IsRing ], 0,
+               "for residue class union and base ring (ResClasses)",
+               ReturnTrue, [ IsUnionOfResidueClasses, IsRing ], 0,
 
   function ( U, R )
     if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
@@ -910,8 +915,8 @@ InstallMethod( Intersection2,
 #M  Intersection2( <R>, <U> ) . . . . . for base ring and residue class union
 ##
 InstallMethod( Intersection2,
-               "for base ring and residue class union", ReturnTrue,
-               [ IsRing, IsUnionOfResidueClasses ], 0,
+               "for base ring and residue class union (ResClasses)",
+               ReturnTrue, [ IsRing, IsUnionOfResidueClasses ], 0,
                function ( R, U ) return Intersection2( U, R ); end );
 
 #############################################################################
@@ -919,7 +924,7 @@ InstallMethod( Intersection2,
 #M  Intersection2( <S1>, <S2> ) . . . . . . . . . . . . .  for set and subset
 ##
 InstallMethod( Intersection2,
-               "for set and subset", ReturnTrue,
+               "for set and subset (ResClasses)", ReturnTrue,
                [ IsListOrCollection, IsListOrCollection ], 0,
 
   function ( S1, S2 )
@@ -933,7 +938,7 @@ InstallMethod( Intersection2,
 #M  Intersection2( <S>, <S_> ) . . . . . . . . . . for two times the same set
 ##
 InstallMethod( Intersection2,
-               "for two times the same set", ReturnTrue,
+               "for two times the same set (ResClasses)", ReturnTrue,
                [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
 
   function ( S, S_ )
@@ -945,8 +950,8 @@ InstallMethod( Intersection2,
 #M  Difference( <U>, <S> ) . . . . . . for residue class union and finite set
 ##
 InstallMethod( Difference,
-               "for residue class union and finite set", ReturnTrue,
-               [ IsResidueClassUnionInSparseRep, IsList ], 100,
+               "for residue class union and finite set (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsList ], 100,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
@@ -959,8 +964,8 @@ InstallMethod( Difference,
 #M  Difference( <S>, <U> ) . . . . . . for finite set and residue class union
 ##
 InstallMethod( Difference,
-               "for finite set and residue class union", ReturnTrue,
-               [ IsList, IsUnionOfResidueClasses ], 0,
+               "for finite set and residue class union (ResClasses)",
+               ReturnTrue, [ IsList, IsUnionOfResidueClasses ], 0,
 
   function ( S, U )
     return Filtered( Set( S ), n -> not n in U );
@@ -971,8 +976,8 @@ InstallMethod( Difference,
 #M  Difference( <R>, <U> ) . . . . . .  for base ring and residue class union
 ##
 InstallMethod( Difference,
-               "for base ring and residue class union", ReturnTrue,
-               [ IsRing, IsUnionOfResidueClasses ], 0,
+               "for base ring and residue class union (ResClasses)",
+               ReturnTrue, [ IsRing, IsUnionOfResidueClasses ], 0,
 
   function ( R, U )
 
@@ -989,8 +994,8 @@ InstallMethod( Difference,
 #M  Difference( <U>, <R> ) . . . . . .  for residue class union and base ring
 ##
 InstallMethod( Difference,
-               "for residue class union and base ring", ReturnTrue,
-               [ IsUnionOfResidueClasses, IsRing ], 0,
+               "for residue class union and base ring (ResClasses)",
+               ReturnTrue, [ IsUnionOfResidueClasses, IsRing ], 0,
 
   function ( U, R )
     if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
@@ -1002,7 +1007,8 @@ InstallMethod( Difference,
 #M  Difference( <R>, <S> ) . . . . . . . . . . . . .  for ring and finite set
 ##
 InstallMethod( Difference,
-               "for ring and finite set", ReturnTrue, [ IsRing, IsList ], 0,
+               "for ring and finite set (ResClasses)", ReturnTrue,
+               [ IsRing, IsList ], 0,
 
   function ( R, S )
     S := Set(S); if not IsSubset(R,S) then TryNextMethod(); fi;
@@ -1014,7 +1020,7 @@ InstallMethod( Difference,
 #M  Difference( <S>, <S_> ) . . . . . . . . . . .  for two times the same set
 ##
 InstallMethod( Difference,
-               "for two times the same set", ReturnTrue,
+               "for two times the same set (ResClasses)", ReturnTrue,
                [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
 
   function ( S, S_ )
@@ -1026,7 +1032,7 @@ InstallMethod( Difference,
 #M  Complement( <U> ) . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallOtherMethod( Complement,
-                    "for residue class union", true,
+                    "for residue class union (ResClasses)", true,
                     [ IsUnionOfResidueClasses ], 0,
                     U -> Difference( UnderlyingRing( FamilyObj( U ) ), U ) );
 
@@ -1035,8 +1041,8 @@ InstallOtherMethod( Complement,
 #M  IsSubset( <U>, <l> ) . . . . . . for residue class union and element list
 ##
 InstallMethod( IsSubset,
-               "for residue class union and element list", ReturnTrue,
-               [ IsUnionOfResidueClasses, IsList ], 0,
+               "for residue class union and element list (ResClasses)",
+               ReturnTrue, [ IsUnionOfResidueClasses, IsList ], 0,
 
   function ( U, l )
     return ForAll( Set( l ), n -> n in U );
@@ -1047,7 +1053,7 @@ InstallMethod( IsSubset,
 #M  IsSubset( <U1>, <U2> ) . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( IsSubset,
-               "for two residue class unions", IsIdenticalObj,
+               "for two residue class unions (ResClasses)", IsIdenticalObj,
                [ IsResidueClassUnionInSparseRep,
                  IsResidueClassUnionInSparseRep ], 0,
 
@@ -1071,8 +1077,8 @@ InstallMethod( IsSubset,
 #M  IsSubset( <R>, <U> ) . . . . . . .  for base ring and residue class union
 ##
 InstallMethod( IsSubset,
-               "for base ring and residue class union", ReturnTrue,
-               [ IsRing, IsUnionOfResidueClasses ], 0,
+               "for base ring and residue class union (ResClasses)",
+               ReturnTrue, [ IsRing, IsUnionOfResidueClasses ], 0,
 
   function ( R, U )
     if   R = UnderlyingRing(FamilyObj(U))
@@ -1084,8 +1090,8 @@ InstallMethod( IsSubset,
 #M  IsSubset( <U>, <R> ) . . . . . . .  for residue class union and base ring
 ##
 InstallMethod( IsSubset,
-               "for residue class union and base ring", ReturnTrue,
-               [ IsUnionOfResidueClasses, IsRing ], 0,
+               "for residue class union and base ring (ResClasses)",
+               ReturnTrue, [ IsUnionOfResidueClasses, IsRing ], 0,
 
   function ( U, R )
     if   R = UnderlyingRing(FamilyObj(U))
@@ -1097,8 +1103,9 @@ InstallMethod( IsSubset,
 #M  \+( <U>, <x> ) . . . . . . . . . for residue class union and ring element
 ##
 InstallOtherMethod( \+,
-                    "for residue class union and ring element", ReturnTrue,
-                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+                    "for residue class union and ring element (ResClasses)",
+                    ReturnTrue, [ IsUnionOfResidueClasses, IsRingElement ],
+                    0,
 
   function ( U, x )
 
@@ -1117,34 +1124,34 @@ InstallOtherMethod( \+,
 #M  \+( <x>, <U> ) . . . . . . . . . for ring element and residue class union
 ##
 InstallOtherMethod( \+,
-                    "for ring element and residue class union", ReturnTrue,
-                    [ IsRingElement, IsUnionOfResidueClasses ], 0,
-                    function ( x, U ) return U + x; end );
+                    "for ring element and residue class union (ResClasses)",
+                    ReturnTrue, [ IsRingElement, IsUnionOfResidueClasses ],
+                    0, function ( x, U ) return U + x; end );
 
 #############################################################################
 ##
 #M  \-( <U>, <x> ) . . . . . . . . . for residue class union and ring element
 ##
 InstallOtherMethod( \-,
-                    "for residue class union and ring element", ReturnTrue,
-                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
-                    function ( U, x ) return U + (-x); end );
+                    "for residue class union and ring element (ResClasses)",
+                    ReturnTrue, [ IsUnionOfResidueClasses, IsRingElement ],
+                    0, function ( U, x ) return U + (-x); end );
 
 #############################################################################
 ##
 #M  \-( <x>, <U> ) . . . . . . . . . for ring element and residue class union
 ##
 InstallOtherMethod( \-,
-                    "for ring element and residue class union", ReturnTrue,
-                    [ IsRingElement, IsUnionOfResidueClasses ], 0,
-                    function ( x, U ) return (-U) + x; end );
+                    "for ring element and residue class union (ResClasses)",
+                    ReturnTrue, [ IsRingElement, IsUnionOfResidueClasses ],
+                    0, function ( x, U ) return (-U) + x; end );
 
 #############################################################################
 ##
 #M  AdditiveInverseOp( <U> ) . . . . . . . . . . . .  for residue class union
 ##
 InstallOtherMethod( AdditiveInverseOp,
-                    "for residue class union", ReturnTrue,
+                    "for residue class union (ResClasses)", ReturnTrue,
                     [ IsUnionOfResidueClasses ], 0,
                     
   U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),Modulus(U),
@@ -1157,8 +1164,9 @@ InstallOtherMethod( AdditiveInverseOp,
 #M  \*( <U>, <x> ) . . . . . . . . . for residue class union and ring element
 ##
 InstallOtherMethod( \*,
-                    "for residue class union and ring element", ReturnTrue,
-                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+                    "for residue class union and ring element (ResClasses)",
+                    ReturnTrue, [ IsUnionOfResidueClasses, IsRingElement ],
+                    0,
 
   function ( U, x )
 
@@ -1178,17 +1186,18 @@ InstallOtherMethod( \*,
 #M  \*( <x>, <U> ) . . . . . . . . . for residue class union and ring element
 ##
 InstallOtherMethod( \*,
-                    "for ring element and residue class union", ReturnTrue,
-                    [ IsRingElement, IsUnionOfResidueClasses ], 0,
-                    function ( x, U ) return U * x; end );
+                    "for ring element and residue class union (ResClasses)",
+                    ReturnTrue, [ IsRingElement, IsUnionOfResidueClasses ],
+                    0, function ( x, U ) return U * x; end );
 
 #############################################################################
 ##
 #M  \/( <U>, <x> ) . . . . . . . . . for residue class union and ring element
 ##
 InstallOtherMethod( \/,
-                    "for residue class union and ring element", ReturnTrue,
-                    [ IsUnionOfResidueClasses, IsRingElement ], 0,
+                    "for residue class union and ring element (ResClasses)",
+                    ReturnTrue, [ IsUnionOfResidueClasses, IsRingElement ],
+                    0,
 
   function ( U, x )
 
@@ -1202,6 +1211,18 @@ InstallOtherMethod( \/,
     return ResidueClassUnion(R,m/x,List(Residues(U),r -> r/x),
                              List(IncludedElements(U),el -> el/x),
                              List(ExcludedElements(U),el -> el/x));
+  end );
+
+#############################################################################
+##
+#M  \/( [ ], <x> ) . . . . . . . . . . . . .  for empty list and ring element
+##
+InstallOtherMethod( \/,
+                    "for empty list and ring element (ResClasses)",
+                    ReturnTrue, [ IsList and IsEmpty, IsRingElement ], 0,
+
+  function ( empty, x )
+    return [ ];
   end );
 
 #############################################################################

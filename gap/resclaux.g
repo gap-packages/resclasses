@@ -11,7 +11,7 @@ Revision.resclaux_g :=
 
 # Missing `String' method for Integers.
 
-InstallMethod( String, "for Integers", true, [ IsIntegers ], 0,
+InstallMethod( String, "for Integers (ResClasses)", true, [ IsIntegers ], 0,
                Ints -> "Integers" );
 
 #############################################################################
@@ -58,4 +58,5 @@ MakeReadOnlyGlobal( "ResClassesTest" );
 #############################################################################
 ##
 #E  resclaux.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
