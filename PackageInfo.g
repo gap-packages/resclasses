@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
 Version          := "1.0",
-Date             := "30/12/2003",
+Date             := "23/01/2004",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/resclasses-1.0",
 ArchiveFormats   := ".tar.gz",
 Persons          := [
@@ -68,4 +68,3 @@ Keywords         := [ "residue classes", "integers", "number theory" ]
 ####################################################################################################
 ##
 #E  PackageInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
