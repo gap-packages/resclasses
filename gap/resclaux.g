@@ -28,14 +28,11 @@ ResClassesBuildManual := function ( )
 
   local  ResClassesDir;
 
-  ResClassesDir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1],
-                                  "resclasses/" );
-  StefansManualLayout( "ResClasses" );
-  MyMakeGAPDocDoc( Concatenation( ResClassesDir, "doc/" ), "resclasses.xml",
-                   [ "../gap/resclaux.g", "../gap/z_pi.gd", "../gap/z_pi.gi",
-                     "../gap/resclass.gd", "../gap/resclass.gi" ],
-                     "ResClasses", "../../../" );
-  ResetManualLayout( );
+  ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+  MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "resclasses.xml",
+                 [ "../gap/resclaux.g", "../gap/z_pi.gd", "../gap/z_pi.gi",
+                   "../gap/resclass.gd", "../gap/resclass.gi" ],
+                   "ResClasses", "../../../" );
 end;
 MakeReadOnlyGlobal( "ResClassesBuildManual" );
 
@@ -50,9 +47,10 @@ MakeReadOnlyGlobal( "ResClassesBuildManual" );
 ##
 ResClassesTest := function (  )
 
-  local  dir;
+  local  ResClassesDir, dir;
 
-  dir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1], "resclasses/tst/" );
+  ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+  dir := Concatenation( ResClassesDir, "/tst/" );
   Read( Concatenation( dir, "testall.g" ) );
 end;
 MakeReadOnlyGlobal( "ResClassesTest" );
@@ -60,3 +58,4 @@ MakeReadOnlyGlobal( "ResClassesTest" );
 #############################################################################
 ##
 #E  resclaux.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
