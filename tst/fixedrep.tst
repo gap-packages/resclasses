@@ -14,6 +14,10 @@ gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
 [1/2]
 gap> U := ResidueClassUnionWithFixedRepresentatives(Integers,[[2,1],[7,4]]);
 [1/2] U [4/7]
+gap> AllResidueClassesWithFixedRepresentativesModulo(Z_pi(2),4);
+[ [0/4], [1/4], [2/4], [3/4] ]
+gap> AllResidueClassesWithFixedRepsModulo(9);
+[ [0/9], [1/9], [2/9], [3/9], [4/9], [5/9], [6/9], [7/9], [8/9] ]
 gap> Modulus(U);
 14
 gap> Classes(U);
