@@ -1143,11 +1143,8 @@ InstallMethod( Union2,
     m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
     r1 := U1!.r; r2 := U2!.r;
     included := Union(U1!.included,U2!.included);
-    excluded := Difference(Union(Filtered(U1!.excluded,
-                                          n->not (n mod m2 in r2)),
-                                 Filtered(U2!.excluded,
-                                          n->not (n mod m1 in r1))),
-                           included);
+    excluded := Difference(Union(Difference(U1!.excluded,U2),
+                                 Difference(U2!.excluded,U1)),included);
     allres := AllResidues(R,m);
     r := Filtered(allres,n->n mod m1 in r1 or n mod m2 in r2);
     return ResidueClassUnion(R,m,r,included,excluded);
