@@ -47,7 +47,7 @@ PackageDoc       := rec(
                          SixFile   := "doc/manual.six",
                          LongTitle := Concatenation("Computations with Residue Classes ",
                                                     "and their Set-Theoretic Unions"),
-                         AutoLoad  := true
+                         Autoload  := true
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.3",
@@ -59,7 +59,7 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
                                    "\nby Stefan Kohl, kohl@mathematik.uni-stuttgart.de\n\n" ),
-AutoLoad         := true,
+Autoload         := true,
 TestFile         := "tst/testall.g",
 Keywords         := [ "residue classes", "integers", "number theory" ]
 
