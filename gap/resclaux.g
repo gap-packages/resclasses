@@ -147,8 +147,8 @@ fi;
 ##  Coloring can be switched off by setting the option `BlackAndWhite' when
 ##  loading ResClasses.
 ##
-if ValueOption( "BlackAndWhite" ) <> true then
-  
+if not CompareVersionNumbers( VERSION, "4r4" ) then
+
   STDOUT := OutputTextUser();;
   PrintPromptHook:=CPROMPT;; EndLineHook:=function() end;;
 
