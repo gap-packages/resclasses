@@ -10,6 +10,8 @@ gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> ResidueClassUnionViewingFormat("long");;
 gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
 [2/3]
+gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
+[1/2]
 gap> U := ResidueClassUnionWithFixedRepresentatives(Integers,[[2,1],[7,4]]);
 [1/2] U [4/7]
 gap> Modulus(U);
@@ -45,8 +47,6 @@ gap> List([cl1,cl2,U],AsOrdinaryUnionOfResidueClasses);
   Union of the residue classes 1(2) and 4(14) of Z ]
 gap> cl1 in U;
 false
-gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
-[1/2]
 gap> cl2 in U;
 true
 gap> AsListOfClasses(U);
