@@ -81,7 +81,9 @@ InstallGlobalFunction( Z_piResidueClassUnionsFamily,
     local  fam, cat, name;
 
     fam := First( Z_PI_RESIDUE_CLASS_UNIONS_FAMILIES,
-                  fam -> UnderlyingRing( fam ) = R );
+                  fam ->     UnderlyingRing( fam ) = R
+                         and PositionSublist( fam!.NAME,
+                                              String(fixedreps) ) <> fail );
     if fam <> fail then return fam; fi;
     if   not fixedreps
     then cat := IsUnionOfResidueClassesOfZ_pi;
@@ -112,7 +114,9 @@ InstallGlobalFunction( GFqxResidueClassUnionsFamily,
 
     x := IndeterminatesOfPolynomialRing( R )[ 1 ];
     fam := First( GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES,
-                  fam -> UnderlyingRing( fam ) = R );
+                  fam -> UnderlyingRing( fam ) = R
+                         and PositionSublist( fam!.NAME,
+                                              String(fixedreps) ) <> fail );
     if fam <> fail then return fam; fi;
     if   not fixedreps
     then cat := IsUnionOfResidueClassesOfGFqx;
@@ -265,6 +269,24 @@ InstallGlobalFunction( AllResidueClassesModulo,
     else m := arg[1]; R := DefaultRing(m); fi;
     if IsZero(m) or not m in R then return fail; fi;
     return List(AllResidues(R,m),r->ResidueClass(R,m,r));
+  end );
+
+#############################################################################
+##
+#F  AllResidueClassesWithFixedRepresentativesModulo( [ <R>, ] <m> )
+#F  AllResidueClassesWithFixedRepsModulo( [ <R>, ] <m> )
+##
+InstallGlobalFunction( AllResidueClassesWithFixedRepresentativesModulo,
+
+  function ( arg )
+
+    local  R, m;
+
+    if   Length(arg) = 2
+    then R := arg[1]; m := arg[2];
+    else m := arg[1]; R := DefaultRing(m); fi;
+    if IsZero(m) or not m in R then return fail; fi;
+    return List(AllResidues(R,m),r->ResidueClassWithFixedRep(R,m,r));
   end );
 
 # Bring the residue class union <U> to normalized, reduced form.

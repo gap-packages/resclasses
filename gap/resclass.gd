@@ -310,6 +310,19 @@ DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
 ##
+#F  AllResidueClassesWithFixedRepresentativesModulo( [ <R>, ] <m> )
+#F  AllResidueClassesWithFixedRepsModulo( [ <R>, ] <m> )
+##
+##  The same as `AllResidueClassesModulo', but with fixed representatives.
+##  The fixed representatives are the same as those returned by the function
+##  `AllResidues' when called with the arguments <R> and <m>.
+##
+DeclareGlobalFunction( "AllResidueClassesWithFixedRepresentativesModulo" );
+DeclareSynonym( "AllResidueClassesWithFixedRepsModulo",
+                AllResidueClassesWithFixedRepresentativesModulo );
+
+#############################################################################
+##
 #O  AsUnionOfFewClasses( <U> ) . . . . .  write <U> as a union of few classes
 ##
 DeclareOperation( "AsUnionOfFewClasses", [ IsUnionOfResidueClasses ] );
