@@ -6,6 +6,8 @@
 ##
 
 gap> START_TEST("$Id$");
+gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
+gap> ResidueClassUnionViewingFormat("long");;
 gap> A := ResidueClass(Integers,3,2);
 The residue class 2(3)
 gap> B := ResidueClass(Z_pi([2,5]),2,1);
@@ -298,13 +300,10 @@ gap> last+1;
 The residue class 1(4) of Z_( 2 )
 gap> Union(last,last2);
 <union of 2 residue classes (mod 4) of Z_( 2 )>
+gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
 #############################################################################
 ##
 #E  resclass.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
-
-
-
-
 
