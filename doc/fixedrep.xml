@@ -30,8 +30,8 @@ residue class unions which we have described in the previous chapter:
     In most situations they behave like lists of single residue classes
     with fixed representatives rather than like sets of ring elements.
     There are exceptions from this behaviour, e.g. w.r.t. forming
-    differences, in order to ensure <Q><M>\rho</M>-additivity</Q>
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+    differences, in order to ensure <Q><M>\delta</M>-additivity</Q>
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA"/>).
   </Item>
 
   <Mark>-</Mark>
@@ -54,7 +54,7 @@ representatives. <P/>
 
 Some of the functionality described in this chapter makes only sense
 if <A>R</A> is the ring of integers -- in particular this holds for
-everything concerning the invariant <M>\rho</M>.
+everything concerning the invariant <M>\delta</M>.
 
 </Section>
 
@@ -369,9 +369,9 @@ gap> 1/2+1/7;
     The union of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
   <Description>
-    We have <C>Rho(Union(<A>U1</A>,<A>U2</A>))
-    = Rho(<A>U1</A>) + Rho(<A>U2</A>)</C>.
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+    We have <C>DELTA(Union(<A>U1</A>,<A>U2</A>))
+    = DELTA(<A>U1</A>) + DELTA(<A>U2</A>)</C>.
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA"/>).
 <Example>
 <![CDATA[
 gap> Union(U,cl1);
@@ -408,9 +408,9 @@ gap> Intersection(cl2,U);
     The difference of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
   <Description>
-    We have <C>Rho(Difference(<A>U1</A>,<A>U2</A>))
-    = Rho(<A>U1</A>) - Rho(<A>U2</A>)</C>.
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+    We have <C>DELTA(Difference(<A>U1</A>,<A>U2</A>))
+    = DELTA(<A>U1</A>) - DELTA(<A>U2</A>)</C>.
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA"/>).
     This is ensured by setting the difference of the empty residue class
     union with fixed representatives and some residue class <M>[r/m]</M>
     equal to <M>[(m-r)/m]</M>.
@@ -477,8 +477,8 @@ gap> U - 17;
     The multiset of products <M>x \cdot u</M>, <M>u \in U</M>.
   </Returns>
   <Description>
-    Scalar multiplication leaves <M>\rho</M> invariant
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+    Scalar multiplication leaves <M>\delta</M> invariant
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA"/>).
 <Example>
 <![CDATA[
 gap> 3*cl1;
@@ -496,8 +496,8 @@ gap> 7*U;
     The multiset of quotients <M>u/x</M>, <M>u \in U</M>.
   </Returns>
   <Description>
-    Scalar division leaves <M>\rho</M> invariant
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+    Scalar division leaves <M>\delta</M> invariant
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA"/>).
     If not all elements of all residue classes in <A>U</A> are divisible
     by&nbsp;<A>x</A>, the method gives up.
 <Example>
@@ -515,7 +515,7 @@ gap> (2*cl1+2)/3;
 
 <Section Label="sec:WhereRepsComeIntoPlay">
 <Heading>
-  The invariant Rho
+  The invariant Delta
 </Heading>
 
 <ManSection>
@@ -534,8 +534,8 @@ gap> (2*cl1+2)/3;
     The method tries to perform a simplification of <A>U</A> by joining
     appropriate residue classes if the argument <A>k</A> is zero. <P/>
 
-    In any case the value of <C>Rho(<A>U</A>)</C> is invariant under
-    this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+    In any case the value of <C>DELTA(<A>U</A>)</C> is invariant under
+    this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA"/>).
 <Example>
 <![CDATA[
 gap> cl := ResidueClassUnionWithFixedReps(Integers,[[2,1]]);
@@ -557,35 +557,47 @@ gap> RepresentativeStabilizingRefinement(S,0);
 </ManSection>
 
 <ManSection>
-  <Attr Name="Rho" Arg="U"/>
+  <Attr Name="DELTA" Arg="U"/>
   <Returns>
-    The value of the invariant <M>\rho</M> of the
+    The value of the invariant <M>\delta</M> of the
     residue class union&nbsp;<A>U</A>.
   </Returns>
   <Description>
     For a residue class <M>[r/m]</M> with fixed representative we set
-    <M>\rho([r/m]) := r/m - 1/2</M> and extend this additively to unions of
+    <M>\delta([r/m]) := r/m - 1/2</M> and extend this additively to unions of
     such residue classes. If no representatives are fixed, this definition
     is still unique (mod&nbsp;1).
 <Example>
 <![CDATA[
-gap> Rho(U);
+gap> DELTA(U);
 1/14
 gap> (1/2-1/2)+(4/7-1/2);
 1/14
 gap> V := RepresentativeStabilizingRefinement(U,3);
 [1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
-gap> Rho(V);
+gap> DELTA(V);
 1/14
 gap> (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
 1/14
-gap> Rho(P);
+gap> DELTA(P);
 -3706053977906326692602106591985470034/1152783981972759212376551073665878035
 gap> Factors(DenominatorRat(last));
 [ 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
   73, 79, 83, 89, 97 ]
 ]]>
 </Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Attr Name="RHO" Arg="U"/>
+  <Returns>
+    The value of the invariant <M>\rho</M> of the
+    residue class union&nbsp;<A>U</A>.
+  </Returns>
+  <Description>
+    For a union $U \subseteq \Z$ of finitely many residue classes,
+    we set <M>\rho(U) := e^{\pi i \delta(U)}</M>.
   </Description>
 </ManSection>
 

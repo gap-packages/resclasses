@@ -1936,9 +1936,9 @@ InstallMethod( RepresentativeStabilizingRefinement,
 
 #############################################################################
 ##
-#M  Rho( <U> ) . . . . . . . . . for residue class union of Z with fixed reps
+#M  DELTA( <U> ) . . . . . . . . for residue class union of Z with fixed reps
 ##
-InstallMethod( Rho,
+InstallMethod( DELTA,
                "for residue class unions of Z with fixed reps (ResClasses)",
                true, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
                0,
@@ -1949,21 +1949,54 @@ InstallMethod( Rho,
 
 #############################################################################
 ##
-#M  Rho( <U> ) . . . . . . . . . . . . . . . . . for residue class union of Z
+#M  DELTA( <U> ) . . . . . . . . . . . . . . . . for residue class union of Z
 ##
-InstallOtherMethod( Rho,
+InstallOtherMethod( DELTA,
                     "for residue class unions of Z (ResClasses)",
                     true, [ IsUnionOfResidueClassesOfZ ], 0,
 
   function ( U )
 
-    local  rho;
+    local  delta;
 
     if   IsEmpty(U)    then return 0;
     elif IsIntegers(U) then return 1/2; else
-      rho :=   Sum(Residues(U))/Modulus(U)
+      delta :=   Sum(Residues(U))/Modulus(U)
              - Length(Residues(U))/2 + Modulus(U);
-      return rho - Int(rho);
+      return delta - Int(delta);
+    fi;
+  end );
+
+#############################################################################
+##
+#M  RHO( <U> ) . . . . . . . . . for residue class union of Z with fixed reps
+##
+InstallMethod( RHO,
+               "for residue class unions of Z with fixed reps (ResClasses)",
+               true, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
+               0,
+
+  function ( U )
+    return Product(List(Classes(U),c->-SignInt(c[1])*E(c[1])^c[2]));
+  end );
+
+#############################################################################
+##
+#M  RHO( <U> ) . . . . . . . . . . . . . . . . . for residue class union of Z
+##
+InstallOtherMethod( RHO,
+                    "for residue class unions of Z (ResClasses)",
+                    true, [ IsUnionOfResidueClassesOfZ ], 0,
+
+  function ( U )
+
+    local  delta;
+
+    if IsEmpty(U) or IsIntegers(U) then return 1; else
+      delta := DELTA(U)/2;
+      delta := delta - Int(delta);
+      if delta >= 1/2 then delta := delta - 1/2; fi;
+      return E(DenominatorRat(delta))^NumeratorRat(delta);
     fi;
   end );
 

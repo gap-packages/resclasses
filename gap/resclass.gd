@@ -395,15 +395,30 @@ DeclareOperation( "RepresentativeStabilizingRefinement",
 
 #############################################################################
 ##
-#A  Rho( <U> ) . . . . . . . . . . . . . . . . . . . . . . .  invariant `Rho'
+#A  DELTA( <U> ) . . . . . . . . . . . . . . . . . . . . .  invariant `Delta'
 ##
 ##  For a residue class $[r/m]$ with fixed representative we set
-##  $\Rho([r/m]) := r/m - 1/2$ and extend this additively to unions of such
+##  $\delta([r/m]) := r/m - 1/2$ and extend this additively to unions of such
 ##  residue classes.
 ##
 ##  If no representatives are fixed, this definition is still unique (mod 1).
 ##
-DeclareAttribute( "Rho", IsUnionOfResidueClassesWithFixedRepresentatives );
+DeclareAttribute( "DELTA", IsUnionOfResidueClassesWithFixedRepresentatives );
+
+#############################################################################
+##
+#A  RHO( <U> ) . . . . . . . . . . . . . . . . . . . . . . .  invariant `Rho'
+##
+##  For a residue class $[r/m]$ with fixed representative and
+##  fixed orientation, i.e. fixed sign of $m$, we set
+##  $\rho([r/m]) := exp(sgn(m)*\delta([r/m])/2)$
+##  and extend this additively to unions of such residue classes.
+##
+##  If no representatives and no orientation is fixed, this definition
+##  can still be made unique by restricting the exponent to the interval
+##  $[0,1/2[$.
+##
+DeclareAttribute( "RHO", IsUnionOfResidueClassesWithFixedRepresentatives );
 
 #############################################################################
 ##

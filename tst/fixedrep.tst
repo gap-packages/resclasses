@@ -97,15 +97,15 @@ gap> RepresentativeStabilizingRefinement(cl1,2);
 [2/6] U [5/6]
 gap> V := RepresentativeStabilizingRefinement(U,3);
 [1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
-gap> Rho(U);
+gap> DELTA(U);
 1/14
 gap> (1/2-1/2)+(4/7-1/2);
 1/14
-gap> Rho(V);
+gap> DELTA(V);
 1/14
 gap> (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
 1/14
-gap> Rho(P);
+gap> DELTA(P);
 -3706053977906326692602106591985470034/1152783981972759212376551073665878035
 gap> Factors(DenominatorRat(last));
 [ 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
