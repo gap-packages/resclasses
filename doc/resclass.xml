@@ -24,16 +24,17 @@
     <Filt Name="IsUnionOfResidueClassesOfZorZ_pi" Arg="U"/>
     <Filt Name="IsUnionOfResidueClassesOfGFqx"    Arg="U"/>
     <Description>
-      The category of all unions of residue classes, resp. of all unions of
-      residue classes of <M>\Z</M>, <M>\Z_\pi</M>, <M>\Z</M> or
-      <M>\Z_\pi</M>, resp. GF( <M>q</M> )[ <M>x</M> ].
+      The category of all unions of residue classes, of all unions of
+      residue classes of <M>\Z</M>, of some semilocalization  <M>\Z_\pi</M>,
+      of <M>\Z</M> or <M>\Z_\pi</M>, resp. of some polynomial ring
+      GF( <M>q</M> )[ <M>x</M> ].
     </Description>
   </ManSection>
 
   <ManSection>
     <Func Name="ResidueClassUnionsFamily" Arg="R"/>
     <Description>
-      The family of unions of residue classes of the ring <A>R</A>.
+      The family of unions of residue classes of the ring <A>R</A>. <P/>
       The ring <A>R</A> can be accessed as
       <C>UnderlyingRing( ResidueClassUnionsFamily( <A>R</A> ) )</C>.
     </Description>

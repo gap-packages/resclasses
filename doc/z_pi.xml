@@ -166,7 +166,7 @@ gap> Lcm(S,90/3,60/17,120/33);
     </Returns>
     <Description>
       This method returns a list <A>l</A>, where the noninvertible
-      prime factors of the numerator of <A>x</A> are stored in
+      prime factors of the numerator of <A>x</A> are stored in the list
       <C><A>l</A>&obrace;[2..Length(<A>l</A>)]&cbrace;</C> in
       ascending order, and <C><A>l</A>[1]</C> is a suitable unit.
 <Example>
@@ -186,8 +186,7 @@ gap> Factors(S,60/17);
     <Meth Name="IsUnit" Arg="R, x"/>
     <Description>
       Checks whether <A>x</A> is a unit in the semilocalization
-      <A>R</A> of the integers. <P/>
-
+      <A>R</A> of the integers.
       The method returns <C>fail</C>, if <A>x</A> is not
       an element of <A>R</A>.
 <Example>

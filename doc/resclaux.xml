@@ -22,8 +22,7 @@
     <Returns>Nothing.</Returns>
     <Description>
       This function builds the manual of the &ResClasses; package in the
-      file formats &LaTeX;, DVI, Postscript, PDF, HTML and ASCII text. <P/>
-
+      file formats &LaTeX;, DVI, Postscript, PDF, HTML and ASCII text.
       This is done using the &GAPDoc; package by Frank Lübeck
       and Max Neunhöffer.
     </Description>
@@ -40,8 +39,7 @@
     <Func Name="ResClassesTest" Arg=""/>
     <Returns>Nothing.</Returns>
     <Description>
-      Performs tests of the &ResClasses; package. <P/>
-
+      Performs tests of the &ResClasses; package.
       This function makes use of an adaptation of the test file
       <F>tst/testall.g</F> of the &GAP; library to this package.
     </Description>
