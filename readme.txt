@@ -2,12 +2,12 @@ README file for `ResClasses' package.
 
 This package for GAP 4 (at least version 4.3) implements
 unions of residue classes of the integers, the polynomial rings
-GF(q)[x] for some prime power q and of the semilocalisations Z_pi
+GF(q)[x] for some prime power q and of the semilocalisations Z_(pi)
 of the integers at some finite set of primes pi as GAP domains
 and provides basic functionality for computing with these sets
 (intersection, union, difference, adding and subtracting finite
 sets of elements, etc.). It also implements the above-mentioned
-rings Z_pi as GAP domains.
+rings Z_(pi) as GAP domains.
 
 The package is completely written in the GAP language and contains /
 requires no external binaries.

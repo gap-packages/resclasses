@@ -9,7 +9,7 @@ gap> START_TEST("$Id$");
 gap> A := ResidueClass(Integers,3,2);
 The residue class 2(3)
 gap> B := ResidueClass(Z_pi([2,5]),2,1);
-The residue class 1(2) of Z_[ 2, 5 ]
+The residue class 1(2) of Z_( 2, 5 )
 gap> B = ResidueClass(Integers,2,1);
 false
 gap> R := PolynomialRing(GF(7),1);;
@@ -23,7 +23,7 @@ Union of the residue classes 1(5) and 2(5), +2/-2 elements
 gap> G := ResidueClassUnion(R,x,[One(R),5*One(R),6*One(R)],[Zero(R)],[One(R)]);
 <union of 3 residue classes (mod x) of GF(7)[x], +1/-1 elements>
 gap> H := ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
-<union of 2 residue classes (mod 8) of Z_[ 2, 3 ]>
+<union of 2 residue classes (mod 8) of Z_( 2, 3 )>
 gap> Modulus(F);
 5
 gap> Modulus(G);
@@ -55,13 +55,13 @@ gap> String(C);
 gap> String(F);
 "ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )"
 gap> String(H);
-"ResidueClassUnion( Z_[ 2, 3 ], 8, [ 3, 5 ] )"
+"ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )"
 gap> Print(C,"\n");
 ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )
 gap> Print(F,"\n");
 ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )
 gap> Print(H,"\n");
-ResidueClassUnion( Z_[ 2, 3 ], 8, [ 3, 5 ] )
+ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )
 gap> Display(F);
 
 The union of the residue classes r ( mod 5 )  for r =
@@ -92,7 +92,7 @@ Z(7)^0
 
 gap> Display(H);
 
-The union of the residue classes r ( mod 8 ) of Z_[ 2, 3 ] for r =
+The union of the residue classes r ( mod 8 ) of Z_( 2, 3 ) for r =
 
  3 5
 
@@ -115,13 +115,13 @@ gap> Difference([2,4,7,8],A);
 gap> Complement(A);
 Union of the residue classes 0(3) and 1(3)
 gap> Complement(B);
-The residue class 0(2) of Z_[ 2, 5 ]
+The residue class 0(2) of Z_( 2, 5 )
 gap> Complement(C);
 <union of 6 residue classes (mod x+Z(7)^0) of GF(7)[x]>
 gap> Complement(F);
 Union of the residue classes 0(5), 3(5) and 4(5), +2/-2 elements
 gap> Complement(H);
-<union of 6 residue classes (mod 8) of Z_[ 2, 3 ]>
+<union of 6 residue classes (mod 8) of Z_( 2, 3 )>
 gap> I := ResidueClassUnion(Integers,6,[1,5]);
 Union of the residue classes 1(6) and 5(6)
 gap> J := ResidueClassUnion(Integers,5,[1,2,3,4]);
@@ -154,7 +154,7 @@ Integers \ [ 1, 2, 3 ]
 gap> Display(last);
 Integers \ [ 1, 2, 3 ]
 gap> Difference(Z_pi([2,3,7]),[1/5,1/55]);
-Z_[ 2, 3, 7 ] \ [ 1/55, 1/5 ]
+Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
 gap> O := Difference(Union(A,[1,3]),[2,5,8]);
 The residue class 2(3), +2/-3 elements
 gap> P := Union(Difference(A,[-1]),[-3,0]);
@@ -194,7 +194,7 @@ without the elements
 gap> Union(A,Complement(A));
 Integers
 gap> Union(B,Complement(B));
-Z_[ 2, 5 ]
+Z_( 2, 5 )
 gap> Union(C,Complement(C));
 GF(7)[x]
 gap> Q := ResidueClassUnion( Integers, 18, [ 2, 5, 8, 11, 14, 16, 17 ],

@@ -4,8 +4,8 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains the declaration part for the semilocalizations Z_pi of
-##  the ring of integers.
+##  This file contains the declaration part for the semilocalizations
+##  $\Z_{(pi)}$ of the ring of integers.
 ##
 Revision.z_pi_gd :=
   "@(#)$Id$";

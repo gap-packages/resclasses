@@ -33,7 +33,7 @@ DeclareCategory( "IsUnionOfResidueClassesOfZ",
 ##
 #C  IsUnionOfResidueClassesOfZ_pi . unions of residue classes and finite sets
 ##
-##  The category of unions of residue classes of some ring $\Z_\pi$ and
+##  The category of unions of residue classes of some ring $\Z_{(\pi)}$ and
 ##  finite subsets of of this ring. 
 ##
 DeclareCategory( "IsUnionOfResidueClassesOfZ_pi",
@@ -75,7 +75,7 @@ DeclareGlobalVariable( "ZResidueClassUnionsFamily" );
 ##
 #F  Z_piResidueClassUnionsFamily( <R> )
 ##
-##  Family of unions of residue classes of $\Z_\pi$ and finite subsets of
+##  Family of unions of residue classes of $\Z_{(\pi)}$ and finite subsets of
 ##  this ring, where the set $\pi$ is given by the list <primes>.
 ##
 DeclareGlobalFunction( "Z_piResidueClassUnionsFamily" );
@@ -128,8 +128,8 @@ DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
 #R  IsResidueClassUnionSparseRep . . .  `sparse' rep. of residue class unions
 ##
 ##  Representation of unions of residue classes of the integers, a
-##  semilocalization $\Z_\pi$ of the integers or a univariate polynomial ring
-##  GF($q$)[$x$] over a finite field.
+##  semilocalization $\Z_{(\pi)}$ of the integers or a univariate polynomial
+##  ring GF($q$)[$x$] over a finite field.
 ## 
 ##  The component <m> stores the common modulus, <r> is the list of class
 ##  representatives and <included> resp. <excluded> are lists of single

@@ -7,13 +7,13 @@
 
 gap> START_TEST("$Id$");
 gap> R := Z_pi([2]);
-Z_[ 2 ]
+Z_( 2 )
 gap> R = Z_pi(2);
 true
 gap> S := Z_pi([2,5,7]);
-Z_[ 2, 5, 7 ]
+Z_( 2, 5, 7 )
 gap> T := Z_pi([3,11]);
-Z_[ 3, 11 ]
+Z_( 3, 11 )
 gap> 4 in R;
 true
 gap> 4/7 in R;
@@ -29,7 +29,7 @@ true
 gap> R = S;
 false
 gap> U := Intersection(R,S,T);
-Z_[ 2, 3, 5, 7, 11 ]
+Z_( 2, 3, 5, 7, 11 )
 gap> Representative(U);
 1/13
 gap> One(U);
@@ -49,7 +49,7 @@ true
 gap> IsField(R);
 false
 gap> Intersection(Rationals,T);
-Z_[ 3, 11 ]
+Z_( 3, 11 )
 gap> IsSubset(R,U);
 true
 gap> IsSubset(T,R);
@@ -77,7 +77,7 @@ gap> StandardAssociate(U,37/13);
 gap> StandardAssociate(U,36/13);
 36
 gap> V := Z_pi([2,3,7]);
-Z_[ 2, 3, 7 ]
+Z_( 2, 3, 7 )
 gap> Gcd(V,2/5,6);
 2
 gap> Gcd(V,20/13,77/19);

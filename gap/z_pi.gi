@@ -21,7 +21,7 @@ InstallMethod( Z_piCons, "natural Z_pi", true,
 
   function ( filter, pi )
 
-    local  R;
+    local  R, piStr;
 
     R := Objectify( NewType( FamilyObj( Integers ),
                              IsRing and IsAttributeStoringRep ),
@@ -34,7 +34,8 @@ InstallMethod( Z_piCons, "natural Z_pi", true,
     SetRepresentative( R, 1/Minimum(Difference(List(pi,NextPrimeInt),pi)) );
     SetElementsFamily( R, FamilyObj( 1 ) );
     SetNoninvertiblePrimes( R, R!.primes );
-    SetName( R, Concatenation( "Z_", String(pi) ) );
+    piStr := String(pi);
+    SetName( R, Concatenation( "Z_(", piStr{[2..Length(piStr)-1]}, ")" ) );
     return R;
   end );
 
