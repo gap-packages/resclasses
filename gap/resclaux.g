@@ -14,6 +14,24 @@ Revision.resclaux_g :=
 InstallMethod( String, "for Integers (ResClasses)", true, [ IsIntegers ], 0,
                Ints -> "Integers" );
 
+RESCLASSES_VIEWING_FORMAT := "long";
+MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
+
+#############################################################################
+##
+#F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
+##
+ResidueClassUnionViewingFormat := function ( format )
+  if   not format in [ "short", "long" ]
+  then Error( "viewing formats other than \"short\" and \"long\" ",
+              "are not supported.\n");
+  fi;
+  MakeReadWriteGlobal( "RESCLASSES_VIEWING_FORMAT" );
+  RESCLASSES_VIEWING_FORMAT := format;
+  MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
+end;
+MakeReadOnlyGlobal( "ResidueClassUnionViewingFormat" );
+
 #############################################################################
 ##
 #F  ResClassesBuildManual( ) . . . . . . . . . . . . . . . . build the manual
@@ -58,5 +76,6 @@ MakeReadOnlyGlobal( "ResClassesTest" );
 #############################################################################
 ##
 #E  resclaux.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
 

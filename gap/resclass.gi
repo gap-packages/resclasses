@@ -424,10 +424,13 @@ InstallOtherMethod( ExcludedElements,
 
 #############################################################################
 ##
-#M  AsUnionOfFewClasses( <U> ) . . . . . . . . . for residue class union of Z
+#M  AsUnionOfFewClasses( <U> ) . . . . . .  for pure residue class union of Z
 ##
+##  The result includes only whole residue classes and does not specify
+##  included / excluded single elements.
+## 
 InstallMethod( AsUnionOfFewClasses,
-               "for residue class unions of Z (ResClasses)", true,
+               "for pure residue class unions of Z (ResClasses)", true,
                [ IsUnionOfResidueClassesOfZ ], 0,
 
   function ( U )
@@ -443,13 +446,13 @@ InstallMethod( AsUnionOfFewClasses,
         if IsSubset(res,List([1..m/d],i->(i-1)*d+(res[pos] mod d))) then
           Si := ResidueClass(Integers,d,res[pos]);
           Add(S,Si); remaining := Difference(remaining,Si);
-          if remaining = [] then break; fi;
+          if IsList(remaining) then break; fi;
           m := Modulus(remaining); res := Residues(remaining); pos := 0;
           if m mod d <> 0 then break; fi;
         fi;
         pos := pos + 1;
       od;
-      if remaining = [] then break; fi;
+      if IsList(remaining) then break; fi;
     od;
     return S;
   end );
@@ -464,11 +467,15 @@ InstallMethod( ViewObj,
 
   function ( U )
 
-    local  R, m, r, included, excluded, n;
+    local  R, m, r, included, excluded, n, cl, short, endval;
 
+    short := RESCLASSES_VIEWING_FORMAT = "short";
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
-    if   (IsIntegers(R) and Length(r) <= 5 and m < 10000) or Length(r) = 1
+    if   IsIntegers(R) and Length(r) < 20 and m < 1000
+    then cl := AsUnionOfFewClasses(U); fi;
+    if   IsIntegers(R) and (IsBound(cl) and Length(cl) < 6 or Length(r) < 6)
+      or Length(r) = 1
     then
       if IsOne(m) then
         Print(String(R)," \\ ");
@@ -478,17 +485,35 @@ InstallMethod( ViewObj,
         else Print(excluded); fi;
       else
         if Length(r) > 1 then
-          Print("Union of the residue classes ");
-          for n in [1..Length(r)-1] do
-            Print(r[n],"(",m,")");
-            if n < Length(r) - 1 then Print(", "); fi;
-          od;
-          Print(" and ");
-        else Print("The residue class "); fi;
+          if not short then Print("Union of the residue classes "); fi;
+          if IsBound(cl) then
+            endval := Length(cl) - 1; if short then endval := endval + 1; fi;
+            for n in [1..endval] do
+              Print(Residues(cl[n])[1],"(",Modulus(cl[n]),")");
+              if n < endval then
+                if short then Print(" U "); else Print(", "); fi;
+              fi;
+            od;
+            if not short then Print(" and "); fi;
+          else
+            for n in [1..Length(r)-1] do
+              Print(r[n],"(",m,")");
+              if n < Length(r) - 1 then
+                if short then Print(" U "); else Print(", "); fi;
+              fi;
+            od;
+            Print(" and ");
+          fi;
+        else if not short then Print("The residue class "); fi; fi;
         if   IsIntegers(R) or IsZ_pi(R)
-        then Print(r[Length(r)],"(",m,")");
+        then if   Length(r) = 1 or not short
+             then if   IsBound(cl)
+                  then Print(Residues(cl[Length(cl)])[1],"(",
+                             Modulus(cl[Length(cl)]),")");
+                  else Print(r[Length(r)],"(",m,")"); fi;
+             fi;
         else Print(r[Length(r)]," ( mod ",m," )"); fi;
-        if not IsIntegers(R) then Print(" of ",String(R)); fi;
+        if not IsIntegers(R) and not short then Print(" of ",String(R)); fi;
         if   included <> [] or excluded <> []
         then Print(", +",Length(included),
                    "/-",Length(excluded)," elements");
@@ -1272,5 +1297,6 @@ InstallOtherMethod( \/,
 #############################################################################
 ##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
 
 
