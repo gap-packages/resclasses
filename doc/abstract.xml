@@ -1,0 +1,34 @@
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  abstract.xml      ResClasses documentation       Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$      ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
+
+<Abstract>
+
+  This package for &GAP; 4 (at least version 4.3) implements unions of
+  residue classes of the integers, the polynomial rings
+  GF( <M>q</M> )[ <M>x</M> ] for some prime power <M>q</M> and of the
+  semilocalisations <M>\Z_\pi</M> of the integers at some finite set of
+  primes <M>pi</M> as &GAP; domains and provides basic functionality for
+  computing with these sets (intersection, union, difference, adding and
+  subtracting finite sets of elements, etc.).
+  It also implements the above-mentioned rings <M>\Z_\pi</M>
+  as &GAP; domains.
+
+  It is completely written in the &GAP; language and contains /
+  requires no external binaries.
+
+  For the documentation, the package &GAPDoc; <Cite Key="GAPDoc"/> is needed.
+
+  &ResClasses; must be installed in the <F>pkg</F> subdirectory of the
+  &GAP; distribution.
+
+</Abstract>
+
+<!-- #################################################################### -->

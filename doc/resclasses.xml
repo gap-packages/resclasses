@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE Book SYSTEM "../../gapdoc/gapdoc.dtd"
+ [ <!ENTITY ResClasses "<Package>ResClasses</Package>">
+   <!ENTITY RCWA "<Package>RCWA</Package>"> ] >
+
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  resclasses.xml     ResClasses documentation      Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$    ## -->
+<!-- ##                                                                ## -->
+<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Universit\"at Stuttgart, Germany                              ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
+     
+<Book Name="ResClasses"> 
+
+<!-- #################################################################### -->
+
+<TitlePage>
+  <Title>ResClasses</Title>
+  <Subtitle>Computations with Residue Classes</Subtitle>
+  <Version>
+    ( Version <#Include SYSTEM "../version"> )
+  </Version>
+  <Author>
+    Stefan Kohl
+    <Email>kohl@mathematik.uni-stuttgart.de</Email>
+    <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn</Homepage>
+    <Address>
+       Institut für Geometrie und Topologie <Br/>
+       Universität Stuttgart <Br/>
+       70550 Stuttgart <Br/>
+       Germany
+    </Address>
+  </Author>
+  <Date>January 10, 2003</Date>
+  <Copyright> &copyright; 2002 by Stefan Kohl </Copyright>
+  <#Include SYSTEM "abstract.xml">
+</TitlePage>
+
+<!-- #################################################################### -->
+
+<TableOfContents/>
+
+<!-- #################################################################### -->
+
+<Body>
+
+<#Include SYSTEM "preface.xml">
+<#Include SYSTEM "z_pi.xml">
+<#Include SYSTEM "resclass.xml">
+<#Include SYSTEM "resclaux.xml">
+
+</Body>
+
+<!-- #################################################################### -->
+
+<Bibliography Databases="resclasses.bib"/>
+
+<TheIndex/>
+
+<!-- #################################################################### -->
+
+</Book>
+
+<!-- #################################################################### -->
