@@ -472,7 +472,13 @@ InstallMethod( ViewObj,
 
   function ( U )
 
-    local  R, m, r, included, excluded, n, cl, short, endval;
+    local  R, m, r, included, excluded, PrintFiniteSet, n, cl, short, endval;
+
+    PrintFiniteSet := function ( S )
+      if   Length(String(S)) <= 32
+      then Print(S);
+      else Print("<set of cardinality ",Length(S),">"); fi;
+    end;
 
     short := RESCLASSES_VIEWING_FORMAT = "short";
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
@@ -483,14 +489,13 @@ InstallMethod( ViewObj,
       or Length(r) = 1
     then
       if IsOne(m) then
-        Print(RingToString(R)," \\ ");
-        if   Length(excluded) > 20
-          or Length(String(excluded)) > SizeScreen()[1]-Length(String(R))-8
-        then Print("<list of length ",Length(excluded),">");
-        else Print(excluded); fi;
+        Print(RingToString(R)," \\ "); PrintFiniteSet(excluded);
       else
         if Length(r) > 1 then
-          if not short then Print("Union of the residue classes "); fi;
+          if not short then
+            if included <> [] or excluded <> [] then Print("("); fi;
+            Print("Union of the residue classes ");
+          fi;
           if IsBound(cl) then
             endval := Length(cl) - 1; if short then endval := endval + 1; fi;
             for n in [1..endval] do
@@ -509,7 +514,12 @@ InstallMethod( ViewObj,
             od;
             Print(" and ");
           fi;
-        else if not short then Print("The residue class "); fi; fi;
+        else
+          if not short then
+            if included <> [] or excluded <> [] then Print("("); fi;
+            Print("The residue class ");
+          fi;
+        fi;
         if   IsIntegers(R) or IsZ_pi(R)
         then if   Length(r) = 1 or not short
              then if   IsBound(cl)
@@ -519,20 +529,35 @@ InstallMethod( ViewObj,
              fi;
         else Print(r[Length(r)]," ( mod ",m," )"); fi;
         if not short then Print(" of ",RingToString(R)); fi;
-        if   included <> [] or excluded <> []
-        then Print(", +",Length(included),
-                   "/-",Length(excluded)," elements");
+        if included <> [] then
+          if short then Print(" U "); else Print(") U "); fi;
+          PrintFiniteSet(included);
+        fi;
+        if excluded <> [] then
+          if   short or included <> [] then Print(" \\ ");
+          else Print(") \\ "); fi;
+          PrintFiniteSet(excluded);
         fi;
       fi;
     else
       Print("<union of ",Length(r)," residue classes (mod ",m,")");
-      Print(" of ",RingToString(R));
-      if   included <> [] or excluded <> []
-      then Print(", +",Length(included),
-                 "/-",Length(excluded)," elements");
-      fi;
+      if not short then Print(" of ",RingToString(R)); fi;
       Print(">");
+      if included <> [] then Print(" U ");  PrintFiniteSet(included); fi;
+      if excluded <> [] then Print(" \\ "); PrintFiniteSet(excluded); fi;
     fi;
+  end ); 
+
+#############################################################################
+##
+#M  String( [ ] ) . . . . . . . . . . . . . . . . . . . .  for the empty list
+##
+InstallMethod( String,
+               "for the empty list (ResClasses)", true,
+               [ IsList and IsEmpty ], SUM_FLAGS,
+
+  function ( empty )
+    if IsStringRep(empty) then return empty; else return "[  ]"; fi;
   end );
 
 #############################################################################
@@ -1344,3 +1369,4 @@ InstallOtherMethod( \/,
 #############################################################################
 ##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
