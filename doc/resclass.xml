@@ -16,14 +16,22 @@
 
 <ManSection>
   <Func Name="ResidueClass" Arg="R, m, r" Label="R, m, r"/>
+  <Func Name="ResidueClass" Arg="m, r" Label="m, r"/>
+  <Func Name="ResidueClass" Arg="r, m" Label="r, m"/>
   <Returns>
-    The residue class <A>r</A>&nbsp;mod&nbsp;<A>m</A>
-    of the ring&nbsp;<A>R</A>.
+    In the three-argument form the residue class
+    <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the ring&nbsp;<A>R</A>, and
+    in the two-argument form the residue class
+    <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the integers.
   </Returns>
   <Description>
+    In the two-argument case, <A>r</A> and <A>m</A> must not be negative,
+    and <A>r</A> is assumed to lie in the range <C>[0..<A>m</A>-1]</C>.
+    The latter is used to decide which of the two arguments is the modulus
+    <A>m</A>, and which is the residue&nbsp;<A>r</A>.
 <Example>
 <![CDATA[
-gap> A := ResidueClass(Integers,3,2);
+gap> A := ResidueClass(2,3);
 The residue class 2(3) of Z
 gap> B := ResidueClass(Z_pi([2,5]),2,1);
 The residue class 1(2) of Z_( 2, 5 )

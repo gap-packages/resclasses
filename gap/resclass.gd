@@ -234,9 +234,13 @@ DeclareSynonym( "ResidueClassUnionWithFixedReps",
 
 #############################################################################
 ##
-#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  single residue class
+#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  residue class of <R>
+#F  ResidueClass( <m>, <r> )  . . . . . . . . . residue class of the integers
+#F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . .  ( dito )
 ##
-##  The residue class <r> ( mod <m> ) of the ring <R>.
+##  The residue class <r> ( mod <m> ) of the ring <R>, resp. the residue
+##  class <r> ( mod <m> ) of the integers. In the two-argument case, <r> and
+##  <m> must be non-negative, and <r> must lie in the range [0..<m>-1].
 ##
 DeclareGlobalFunction( "ResidueClass" );
 

@@ -462,15 +462,27 @@ InstallGlobalFunction( ResidueClassUnionWithFixedRepresentatives,
 
 #############################################################################
 ##
-#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  single residue class
+#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  residue class of <R>
+#F  ResidueClass( <m>, <r> )  . . . . . . . . . residue class of the integers
+#F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . .  ( dito )
 ##
 InstallGlobalFunction( ResidueClass,
 
-  function ( R, m, r )
+  function ( arg )
 
-    if not ( IsRing(R) and m in R and r in R )
-    then Error( "usage: ResidueClass( <R>, <m>, <r> ) for a ring <R> and ",
-                "elements <m> and <r>.\n" ); fi;
+    local  R, m, r;
+
+    if Length(arg) = 3 then
+      R := arg[1]; m := arg[2]; r := arg[3];
+      if   not ( IsRing(R) and m in R and r in R )
+      then Error( "usage: see ?ResidueClass\n"); fi;
+    elif Length(arg) = 2 then
+      if   not (ForAll(arg,IsInt) and Minimum(arg) >= 0 and Maximum(arg) > 0)
+      then Error( "usage: see ?ResidueClass\n"); fi;
+      R := Integers; m := Maximum(arg); r := Minimum(arg);
+    else
+     Error( "usage: see ?ResidueClass\n");
+    fi;
     return ResidueClassUnion( R, m, [ r ] );
   end );
 
