@@ -35,7 +35,7 @@
 
   <ManSection>
     <Func Name="ResClassesBuildManual" Arg=""/>
-    <Returns>Nothing.</Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       This function builds the manual of the &ResClasses; package in the
       file formats &LaTeX;, DVI, Postscript, PDF, HTML and ASCII text.
@@ -53,7 +53,7 @@
 
   <ManSection>
     <Func Name="ResClassesTest" Arg=""/>
-    <Returns>Nothing.</Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       Performs tests of the &ResClasses; package.
       This function makes use of an adaptation of the test file
@@ -70,7 +70,7 @@
 
   <ManSection>
     <Func Name="ResidueClassUnionViewingFormat" Arg="format"/>
-    <Returns>Nothing.</Returns>
+    <Returns> Nothing. </Returns>
     <Description>
       Switches between a longer and more descriptive (<A>format</A> =
       <C>"long"</C>) and a shorter and less bulky (<A>format</A> =
@@ -103,4 +103,3 @@ Union of the residue classes 1(3) and 5(6) of Z
 </Chapter>
 
 <!-- #################################################################### -->
-

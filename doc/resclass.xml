@@ -17,7 +17,8 @@
   <ManSection>
     <Func Name="ResidueClass" Arg="R, m, r"/>
     <Returns>
-      The residue class <A>r</A> mod <A>m</A> of the ring <A>R</A>.
+      The residue class <A>r</A>&nbsp;mod&nbsp;<A>m</A>
+      of the ring&nbsp;<A>R</A>.
     </Returns>
     <Description>
 <Example>
@@ -41,9 +42,10 @@ The residue class Z(7) ( mod x+Z(7)^0 ) of GF(7)[x]
     <Func Name="ResidueClassUnion" Arg="R, m, r"/>
     <Func Name="ResidueClassUnion" Arg="R, m, r, included, excluded"/>
     <Returns>
-      The union of the residue classes <A>r</A>[<M>i</M>] mod <A>m</A>
-      of the ring <A>R</A>, plus / minus finite sets <A>included</A> and
-      <A>excluded</A> of ring elements.
+      The union of the residue classes
+      <A>r</A>[<M>i</M>]&nbsp;mod&nbsp;<A>m</A>
+      of the ring&nbsp;<A>R</A>, plus / minus finite sets <A>included</A>
+      and <A>excluded</A> of ring elements.
     </Returns>
     <Description>
       If the arguments <A>included</A> and <A>excluded</A> are given, they
@@ -101,25 +103,25 @@ gap> AllResidueClassesModulo(R,x);
 
   <ManSection>
     <Meth Name="Modulus" Arg="U"/>
-    <Returns>the modulus <A>m</A> of <A>U</A>.</Returns>
+    <Returns> The modulus <A>m</A> of&nbsp;<A>U</A>. </Returns>
   </ManSection>
 
   <ManSection>
     <Oper Name="Residues" Arg="U"/>
-    <Returns>the set of residues <A>r</A> of <A>U</A>.</Returns>
+    <Returns> The set of residues <A>r</A> of&nbsp;<A>U</A>. </Returns>
   </ManSection>
 
   <ManSection>
     <Oper Name="IncludedElements" Arg="U"/>
     <Returns>
-      the set <A>included</A> of single elements of <A>U</A>.
+      The set <A>included</A> of single elements of&nbsp;<A>U</A>.
     </Returns>
   </ManSection>
 
   <ManSection>
     <Oper Name="ExcludedElements" Arg="U"/>
     <Returns>
-      the set <A>excluded</A> of single elements explicitly not
+      The set <A>excluded</A> of single elements explicitly not
       contained in&nbsp;<A>U</A>.
     </Returns>
   </ManSection>
@@ -135,7 +137,7 @@ gap> AllResidueClassesModulo(R,x);
     <Meth Name="String" Arg="U"/>
     <Meth Name="String" Arg="U, lng"/>
     <Returns>
-      a string representation of the residue class union <A>U</A>.
+      A string representation of the residue class union&nbsp;<A>U</A>.
     </Returns>
     <Description>
       If the argument <A>lng</A> is given its absolute value denotes the
@@ -156,9 +158,10 @@ gap> String(H);
 
   <ManSection>
     <Meth Name="Print" Arg="U"/>
+    <Returns> Nothing. </Returns>
     <Description>
-      Prints the residue class union <A>U</A> in a way similar to what
-      a user has to write in order to create this object.
+      Prints the residue class union&nbsp;<A>U</A> in a way similar to
+      what a user has to write in order to create this object.
 <Example>
 <![CDATA[
 gap> Print(C,"\n");
@@ -174,8 +177,9 @@ ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )
 
   <ManSection>
     <Meth Name="Display" Arg="U"/>
+    <Returns> Nothing. </Returns>
     <Description>
-      Displays the residue class union <A>U</A> in a nice,
+      Displays the residue class union&nbsp;<A>U</A> in a nice,
       human-readable form.
 <Example>
 <![CDATA[
@@ -220,9 +224,11 @@ The union of the residue classes r ( mod 8 ) of Z_( 2, 3 ) for r =
 
   <ManSection>
     <Meth Name="\in" Arg="el, U"/>
+    <Returns>
+      <C>true</C> if <A>el</A> is an element of the residue class
+      union&nbsp;<A>U</A> and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Tests whether <A>el</A> is an element of the
-      residue class union&nbsp;<A>U</A>. 
 <Example>
 <![CDATA[
 gap> 20 in A;
@@ -244,9 +250,11 @@ true
 
   <ManSection>
     <Meth Name="IsSubset" Arg="U1, U2"/>
+    <Returns>
+      <C>true</C> if the residue class union&nbsp;<A>U2</A> is a subset of
+      the residue class union&nbsp;<A>U1</A> and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Checks whether the residue class union <A>U2</A> is a subset of
-      the residue class union&nbsp;<A>U1</A>.
 <Example>
 <![CDATA[
 gap> IsSubset(A,D);
@@ -261,7 +269,8 @@ true
   <ManSection>
     <Oper Name="Density" Arg="U"/>
     <Returns>
-      the natural density of <A>U</A> as a subset of the underlying ring.
+      The natural density of&nbsp;<A>U</A> as a subset of the
+      underlying ring.
     </Returns>
     <Description>
 <Example>
@@ -287,9 +296,10 @@ gap> Density(last);
     <Meth Name="Union" Arg="U1, U2"/>
     <Meth Name="Union" Arg="U, S"/>
     <Returns>
-      the union of two residue class unions <A>U1</A> and <A>U2</A>
-      resp. of the residue class union <A>U</A> and the finite set <A>S</A>
-      of elements of the ring <A>U</A> is defined over.
+      The union of two residue class unions <A>U1</A> and&nbsp;<A>U2</A>
+      resp. of the residue class union&nbsp;<A>U</A> and the finite
+      set&nbsp;<A>S</A> of elements of the ring <A>U</A>&nbsp;is defined
+      over.
     </Returns>
     <Description>
 <Example>
@@ -316,9 +326,10 @@ Union of the residue classes 1(3) and 2(3) of Z
     <Meth Name="Intersection" Arg="U1, U2"/>
     <Meth Name="Intersection" Arg="U, S"/>
     <Returns>
-      the intersection of two residue class unions <A>U1</A> and <A>U2</A>
-      resp. of the residue class union <A>U</A> and the finite set <A>S</A>
-      of elements of the ring <A>U</A> is defined over.
+      The intersection of two residue class unions <A>U1</A>
+      and&nbsp;<A>U2</A> resp. of the residue class union&nbsp;<A>U</A>
+      and the finite set&nbsp;<A>S</A> of elements of the ring
+      <A>U</A>&nbsp;is defined over.
     </Returns>
     <Description>
 <Example>
@@ -347,9 +358,10 @@ gap> List(Primes{[1..25]},p->Representative(cl_int) mod p);
     <Meth Name="Difference"   Arg="U1, U2"/>
     <Meth Name="Difference"   Arg="U, S"/>
     <Returns>
-      the difference of two residue class unions <A>U1</A> and <A>U2</A>
-      resp. of the residue class union <A>U</A> and the finite set <A>S</A>
-      of elements of the ring <A>U</A> is defined over.
+      The difference of two residue class unions <A>U1</A> and&nbsp;<A>U2</A>
+      resp. of the residue class union <A>U</A> and the finite
+      set&nbsp;<A>S</A> of elements of the ring <A>U</A>&nbsp;is defined
+      over.
     </Returns>
     <Description>
 <Example>
@@ -375,7 +387,9 @@ Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
 
   <ManSection>
     <Meth Name="Iterator" Arg="U"/>
-    <Returns> an iterator of the residue class union <A>U</A>. </Returns>
+    <Returns>
+      An iterator of the residue class union&nbsp;<A>U</A>.
+    </Returns>
     <Description>
       Currently, iterators are only implemented for residue class unions of
       the integers.
@@ -391,7 +405,7 @@ gap> it := Iterator(F);
   <ManSection>
     <Meth Name="NextIterator" Arg="iter"/>
     <Returns>
-      the next element delivered by the iterator <A>iter</A> of
+      The next element delivered by the iterator <A>iter</A> of
       some residue class union.
     </Returns>
     <Description>
@@ -412,7 +426,7 @@ gap> Difference(l,Intersection(F,[-20..20]));
     <Meth Name="\+" Arg="U, x"/>
     <Meth Name="\+" Arg="x, U"/>
     <Returns>
-      the set of sums <M>u + x</M>, <M>u \in U</M>.
+      The set of sums <M>u + x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
 <Example>
@@ -435,7 +449,7 @@ true
     <Meth Name="\-" Arg="x, U"/>
     <Meth Name="\-" Arg="U"/>
     <Returns>
-      the set of differences <M>u - x</M>, <M>u \in U</M> resp. the set of
+      The set of differences <M>u - x</M>, <M>u \in U</M> resp. the set of
       differences <M>x - u</M>, <M>u \in U</M> resp. the set of the additive
       inverses of the elements of&nbsp;<M>U</M>.
     </Returns>
@@ -457,7 +471,7 @@ The residue class Z(7)^4 ( mod x+Z(7)^0 ) of GF(7)[x]
     <Meth Name="\*" Arg="U, x"/>
     <Meth Name="\*" Arg="x, U"/>
     <Returns>
-      the set of products <M>x \cdot u</M>, <M>u \in U</M>.
+      The set of products <M>x \cdot u</M>, <M>u \in U</M>.
     </Returns>
     <Description>
 <Example>
@@ -478,7 +492,7 @@ gap> 2*Difference(Integers,[1,2,3]);
   <ManSection>
     <Meth Name="\/" Arg="U, x"/>
     <Returns>
-      the set of quotients <M>u/x</M>, <M>u \in U</M>.
+      The set of quotients <M>u/x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
       If the result is not a subset of the underlying ring,
@@ -503,6 +517,10 @@ Union of the residue classes 1(6) and 5(6) of Z
 
   <ManSection>
     <Filt Name="IsUnionOfResidueClasses" Arg="U"/>
+    <Returns>
+      <C>true</C> if <A>U</A> is a union of residue classes and
+      <C>false</C> otherwise.
+    </Returns>
     <Description>
       The category of all unions of residue classes.
     </Description>
@@ -510,6 +528,10 @@ Union of the residue classes 1(6) and 5(6) of Z
 
   <ManSection>
     <Filt Name="IsUnionOfResidueClassesOfZ" Arg="U"/>
+    <Returns>
+      <C>true</C> if <A>U</A> is a union of residue classes of
+      the ring of integers and <C>false</C> otherwise.
+    </Returns>
     <Description>
       The category of all unions of residue classes of <M>\Z</M>.
     </Description>
@@ -517,6 +539,10 @@ Union of the residue classes 1(6) and 5(6) of Z
 
   <ManSection>
     <Filt Name="IsUnionOfResidueClassesOfZ_pi" Arg="U"/>
+    <Returns>
+      <C>true</C> if <A>U</A> is a union of residue classes of a
+      semilocalization of the ring of integers and <C>false</C> otherwise.
+    </Returns>
     <Description>
       The category of all unions of residue classes of some semilocalization
       <M>\Z_{(\pi)}</M> of the integers.
@@ -525,6 +551,10 @@ Union of the residue classes 1(6) and 5(6) of Z
 
   <ManSection>
     <Filt Name="IsUnionOfResidueClassesOfZorZ_pi" Arg="U"/>
+    <Returns>
+      <C>true</C> if <A>U</A> is a union of residue classes of the ring of
+      integers or of one of its semilocalizations and <C>false</C> otherwise.
+    </Returns>
     <Description>
       The category of all unions of residue classes of <M>\Z</M> or
       <M>\Z_{(\pi)}</M>.
@@ -533,6 +563,10 @@ Union of the residue classes 1(6) and 5(6) of Z
 
   <ManSection>
     <Filt Name="IsUnionOfResidueClassesOfGFqx" Arg="U"/>
+    <Returns>
+      <C>true</C> if <A>U</A> is a union of residue classes of a polynomial
+      ring in one variable over a finite field and <C>false</C> otherwise.
+    </Returns>
     <Description>
       The category of all unions of residue classes of some polynomial ring
       GF(<M>q</M>)[<M>x</M>].

@@ -22,7 +22,7 @@ implement them in this package.
   <ManSection>
     <Func Name="Z_pi" Arg="pi"/>
     <Func Name="Z_pi" Arg="p"/>
-    <Returns>the ring <M>\Z_{(\pi)}</M>.</Returns>
+    <Returns> The ring <M>\Z_{(\pi)}</M>. </Returns>
     <Description>
       The function also accepts a single prime <A>p</A> instead of the
       one-element list <C><A>pi</A> = [ <A>p</A> ]</C> as argument.
@@ -41,18 +41,18 @@ Z_( 3, 11 )
 
   <ManSection>
     <Prop Name="IsZ_pi" Arg="R"/>
-    <Description>
-      Indicates whether <A>R</A> is a ring <M>\Z_{(\pi)}</M> for some
-      set of primes <M>\pi</M>.
-    </Description>
+    <Returns>
+      <C>true</C> if <A>R</A> is a ring <M>\Z_{(\pi)}</M> for some
+      set of primes&nbsp;<M>\pi</M> and <C>false</C> otherwise.
+    </Returns>
   </ManSection>
 
   <ManSection>
     <Attr Name="NoninvertiblePrimes" Arg="R"/>
-    <Description>
-      The noninvertible primes <A>pi</A> in the semilocalization <A>R</A>
-      of the integers.
-    </Description>
+    <Returns>
+      The set of noninvertible primes&nbsp;<A>pi</A>
+      in the semilocalization&nbsp;<A>R</A> of the integers.
+    </Returns>
   </ManSection>
 
 </Section>
@@ -64,9 +64,12 @@ Z_( 3, 11 )
 
   <ManSection>
     <Meth Name="\in" Arg="x, R"/>
+    <Returns>
+      <C>true</C> if <A>x</A> is an element of the
+      semilocalization&nbsp;<A>R</A> of the integers and
+      <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Checks whether <A>x</A> is an element of the semilocalization <A>R</A>
-      of the integers.
 <Example>
 <![CDATA[
 gap> 4/7 in R;
@@ -85,7 +88,7 @@ true
   <ManSection>
     <Meth Name="Intersection" Arg="R, S"/>
     <Returns>
-      the intersection of the semilocalizations <A>R</A> and <A>S</A>
+      The intersection of the semilocalizations <A>R</A> and&nbsp;<A>S</A>
       of the integers.
     </Returns>
     <Description>
@@ -100,9 +103,13 @@ Z_( 2, 3, 5, 7, 11 )
 
   <ManSection>
     <Meth Name="IsSubset" Arg="R, S"/>
+    <Returns>
+      <C>true</C> if <A>S</A> is a subring of&nbsp;<A>R</A>, and
+      <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Checks whether <A>S</A> is a subring of <A>R</A>, where <A>R</A> and
-      <A>S</A> are semilocalizations of the integers.
+      The arguments <A>R</A> and&nbsp;<A>S</A> must be
+      semilocalizations of the integers.
 <Example>
 <![CDATA[
 gap> IsSubset(R,U);
@@ -117,8 +124,8 @@ false
   <ManSection>
     <Meth Name="StandardAssociate" Arg="R, x"/>
     <Returns>
-      the standard associate of <A>x</A> in the semilocalization
-      <A>R</A> of the integers.
+      The standard associate of <A>x</A> in the
+      semilocalization&nbsp;<A>R</A> of the integers.
     </Returns>
     <Description>
       We define the standard associate of an element of <M>\Z_{(\pi)}</M>
@@ -142,8 +149,8 @@ gap> StandardAssociate(U,36/13);
     <Meth Name="GcdOp" Arg="R, x, y"/>
     <Meth Name="Gcd"   Arg="R, x, y"/>
     <Returns>
-      the greatest common divisor of <A>x</A> and <A>y</A>
-      in the semilocalization <A>R</A> of the integers.
+      The greatest common divisor of <A>x</A> and&nbsp;<A>y</A>
+      in the semilocalization&nbsp;<A>R</A> of the integers.
     </Returns>
     <Description>
 <Example>
@@ -161,8 +168,8 @@ gap> Gcd(S,90/3,60/17,120/33);
     <Meth Name="LcmOp" Arg="R, x, y"/>
     <Meth Name="Lcm"   Arg="R, x, y"/>
     <Returns>
-      the least common multiple of <A>x</A> and <A>y</A>
-      in the semilocalization <A>R</A> of the integers.
+      The least common multiple of <A>x</A> and&nbsp;<A>y</A>
+      in the semilocalization&nbsp;<A>R</A> of the integers.
     </Returns>
     <Description>
 <Example>
@@ -179,8 +186,8 @@ gap> Lcm(S,90/3,60/17,120/33);
   <ManSection>
     <Meth Name="Factors" Arg="R, x"/>
     <Returns>
-      a prime factorization of <A>x</A> in the semilocalization
-      <A>R</A> of the integers.
+      A prime factorization of&nbsp;<A>x</A> in the
+      semilocalization&nbsp;<A>R</A> of the integers.
     </Returns>
     <Description>
 <Example>
@@ -200,11 +207,14 @@ gap> Factors(S,60/17);
 
   <ManSection>
     <Meth Name="IsUnit" Arg="R, x"/>
+    <Returns>
+      <C>true</C> if <A>x</A> is a unit in the
+      semilocalization&nbsp;<A>R</A> of the integers and
+      <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Checks whether <A>x</A> is a unit in the semilocalization
-      <A>R</A> of the integers.
       The method returns <C>fail</C> if <A>x</A> is not
-      an element of <A>R</A>.
+      an element of&nbsp;<A>R</A>.
 <Example>
 <![CDATA[
 gap> IsUnit(S,3/11);
@@ -231,5 +241,3 @@ fail
 </Chapter>
 
 <!-- #################################################################### -->
-
-

@@ -71,8 +71,8 @@ everything concerning the invariant <M>\rho</M>.
     <Func Name="ResidueClassWithFixedRep" Arg="R, m, r"/>
     <Func Name="ResidueClassWithFixedRep" Arg="m, r"/>
     <Returns>
-      The residue class <A>r</A> mod <A>m</A> of the ring <A>R</A>,
-      with fixed representative&nbsp;<A>r</A>.
+      The residue class <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the
+      ring&nbsp;<A>R</A>, with fixed representative&nbsp;<A>r</A>.
     </Returns>
     <Description>
       If the argument <A>R</A> is omitted, it defaults to <C>Integers</C>.
@@ -114,7 +114,7 @@ gap> U := ResidueClassUnionWithFixedRepresentatives(Integers,[[2,1],[7,4]]);
   <ManSection>
     <Meth Name="Modulus" Arg="U"/>
     <Returns>
-      the lcm of the moduli of the residue classes in <A>U</A>.
+      The lcm of the moduli of the residue classes in&nbsp;<A>U</A>.
     </Returns>
     <Description>
 <Example>
@@ -129,7 +129,7 @@ gap> Modulus(U);
   <ManSection>
     <Meth Name="Classes" Arg="U"/>
     <Returns>
-      the list <A>classes</A> of pairs (modulus,residue) as in
+      The list <A>classes</A> of pairs (modulus,residue) as in
       <Ref Func="ResidueClassUnionWithFixedRepresentatives"/>.
     </Returns>
     <Description>
@@ -155,7 +155,7 @@ gap> Classes(U);
     <Meth Name="String" Arg="U"/>
     <Meth Name="String" Arg="U, lng"/>
     <Returns>
-      a string representation of <A>U</A>.
+      A string representation of&nbsp;<A>U</A>.
     </Returns>
     <Description>
 <Example>
@@ -169,6 +169,7 @@ gap> String(cl1);
 
   <ManSection>
     <Meth Name="Print" Arg="U"/>
+    <Returns> Nothing. </Returns>
     <Description>
       Prints <A>U</A> in a way similar to what a user has to write in order
       to create this object.
@@ -185,6 +186,7 @@ ResidueClassUnionWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ] ] )
 
   <ManSection>
     <Meth Name="Display" Arg="U"/>
+    <Returns> Nothing. </Returns>
     <Description>
       Displays <A>U</A> in a nice, human-readable form.
 <Example>
@@ -205,7 +207,7 @@ gap> Display(P);
   <ManSection>
     <Meth Name="Multiplicity" Arg="x, U"/>
     <Returns>
-      the multiplicity of <A>x</A> in <A>U</A> regarded as a multiset
+      The multiplicity of <A>x</A> in&nbsp;<A>U</A> regarded as a multiset
       of ring elements.
     </Returns>
     <Description>
@@ -224,8 +226,12 @@ gap> Multiplicity(11,U);
 
   <ManSection>
     <Prop Name="IsOverlappingFree" Arg="U"/>
+    <Returns>
+      <C>true</C> if the residue classes in&nbsp;<A>U</A> are pairwisely
+      disjoint and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      We call a residue class union <A>U</A> with fixed representatives
+      We call a residue class union&nbsp;<A>U</A> with fixed representatives
       <E>overlapping free</E> if and only if it consists of pairwisely
       disjoint residue classes.
 <Example>
@@ -242,7 +248,7 @@ false
   <ManSection>
     <Meth Name="AsOrdinaryUnionOfResidueClasses" Arg="U"/>
     <Returns>
-      the set-theoretic union of the residue classes in <A>U</A>.
+      The set-theoretic union of the residue classes in&nbsp;<A>U</A>.
     </Returns>
     <Description>
       The returned object is an ordinary residue class union
@@ -261,9 +267,11 @@ gap> List([cl1,cl2,U],AsOrdinaryUnionOfResidueClasses);
 
   <ManSection>
     <Meth Name="\in" Arg="cl, U"/>
+    <Returns>
+      <C>true</C> if the residue class <A>cl</A> with a fixed representative
+      is an element of&nbsp;<A>U</A> and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Tests whether the residue class <A>cl</A> with a fixed representative
-      is an element of&nbsp;<A>U</A>. 
 <Example>
 <![CDATA[
 gap> cl1 in U;
@@ -278,7 +286,7 @@ true
   <ManSection>
     <Meth Name="AsListOfClasses" Arg="U"/>
     <Returns>
-      the sorted list of the residue classes in <A>U</A>.
+      The sorted list of the residue classes in&nbsp;<A>U</A>.
     </Returns>
     <Description>
 <Example>
@@ -292,11 +300,14 @@ gap> AsListOfClasses(U);
 
   <ManSection>
     <Meth Name="IsSubset" Arg="U1, U2"/>
+    <Returns>
+      <C>true</C> if <A>U2</A> is a subset of <A>U1</A>
+      and <C>false</C> otherwise.
+    </Returns>
     <Description>
-      Checks whether <A>U2</A> is a subset of <A>U1</A>,
-      i.e. that if a residue class <M>[r/m]</M> is contained
-      <M>k_1</M>-fold in <A>U1</A> and <M>k_2</M>-fold in <A>U2</A>,
-      we always have <M>k_1 \geq k_2</M>.
+      We say that <A>U2</A> is a subset of <A>U1</A> if the multiplicity
+      of any residue class&nbsp;<M>[r/m]</M> in <A>U1</A> is greater than
+      or equal to its multiplicity in&nbsp;<A>U2</A>.
 <Example>
 <![CDATA[
 gap> IsSubset(U,cl1);
@@ -311,7 +322,7 @@ true
   <ManSection>
     <Oper Name="Density" Arg="U"/>
     <Returns>
-      the natural density of <A>U</A> as a multiset (elements with
+      The natural density of <A>U</A> as a multiset (elements with
       multiplicity&nbsp;<M>k</M> count <M>k</M>-fold).
     </Returns>
     <Description>
@@ -329,7 +340,7 @@ gap> 1/2+1/7;
   <ManSection>
     <Meth Name="Union" Arg="U1, U2"/>
     <Returns>
-      the union of <A>U1</A> and <A>U2</A>.
+      The union of <A>U1</A> and&nbsp;<A>U2</A>.
     </Returns>
     <Description>
       We have <C>Rho(Union(<A>U1</A>,<A>U2</A>))
@@ -347,7 +358,7 @@ gap> Union(U,cl1);
   <ManSection>
     <Meth Name="Intersection" Arg="U1, U2"/>
     <Returns>
-      the intersection of <A>U1</A> and <A>U2</A>.
+      The intersection of <A>U1</A> and&nbsp;<A>U2</A>.
     </Returns>
     <Description>
       The multiplicity of any residue class in the intersection
@@ -368,7 +379,7 @@ gap> Intersection(cl2,U);
   <ManSection>
     <Meth Name="Difference"   Arg="U1, U2"/>
     <Returns>
-      the difference of <A>U1</A> and <A>U2</A>.
+      The difference of <A>U1</A> and&nbsp;<A>U2</A>.
     </Returns>
     <Description>
       We have <C>Rho(Difference(<A>U1</A>,<A>U2</A>))
@@ -398,7 +409,7 @@ a union of residue classes with fixed representatives</Q> by
     <Meth Name="\+" Arg="U, x"/>
     <Meth Name="\+" Arg="x, U"/>
     <Returns>
-      the multiset of sums <M>u + x</M>, <M>u \in U</M>.
+      The multiset of sums <M>u + x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
 <Example>
@@ -417,7 +428,7 @@ gap> U+23;
     <Meth Name="\-" Arg="x, U"/>
     <Meth Name="\-" Arg="U"/>
     <Returns>
-      the multiset of differences <M>u - x</M>, <M>u \in U</M> resp. the
+      The multiset of differences <M>u - x</M>, <M>u \in U</M> resp. the
       set of differences <M>x - u</M>, <M>u \in U</M> resp. the set of the
       additive inverses of the elements of&nbsp;<M>U</M>.
     </Returns>
@@ -437,7 +448,7 @@ gap> U - 17;
     <Meth Name="\*" Arg="U, x"/>
     <Meth Name="\*" Arg="x, U"/>
     <Returns>
-      the multiset of products <M>x \cdot u</M>, <M>u \in U</M>.
+      The multiset of products <M>x \cdot u</M>, <M>u \in U</M>.
     </Returns>
     <Description>
       Scalar multiplication leaves <M>\rho</M> invariant
@@ -456,7 +467,7 @@ gap> 7*U;
   <ManSection>
     <Meth Name="\/" Arg="U, x"/>
     <Returns>
-      the multiset of quotients <M>u/x</M>, <M>u \in U</M>.
+      The multiset of quotients <M>u/x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
       Scalar division leaves <M>\rho</M> invariant
@@ -483,6 +494,10 @@ gap> (2*cl1+2)/3;
 
   <ManSection>
     <Meth Name="RepresentativeStabilizingRefinement" Arg="U, k"/>
+    <Returns>
+      The representative stabilizing refinement of <A>U</A>
+      into <M>k</M>&nbsp;parts.
+    </Returns>
     <Description>
       We define the <E>representative stabilizing refinement</E> of a residue
       class <M>[r/m]</M> of <M>\Z</M> with fixed representative into <M>k</M>
@@ -517,6 +532,10 @@ gap> RepresentativeStabilizingRefinement(S,0);
 
   <ManSection>
     <Attr Name="Rho" Arg="U"/>
+    <Returns>
+      The value of the invariant <M>\rho</M> of the
+      residue class union&nbsp;<A>U</A>.
+    </Returns>
     <Description>
       For a residue class <M>[r/m]</M> with fixed representative we set
       <M>\rho([r/m]) := r/m - 1/2</M> and extend this additively to unions of
