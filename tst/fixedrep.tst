@@ -59,16 +59,22 @@ gap> Density(U);
 9/14
 gap> Union(U,cl1);
 [1/2] U [2/3] U [4/7]
+gap> Union(cl1,cl1);
+[2/3] U [2/3]
 gap> Intersection(cl1,cl2);
 Empty union of residue classes of Z with fixed representatives
 gap> Intersection(List([cl1,cl2],AsOrdinaryUnionOfResidueClasses));
 The residue class 5(6) of Z
 gap> Intersection(cl2,U);
 [1/2]
+gap> Intersection(U,cl1);
+Empty union of residue classes of Z with fixed representatives
 gap> Difference(U,cl1);
-[1/2] U [4/7]
+[1/2] U [1/3] U [4/7]
 gap> Difference(U,cl2);
 [4/7]
+gap> Difference(U,U);
+[  ]
 gap> cl1 + 1;
 [3/3]
 gap> U+23;
@@ -100,6 +106,41 @@ gap> Rho(P);
 gap> Factors(DenominatorRat(last));
 [ 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
   73, 79, 83, 89, 97 ]
+gap> cl := ResidueClassUnionWithFixedReps(Integers,[[2,1]]);
+[1/2]
+gap> S := RepresentativeStabilizingRefinement(cl,3);
+[1/6] U [3/6] U [5/6]
+gap> cls := AsListOfClasses(S);
+[ [1/6], [3/6], [5/6] ]
+gap> cls := List([1..3],i->RepresentativeStabilizingRefinement(cls[i],i+1));
+[ [1/12] U [7/12], [3/18] U [9/18] U [15/18], 
+  [5/24] U [11/24] U [17/24] U [23/24] ]
+gap> S := Union(cls);
+<union of 9 residue classes of Z with fixed representatives>
+gap> RepresentativeStabilizingRefinement(S,0);
+[1/2]
+gap> cl := ResidueClassWithFixedRep(3,1);
+[1/3]
+gap> U := Union(cl,cl);
+[1/3] U [1/3]
+gap> U := RepresentativeStabilizingRefinement(U,2);
+[1/6] U [1/6] U [4/6] U [4/6]
+gap> U := RepresentativeStabilizingRefinement(U,3);
+<union of 12 residue classes of Z with fixed representatives>
+gap> RepresentativeStabilizingRefinement(U,0);
+[1/3] U [1/3]
+gap> R := PolynomialRing(GF(2),1);;
+gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
+gap> cl := ResidueClassWithFixedRepresentative(R,x^2+One(R),One(R));
+[Z(2)^0/x^2+Z(2)^0]
+gap> cl*x;
+[x/x^3+x]
+gap> cl+x;
+[x+Z(2)^0/x^2+Z(2)^0]
+gap> -cl;
+[Z(2)^0/x^2+Z(2)^0]
+gap> Print(cl,"\n");
+ResidueClassWithFixedRepresentative( GF(2)[x], x^2+Z(2)^0, Z(2)^0 )
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "fixedrep.tst", 100000000 );
 
