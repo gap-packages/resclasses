@@ -31,7 +31,8 @@ StefansManualLayout := function ( bookname )
                 ListWithIdenticalEntries((100-34-2*Length(bookname))/2,' '),
                 bookname," documentation ",
                 ListWithIdenticalEntries((100-34-2*Length(bookname))/2,' '),
-                "Stefan Kohl\n%%\n\n\\documentclass[");
+                "Stefan Kohl\n%%\n",ListWithIdenticalEntries(100,'%'),
+                "\n\n\\documentclass[");
 
   GAPDoc2LaTeXProcs.Head1x :=
   Concatenation(
