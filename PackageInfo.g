@@ -8,8 +8,9 @@
 SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
+Subtitle         := "Set-Theoretic Computations with Residue Classes",
 Version          := "1.0",
-Date             := "24/02/2003",
+Date             := "24/06/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/resclasses-1.0",
 ArchiveFormats   := ".zoo",
 Persons          := [
@@ -39,15 +40,14 @@ AbstractHTML     := Concatenation("This package allows to do computations with s
                                   "unions of residue classes."),
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses.html",
 PackageDoc       := rec(
-                         BookName  := "ResClasses",
-                         Archive   := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/",
-                                                    "~kohlsn/resclasses/resclasses-1.0doc-win.zip"),
-                         HTMLStart := "doc/chap0.html",
-                         PDFFile   := "doc/manual.pdf",
-                         SixFile   := "doc/manual.six",
-                         LongTitle := Concatenation("Computations with Residue Classes ",
-                                                    "and their Set-Theoretic Unions"),
-                         Autoload  := true
+                         BookName         := "ResClasses",
+                         ArchiveURLSubset := ["doc"],
+                         HTMLStart        := "doc/chap0.html",
+                         PDFFile          := "doc/manual.pdf",
+                         SixFile          := "doc/manual.six",
+                         LongTitle        := Concatenation("Computations with Residue Classes ",
+                                                           "and their Set-Theoretic Unions"),
+                         Autoload         := true
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.3",
@@ -68,3 +68,4 @@ Keywords         := [ "residue classes", "integers", "number theory" ]
 ####################################################################################################
 ##
 #E  PackageInfo.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
