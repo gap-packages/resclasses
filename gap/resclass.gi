@@ -497,14 +497,14 @@ InstallMethod( ViewObj,
             Print("Union of the residue classes ");
           fi;
           if IsBound(cl) then
-            endval := Length(cl) - 1; if short then endval := endval + 1; fi;
+            endval := Length(cl) - 1;
             for n in [1..endval] do
               Print(Residues(cl[n])[1],"(",Modulus(cl[n]),")");
               if n < endval then
                 if short then Print(" U "); else Print(", "); fi;
               fi;
             od;
-            if not short then Print(" and "); fi;
+            if short then Print(" U "); else Print(" and "); fi;
           else
             for n in [1..Length(r)-1] do
               Print(r[n],"(",m,")");
@@ -512,7 +512,7 @@ InstallMethod( ViewObj,
                 if short then Print(" U "); else Print(", "); fi;
               fi;
             od;
-            Print(" and ");
+            if short then Print(" U "); else Print(" and "); fi;
           fi;
         else
           if not short then
@@ -521,12 +521,10 @@ InstallMethod( ViewObj,
           fi;
         fi;
         if   IsIntegers(R) or IsZ_pi(R)
-        then if   Length(r) = 1 or not short
-             then if   IsBound(cl)
-                  then Print(Residues(cl[Length(cl)])[1],"(",
-                             Modulus(cl[Length(cl)]),")");
-                  else Print(r[Length(r)],"(",m,")"); fi;
-             fi;
+        then if   IsBound(cl)
+             then Print(Residues(cl[Length(cl)])[1],"(",
+                        Modulus(cl[Length(cl)]),")");
+             else Print(r[Length(r)],"(",m,")"); fi;
         else Print(r[Length(r)]," ( mod ",m," )"); fi;
         if not short then Print(" of ",RingToString(R)); fi;
         if included <> [] then
@@ -547,18 +545,6 @@ InstallMethod( ViewObj,
       if excluded <> [] then Print(" \\ "); PrintFiniteSet(excluded); fi;
     fi;
   end ); 
-
-#############################################################################
-##
-#M  String( [ ] ) . . . . . . . . . . . . . . . . . . . .  for the empty list
-##
-InstallMethod( String,
-               "for the empty list (ResClasses)", true,
-               [ IsList and IsEmpty ], SUM_FLAGS,
-
-  function ( empty )
-    if IsStringRep(empty) then return empty; else return "[  ]"; fi;
-  end );
 
 #############################################################################
 ##
