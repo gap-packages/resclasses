@@ -53,8 +53,8 @@ and <A>U2</A> denote unions of residue classes of <A>R</A> with fixed
 representatives. <P/>
 
 Some of the functionality described in this chapter makes only sense
-if <A>R</A> is the ring of integers, in particular everything concerning
-the invariant <M>\rho</M>.
+if <A>R</A> is the ring of integers -- in particular this holds for
+everything concerning the invariant <M>\rho</M>.
 
 </Section>
 
