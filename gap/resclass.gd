@@ -203,13 +203,6 @@ DeclareOperation( "AsUnionOfFewClasses", [ IsUnionOfResidueClasses ] );
 
 #############################################################################
 ##
-#O  Complement( <U> ) . . . . . . . . . . . complement of residue class union
-##
-if   not IsBound( Complement ) # In case CRISP is not loaded.
-then DeclareOperation( "Complement", [ IsObject ] ); fi;
-
-#############################################################################
-##
 #R  IsResidueClassUnionsIteratorRep( <U> ) . . . . .  iterator representation
 ##
 DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
@@ -219,3 +212,4 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+

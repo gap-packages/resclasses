@@ -1029,15 +1029,6 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
-#M  Complement( <U> ) . . . . . . . . . . . . . . . . for residue class union
-##
-InstallOtherMethod( Complement,
-                    "for residue class union (ResClasses)", true,
-                    [ IsUnionOfResidueClasses ], 0,
-                    U -> Difference( UnderlyingRing( FamilyObj( U ) ), U ) );
-
-#############################################################################
-##
 #M  IsSubset( <U>, <l> ) . . . . . . for residue class union and element list
 ##
 InstallMethod( IsSubset,
@@ -1228,4 +1219,5 @@ InstallOtherMethod( \/,
 #############################################################################
 ##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
 
