@@ -268,9 +268,42 @@ gap> ExcludedElements(Integers);
 [  ]
 gap> ExcludedElements([1,2,3]);
 [  ]
+gap> 2*Integers;
+The residue class 0(2)
+gap> Z_pi(2)*3;
+Z_( 2 )
+gap> Z_pi(2)*2;
+The residue class 0(2) of Z_( 2 )
+gap> x*R;
+The residue class 0*Z(7) ( mod x ) of GF(7)[x]
+gap> R+One(R);
+GF(7)[x]
+gap> Integers+1;
+Integers
+gap> Z_pi(2)-1;
+Z_( 2 )
+gap> -Integers;
+Integers
+gap> 45-Integers;
+Integers
+gap> -Z_pi([2,3]);
+Z_( 2, 3 )
+gap> 1-Z_pi([2,3]);
+Z_( 2, 3 )
+gap> 1/3*Z_pi(2);
+Z_( 2 )
+gap> 4*Z_pi(2);
+The residue class 0(4) of Z_( 2 )
+gap> last+1;
+The residue class 1(4) of Z_( 2 )
+gap> Union(last,last2);
+<union of 2 residue classes (mod 4) of Z_( 2 )>
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
 #############################################################################
 ##
 #E  resclass.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
+
+
 
