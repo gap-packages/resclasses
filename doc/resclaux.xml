@@ -46,6 +46,40 @@
 
 <!-- #################################################################### -->
 
+<Section Label="sec:ChangingTheClassUnionViewingFormat">
+<Heading>The testing routine</Heading>
+
+  <ManSection>
+    <Func Name="ResidueClassUnionViewingFormat" Arg="format"/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      Switches between a longer and more descriptive (<A>format</A> =
+      <C>"long"</C>) and a shorter and less bulky (<A>format</A> =
+      <C>"short"</C>) viewing format for unions of residue classes. <P/>
+
+      The former is the default and should be used when not many residue
+      classes have to be displayed or residue classes of different rings
+      are used, but the later is usually preferable if it is always clear
+      which the base ring is and if the printed representation of many
+      residue classes should fit on one screen.
+<Example>
+<![CDATA[
+gap> ResidueClassUnionViewingFormat("short");
+gap> ResidueClassUnion(Integers,12,[1,4,5,7,10,11]);
+1(3) U 5(6)
+gap> ResidueClassUnionViewingFormat("long");
+gap> ResidueClassUnion(Integers,12,[1,4,5,7,10,11]);
+Union of the residue classes 1(3) and 5(6)
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
 </Chapter>
 
 <!-- #################################################################### -->
+
