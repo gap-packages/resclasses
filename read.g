@@ -12,6 +12,8 @@
 
 SetInfoLevel( InfoWarning, 0 );
 
+ReadPkg( "resclasses", "gap/compat43.g" );
+ReadPkg( "resclasses", "gap/manstyle.g" );
 ReadPkg( "resclasses", "gap/resclaux.g" );
 ReadPkg( "resclasses", "gap/z_pi.gi" );
 ReadPkg( "resclasses", "gap/resclass.gi" );
