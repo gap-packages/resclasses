@@ -57,8 +57,8 @@ DeclareRepresentation( "IsResidueClassUnionSparseRep",
 ##  ( <modulus>, <representative> ). The representatives are *not* reduced
 ##  modulo the respective moduli, and the moduli may be different --
 ##  in contrast to `IsResidueClassUnionSparseRep' no common modulus is
-##  stored, and *unions which are equal as sets are distinguished* if a
-##  different partition of this set or different representatives are stored.
+##  stored, and *unions which are equal as sets are distinguished* if their
+##  respective <classes> - components are distinct.
 ##
 DeclareRepresentation( "IsFixedRepResidueClassUnionRep",
                        IsComponentObjectRep and IsAttributeStoringRep, 
@@ -220,10 +220,13 @@ DeclareGlobalFunction( "ResidueClassUnion" );
 #############################################################################
 ##
 #F  ResidueClassUnionWithFixedRepresentatives( <R>, <classes> )
+#F  ResidueClassUnionWithFixedRepresentatives( <classes> )
 #F  ResidueClassUnionWithFixedReps( <R>, <classes> )
+#F  ResidueClassUnionWithFixedReps( <classes> )
 ##
 ##  Calls `ResidueClassUnionWithFixedRepresentativesCons'.
 ##  For a description of the arguments, see there.
+##  If the argument <R> is not given, it defaults to `Integers'.
 ##
 DeclareGlobalFunction( "ResidueClassUnionWithFixedRepresentatives" );
 DeclareSynonym( "ResidueClassUnionWithFixedReps",
@@ -240,10 +243,13 @@ DeclareGlobalFunction( "ResidueClass" );
 #############################################################################
 ##
 #F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> )  same with fixed rep
+#F  ResidueClassWithFixedRepresentative( <m>, <r> )
 #F  ResidueClassWithFixedRep( <R>, <m>, <r> )
+#F  ResidueClassWithFixedRep( <m>, <r> )
 ##
 ##  The residue class <r> ( mod <m> ) of the ring <R>, with the fixed
-##  representative <r>.
+##  representative <r>. If the argument <R> is not given, it defaults to
+##  `Integers'.
 ##
 DeclareGlobalFunction( "ResidueClassWithFixedRepresentative" );
 DeclareSynonym( "ResidueClassWithFixedRep",
@@ -365,6 +371,9 @@ DeclareAttribute( "Density", IsUnionOfResidueClasses );
 ##  $[r/km] \cup [(r+m)/km] \cup \dots [(r+(k-1)m)/km]$.
 ##
 ##  We extend this definition in a natural way to unions of residue classes.
+##
+##  If the argument <k> is zero, it is tried to simplify <U> by iteratively
+##  uniting residue classes by the reverse of the process described above.  
 ##
 DeclareOperation( "RepresentativeStabilizingRefinement",
                   [ IsUnionOfResidueClassesWithFixedRepresentatives,

@@ -373,7 +373,7 @@ InstallMethod( ResidueClassUnionWithFixedRepresentativesCons,
     then type := IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives; fi;
     Result := Objectify( NewType( fam,
                                   type and IsFixedRepResidueClassUnionRep ),
-                         rec( classes := Set( classes ) ) );
+                         rec( classes := AsSortedList( classes ) ) );
     if classes <> [] then
       SetSize( Result, infinity ); SetIsFinite( Result, false );
       SetIsEmpty( Result, false );
@@ -413,17 +413,27 @@ InstallGlobalFunction( ResidueClassUnion,
 #############################################################################
 ##
 #F  ResidueClassUnionWithFixedRepresentatives( <R>, <classes> )
+#F  ResidueClassUnionWithFixedRepresentatives( <classes> )
+#F  ResidueClassUnionWithFixedReps( <R>, <classes> )
+#F  ResidueClassUnionWithFixedReps( <classes> )
 ##
 InstallGlobalFunction( ResidueClassUnionWithFixedRepresentatives,
 
-  function ( R, classes )
+  function ( arg )
 
+    local  R, classes, usage;
+
+    usage := Concatenation("usage: ResidueClassUnionWithFixedRepresenta",
+                           "tives( [ <R>, ] <classes> )\n");
+    if not Length(arg) in [1,2] then Error(usage); return fail; fi;
+    if Length(arg) = 2 then R := arg[1];   classes := arg[2];
+                       else R := Integers; classes := arg[1]; fi;
     if   not IsIntegers(R) and not IsZ_pi(R) and not IsPolynomialRing(R)
-      or not IsList(classes) or not ForAll(classes,cl->Length(cl)=2)
+      or not IsList(classes) or not ForAll(classes,IsList)
+      or not ForAll(classes,cl->Length(cl)=2)
       or not IsSubset(R,Flat(classes))
       or IsZero(Product(List(classes,cl->cl[1])))
-    then Error("usage: ResidueClassUnionWithFixedRepresentatives( ",
-               "<R>, <classes> )\n"); return fail; fi;
+    then Error(usage); return fail; fi;
     return ResidueClassUnionWithFixedRepresentativesCons(
              IsUnionOfResidueClassesWithFixedRepresentatives, R, classes );
   end );
@@ -444,15 +454,25 @@ InstallGlobalFunction( ResidueClass,
 
 #############################################################################
 ##
-#F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> ) same with fixed rep.
+#F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> )  same with fixed rep
+#F  ResidueClassWithFixedRepresentative( <m>, <r> )
+#F  ResidueClassWithFixedRep( <R>, <m>, <r> )
+#F  ResidueClassWithFixedRep( <m>, <r> )
 ##
 InstallGlobalFunction( ResidueClassWithFixedRepresentative,
 
-  function ( R, m, r )
+  function ( arg )
 
+    local  R, m, r, usage;
+
+    usage := Concatenation("usage: ResidueClassWithFixedRepresentative",
+                           "( [ <R>, ] <m>, <r> ) for a ring <R> and ",
+                           "elements <m> and <r>.\n");
+    if not Length(arg) in [2,3] then Error(usage); return fail; fi;
+    if Length(arg) = 3 then R := arg[1];   m := arg[2]; r := arg[3];
+                       else R := Integers; m := arg[1]; r := arg[2]; fi;
     if not ( IsRing(R) and m in R and r in R )
-    then Error("usage: ResidueClassWithFixedRepresentative( <R>, <m>, <r> )",
-               "\nfor a ring <R> and elements <m> and <r>.\n" ); fi;
+    then Error(usage); return fail; fi;
     return ResidueClassUnionWithFixedRepresentatives( R, [ [ m, r ] ] );
   end );
 
@@ -606,9 +626,9 @@ InstallMethod( AsListOfClasses,
                "for residue class unions with fixed reps (ResClasses)", true,
                [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
-  U -> Set( Classes( U ),
-            cl -> ResidueClassWithFixedRepresentative(
-                    UnderlyingRing( FamilyObj( U ) ), cl[1], cl[2] ) ) );
+  U -> SortedList( List( Classes( U ),
+                   cl -> ResidueClassWithFixedRepresentative(
+                   UnderlyingRing( FamilyObj( U ) ), cl[1], cl[2] ) ) ) );
 
 #############################################################################
 ##
@@ -1127,7 +1147,7 @@ InstallMethod( Union2,
 
     R := UnderlyingRing(FamilyObj(U1));
     return ResidueClassUnionWithFixedRepresentatives(R,
-             Union(Classes(U1),Classes(U2)));
+             Concatenation(Classes(U1),Classes(U2)));
   end );
 
 #############################################################################
@@ -1174,11 +1194,13 @@ InstallMethod( Intersection2,
 
   function ( U1, U2 )
 
-    local  R;
+    local  R, cls, cls1, cls2, int, cl;
 
     R := UnderlyingRing(FamilyObj(U1));
-    return ResidueClassUnionWithFixedRepresentatives( R,
-             Intersection(Classes(U1),Classes(U2)));
+    cls1 := Classes(U1); cls2 := Classes(U2); int := Intersection(cls1,cls2);
+    cls := Concatenation(List(int,cl->ListWithIdenticalEntries(
+           Minimum(Number(cls1,cl1->cl1=cl),Number(cls2,cl2->cl2=cl)),cl)));
+    return ResidueClassUnionWithFixedRepresentatives( R, cls );
   end );
 
 #############################################################################
@@ -1219,11 +1241,22 @@ InstallMethod( Difference,
 
   function ( U1, U2 )
 
-    local  R;
+    local  Multiple, R, cls, classes, numbers, diffcls;
 
-    R := UnderlyingRing(FamilyObj(U1));
-    return ResidueClassUnionWithFixedRepresentatives( R,
-             Difference(Classes(U1),Classes(U2)));
+    Multiple := function ( cl, k )
+      if   k < 0
+      then return ListWithIdenticalEntries(-k,[cl[1],cl[1]-cl[2]]);
+      else return ListWithIdenticalEntries(k,cl); fi;
+    end;
+
+    R       := UnderlyingRing(FamilyObj(U1));
+    cls     := [Classes(U1),Classes(U2)];
+    classes := Set(Union(cls));
+    numbers := List(classes,cl1->List(cls,list->Number(list,cl2->cl2=cl1)));
+    numbers := TransposedMat(numbers); numbers := numbers[1] - numbers[2];
+    diffcls := Concatenation(List([1..Length(numbers)],
+                                  i->Multiple(classes[i],numbers[i])));
+    return ResidueClassUnionWithFixedRepresentatives( R, diffcls );
   end );
 
 #############################################################################
@@ -1258,6 +1291,8 @@ InstallMethod( Union2,
                [ IsListOrCollection, IsListOrCollection ], 20,
 
   function ( S1, S2 )
+    if   ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
+    then TryNextMethod(); fi;
     if   IsSubset(S1,S2) then return S1;
     elif IsSubset(S2,S1) then return S2;
     else TryNextMethod(); fi;
@@ -1317,6 +1352,8 @@ InstallMethod( Intersection2,
                [ IsListOrCollection, IsListOrCollection ], 0,
 
   function ( S1, S2 )
+    if   ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
+    then TryNextMethod(); fi;
     if   IsSubset(S1,S2) then return S2;
     elif IsSubset(S2,S1) then return S1;
     else TryNextMethod(); fi;
@@ -1463,7 +1500,14 @@ InstallMethod( IsSubset,
                  IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
-    return IsSubset(Classes(U1),Classes(U2));
+
+    local  R, cls, classes, numbers;
+
+    R       := UnderlyingRing(FamilyObj(U1));
+    cls     := [Classes(U1),Classes(U2)];
+    classes := Set(Union(cls));
+    numbers := List(classes,cl1->List(cls,list->Number(list,cl2->cl2=cl1)));
+    return ForAll(numbers,num->num[1]>=num[2]); 
   end );
 
 #############################################################################
@@ -1645,7 +1689,7 @@ InstallOtherMethod( AdditiveInverseOp,
     local  R, invclasses;
 
     R := UnderlyingRing(FamilyObj(U));
-    invclasses := List(Classes(U),cl->[cl[1],-cl[2]]);
+    invclasses := List(Classes(U),cl->[-cl[1],-cl[2]]);
     return ResidueClassUnionWithFixedRepresentatives(R,invclasses);
   end );
 
@@ -1816,6 +1860,56 @@ InstallMethod( RepresentativeStabilizingRefinement,
                                   cl->List([0..k-1],
                                            i->[k*cl[1],i*cl[1]+cl[2]])));
     return ResidueClassUnionWithFixedRepresentatives(Integers,classes);
+  end );
+
+#############################################################################
+##
+#M  RepresentativeStabilizingRefinement( <U>, 0 )
+##
+InstallMethod( RepresentativeStabilizingRefinement,
+               Concatenation( "for residue class union of Z with fixed reps",
+                              " and 0 (simplify) (ResClasses)" ),
+               ReturnTrue,
+               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
+                 IsInt and IsZero ], 0,
+
+  function ( U, k )
+
+    local  cls, olds, mods, parts, part, mp, rp, kp, m, complete, c,
+           progression, replacement, found, cl, pos;
+
+    cls := ShallowCopy(Classes(U));
+    if Length(cls) < 2 then return U; fi;
+    repeat
+      olds  := ShallowCopy(cls);
+      mods  := Set(List(cls,cl->cl[1]));
+      parts := List(mods,m->Filtered(cls,cl->cl[1]=m));
+      found := false;
+      for part in parts do
+        mp := part[1][1]; rp := Set(part,cl->cl[2]);
+        for kp in Intersection([2..Length(rp)],DivisorsInt(mp)) do
+          m := mp/kp;
+          complete := First(Collected(rp mod m),c->c[2]=kp);
+          if complete <> fail then
+            progression := Set(Filtered(part,t->t[2] mod m = complete[1]));
+            replacement := [[m,progression[1][2]]];
+            while progression <> [] do
+              cl := progression[1];
+              pos := Position(cls,cl);
+              Unbind(cls[pos]);
+              cls := SortedList(cls); 
+              Unbind(progression[1]);
+              progression := SortedList(progression);
+            od;
+            cls := Concatenation(cls,replacement);
+            found := true;
+          fi;
+          if found then break; fi;
+        od;
+        if found then break; fi;
+      od;
+    until cls = olds;
+    return ResidueClassUnionWithFixedRepresentatives(Integers,cls);
   end );
 
 #############################################################################
