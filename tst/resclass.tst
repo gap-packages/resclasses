@@ -351,6 +351,14 @@ gap> AllResidueClassesModulo(R,x);
   The residue class Z(7)^5 ( mod x ) of GF(7)[x] ]
 gap> AllResidueClassesModulo(R,One(R));
 [ GF(7)[x] ]
+gap> SplittedClass(ResidueClass(2,3),5);
+[ The residue class 2(15) of Z, The residue class 5(15) of Z,
+  The residue class 8(15) of Z, The residue class 11(15) of Z,
+  The residue class 14(15) of Z ]
+gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),2);
+[ The residue class 2(6) of Z_( 2, 3 ), The residue class 5(6) of Z_( 2, 3 ) ]
+gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),5);
+fail
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
