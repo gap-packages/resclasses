@@ -21,7 +21,7 @@
 <Example>
 <![CDATA[
 gap> A := ResidueClass(Integers,3,2);
-The residue class 2(3)
+The residue class 2(3) of Z
 gap> B := ResidueClass(Z_pi([2,5]),2,1);
 The residue class 1(2) of Z_( 2, 5 )
 gap> B = ResidueClass(Integers,2,1);
@@ -47,9 +47,9 @@ The residue class Z(7) ( mod x+Z(7)^0 ) of GF(7)[x]
 <Example>
 <![CDATA[
 gap> D := ResidueClassUnion(Integers,6,[2,4]);
-Union of the residue classes 2(6) and 4(6)
+Union of the residue classes 2(6) and 4(6) of Z
 gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
-Union of the residue classes 1(5) and 2(5), +2/-2 elements
+Union of the residue classes 1(5) and 2(5) of Z, +2/-2 elements
 gap> G := ResidueClassUnion(R,x,[One(R),5*One(R),6*One(R)],[Zero(R)],[One(R)]);
 <union of 3 residue classes (mod x) of GF(7)[x], +1/-1 elements>
 gap> H := ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
@@ -151,7 +151,7 @@ ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )
 <![CDATA[
 gap> Display(F);
 
-The union of the residue classes r ( mod 5 )  for r =
+The union of the residue classes r ( mod 5 ) of Z for r =
 
  1 2
 
@@ -240,18 +240,18 @@ true
 <Example>
 <![CDATA[
 gap> I := ResidueClassUnion(Integers,6,[1,5]);
-Union of the residue classes 1(6) and 5(6)
+Union of the residue classes 1(6) and 5(6) of Z
 gap> J := ResidueClassUnion(Integers,5,[1,2,3,4]);
-Union of the residue classes 1(5), 2(5), 3(5) and 4(5)
+Union of the residue classes 1(5), 2(5), 3(5) and 4(5) of Z
 gap> K := Union(I,J);
-<union of 26 residue classes (mod 30)>
+<union of 26 residue classes (mod 30) of Z>
 gap> Residues(K);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24, 
   25, 26, 27, 28, 29 ]
 gap> Union(K,[0]);
-<union of 26 residue classes (mod 30), +1/-0 elements>
+<union of 26 residue classes (mod 30) of Z, +1/-0 elements>
 gap> Union(D,I);
-Union of the residue classes 1(3) and 2(3)
+Union of the residue classes 1(3) and 2(3) of Z
 ]]>
 </Example>
     </Description>
@@ -269,17 +269,17 @@ Union of the residue classes 1(3) and 2(3)
 <Example>
 <![CDATA[
 gap> L := Intersection(I,J);
-<union of 8 residue classes (mod 30)>
+<union of 8 residue classes (mod 30) of Z>
 gap> Display(L);
 
-The union of the residue classes r ( mod 30 )  for r =
+The union of the residue classes r ( mod 30 ) of Z for r =
 
   1  7 11 13 17 19 23 29
 
 gap> cl := List([1..25],i->ResidueClass(Integers,Primes[i],i));;
 gap> cl_int := Intersection(cl);
 The residue class 941584379775558526136539054851975983(
-2305567963945518424753102147331756070)
+2305567963945518424753102147331756070) of Z
 gap> List(Primes{[1..25]},p->Representative(cl_int) mod p);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
   22, 23, 24, 25 ]
@@ -300,17 +300,17 @@ gap> List(Primes{[1..25]},p->Representative(cl_int) mod p);
 <Example>
 <![CDATA[
 gap> M := Difference(I,J);
-Union of the residue classes 5(30) and 25(30)
+Union of the residue classes 5(30) and 25(30) of Z
 gap> N := Difference(J,I);
-<union of 16 residue classes (mod 30)>
+<union of 16 residue classes (mod 30) of Z>
 gap> Display(N);
 
-The union of the residue classes r ( mod 30 )  for r =
+The union of the residue classes r ( mod 30 ) of Z for r =
 
   2  3  4  6  8  9 12 14 16 18 21 22 24 26 27 28
 
 gap> Difference(Integers,[1,2,3]);
-Integers \ [ 1, 2, 3 ]
+Z \ [ 1, 2, 3 ]
 gap> Difference(Z_pi([2,3,7]),[1/5,1/55]);
 Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
 ]]>
@@ -364,7 +364,7 @@ gap> Difference(l,Intersection(F,[-20..20]));
 <![CDATA[
 gap> Display(L+1);
 
-The union of the residue classes r ( mod 30 )  for r =
+The union of the residue classes r ( mod 30 ) of Z for r =
 
   0  2  8 12 14 18 20 24
 
@@ -388,7 +388,7 @@ true
 <Example>
 <![CDATA[
 gap> F-7;
-Union of the residue classes 0(5) and 4(5), +2/-2 elements
+Union of the residue classes 0(5) and 4(5) of Z, +2/-2 elements
 gap> -L = L;
 true
 gap> -C;
@@ -408,13 +408,13 @@ The residue class Z(7)^4 ( mod x+Z(7)^0 ) of GF(7)[x]
 <Example>
 <![CDATA[
 gap> 2*A;
-The residue class 4(6)
+The residue class 4(6) of Z
 gap> D*17;
-Union of the residue classes 34(102) and 68(102)
+Union of the residue classes 34(102) and 68(102) of Z
 gap> x^3*C;
 The residue class Z(7)*x^3 ( mod x^4+x^3 ) of GF(7)[x]
 gap> 2*Difference(Integers,[1,2,3]);
-The residue class 0(2), +0/-3 elements
+The residue class 0(2) of Z, +0/-3 elements
 ]]>
 </Example>
     </Description>
@@ -431,9 +431,9 @@ The residue class 0(2), +0/-3 elements
 <Example>
 <![CDATA[
 gap> D/2;
-Union of the residue classes 1(3) and 2(3)
+Union of the residue classes 1(3) and 2(3) of Z
 gap> M/5;
-Union of the residue classes 1(6) and 5(6)
+Union of the residue classes 1(6) and 5(6) of Z
 ]]>
 </Example>
     </Description>
@@ -454,14 +454,14 @@ Union of the residue classes 1(6) and 5(6)
   </ManSection>
 
   <ManSection>
-    <Filt Name="IsUnionOfResidueClassesOfZ"       Arg="U"/>
+    <Filt Name="IsUnionOfResidueClassesOfZ" Arg="U"/>
     <Description>
       The category of all unions of residue classes of <M>\Z</M>.
     </Description>
   </ManSection>
 
   <ManSection>
-    <Filt Name="IsUnionOfResidueClassesOfZ_pi"    Arg="U"/>
+    <Filt Name="IsUnionOfResidueClassesOfZ_pi" Arg="U"/>
     <Description>
       The category of all unions of residue classes of some semilocalization
       <M>\Z_{(\pi)}</M> of the integers.
@@ -471,13 +471,13 @@ Union of the residue classes 1(6) and 5(6)
   <ManSection>
     <Filt Name="IsUnionOfResidueClassesOfZorZ_pi" Arg="U"/>
     <Description>
-      The category of all unions of residue classes of all unions of residue
-      classes of <M>\Z</M> or <M>\Z_{(\pi)}</M>.
+      The category of all unions of residue classes of <M>\Z</M> or
+      <M>\Z_{(\pi)}</M>.
     </Description>
   </ManSection>
 
   <ManSection>
-    <Filt Name="IsUnionOfResidueClassesOfGFqx"    Arg="U"/>
+    <Filt Name="IsUnionOfResidueClassesOfGFqx" Arg="U"/>
     <Description>
       The category of all unions of residue classes of some polynomial ring
       GF( <M>q</M> )[ <M>x</M> ].
@@ -500,5 +500,3 @@ Union of the residue classes 1(6) and 5(6)
 </Chapter>
 
 <!-- #################################################################### -->
-
-

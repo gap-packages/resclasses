@@ -11,7 +11,7 @@
 <!-- ##  $Id$    ## -->
 <!-- ##                                                                ## -->
 <!-- #################################################################### -->
-     
+
 <Book Name="ResClasses"> 
 
 <!-- #################################################################### -->
@@ -29,13 +29,13 @@
     <Email>kohl@mathematik.uni-stuttgart.de</Email>
     <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn</Homepage>
     <Address>
-       Institut für Geometrie und Topologie <Br/>
-       Universität Stuttgart <Br/>
-       70550 Stuttgart <Br/>
-       Germany
+      Institut für Geometrie und Topologie <Br/>
+      Universität Stuttgart <Br/>
+      70550 Stuttgart <Br/>
+      Germany
     </Address>
   </Author>
-  <Date>January 23, 2004</Date>
+  <Date>January 26, 2004</Date>
   <Copyright>
     &copyright; 2003 by Stefan Kohl <P/>
     We adopt the copyright regulations of &GAP; as detailed
@@ -70,4 +70,3 @@
 </Book>
 
 <!-- #################################################################### -->
-
