@@ -12,7 +12,9 @@
 
 SetInfoLevel( InfoWarning, 0 );
 
-ReadPkg( "resclasses", "gap/compat43.g" );
+if   not CompareVersionNumbers( VERSION, "4r4" )
+then ReadPkg( "resclasses", "gap/compat43.g" ); fi;
+
 ReadPkg( "resclasses", "gap/manstyle.g" );
 ReadPkg( "resclasses", "gap/resclaux.g" );
 ReadPkg( "resclasses", "gap/z_pi.gi" );
