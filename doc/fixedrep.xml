@@ -27,17 +27,18 @@ residue class unions which we have described in the previous chapter:
 
   <Mark>-</Mark>
   <Item>
-    They behave like sets of single residue classes with fixed
-    representative rather than like sets of ring elements.
-    We use the term <E>union</E> in particular in order to distinguish
-    the objects representing these sets from plain lists of single
-    residue classes.
+    In most situations they behave like lists of single residue classes
+    with fixed representatives rather than like sets of ring elements.
+    There are exceptions from this behaviour, e.g. w.r.t. forming
+    differences, in order to ensure <Q><M>\rho</M>-additivity</Q>
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
   </Item>
 
   <Mark>-</Mark>
   <Item>
     They can be viewed as <E>multisets</E> of ring elements --
-    the residue classes in such a union are not necessarily disjoint.
+    the residue classes in such a union are not necessarily disjoint,
+    and not even necessarily distinct.
   </Item>
 
 </List>
@@ -49,7 +50,11 @@ by the &RCWA; package. <P/>
 Throughout this chapter, the argument <A>R</A> denotes the ring whose
 residue classes we are dealing with, and the arguments <A>U</A>, <A>U1</A>
 and <A>U2</A> denote unions of residue classes of <A>R</A> with fixed
-representatives.
+representatives. <P/>
+
+Some of the functionality described in this chapter makes only sense
+if <A>R</A> is the ring of integers, in particular everything concerning
+the invariant <M>\rho</M>.
 
 </Section>
 
@@ -62,12 +67,15 @@ representatives.
 
   <ManSection>
     <Func Name="ResidueClassWithFixedRepresentative" Arg="R, m, r"/>
+    <Func Name="ResidueClassWithFixedRepresentative" Arg="m, r"/>
     <Func Name="ResidueClassWithFixedRep" Arg="R, m, r"/>
+    <Func Name="ResidueClassWithFixedRep" Arg="m, r"/>
     <Returns>
       The residue class <A>r</A> mod <A>m</A> of the ring <A>R</A>,
       with fixed representative&nbsp;<A>r</A>.
     </Returns>
     <Description>
+      If the argument <A>R</A> is omitted, it defaults to <C>Integers</C>.
 <Example>
 <![CDATA[
 gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
@@ -81,7 +89,9 @@ gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
 
   <ManSection>
     <Func Name="ResidueClassUnionWithFixedRepresentatives" Arg="R, classes"/>
+    <Func Name="ResidueClassUnionWithFixedRepresentatives" Arg="classes"/>
     <Func Name="ResidueClassUnionWithFixedReps" Arg="R, classes"/>
+    <Func Name="ResidueClassUnionWithFixedReps" Arg="classes"/>
     <Returns>
       The union of the residue classes <A>classes</A>[<M>i</M>][2] mod
       <A>classes</A>[<M>i</M>][1] of the ring <A>R</A>, with fixed
@@ -90,7 +100,8 @@ gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
     <Description>
       The argument <A>classes</A> must be a list of pairs of elements of
       the ring <A>R</A>, those first elements (the moduli) have to be
-      non-zero.
+      non-zero. If the argument <A>R</A> is omitted, it defaults to
+      <C>Integers</C>.
 <Example>
 <![CDATA[
 gap> U := ResidueClassUnionWithFixedRepresentatives(Integers,[[2,1],[7,4]]);
@@ -267,7 +278,7 @@ true
   <ManSection>
     <Meth Name="AsListOfClasses" Arg="U"/>
     <Returns>
-      the strictly sorted list of the residue classes in <A>U</A>.
+      the sorted list of the residue classes in <A>U</A>.
     </Returns>
     <Description>
 <Example>
@@ -282,7 +293,10 @@ gap> AsListOfClasses(U);
   <ManSection>
     <Meth Name="IsSubset" Arg="U1, U2"/>
     <Description>
-      Checks whether <A>U2</A> is a subset of <A>U1</A>.
+      Checks whether <A>U2</A> is a subset of <A>U1</A>,
+      i.e. that if a residue class <M>[r/m]</M> is contained
+      <M>k_1</M>-fold in <A>U1</A> and <M>k_2</M>-fold in <A>U2</A>,
+      we always have <M>k_1 \geq k_2</M>.
 <Example>
 <![CDATA[
 gap> IsSubset(U,cl1);
@@ -315,9 +329,12 @@ gap> 1/2+1/7;
   <ManSection>
     <Meth Name="Union" Arg="U1, U2"/>
     <Returns>
-      the set-theoretic union of <A>U1</A> and <A>U2</A>.
+      the union of <A>U1</A> and <A>U2</A>.
     </Returns>
     <Description>
+      We have <C>Rho(Union(<A>U1</A>,<A>U2</A>))
+      = Rho(<A>U1</A>) + Rho(<A>U2</A>)</C>.
+      (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
 <Example>
 <![CDATA[
 gap> Union(U,cl1);
@@ -330,9 +347,11 @@ gap> Union(U,cl1);
   <ManSection>
     <Meth Name="Intersection" Arg="U1, U2"/>
     <Returns>
-      the set-theoretic intersection of <A>U1</A> and <A>U2</A>.
+      the intersection of <A>U1</A> and <A>U2</A>.
     </Returns>
     <Description>
+      The multiplicity of any residue class in the intersection
+      is the minimum of its multiplicities in the arguments. 
 <Example>
 <![CDATA[
 gap> Intersection(cl1,cl2);
@@ -349,9 +368,15 @@ gap> Intersection(cl2,U);
   <ManSection>
     <Meth Name="Difference"   Arg="U1, U2"/>
     <Returns>
-      the set-theoretic difference of <A>U1</A> and <A>U2</A>.
+      the difference of <A>U1</A> and <A>U2</A>.
     </Returns>
     <Description>
+      We have <C>Rho(Difference(<A>U1</A>,<A>U2</A>))
+      = Rho(<A>U1</A>) - Rho(<A>U2</A>)</C>.
+      (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
+      This is ensured by setting the difference of the empty residue class
+      union with fixed representatives and some residue class <M>[r/m]</M>
+      equal to <M>[(m-r)/m]</M>.
 <Example>
 <![CDATA[
 gap> Difference(U,cl1);
@@ -415,6 +440,8 @@ gap> U - 17;
       the multiset of products <M>x \cdot u</M>, <M>u \in U</M>.
     </Returns>
     <Description>
+      Scalar multiplication leaves <M>\rho</M> invariant
+      (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
 <Example>
 <![CDATA[
 gap> 3*cl1;
@@ -432,8 +459,10 @@ gap> 7*U;
       the multiset of quotients <M>u/x</M>, <M>u \in U</M>.
     </Returns>
     <Description>
+      Scalar division leaves <M>\rho</M> invariant
+      (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
       If not all elements of all residue classes in <A>U</A> are divisible
-      by <A>x</A>, the method gives up.
+      by&nbsp;<A>x</A>, the method gives up.
 <Example>
 <![CDATA[
 gap> (2*cl1+2)/3;
@@ -449,7 +478,7 @@ gap> (2*cl1+2)/3;
 
 <Section Label="sec:WhereRepsComeIntoPlay">
 <Heading>
-  Where the representatives come into play
+  The invariant Rho
 </Heading>
 
   <ManSection>
@@ -459,13 +488,28 @@ gap> (2*cl1+2)/3;
       class <M>[r/m]</M> of <M>\Z</M> with fixed representative into <M>k</M>
       parts by <M>[r/km] \cup [(r+m)/km] \cup \dots \cup [(r+(k-1)m)/km]</M>,
       and extend this definition in a natural way to unions of residue
-      classes.
+      classes. <P/>
+
+      The method tries to perform a simplification of <A>U</A> by joining
+      appropriate residue classes if the argument <A>k</A> is zero. <P/>
+
+      In any case the value of <C>Rho(<A>U</A>)</C> is invariant under
+      this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="Rho"/>).
 <Example>
 <![CDATA[
-gap> RepresentativeStabilizingRefinement(cl1,2);
-[2/6] U [5/6]
-gap> V := RepresentativeStabilizingRefinement(U,3);
-[1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
+gap> cl := ResidueClassUnionWithFixedReps(Integers,[[2,1]]);
+[1/2]
+gap> S := RepresentativeStabilizingRefinement(cl,3);
+[1/6] U [3/6] U [5/6]
+gap> cls := AsListOfClasses(S);
+[ [1/6], [3/6], [5/6] ]
+gap> cls := List([1..3],i->RepresentativeStabilizingRefinement(cls[i],i+1));
+[ [1/12] U [7/12], [3/18] U [9/18] U [15/18], 
+  [5/24] U [11/24] U [17/24] U [23/24] ]
+gap> S := Union(cls);
+<union of 9 residue classes of Z with fixed representatives>
+gap> RepresentativeStabilizingRefinement(S,0);
+[1/2]
 ]]>
 </Example>
     </Description>
@@ -484,6 +528,8 @@ gap> Rho(U);
 1/14
 gap> (1/2-1/2)+(4/7-1/2);
 1/14
+gap> V := RepresentativeStabilizingRefinement(U,3);
+[1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
 gap> Rho(V);
 1/14
 gap> (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
