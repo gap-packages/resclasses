@@ -30,12 +30,14 @@ them in this package.
       The function also accepts a single prime <A>p</A> instead of the
       one-element list <C><A>pi</A> = [ <A>p</A> ]</C> as argument.
 <Example>
+<![CDATA[
 gap> R := Z_pi(2);
 Z_[ 2 ]
 gap> S := Z_pi([2,5,7]);
 Z_[ 2, 5, 7 ]
 gap> T := Z_pi([3,11]);
 Z_[ 3, 11 ]
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -62,6 +64,7 @@ Z_[ 3, 11 ]
       Checks whether <A>x</A> is an element of the semilocalization <A>R</A>
       of the integers.
 <Example>
+<![CDATA[
 gap> 4/7 in R;
 true
 gap> 3/2 in R;
@@ -70,6 +73,7 @@ gap> 17/35 in S;
 false
 gap> 3/17 in S;
 true
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -82,8 +86,10 @@ true
     </Returns>
     <Description>
 <Example>
+<![CDATA[
 gap> U := Intersection(R,S,T);
 Z_[ 2, 3, 5, 7, 11 ]
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -94,10 +100,12 @@ Z_[ 2, 3, 5, 7, 11 ]
       Checks whether <A>S</A> is a subring of <A>R</A>, where <A>R</A> and
       <A>S</A> are semilocalizations of the integers.
 <Example>
+<![CDATA[
 gap> IsSubset(R,U);
 true
 gap> IsSubset(T,R);
 false
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -112,6 +120,7 @@ false
       We define the standard associate of an element of <M>\Z_\pi</M>
       as the product of the noninvertible prime factors of its numerator.
 <Example>
+<![CDATA[
 gap> StandardAssociate(R,-6/7);
 2
 gap> StandardAssociate(R,36/5);
@@ -120,6 +129,7 @@ gap> StandardAssociate(U,37/13);
 1
 gap> StandardAssociate(U,36/13);
 36
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -133,10 +143,12 @@ gap> StandardAssociate(U,36/13);
     </Returns>
     <Description>
 <Example>
+<![CDATA[
 gap> GcdOp(S,-10/3,8/13);
 2
 gap> Gcd(S,90/3,60/17,120/33);
 10
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -150,10 +162,12 @@ gap> Gcd(S,90/3,60/17,120/33);
     </Returns>
     <Description>
 <Example>
+<![CDATA[
 gap> LcmOp(S,-10/3,8/13);
 40
 gap> Lcm(S,90/3,60/17,120/33);
 40
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -170,6 +184,7 @@ gap> Lcm(S,90/3,60/17,120/33);
       <C><A>l</A>&obrace;[2..Length(<A>l</A>)]&cbrace;</C> in
       ascending order, and <C><A>l</A>[1]</C> is a suitable unit.
 <Example>
+<![CDATA[
 gap> Factors(U,840);
 [ 2, 2, 2, 3, 5, 7 ]
 gap> Factors(R,840);
@@ -178,6 +193,7 @@ gap> Factors(R,-2/3);
 [ -1/3, 2 ]
 gap> Factors(S,60/17);
 [ 3/17, 2, 2, 5 ]
+]]>
 </Example>
     </Description>
   </ManSection>
@@ -190,6 +206,7 @@ gap> Factors(S,60/17);
       The method returns <C>fail</C>, if <A>x</A> is not
       an element of <A>R</A>.
 <Example>
+<![CDATA[
 gap> IsUnit(S,3/11);
 true
 gap> IsUnit(T,-2);
@@ -200,6 +217,7 @@ gap> IsUnit(T,3);
 false
 gap> IsUnit(T,3/11);
 fail
+]]>
 </Example>
     </Description>
   </ManSection>
