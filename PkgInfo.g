@@ -4,19 +4,14 @@
 ##  
 #H  @(#)$Id$
 ##
-#Y  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,
-#Y  Universit\"at Stuttgart, Germany
-##
-##  Preliminary, not yet to be distributed !!!
-##
-##  None of the files on my webpage referred to from here is currently existing.
+#Y  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik, Universit\"at Stuttgart, Germany
 ##
 
 SetPackageInfo( rec(
 
 PkgName          := "ResClasses",
 Version          := "1.0",
-Date             := "20/02/2003",
+Date             := "24/02/2003",
 ArchiveURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/resclasses-1.0",
 ArchiveFormats   := ".zoo",
 Persons          := [
@@ -39,18 +34,21 @@ Persons          := [
 Status           := "dev",
 CommunicatedBy   := "",
 AcceptDate       := "",
-README_URL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/README.resclasses",
+README_URL       := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/",
+                                  "~kohlsn/resclasses/README.resclasses"),
 PkgInfoURL       := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses/PkgInfo.g",
-AbstractHTML     := "This package allows to do computations with unions of residue classes.",
+AbstractHTML     := Concatenation("This package allows to do computations with set-theoretic ",
+                                  "unions of residue classes."),
 PackageWWWHome   := "http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/resclasses.html",
 PackageDoc       := rec(
                          BookName  := "ResClasses",
                          Archive   := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/",
                                                     "~kohlsn/resclasses/resclasses-1.0doc-win.zip"),
-                         HTMLStart := "doc/manual.html",
+                         HTMLStart := "doc/chap0.html",
                          PDFFile   := "doc/manual.pdf",
                          SixFile   := "doc/manual.six",
-                         LongTitle := "Computations with Residue Classes",
+                         LongTitle := Concatenation("Computations with Residue Classes ",
+                                                    "and their Set-Theoretic Unions"),
                          AutoLoad  := true
                        ),
 Dependencies     := rec(

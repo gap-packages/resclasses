@@ -4,7 +4,7 @@
 <!-- ##                                                                ## -->
 <!-- ##  $Id$      ## -->
 <!-- ##                                                                ## -->
-<!-- ##  Copyright (C) 2002 by Stefan Kohl, Fachbereich Mathematik,    ## -->
+<!-- ##  Copyright (C) 2003 by Stefan Kohl, Fachbereich Mathematik,    ## -->
 <!-- ##  Universit\"at Stuttgart, Germany                              ## -->
 <!-- ##                                                                ## -->
 <!-- #################################################################### -->
@@ -15,7 +15,7 @@
   residue classes of the integers, the polynomial rings
   GF( <M>q</M> )[ <M>x</M> ] for some prime power <M>q</M> and of the
   semilocalisations <M>\Z_\pi</M> of the integers at some finite set of
-  primes <M>pi</M> as &GAP; domains and provides basic functionality for
+  primes <M>\pi</M> as &GAP; domains and provides basic functionality for
   computing with these sets (intersection, union, difference, adding and
   subtracting finite sets of elements, etc.).
   It also implements the above-mentioned rings <M>\Z_\pi</M>
