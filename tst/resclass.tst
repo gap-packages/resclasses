@@ -112,16 +112,6 @@ gap> IsSubset(H,ResidueClass(Z_pi([2,3]),16,11));
 true
 gap> Difference([2,4,7,8],A);
 [ 4, 7 ]
-gap> Complement(A);
-Union of the residue classes 0(3) and 1(3)
-gap> Complement(B);
-The residue class 0(2) of Z_( 2, 5 )
-gap> Complement(C);
-<union of 6 residue classes (mod x+Z(7)^0) of GF(7)[x]>
-gap> Complement(F);
-Union of the residue classes 0(5), 3(5) and 4(5), +2/-2 elements
-gap> Complement(H);
-<union of 6 residue classes (mod 8) of Z_( 2, 3 )>
 gap> I := ResidueClassUnion(Integers,6,[1,5]);
 Union of the residue classes 1(6) and 5(6)
 gap> J := ResidueClassUnion(Integers,5,[1,2,3,4]);
@@ -191,12 +181,6 @@ without the elements
   2  5  8 11 14 17 20 23 26 29 32 35 38 41 44 47 50 53 56 59 62 65 68 71 74
  77 80 83 86 89 92 95 98
 
-gap> Union(A,Complement(A));
-Integers
-gap> Union(B,Complement(B));
-Z_( 2, 5 )
-gap> Union(C,Complement(C));
-GF(7)[x]
 gap> Q := ResidueClassUnion( Integers, 18, [ 2, 5, 8, 11, 14, 16, 17 ],
 >                            [ 1, 3, 4, 10 ], [ 2, 5, 8, 16 ] );;
 gap> IsSubset(Q,O);
@@ -241,8 +225,10 @@ gap> for n in F do Add(l,n); if Length(l) > 100 then break; fi; od;
 gap> Set(l) = Intersection(F,[-124..126]);
 true
 gap> l := [];;
-gap> for n in Complement(A) do Add(l,n); if Length(l)>100 then break; fi; od;
-gap> Set(l) = Intersection(Complement(A),[-75..75]);
+gap> for n in Difference(Integers,A) do
+>      Add(l,n); if Length(l)>100 then break; fi;
+>    od;
+gap> Set(l) = Intersection(Difference(Integers,A),[-75..75]);
 true
 gap> (((4+2*(F+7)*8)/2)*2-4)/16-7 = F;
 true
@@ -287,3 +273,4 @@ gap> STOP_TEST( "resclass.tst", 200000000 );
 #############################################################################
 ##
 #E  resclass.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
