@@ -21,10 +21,10 @@ The residue class Z(7) ( mod x+Z(7)^0 ) of GF(7)[x]
 gap> D := ResidueClassUnion(Integers,6,[2,4]);
 Union of the residue classes 2(6) and 4(6) of Z
 gap> F := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
-Union of the residue classes 1(5) and 2(5) of Z, +2/-2 elements
+(Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> G := ResidueClassUnion(R,x,[One(R),5*One(R),6*One(R)],
 >                               [Zero(R)],[One(R)]);
-<union of 3 residue classes (mod x) of GF(7)[x], +1/-1 elements>
+<union of 3 residue classes (mod x) of GF(7)[x]> U [ 0*Z(7) ] \ [ Z(7)^0 ]
 gap> H := ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
 <union of 2 residue classes (mod 8) of Z_( 2, 3 )>
 gap> Modulus(F);
@@ -173,9 +173,9 @@ Z \ [ 1, 2, 3 ]
 gap> Difference(Z_pi([2,3,7]),[1/5,1/55]);
 Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
 gap> O := Difference(Union(A,[1,3]),[2,5,8]);
-The residue class 2(3) of Z, +2/-3 elements
+(The residue class 2(3) of Z) U [ 1, 3 ] \ [ 2, 5, 8 ]
 gap> P := Union(Difference(A,[-1]),[-3,0]);
-The residue class 2(3) of Z, +2/-1 elements
+(The residue class 2(3) of Z) U [ -3, 0 ] \ [ -1 ]
 gap> Display(Union(O,P));
 
 The residue class 2 ( mod 3 ) of Z
@@ -215,15 +215,15 @@ true
 gap> IsSubset(O,Q);
 false
 gap> U := ResidueClassUnion(Integers,3,[1],[0],[]);
-The residue class 1(3) of Z, +1/-0 elements
+(The residue class 1(3) of Z) U [ 0 ]
 gap> V := ResidueClassUnion(Integers,3,[2],[0],[]);
-The residue class 2(3) of Z, +1/-0 elements
+(The residue class 2(3) of Z) U [ 0 ]
 gap> Intersection(U,V);
 [ 0 ]
 gap> U := ResidueClassUnion(Integers,3,[1],[0],[1]);
-The residue class 1(3) of Z, +1/-1 elements
+(The residue class 1(3) of Z) U [ 0 ] \ [ 1 ]
 gap> V := ResidueClassUnion(Integers,3,[1,2],[0],[]);
-Union of the residue classes 1(3) and 2(3) of Z, +1/-0 elements
+(Union of the residue classes 1(3) and 2(3) of Z) U [ 0 ]
 gap> Display(Difference(V,U));
  
 The residue class 2 ( mod 3 ) of Z
@@ -260,7 +260,7 @@ true
 gap> (((4+2*(F+7)*8)/2)*2-4)/16-7 = F;
 true
 gap> -F;
-Union of the residue classes 3(5) and 4(5) of Z, +2/-2 elements
+(Union of the residue classes 3(5) and 4(5) of Z) U [ -8, -3 ] \ [ -1, 4 ]
 gap> -(-F) = F;
 true
 gap> Difference(ResidueClass(Integers,6,1),Integers);
@@ -325,6 +325,12 @@ gap> last+1;
 The residue class 1(4) of Z_( 2 )
 gap> Union(last,last2);
 <union of 2 residue classes (mod 4) of Z_( 2 )>
+gap> Union(ResidueClass(Integers,2,1),[1..100]);
+(The residue class 1(2) of Z) U <set of cardinality 50>
+gap> Difference(ResidueClass(Integers,2,1),[1..100]);
+(The residue class 1(2) of Z) \ <set of cardinality 50>
+gap> Difference(Union(ResidueClass(Integers,2,1),[1..100]),[-5..-1]);
+(The residue class 1(2) of Z) U <set of cardinality 50> \ [ -5, -3, -1 ]
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
