@@ -4,8 +4,8 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains implementations of methods dealing with unions of
-##  residue classes and finite sets.
+##  This file contains implementations of methods and functions dealing with
+##  unions of residue classes and finite sets.
 ##
 Revision.resclass_gi :=
   "@(#)$Id$";
