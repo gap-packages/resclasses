@@ -47,7 +47,7 @@
 <!-- #################################################################### -->
 
 <Section Label="sec:ChangingTheClassUnionViewingFormat">
-<Heading>The testing routine</Heading>
+<Heading>Changing the viewing format for residue class unions</Heading>
 
   <ManSection>
     <Func Name="ResidueClassUnionViewingFormat" Arg="format"/>
@@ -59,7 +59,7 @@
 
       The former is the default and should be used when not many residue
       classes have to be displayed or residue classes of different rings
-      are used, but the later is usually preferable if it is always clear
+      are used, but the latter is usually preferable if it is always clear
       which the base ring is and if the printed representation of many
       residue classes should fit on one screen.
 <Example>
@@ -82,4 +82,5 @@ Union of the residue classes 1(3) and 5(6)
 </Chapter>
 
 <!-- #################################################################### -->
+
 

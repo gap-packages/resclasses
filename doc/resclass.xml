@@ -23,7 +23,7 @@
     <Description>
       The category of all unions of residue classes, of all unions of
       residue classes of <M>\Z</M>, of some semilocalization
-      <M>\Z_{(\pi)}</M>, of <M>\Z</M> or <M>\Z_\pi</M>, resp. of some
+      <M>\Z_{(\pi)}</M>, of <M>\Z</M> or <M>\Z_\pi</M> resp. of some
       polynomial ring GF( <M>q</M> )[ <M>x</M> ].
     </Description>
   </ManSection>
@@ -151,7 +151,7 @@ gap> String(H);
     <Meth Name="Print" Arg="U"/>
     <Description>
       Prints the residue class union <A>U</A> in a way similar to what
-      the user has to write in order to create this object.
+      a user has to write in order to create this object.
 <Example>
 <![CDATA[
 gap> Print(C,"\n");
@@ -469,4 +469,5 @@ Union of the residue classes 1(6) and 5(6)
 </Chapter>
 
 <!-- #################################################################### -->
+
 
