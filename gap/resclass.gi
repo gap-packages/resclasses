@@ -1355,7 +1355,8 @@ InstallMethod( Union2,
                [ IsListOrCollection, IsListOrCollection ], 20,
 
   function ( S1, S2 )
-    if   ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
+    if not ForAny([S1,S2],IsRing)   
+        or ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
     then TryNextMethod(); fi;
     if   IsSubset(S1,S2) then return S1;
     elif IsSubset(S2,S1) then return S2;
@@ -1416,7 +1417,8 @@ InstallMethod( Intersection2,
                [ IsListOrCollection, IsListOrCollection ], 0,
 
   function ( S1, S2 )
-    if   ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
+    if not ForAny([S1,S2],IsRing)  
+        or ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
     then TryNextMethod(); fi;
     if   IsSubset(S1,S2) then return S2;
     elif IsSubset(S2,S1) then return S1;
