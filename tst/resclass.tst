@@ -113,6 +113,30 @@ gap> IsSubset(A,D);
 false
 gap> IsSubset(H,ResidueClass(Z_pi([2,3]),16,11));
 true
+gap> Density(D);
+1/3
+gap> Density(D/2);
+2/3
+gap> Density(2*D+7);
+1/6
+gap> Density(G);
+3/7
+gap> Density(H);
+1/4
+gap> Density([1,2,3]);
+0
+gap> Density([1/2,2,3]);
+0
+gap> Density([x]);
+0
+gap> Density([]);
+0
+gap> Density(Integers);
+1
+gap> Density(Z_pi(3));
+1
+gap> Density(R);
+1
 gap> Difference([2,4,7,8],A);
 [ 4, 7 ]
 gap> I := ResidueClassUnion(Integers,6,[1,5]);
