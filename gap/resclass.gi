@@ -1348,19 +1348,62 @@ InstallMethod( Union2,
 
 #############################################################################
 ##
-#M  Union2( <S1>, <S2> ) . . . . . . . . . . . . . . . . . for set and subset
+#M  Union2( <U>, <R> ) . . . . . . . .  for residue class union and base ring
 ##
 InstallMethod( Union2,
-               "for set and subset (ResClasses)", ReturnTrue,
-               [ IsListOrCollection, IsListOrCollection ], 20,
+               "for residue class union and base ring (ResClasses)",
+               ReturnTrue, [ IsUnionOfResidueClasses, IsRing ], 0,
 
-  function ( S1, S2 )
-    if not ForAny([S1,S2],IsRing)   
-        or ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
-    then TryNextMethod(); fi;
-    if   IsSubset(S1,S2) then return S1;
-    elif IsSubset(S2,S1) then return S2;
-    else TryNextMethod(); fi;
+  function ( U, R )
+    if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
+    return R;
+  end );
+
+#############################################################################
+##
+#M  Union2( <R>, <U> ) . . . . . . . .  for base ring and residue class union
+##
+InstallMethod( Union2,
+               "for base ring and residue class union (ResClasses)",
+               ReturnTrue, [ IsRing, IsUnionOfResidueClasses ], 0,
+               function ( R, U ) return Union2( U, R ); end );
+
+#############################################################################
+##
+#M  Union2( <S>, <R> ) . . . . . . . . . . . . . for finite set and base ring
+##
+InstallMethod( Union2,
+               "for residue class union and base ring (ResClasses)",
+               ReturnTrue, [ IsList, IsRing ], 0,
+
+  function ( S, R )
+    if not IsSubset(R,S) then TryNextMethod(); fi;
+    return R;
+  end );
+
+#############################################################################
+##
+#M  Union2( <R>, <S> ) . . . . . . . . . . . . . for base ring and finite set
+##
+InstallMethod( Union2,
+               "for base ring and residue class union (ResClasses)",
+               ReturnTrue, [ IsRing, IsList ], 0,
+               function ( R, S ) return Union2( S, R ); end );
+
+#############################################################################
+##
+#M  Union2( <R>, <R_> ) . . . . . . . . . . . . . for two times the same ring
+##
+InstallMethod( Union2,
+               "for two times the same ring (ResClasses)", ReturnTrue,
+               [ IsRing, IsRing ], SUM_FLAGS,
+
+  function ( R, R_ )
+    if IsIdenticalObj(R,R_) then return R; else
+      if   ForAll([R,R_],IsZ_pi) or ForAll([R,R_],IsPolynomialRing)
+      then if R = R_ then return R; fi; fi; 
+      TryNextMethod();
+    fi;
   end );
 
 #############################################################################
@@ -1410,31 +1453,18 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  Intersection2( <S1>, <S2> ) . . . . . . . . . . . . .  for set and subset
+#M  Intersection2( <R>, <R_> ) . . . . . . . . .  for two times the same ring
 ##
 InstallMethod( Intersection2,
-               "for set and subset (ResClasses)", ReturnTrue,
-               [ IsListOrCollection, IsListOrCollection ], 0,
-
-  function ( S1, S2 )
-    if not ForAny([S1,S2],IsRing)  
-        or ForAny([S1,S2],IsUnionOfResidueClassesWithFixedRepresentatives)
-    then TryNextMethod(); fi;
-    if   IsSubset(S1,S2) then return S2;
-    elif IsSubset(S2,S1) then return S1;
-    else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  Intersection2( <S>, <S_> ) . . . . . . . . . . for two times the same set
-##
-InstallMethod( Intersection2,
-               "for two times the same set (ResClasses)", ReturnTrue,
+               "for two times the same ring (ResClasses)", ReturnTrue,
                [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
 
-  function ( S, S_ )
-    if IsIdenticalObj(S,S_) then return S; else TryNextMethod(); fi;
+  function ( R, R_ )
+    if IsIdenticalObj(R,R_) then return R; else
+      if   ForAll([R,R_],IsZ_pi) or ForAll([R,R_],IsPolynomialRing)
+      then if R = R_ then return R; fi; fi; 
+      TryNextMethod();
+    fi;
   end );
 
 #############################################################################
