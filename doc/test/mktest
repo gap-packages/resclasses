@@ -56,5 +56,5 @@ $mkxtest $options -r resclasses abstract
 $mkxtest $options -r resclasses preface
 $mkxtest $options -r resclasses z_pi
 $mkxtest $options -r resclasses resclass
-$mkxtest $options resclaux
+$mkxtest $options -r resclasses resclaux
 
