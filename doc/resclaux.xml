@@ -22,7 +22,7 @@
     <Returns>Nothing.</Returns>
     <Description>
       This function builds the manual of the &ResClasses; package in the
-      file formats &LaTeX;, DVI, Postscript, PDF and HTML. <P/>
+      file formats &LaTeX;, DVI, Postscript, PDF, HTML and ASCII text. <P/>
 
       This is done using the &GAPDoc; package by Frank Lübeck
       and Max Neunhöffer.
@@ -46,21 +46,6 @@
       <F>tst/testall.g</F> of the &GAP; library to this package.
     </Description>
   </ManSection>
-
-</Section>
-
-<!-- #################################################################### -->
-
-<Section Label="sec:TheColorMarkup">
-<Heading>The color markup</Heading>
-
-  By default, &ResClasses; switches on coloring of &GAP; prompts and user
-  input and uses colored markup for displaying its online help texts. <P/>
-
-  If you do not like this or if your system does not support it, you can
-  switch this off by setting the option value <C>BlackAndWhite</C> to
-  <C>true</C> when loading the package:
-  <C>LoadPackage( "resclasses" : BlackAndWhite );</C>.
 
 </Section>
 
