@@ -272,8 +272,6 @@ gap> 1/5 in B;
 false
 gap> x in G;
 false
-gap> Zero(R) in G;
-true
 ]]>
 </Example>
   </Description>
@@ -417,6 +415,28 @@ Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
 </ManSection>
 
 <ManSection>
+  <Oper Name="AsUnionOfFewClasses" Arg="U" Label="U"/>
+  <Returns>
+    A set of disjoint residue classes whose union is <A>U</A>.
+  </Returns>
+  <Description>
+    As the name of the operation suggests, it is taken care that
+    the number of residue classes in the returned list is kept
+    <Q>reasonably small</Q>. It is not necessarily minimal.
+    No care is taken of <C>IncludedElements</C> and
+    <C>ExcludedElements</C>.
+<Example>
+<![CDATA[
+gap> AsUnionOfFewClasses(K);
+[ The residue class 1(5) of Z, The residue class 2(5) of Z, 
+  The residue class 3(5) of Z, The residue class 4(5) of Z, 
+  The residue class 5(30) of Z, The residue class 25(30) of Z ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Meth Name="Iterator" Arg="U" Label="U"/>
   <Returns>
     An iterator of the residue class union&nbsp;<A>U</A>.
@@ -507,12 +527,8 @@ The residue class Z(7)^4 ( mod x+Z(7)^0 ) of GF(7)[x]
   <Description>
 <Example>
 <![CDATA[
-gap> 2*A;
-The residue class 4(6) of Z
 gap> D*17;
 Union of the residue classes 34(102) and 68(102) of Z
-gap> x^3*C;
-The residue class Z(7)*x^3 ( mod x^4+x^3 ) of GF(7)[x]
 gap> 2*Difference(Integers,[1,2,3]);
 (The residue class 0(2) of Z) \ [ 2, 4, 6 ]
 ]]>
@@ -548,60 +564,16 @@ Union of the residue classes 1(6) and 5(6) of Z
 
 <ManSection>
   <Filt Name="IsUnionOfResidueClasses" Arg="U" Label="U"/>
-  <Returns>
-    <C>true</C> if <A>U</A> is a union of residue classes and
-    <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all unions of residue classes.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsUnionOfResidueClassesOfZ" Arg="U" Label="U"/>
-  <Returns>
-    <C>true</C> if <A>U</A> is a union of residue classes of
-    the ring of integers and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all unions of residue classes of <M>\Z</M>.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsUnionOfResidueClassesOfZ_pi" Arg="U" Label="U"/>
-  <Returns>
-    <C>true</C> if <A>U</A> is a union of residue classes of a
-    semilocalization of the ring of integers and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all unions of residue classes of some semilocalization
-    <M>\Z_{(\pi)}</M> of the integers.
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Filt Name="IsUnionOfResidueClassesOfZorZ_pi" Arg="U" Label="U"/>
-  <Returns>
-    <C>true</C> if <A>U</A> is a union of residue classes of the ring of
-    integers or of one of its semilocalizations and <C>false</C> otherwise.
-  </Returns>
-  <Description>
-    The category of all unions of residue classes of <M>\Z</M> or
-    <M>\Z_{(\pi)}</M>.
-  </Description>
-</ManSection>
-
-<ManSection>
   <Filt Name="IsUnionOfResidueClassesOfGFqx" Arg="U" Label="U"/>
   <Returns>
-    <C>true</C> if <A>U</A> is a union of residue classes of a polynomial
-    ring in one variable over a finite field and <C>false</C> otherwise.
+    <C>true</C> if <A>U</A> is a union of residue classes, resp.
+    a union of residue classes of the ring of integers, resp.
+    a union of residue classes of a semilocalization of the ring of integers,
+    resp. a union of residue classes of a polynomial ring in one variable
+    over a finite field, and <C>false</C> otherwise.
   </Returns>
-  <Description>
-    The category of all unions of residue classes of some polynomial ring
-    GF(<M>q</M>)[<M>x</M>].
-  </Description>
 </ManSection>
 
 <ManSection>
@@ -612,8 +584,7 @@ Union of the residue classes 1(6) and 5(6) of Z
   <Returns>
     The family of unions of residue classes resp. the family of unions
     of residue classes with fixed representatives of the ring <A>R</A>,
-    depending on whether the argument <A>fixedreps</A> is present and
-    <C>true</C>.
+    depending on whether <A>fixedreps</A> is present and <C>true</C>.
   </Returns>
   <Description>
     The ring <A>R</A> can be accessed as

@@ -166,7 +166,7 @@ gap> Modulus(U);
   <Meth Name="Classes" Arg="U" Label="U"/>
   <Returns>
     The list <A>classes</A> of pairs (modulus,residue) as in
-    <Ref Func="ResidueClassUnionWithFixedRepresentatives"/>.
+    <Ref Func="ResidueClassUnionWithFixedRepresentatives" Label="R, classes"/>.
   </Returns>
   <Description>
 <Example>
@@ -213,7 +213,7 @@ gap> String(cl1);
 <![CDATA[
 gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);;
 gap> Print(cl2,"\n");
-ResidueClassWithFixedRepresentative( Integers, 1, 2 )
+ResidueClassWithFixedRepresentative( Integers, 2, 1 )
 gap> Print(U,"\n");
 ResidueClassUnionWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ] ] )
 ]]>
@@ -580,16 +580,12 @@ gap> RepresentativeStabilizingRefinement(S,0);
     is still unique (mod&nbsp;1).
 <Example>
 <![CDATA[
-gap> DELTA(U);
-1/14
-gap> (1/2-1/2)+(4/7-1/2);
-1/14
+gap> [ DELTA(U), (1/2-1/2)+(4/7-1/2) ];
+[ 1/14, 1/14 ]
 gap> V := RepresentativeStabilizingRefinement(U,3);
 [1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
-gap> DELTA(V);
-1/14
-gap> (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
-1/14
+gap> DELTA(V) = (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
+true
 gap> DELTA(P);
 -3706053977906326692602106591985470034/1152783981972759212376551073665878035
 gap> Factors(DenominatorRat(last));
