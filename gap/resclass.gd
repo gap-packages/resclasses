@@ -91,21 +91,11 @@ DeclareGlobalFunction( "GFqxResidueClassUnionsFamily" );
 
 #############################################################################
 ##
-#F  AllGFqPolynomialsModDegree( <q>, <d>, <x> ) . residues in canonical order
+#F  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
 ##
-##  Returns a sorted list of all residues modulo a polynomial of degree <d>
-##  over GF(<q>) in the variable <x>.
-##  This gives also the ordering in which the coefficients of a modular rcwa
-##  mapping are stored; thus, if <f> is a modular rcwa mapping over
-##  GF(<q>)[x] with coefficients list <c>, whose modulus <m> has degree <d>,
-##  then <f> maps a polynomial <P> with <P> mod <m> = <r> to
+##  Returns a sorted list of all residues modulo <m> in the ring <R>.
 ##
-##  ( <c>[`Position'(<res>,<r>)][1] * <P> + <c>[`Position'(<res>,<r>)][2] ) /
-##    <c>[`Position'(<res>,<r>)][3],
-##
-##  where <res> denotes the list of residues returned by this function.
-##
-DeclareGlobalFunction( "AllGFqPolynomialsModDegree" );
+DeclareGlobalFunction( "AllResidues" );
 
 #############################################################################
 ##
@@ -212,5 +202,3 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
-

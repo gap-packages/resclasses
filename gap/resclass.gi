@@ -10,6 +10,11 @@
 Revision.resclass_gi :=
   "@(#)$Id$";
 
+RingToString := function ( R )
+  if IsIntegers(R) then return "Z"; else return String(R); fi;
+end;
+MakeReadOnlyGlobal( "RingToString");
+
 # Internal variables storing the residue class unions families used in the
 # current GAP session.
 
@@ -169,51 +174,49 @@ InstallMethod( ViewObj,
 
 BindGlobal( "POLYNOMIAL_RESIDUE_CACHE", [] );
 
-#############################################################################
-##
-#F  AllGFqPolynomialsModDegree( <q>, <d>, <x> ) . residues in canonical order
-##
-InstallGlobalFunction ( AllGFqPolynomialsModDegree,
+AllGFqPolynomialsModDegree := function ( q, d, x )
 
-  function ( q, d, x )
+  local  erg, mon, gflist;
 
-    local  erg, mon, gflist;
-
-    if   d = 0
-    then return [ Zero( x ) ];
-    elif     IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
-         and IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] )
-    then return ShallowCopy( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] );
-    else gflist := AsList( GF( q ) );
-         mon := List( gflist, el -> List( [ 0 .. d - 1 ], i -> el * x^i ) );
-         erg := List( Tuples( GF( q ), d ),
-                      t -> Sum( List( [ 1 .. d ],
-                                      i -> mon[ Position( gflist, t[ i ] ) ]
-                                              [ d - i + 1 ] ) ) );
-         MakeReadWriteGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
-         if not IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
-         then POLYNOMIAL_RESIDUE_CACHE[ q ] := [ ]; fi;
-         POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] := Immutable( erg );
-         MakeReadOnlyGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
-         return erg;
-    fi;
-  end );
-
-# All residues (mod modulus).
-
-AllResidues := function ( R, m )
-
-  local  q, d, x;
-
-  if   IsIntegers(R) or IsZ_pi(R)
-  then return [0..StandardAssociate(R,m)-1];
-  else q := Size(CoefficientsRing(R));
-       d := DegreeOfLaurentPolynomial(m);
-       x := IndeterminatesOfPolynomialRing(R)[1];
-       return AllGFqPolynomialsModDegree(q,d,x);
+  if   d = 0
+  then return [ Zero( x ) ];
+  elif     IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
+       and IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] )
+  then return ShallowCopy( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] );
+  else gflist := AsList( GF( q ) );
+       mon := List( gflist, el -> List( [ 0 .. d - 1 ], i -> el * x^i ) );
+       erg := List( Tuples( GF( q ), d ),
+                    t -> Sum( List( [ 1 .. d ],
+                                    i -> mon[ Position( gflist, t[ i ] ) ]
+                                            [ d - i + 1 ] ) ) );
+       MakeReadWriteGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
+       if not IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
+       then POLYNOMIAL_RESIDUE_CACHE[ q ] := [ ]; fi;
+       POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] := Immutable( erg );
+       MakeReadOnlyGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
+       return erg;
   fi;
 end;
-MakeReadOnlyGlobal( "AllResidues" );
+MakeReadOnlyGlobal( "AllGFqPolynomialsModDegree" );
+
+#############################################################################
+##
+#F  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
+##
+InstallGlobalFunction( AllResidues,
+
+  function ( R, m )
+
+    local  q, d, x;
+
+    if   IsIntegers(R) or IsZ_pi(R)
+    then return [0..StandardAssociate(R,m)-1];
+    else q := Size(CoefficientsRing(R));
+         d := DegreeOfLaurentPolynomial(m);
+         x := IndeterminatesOfPolynomialRing(R)[1];
+         return AllGFqPolynomialsModDegree(q,d,x);
+    fi;
+  end );
 
 # Bring the residue class union <U> to normalized, reduced form.
 
@@ -480,7 +483,7 @@ InstallMethod( ViewObj,
       or Length(r) = 1
     then
       if IsOne(m) then
-        Print(String(R)," \\ ");
+        Print(RingToString(R)," \\ ");
         if   Length(excluded) > 20
           or Length(String(excluded)) > SizeScreen()[1]-Length(String(R))-8
         then Print("<list of length ",Length(excluded),">");
@@ -515,7 +518,7 @@ InstallMethod( ViewObj,
                   else Print(r[Length(r)],"(",m,")"); fi;
              fi;
         else Print(r[Length(r)]," ( mod ",m," )"); fi;
-        if not IsIntegers(R) and not short then Print(" of ",String(R)); fi;
+        if not short then Print(" of ",RingToString(R)); fi;
         if   included <> [] or excluded <> []
         then Print(", +",Length(included),
                    "/-",Length(excluded)," elements");
@@ -523,7 +526,7 @@ InstallMethod( ViewObj,
       fi;
     else
       Print("<union of ",Length(r)," residue classes (mod ",m,")");
-      if not IsIntegers(R) then Print(" of ",String(R)); fi;
+      Print(" of ",RingToString(R));
       if   included <> [] or excluded <> []
       then Print(", +",Length(included),
                  "/-",Length(excluded)," elements");
@@ -610,15 +613,15 @@ InstallMethod( Display,
     if Length(included) > 1 then plin := "s"; else plin := ""; fi;
     if Length(excluded) > 1 then plex := "s"; else plex := ""; fi;
     if IsOne(m) then
-      Print(R," \\ ",excluded,"\n"); return;
+      Print(RingToString(R)," \\ ",excluded,"\n"); return;
     elif Length(r) = 1 then
       if [included,excluded] <> [[],[]] then Print("\n"); fi;
       Print("The residue class ",r[1]," ( mod ",m," )");
-      if not IsIntegers(R) then Print(" of ",String(R)); fi; Print("\n");
+      Print(" of ",RingToString(R),"\n");
       if [included,excluded] <> [[],[]] then Print("\n"); fi;
     else
       Print("\nThe union of the residue classes r ( mod ",m," ) ");
-      if not IsIntegers(R) then Print("of ",String(R)); fi;
+      Print("of ",RingToString(R));
       Print(" for r ="); DisplayArray(r);
     fi;
     if   included <> []
@@ -1299,7 +1302,3 @@ InstallOtherMethod( \/,
 #############################################################################
 ##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
-
-
-
