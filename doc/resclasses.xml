@@ -35,8 +35,12 @@
        Germany
     </Address>
   </Author>
-  <Date>December 22, 2003</Date>
-  <Copyright> &copyright; 2003 by Stefan Kohl </Copyright>
+  <Date>January 23, 2004</Date>
+  <Copyright>
+    &copyright; 2003 by Stefan Kohl <P/>
+    We adopt the copyright regulations of &GAP; as detailed
+    in the copyright notice in the &GAP; manual.
+  </Copyright>
   <#Include SYSTEM "abstract.xml">
 </TitlePage>
 

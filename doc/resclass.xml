@@ -15,29 +15,6 @@
 <Heading>Defining unions of residue classes</Heading>
 
   <ManSection>
-    <Filt Name="IsUnionOfResidueClasses"          Arg="U"/>
-    <Filt Name="IsUnionOfResidueClassesOfZ"       Arg="U"/>
-    <Filt Name="IsUnionOfResidueClassesOfZ_pi"    Arg="U"/>
-    <Filt Name="IsUnionOfResidueClassesOfZorZ_pi" Arg="U"/>
-    <Filt Name="IsUnionOfResidueClassesOfGFqx"    Arg="U"/>
-    <Description>
-      The category of all unions of residue classes, of all unions of
-      residue classes of <M>\Z</M>, of some semilocalization
-      <M>\Z_{(\pi)}</M>, of <M>\Z</M> or <M>\Z_{(\pi)}</M> resp. of some
-      polynomial ring GF( <M>q</M> )[ <M>x</M> ].
-    </Description>
-  </ManSection>
-
-  <ManSection>
-    <Func Name="ResidueClassUnionsFamily" Arg="R"/>
-    <Description>
-      The family of unions of residue classes of the ring <A>R</A>. <P/>
-      The ring <A>R</A> can be accessed as
-      <C>UnderlyingRing( ResidueClassUnionsFamily( <A>R</A> ) )</C>.
-    </Description>
-  </ManSection>
-
-  <ManSection>
     <Func Name="ResidueClass" Arg="R, m, r"/>
     <Description>
       The residue class <A>r</A> mod <A>m</A> of the ring <A>R</A>.
@@ -462,7 +439,59 @@ Union of the residue classes 1(6) and 5(6)
     </Description>
   </ManSection>
 
-  <Alt Only="HTML">&nbsp;</Alt>
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:CategoriesOfUnionsOfResidueClasses">
+<Heading>The categories and families of unions of residue classes</Heading>
+
+  <ManSection>
+    <Filt Name="IsUnionOfResidueClasses" Arg="U"/>
+    <Description>
+      The category of all unions of residue classes.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsUnionOfResidueClassesOfZ"       Arg="U"/>
+    <Description>
+      The category of all unions of residue classes of <M>\Z</M>.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsUnionOfResidueClassesOfZ_pi"    Arg="U"/>
+    <Description>
+      The category of all unions of residue classes of some semilocalization
+      <M>\Z_{(\pi)}</M> of the integers.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsUnionOfResidueClassesOfZorZ_pi" Arg="U"/>
+    <Description>
+      The category of all unions of residue classes of all unions of residue
+      classes of <M>\Z</M> or <M>\Z_{(\pi)}</M>.
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Filt Name="IsUnionOfResidueClassesOfGFqx"    Arg="U"/>
+    <Description>
+      The category of all unions of residue classes of some polynomial ring
+      GF( <M>q</M> )[ <M>x</M> ].
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Func Name="ResidueClassUnionsFamily" Arg="R"/>
+    <Description>
+      The family of unions of residue classes of the ring <A>R</A>. <P/>
+      The ring <A>R</A> can be accessed as
+      <C>UnderlyingRing( ResidueClassUnionsFamily( <A>R</A> ) )</C>.
+    </Description>
+  </ManSection>
 
 </Section>
 
@@ -471,6 +500,4 @@ Union of the residue classes 1(6) and 5(6)
 </Chapter>
 
 <!-- #################################################################### -->
-
-
 
