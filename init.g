@@ -7,7 +7,6 @@
 
 # Read the declaration part of the package.
 
-ReadPackage( "resclasses", "banner.g" );
 ReadPackage( "resclasses", "gap/z_pi.gd" );
 ReadPackage( "resclasses", "gap/resclass.gd" );
 
