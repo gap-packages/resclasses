@@ -30,11 +30,11 @@ ResClassesBuildManual := function ( )
 
   ResClassesDir := Concatenation( DIRECTORIES_LIBRARY.pkg[1]![1],
                                   "resclasses/" );
-  StefansManualLayout( );
-  MakeGAPDocDoc( Concatenation( ResClassesDir, "doc/" ), "resclasses.xml",
-                 [ "../gap/resclaux.g", "../gap/z_pi.gd", "../gap/z_pi.gi",
-                   "../gap/resclass.gd", "../gap/resclass.gi" ],
-                   "ResClasses", "../../../" );
+  StefansManualLayout( "resclasses" );
+  MyMakeGAPDocDoc( Concatenation( ResClassesDir, "doc/" ), "resclasses.xml",
+                   [ "../gap/resclaux.g", "../gap/z_pi.gd", "../gap/z_pi.gi",
+                     "../gap/resclass.gd", "../gap/resclass.gi" ],
+                     "ResClasses", "../../../" );
   ResetManualLayout( );
 end;
 MakeReadOnlyGlobal( "ResClassesBuildManual" );
