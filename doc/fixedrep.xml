@@ -84,8 +84,6 @@ everything concerning the invariant <M>\delta</M>.
 <![CDATA[
 gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
 [2/3]
-gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
-[1/2]
 ]]>
 </Example>
   </Description>
@@ -213,8 +211,9 @@ gap> String(cl1);
     to create this object.
 <Example>
 <![CDATA[
-gap> Print(cl1,"\n");
-ResidueClassWithFixedRepresentative( Integers, 3, 2 )
+gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);;
+gap> Print(cl2,"\n");
+ResidueClassWithFixedRepresentative( Integers, 1, 2 )
 gap> Print(U,"\n");
 ResidueClassUnionWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ] ] )
 ]]>

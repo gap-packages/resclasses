@@ -27,10 +27,7 @@ gap> A := ResidueClass(Integers,3,2);
 The residue class 2(3) of Z
 gap> B := ResidueClass(Z_pi([2,5]),2,1);
 The residue class 1(2) of Z_( 2, 5 )
-gap> B = ResidueClass(Integers,2,1);
-false
-gap> R := PolynomialRing(GF(7),1);;
-gap> x := Indeterminate(GF(7),1);; SetName(x,"x");
+gap> R := PolynomialRing(GF(7),1);; x := Indeterminate(GF(7),1);; SetName(x,"x");
 gap> C := ResidueClass(R,x+One(R),3*One(R));
 The residue class Z(7) ( mod x+Z(7)^0 ) of GF(7)[x]
 ]]>
@@ -99,6 +96,36 @@ gap> AllResidueClassesModulo(R,x);
 </Example>
   </Description>
 </ManSection>
+
+A transversal for the set of residue classes (mod&nbsp;<M>m</M>)
+can be obtained with the following function:
+
+<ManSection>
+  <Func Name="AllResidues" Arg="R, m" Label="R, m"/>
+  <Returns>
+    A sorted list of all residues modulo&nbsp;<A>m</A>
+    in the ring&nbsp;<A>R</A>.
+  </Returns>
+  <Description>
+<Example>
+<![CDATA[
+gap> AllResidues(Integers,6);
+[ 0 .. 5 ]
+gap> AllResidues(Z_pi([3,5,7]),700);
+[ 0 .. 174 ]
+gap> x := Indeterminate(GF(2),1);; SetName(x,"x");;
+gap> R := PolynomialRing(GF(2),1); e := One(R);; z := Zero(R);;
+GF(2)[x]
+gap> AllResidues(R,x^4+x^2);
+[ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0, x^3, 
+  x^3+Z(2)^0, x^3+x, x^3+x+Z(2)^0, x^3+x^2, x^3+x^2+Z(2)^0, x^3+x^2+x, 
+  x^3+x^2+x+Z(2)^0 ]
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 The components of a residue class union as given as arguments
 in <Ref Func="ResidueClassUnion" Label="R, m, r"/>
