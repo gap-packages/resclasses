@@ -1977,7 +1977,11 @@ InstallMethod( RHO,
                0,
 
   function ( U )
-    return Product(List(Classes(U),c->-SignInt(c[1])*E(c[1])^c[2]));
+
+    local  delta;
+
+    delta := DELTA(U)/2;
+    return E(DenominatorRat(delta))^NumeratorRat(delta);
   end );
 
 #############################################################################
