@@ -7,18 +7,12 @@
 
 # Read the implementation part of the package.
 
-SetInfoLevel( InfoWarning, 0 );
-
-if   not CompareVersionNumbers( VERSION, "4r4" )
-then ReadPkg( "resclasses", "gap/compat43.g" ); fi;
-
-ReadPkg( "resclasses", "gap/resclaux.g" );
-ReadPkg( "resclasses", "gap/z_pi.gi" );
-ReadPkg( "resclasses", "gap/resclass.gi" );
-
-SetInfoLevel( InfoWarning, 1 );
+ReadPackage( "resclasses", "gap/resclaux.g" );
+ReadPackage( "resclasses", "gap/z_pi.gi" );
+ReadPackage( "resclasses", "gap/resclass.gi" );
 
 #############################################################################
 ##
 #E  read.g . . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here
+
 
