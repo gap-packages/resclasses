@@ -262,6 +262,7 @@ InstallMethod( ResidueClassUnionCons,
              or (     IsFiniteFieldPolynomialRing( R )
                   and IsUnivariatePolynomialRing( R ) ) )
     then TryNextMethod( ); fi;
+    m := StandardAssociate( R, m );
     r := Set( List( r, n -> n mod m ) );
     both := Intersection( included, excluded );
     included := Set( Difference( included, both ) );
@@ -1121,11 +1122,33 @@ InstallOtherMethod( \+,
 
 #############################################################################
 ##
+#M  \+( <R>, <x> ) . . . . . . . . . . . . . . for base ring and ring element
+##
+InstallOtherMethod( \+,
+                    "for base ring and ring element (ResClasses)",
+                    ReturnTrue, [ IsRing, IsRingElement ], 0,
+                    
+  function ( R, x )
+    if not x in R then TryNextMethod(); fi;
+    return R;
+  end );
+
+#############################################################################
+##
+#M  \+( <x>, <R> ) . . . . . . . . . . . . . . for ring element and base ring
+##
+InstallOtherMethod( \+,
+                    "for ring element and base ring (ResClasses)",
+                    ReturnTrue, [ IsRingElement, IsRing ], 0,
+                    function ( x, R ) return R + x; end );
+
+#############################################################################
+##
 #M  \-( <U>, <x> ) . . . . . . . . . for residue class union and ring element
 ##
 InstallOtherMethod( \-,
                     "for residue class union and ring element (ResClasses)",
-                    ReturnTrue, [ IsUnionOfResidueClasses, IsRingElement ],
+                    ReturnTrue, [ IsListOrCollection, IsRingElement ],
                     0, function ( U, x ) return U + (-x); end );
 
 #############################################################################
@@ -1134,7 +1157,7 @@ InstallOtherMethod( \-,
 ##
 InstallOtherMethod( \-,
                     "for ring element and residue class union (ResClasses)",
-                    ReturnTrue, [ IsRingElement, IsUnionOfResidueClasses ],
+                    ReturnTrue, [ IsRingElement, IsListOrCollection ],
                     0, function ( x, U ) return (-U) + x; end );
 
 #############################################################################
@@ -1149,6 +1172,14 @@ InstallOtherMethod( AdditiveInverseOp,
                          List(Residues(U),r -> (-r) mod Modulus(U)),
                          List(IncludedElements(U),el -> -el),
                          List(ExcludedElements(U),el -> -el)) );
+
+#############################################################################
+##
+#M  AdditiveInverseOp( <R> ) . . . . . . . . . . . . . . . . .  for base ring
+##
+InstallOtherMethod( AdditiveInverseOp,
+                    "for base ring (ResClasses)", ReturnTrue, [ IsRing ], 0,
+                    R -> R );
 
 #############################################################################
 ##
@@ -1174,12 +1205,34 @@ InstallOtherMethod( \*,
 
 #############################################################################
 ##
-#M  \*( <x>, <U> ) . . . . . . . . . for residue class union and ring element
+#M  \*( <x>, <U> ) . . . . . . . . . for ring element and residue class union
 ##
 InstallOtherMethod( \*,
                     "for ring element and residue class union (ResClasses)",
                     ReturnTrue, [ IsRingElement, IsUnionOfResidueClasses ],
                     0, function ( x, U ) return U * x; end );
+
+#############################################################################
+##
+#M  \*( <R>, <x> ) . . . . . . . . . . . . . . for base ring and ring element
+##
+InstallOtherMethod( \*,
+                    "for base ring and ring element (ResClasses)",
+                    ReturnTrue, [ IsRing, IsRingElement ], 0,
+                    
+  function ( R, x )
+    if not x in R then TryNextMethod(); fi;
+    return ResidueClass(R,x,Zero(x));
+  end );
+
+#############################################################################
+##
+#M  \*( <x>, <R> ) . . . . . . . . . . . . . . for ring element and base ring
+##
+InstallOtherMethod( \*,
+                    "for ring element and base ring (ResClasses)",
+                    ReturnTrue, [ IsRingElement, IsRing ], 0,
+                    function ( x, R ) return R * x; end );
 
 #############################################################################
 ##
