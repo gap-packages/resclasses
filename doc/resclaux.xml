@@ -69,7 +69,7 @@ For the documentation the package &GAPDoc; <Cite Key="GAPDoc"/> is needed.
 <Heading>Changing the viewing format for residue class unions</Heading>
 
 <ManSection>
-  <Func Name="ResidueClassUnionViewingFormat" Arg="format"/>
+  <Func Name="ResidueClassUnionViewingFormat" Arg="format" Label="format"/>
   <Returns> Nothing. </Returns>
   <Description>
     Switches between a longer and more descriptive (<A>format</A> =

@@ -20,8 +20,8 @@ implement them in this package.
 <Heading>Defining semilocalizations of the integers</Heading>
 
 <ManSection>
-  <Func Name="Z_pi" Arg="pi"/>
-  <Func Name="Z_pi" Arg="p"/>
+  <Func Name="Z_pi" Arg="pi" Label="pi"/>
+  <Func Name="Z_pi" Arg="p" Label="pi"/>
   <Returns> The ring <M>\Z_{(\pi)}</M>. </Returns>
   <Description>
     The function also accepts a single prime <A>p</A> instead of the
@@ -40,7 +40,7 @@ Z_( 3, 11 )
 </ManSection>
 
 <ManSection>
-  <Prop Name="IsZ_pi" Arg="R"/>
+  <Prop Name="IsZ_pi" Arg="R" Label="R"/>
   <Returns>
     <C>true</C> if <A>R</A> is a ring <M>\Z_{(\pi)}</M> for some
     set of primes&nbsp;<M>\pi</M> and <C>false</C> otherwise.
@@ -48,7 +48,7 @@ Z_( 3, 11 )
 </ManSection>
 
 <ManSection>
-  <Attr Name="NoninvertiblePrimes" Arg="R"/>
+  <Attr Name="NoninvertiblePrimes" Arg="R" Label="R"/>
   <Returns>
     The set of noninvertible primes&nbsp;<A>pi</A>
     in the semilocalization&nbsp;<A>R</A> of the integers.
@@ -63,7 +63,7 @@ Z_( 3, 11 )
 <Heading>Methods for semilocalizations of the integers</Heading>
 
 <ManSection>
-  <Meth Name="\in" Arg="x, R"/>
+  <Meth Name="\in" Arg="x, R" Label="x, R"/>
   <Returns>
     <C>true</C> if <A>x</A> is an element of the
     semilocalization&nbsp;<A>R</A> of the integers and
@@ -86,7 +86,7 @@ true
 </ManSection>
 
 <ManSection>
-  <Meth Name="Intersection" Arg="R, S"/>
+  <Meth Name="Intersection" Arg="R, S" Label="R, S"/>
   <Returns>
     The intersection of the semilocalizations <A>R</A> and&nbsp;<A>S</A>
     of the integers.
@@ -102,7 +102,7 @@ Z_( 2, 3, 5, 7, 11 )
 </ManSection>
 
 <ManSection>
-  <Meth Name="IsSubset" Arg="R, S"/>
+  <Meth Name="IsSubset" Arg="R, S" Label="R, S"/>
   <Returns>
     <C>true</C> if <A>S</A> is a subring of&nbsp;<A>R</A>, and
     <C>false</C> otherwise.
@@ -122,7 +122,7 @@ false
 </ManSection>
 
 <ManSection>
-  <Meth Name="StandardAssociate" Arg="R, x"/>
+  <Meth Name="StandardAssociate" Arg="R, x" Label="R, x"/>
   <Returns>
     The standard associate of <A>x</A> in the
     semilocalization&nbsp;<A>R</A> of the integers.
@@ -146,8 +146,8 @@ gap> StandardAssociate(U,36/13);
 </ManSection>
 
 <ManSection>
-  <Meth Name="GcdOp" Arg="R, x, y"/>
-  <Meth Name="Gcd"   Arg="R, x, y"/>
+  <Meth Name="GcdOp" Arg="R, x, y" Label="R, x, y"/>
+  <Meth Name="Gcd"   Arg="R, x, y" Label="R, x, y"/>
   <Returns>
     The greatest common divisor of <A>x</A> and&nbsp;<A>y</A>
     in the semilocalization&nbsp;<A>R</A> of the integers.
@@ -165,8 +165,8 @@ gap> Gcd(S,90/3,60/17,120/33);
 </ManSection>
 
 <ManSection>
-  <Meth Name="LcmOp" Arg="R, x, y"/>
-  <Meth Name="Lcm"   Arg="R, x, y"/>
+  <Meth Name="LcmOp" Arg="R, x, y" Label="R, x, y"/>
+  <Meth Name="Lcm"   Arg="R, x, y" Label="R, x, y"/>
   <Returns>
     The least common multiple of <A>x</A> and&nbsp;<A>y</A>
     in the semilocalization&nbsp;<A>R</A> of the integers.
@@ -184,7 +184,7 @@ gap> Lcm(S,90/3,60/17,120/33);
 </ManSection>
 
 <ManSection>
-  <Meth Name="Factors" Arg="R, x"/>
+  <Meth Name="Factors" Arg="R, x" Label="R, x"/>
   <Returns>
     A prime factorization of&nbsp;<A>x</A> in the
     semilocalization&nbsp;<A>R</A> of the integers.
@@ -206,7 +206,7 @@ gap> Factors(S,60/17);
 </ManSection>
 
 <ManSection>
-  <Meth Name="IsUnit" Arg="R, x"/>
+  <Meth Name="IsUnit" Arg="R, x" Label="R, x"/>
   <Returns>
     <C>true</C> if <A>x</A> is a unit in the
     semilocalization&nbsp;<A>R</A> of the integers and
