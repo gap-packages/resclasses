@@ -18,7 +18,7 @@ The package `ResClasses' must be installed in the pkg/ - subdirectory
 of the GAP distribution.
 
 After extracting the distribution file in the proper place,
-you can load the package via RequirePackage( "resclasses" );
+you can load the package via LoadPackage( "resclasses" );
 
 Then you can build the manual by issueing BuildResClassesManual( );
 (this works only under UNIX, but should not be necessary

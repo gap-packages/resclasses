@@ -29,7 +29,7 @@ DeclarePackage( "resclasses", "1.0",
 
 if IsList( TestPackageAvailability( "gapdoc", "0.99" ) ) then
   OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
-  RequirePackage( "gapdoc" );
+  LoadPackage( "gapdoc" );
   BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
 fi;
 

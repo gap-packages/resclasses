@@ -60,7 +60,7 @@
   If you do not like this or if your system does not support it, you can
   switch this off by setting the option value <C>BlackAndWhite</C> to
   <C>true</C> when loading the package:
-  <C>RequirePackage( "resclasses" : BlackAndWhite );</C>.
+  <C>LoadPackage( "resclasses" : BlackAndWhite );</C>.
 
 </Section>
 
