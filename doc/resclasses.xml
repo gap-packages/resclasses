@@ -35,7 +35,7 @@
        Germany
     </Address>
   </Author>
-  <Date>February 28, 2003</Date>
+  <Date>December 22, 2003</Date>
   <Copyright> &copyright; 2003 by Stefan Kohl </Copyright>
   <#Include SYSTEM "abstract.xml">
 </TitlePage>
@@ -66,3 +66,4 @@
 </Book>
 
 <!-- #################################################################### -->
+
