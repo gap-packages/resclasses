@@ -218,6 +218,22 @@ InstallGlobalFunction( AllResidues,
     fi;
   end );
 
+#############################################################################
+##
+#F  AllResidueClassesModulo( [ <R>, ] <m> ) . . the residue classes (mod <m>)
+##
+InstallGlobalFunction( AllResidueClassesModulo,
+
+  function ( arg )
+
+    local  R, m;
+
+    if   Length(arg) = 2
+    then R := arg[1]; m := arg[2];
+    else m := arg[1]; R := DefaultRing(m); fi;
+    return List(AllResidues(R,m),r->ResidueClass(R,m,r));
+  end );
+
 # Bring the residue class union <U> to normalized, reduced form.
 
 ReduceResidueClassUnion := function ( U )
@@ -1355,4 +1371,5 @@ InstallOtherMethod( \/,
 #############################################################################
 ##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
 

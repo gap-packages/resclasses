@@ -99,6 +99,16 @@ DeclareGlobalFunction( "AllResidues" );
 
 #############################################################################
 ##
+#F  AllResidueClassesModulo( [ <R>, ] <m> ) . . the residue classes (mod <m>)
+##
+##  Returns a sorted list of all residue classes modulo <m> in the ring <R>.
+##  If the argument <R> is not given the function will choose the default
+##  ring of <m>.
+##
+DeclareGlobalFunction( "AllResidueClassesModulo" );
+
+#############################################################################
+##
 #F  UnderlyingRing( <obj> ) . . . . . . . . . . . . . . . . . underlying ring
 ##
 ##  The underlying ring of the object <obj>.
@@ -208,3 +218,4 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
