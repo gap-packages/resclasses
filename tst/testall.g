@@ -99,11 +99,6 @@ Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 #X  read all test files
 ##
 Print("You should start GAP4 using:  `gap -N -A -x 80 -r -m 100m'.\n");
-Print("The more GAP4stones you get, the faster your system is.\n");
-Print("The runtime of the following tests (in general)  increases.\n");
-Print("You should expect about 100000 GAP4stones on a Pentium 3, 1GHz.\n");
-Print("The `next' time is an approximation of the running time for the\n");
-Print("next test.\n");
 Print("\n");
 Print("Architecture: ", GAP_ARCHITECTURE, "\n");
 Print("\n");

@@ -331,6 +331,26 @@ gap> Difference(ResidueClass(Integers,2,1),[1..100]);
 (The residue class 1(2) of Z) \ <set of cardinality 50>
 gap> Difference(Union(ResidueClass(Integers,2,1),[1..100]),[-5..-1]);
 (The residue class 1(2) of Z) U <set of cardinality 50> \ [ -5, -3, -1 ]
+gap> AllResidueClassesModulo(3);
+[ The residue class 0(3) of Z, The residue class 1(3) of Z,
+  The residue class 2(3) of Z ]
+gap> AllResidueClassesModulo(Z_pi(2),4);
+[ The residue class 0(4) of Z_( 2 ), The residue class 1(4) of Z_( 2 ),
+  The residue class 2(4) of Z_( 2 ), The residue class 3(4) of Z_( 2 ) ]
+gap> AllResidueClassesModulo(Z_pi(2),3);
+[ Z_( 2 ) ]
+gap> R := PolynomialRing(GF(7),1);;
+gap> x := Indeterminate(GF(7),1);; SetName(x,"x");
+gap> AllResidueClassesModulo(R,x);
+[ The residue class 0*Z(7) ( mod x ) of GF(7)[x],
+  The residue class Z(7)^0 ( mod x ) of GF(7)[x],
+  The residue class Z(7) ( mod x ) of GF(7)[x],
+  The residue class Z(7)^2 ( mod x ) of GF(7)[x],
+  The residue class -Z(7)^0 ( mod x ) of GF(7)[x],
+  The residue class Z(7)^4 ( mod x ) of GF(7)[x],
+  The residue class Z(7)^5 ( mod x ) of GF(7)[x] ]
+gap> AllResidueClassesModulo(R,One(R));
+[ GF(7)[x] ]
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
