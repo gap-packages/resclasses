@@ -10,13 +10,17 @@
 
 <!-- #################################################################### -->
 
-Although all functionality provided by this package is mathematically
+Although most functionality provided by this package is mathematically
 trivial, the author thinks that having available a nice and easy-to-use
 implementation of residue classes as sets which permits to form unions,
 intersections and differences and which interacts smoothly with finite sets
 of elements w.r.t. these operations is often useful.
 The functionality of this package is used in a group theoretical context
 by the &RCWA; package written by the same author. <P/>
+
+The introduction of unions of residue classes with fixed representatives
+which are implemented in this package since version&nbsp;2.0 follows a
+suggestion by Wolfgang&nbsp;Rump. <P/>
 
 I would be grateful for any bug reports, comments or suggestions.
 
@@ -37,6 +41,3 @@ I would be grateful for any bug reports, comments or suggestions.
 </Chapter>
 
 <!-- #################################################################### -->
-
-
-

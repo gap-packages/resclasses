@@ -21,107 +21,13 @@ DeclareCategory( "IsUnionOfResidueClasses",
 
 #############################################################################
 ##
-#C  IsUnionOfResidueClassesOfZ . .  unions of residue classes and finite sets
+#C  IsUnionOfResidueClassesWithFixedRepresentatives
 ##
-##  The category of unions of residue classes of the integers and finite sets
-##  of integers.
+##  The category of all unions of residue classes which are endowed with
+##  fixed representatives.
 ##
-DeclareCategory( "IsUnionOfResidueClassesOfZ",
+DeclareCategory( "IsUnionOfResidueClassesWithFixedRepresentatives",
                  IsDomain and IsListOrCollection );
-
-#############################################################################
-##
-#C  IsUnionOfResidueClassesOfZ_pi . unions of residue classes and finite sets
-##
-##  The category of unions of residue classes of some ring $\Z_{(\pi)}$ and
-##  finite subsets of of this ring. 
-##
-DeclareCategory( "IsUnionOfResidueClassesOfZ_pi",
-                 IsDomain and IsListOrCollection );
-
-#############################################################################
-##
-#C  IsUnionOfResidueClassesOfZorZ_pi . unions of res. classes and finite sets
-##
-##  The union of the categories `IsUnionOfResidueClassesOfZ' and
-##  `IsUnionOfResidueClassesOfZ_pi'.
-##
-DeclareCategory( "IsUnionOfResidueClassesOfZorZ_pi",
-                 IsDomain and IsListOrCollection );
-
-#############################################################################
-##
-#C  IsUnionOfResidueClassesOfGFqx . . .  unions of res. classes and fin. sets
-##
-##  The category of unions of residue classes of some ring GF($q$)[$x$] and
-##  finite subsets of of this ring. 
-##
-DeclareCategory( "IsUnionOfResidueClassesOfGFqx",
-                 IsDomain and IsListOrCollection );
-
-#############################################################################
-##
-#F  ResidueClassUnionsFamily( <R> ) . family of all residue class unions of R
-##
-DeclareGlobalFunction( "ResidueClassUnionsFamily" );
-
-#############################################################################
-##
-#V  ZResidueClassUnionsFamily . . . . .  family of all res. class unions of Z
-##
-DeclareGlobalVariable( "ZResidueClassUnionsFamily" );
-
-#############################################################################
-##
-#F  Z_piResidueClassUnionsFamily( <R> )
-##
-##  Family of unions of residue classes of $\Z_{(\pi)}$ and finite subsets of
-##  this ring, where the set $\pi$ is given by the list <primes>.
-##
-DeclareGlobalFunction( "Z_piResidueClassUnionsFamily" );
-
-#############################################################################
-##
-#F  GFqxResidueClassUnionsFamily( <R> )
-##
-##  Family of unions of residue classes of the ring $R$ = GF($q$)[$x$] and
-##  finite subsets of this ring.
-##
-DeclareGlobalFunction( "GFqxResidueClassUnionsFamily" );
-
-#############################################################################
-##
-#F  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
-##
-##  Returns a sorted list of all residues modulo <m> in the ring <R>.
-##
-DeclareGlobalFunction( "AllResidues" );
-
-#############################################################################
-##
-#F  AllResidueClassesModulo( [ <R>, ] <m> ) . . the residue classes (mod <m>)
-##
-##  Returns a sorted list of all residue classes modulo <m> in the ring <R>.
-##  If the argument <R> is not given the function will choose the default
-##  ring of <m>.
-##
-DeclareGlobalFunction( "AllResidueClassesModulo" );
-
-#############################################################################
-##
-#F  UnderlyingRing( <obj> ) . . . . . . . . . . . . . . . . . underlying ring
-##
-##  The underlying ring of the object <obj>.
-##
-DeclareAttribute( "UnderlyingRing", IsFamily );
-
-#############################################################################
-##
-#F  UnderlyingIndeterminate( <fam> ) . . indet. of underlying polynomial ring
-##
-##  The indeterminate of the underlying polynomial ring of the family <fam>.
-##
-DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
 
 #############################################################################
 ##
@@ -141,7 +47,139 @@ DeclareRepresentation( "IsResidueClassUnionSparseRep",
 
 #############################################################################
 ##
-#O  ResidueClassUnionCons( <R>, <m>, <r>, <included>, <excluded> )
+#R  IsFixedRepResidueClassUnionRep
+##
+##  Representation of unions of residue classes of the integers, a
+##  semilocalization $\Z_{(\pi)}$ of the integers or a univariate polynomial
+##  ring GF($q$)[$x$] over a finite field, with fixed representatives.
+## 
+##  The component <classes> is a list of residue classes, given as pairs
+##  ( <modulus>, <representative> ). The representatives are *not* reduced
+##  modulo the respective moduli, and the moduli may be different --
+##  in contrast to `IsResidueClassUnionSparseRep' no common modulus is
+##  stored, and *unions which are equal as sets are distinguished* if a
+##  different partition of this set or different representatives are stored.
+##
+DeclareRepresentation( "IsFixedRepResidueClassUnionRep",
+                       IsComponentObjectRep and IsAttributeStoringRep, 
+                       [ "classes" ] );
+
+#############################################################################
+##
+#C  IsUnionOfResidueClassesOfZ . .  unions of residue classes and finite sets
+#C  IsUnionOfResidueClassesOfZWithFixedRepresentatives
+##
+##  The category of unions of residue classes of the integers and finite sets
+##  of integers, resp. of unions of residue classes of the integers with
+##  fixed representatives.
+##
+DeclareCategory( "IsUnionOfResidueClassesOfZ",
+                 IsDomain and IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfZWithFixedRepresentatives",
+                 IsDomain and IsListOrCollection );
+
+#############################################################################
+##
+#C  IsUnionOfResidueClassesOfZ_pi . unions of residue classes and finite sets
+#C  IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives
+##
+##  The category of unions of residue classes of some ring $\Z_{(\pi)}$ and
+##  finite subsets of of this ring, resp. of unions of residue classes of
+##  these rings with fixed representatives.
+##
+DeclareCategory( "IsUnionOfResidueClassesOfZ_pi",
+                 IsDomain and IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives",
+                 IsDomain and IsListOrCollection );
+
+#############################################################################
+##
+#C  IsUnionOfResidueClassesOfZorZ_pi . unions of res. classes and finite sets
+#C  IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives
+##
+##  The union of the categories `IsUnionOfResidueClassesOfZ' and
+##  `IsUnionOfResidueClassesOfZ_pi' resp. the categories
+##  `IsUnionOfResidueClassesOfZWithFixedRepresentatives' and
+##  `IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives`.
+##
+DeclareCategory( "IsUnionOfResidueClassesOfZorZ_pi",
+                 IsDomain and IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives",
+                 IsDomain and IsListOrCollection );
+
+#############################################################################
+##
+#C  IsUnionOfResidueClassesOfGFqx . . .  unions of res. classes and fin. sets
+#C  IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives
+##
+##  The category of unions of residue classes of some ring GF($q$)[$x$] and
+##  finite subsets of of this ring, resp. of unions of residue classes of
+##  these rings with fixed representatives.
+##
+DeclareCategory( "IsUnionOfResidueClassesOfGFqx",
+                 IsDomain and IsListOrCollection );
+DeclareCategory( "IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives",
+                 IsDomain and IsListOrCollection );
+
+#############################################################################
+##
+#F  ResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
+##
+##  The family of all residue class unions of <R>. The optional argument
+##  <fixedreps> is a boolean which determines whether the function returns
+##  the family of "usual" residue class unions of <R> (<fixedreps> = `false'
+##  or not given) or the family of unions of residue classes with fixed
+##  representatives (<fixedreps> = `true').
+##
+DeclareGlobalFunction( "ResidueClassUnionsFamily" );
+
+#############################################################################
+##
+#V  ZResidueClassUnionsFamily . . . . family of all residue class unions of Z
+#V  ZFResidueClassUnionsWithFixedRepresentativesFamily . same with fixed reps
+##
+DeclareGlobalVariable( "ZResidueClassUnionsFamily" );
+DeclareGlobalVariable( "ZResidueClassUnionsWithFixedRepresentativesFamily" );
+
+#############################################################################
+##
+#F  Z_piResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
+##
+##  Family of unions of residue classes of the ring $R = \Z_{(\pi)}$ and
+##  finite subsets of this ring. For the meaning of the optional argument
+##  <fixedreps> see `ResidueClassUnionsFamily'.
+##
+DeclareGlobalFunction( "Z_piResidueClassUnionsFamily" );
+
+#############################################################################
+##
+#F  GFqxResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
+##
+##  Family of unions of residue classes of the ring $R$ = GF($q$)[$x$] and
+##  finite subsets of this ring. For the meaning of the optional argument
+##  <fixedreps> see `ResidueClassUnionsFamily'.
+##
+DeclareGlobalFunction( "GFqxResidueClassUnionsFamily" );
+
+#############################################################################
+##
+#F  UnderlyingRing( <obj> ) . . . . . . . . . . . . . . . . . underlying ring
+##
+##  The underlying ring of the object <obj>.
+##
+DeclareAttribute( "UnderlyingRing", IsFamily );
+
+#############################################################################
+##
+#F  UnderlyingIndeterminate( <fam> ) . . indet. of underlying polynomial ring
+##
+##  The indeterminate of the underlying polynomial ring of the family <fam>.
+##
+DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
+
+#############################################################################
+##
+#O  ResidueClassUnionCons( <filter>, <R>, <m>, <r>, <included>, <excluded> )
 ##
 ##  Constructor for unions of residue classes +/- finite sets of elements.
 ##
@@ -155,11 +193,19 @@ DeclareConstructor( "ResidueClassUnionCons",
 
 #############################################################################
 ##
-#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  single residue class
+#O  ResidueClassUnionWithFixedRepresentativesCons( <filter>, <R>, <classes> )
 ##
-##  The residue class <r> ( mod <m> ) of the ring <R>.
+##  Constructor for unions of residue classes with fixed representatives.
 ##
-DeclareGlobalFunction( "ResidueClass" );
+##  Constructs the union of the residue classes
+##
+##   <classes>[i][2] ( mod <classes>[i][1] )
+##
+##  of the ring <R>.
+##
+DeclareConstructor( "ResidueClassUnionWithFixedRepresentativesCons",
+                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                      IsRing, IsList ] );
 
 #############################################################################
 ##
@@ -170,6 +216,38 @@ DeclareGlobalFunction( "ResidueClass" );
 ##  For a description of the arguments, see there.
 ##
 DeclareGlobalFunction( "ResidueClassUnion" );
+
+#############################################################################
+##
+#F  ResidueClassUnionWithFixedRepresentatives( <R>, <classes> )
+#F  ResidueClassUnionWithFixedReps( <R>, <classes> )
+##
+##  Calls `ResidueClassUnionWithFixedRepresentativesCons'.
+##  For a description of the arguments, see there.
+##
+DeclareGlobalFunction( "ResidueClassUnionWithFixedRepresentatives" );
+DeclareSynonym( "ResidueClassUnionWithFixedReps",
+                ResidueClassUnionWithFixedRepresentatives );
+
+#############################################################################
+##
+#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  single residue class
+##
+##  The residue class <r> ( mod <m> ) of the ring <R>.
+##
+DeclareGlobalFunction( "ResidueClass" );
+
+#############################################################################
+##
+#F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> )  same with fixed rep
+#F  ResidueClassWithFixedRep( <R>, <m>, <r> )
+##
+##  The residue class <r> ( mod <m> ) of the ring <R>, with the fixed
+##  representative <r>.
+##
+DeclareGlobalFunction( "ResidueClassWithFixedRepresentative" );
+DeclareSynonym( "ResidueClassWithFixedRep",
+                ResidueClassWithFixedRepresentative );
 
 #############################################################################
 ##
@@ -197,15 +275,112 @@ DeclareOperation( "ExcludedElements", [ IsUnionOfResidueClasses ] );
 
 #############################################################################
 ##
-#O  Density( <S> ) . .  natural density of the set <S> in the underlying ring
+#O  Classes( <U> )
 ##
-DeclareOperation( "Density", [ IsListOrCollection ] );
+##  The list of pairs ( <representative>, <modulus> ) as given as argument
+##  <classes> when constructing <U> via
+##  `ResidueClassUnionWithFixedRepresentatives'.
+##
+DeclareOperation( "Classes",
+                  [ IsUnionOfResidueClassesWithFixedRepresentatives ] );
+
+#############################################################################
+##
+#F  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
+##
+##  Returns a sorted list of all residues modulo <m> in the ring <R>.
+##
+DeclareGlobalFunction( "AllResidues" );
+
+#############################################################################
+##
+#F  AllResidueClassesModulo( [ <R>, ] <m> ) . . the residue classes (mod <m>)
+##
+##  Returns a sorted list of all residue classes modulo <m> in the ring <R>.
+##  If the argument <R> is not given the function will choose the default
+##  ring of <m>.
+##
+DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
 ##
 #O  AsUnionOfFewClasses( <U> ) . . . . .  write <U> as a union of few classes
 ##
 DeclareOperation( "AsUnionOfFewClasses", [ IsUnionOfResidueClasses ] );
+
+#############################################################################
+##
+#O  AsListOfClasses( <U> )
+##
+##  A list of the classes which form the union <U> of residue classes with
+##  fixed representatives.
+##
+DeclareOperation( "AsListOfClasses",
+                  [ IsUnionOfResidueClassesWithFixedRepresentatives ] );
+
+#############################################################################
+##
+#O  Multiplicity( <n>, <U> ) . . . . . . . . . . . multiplicity of <n> in <U>
+##
+##  The multiplicity of the ring element <n> in the residue class union <U>
+##  with fixed representatives, viewed as a multiset.
+##
+DeclareOperation( "Multiplicity", [ IsRingElement, IsListOrCollection ] );
+
+#############################################################################
+##
+#P  IsOverlappingFree( <U> )
+##
+##  We call a residue class union <U> with fixed representatives
+##  *overlapping free* if and only if it consists of pairwisely disjoint 
+##  residue classes.
+##
+DeclareProperty( "IsOverlappingFree",
+                 IsUnionOfResidueClassesWithFixedRepresentatives );
+
+#############################################################################
+##
+#O  AsOrdinaryUnionOfResidueClasses( <U> )
+##
+##  The set-theoretic union of the residue classes in the union <U> of
+##  residue classes with fixed representatives. The returned object is an
+##  ordinary residue class union without fixed representatives which
+##  behaves like a subset of the underlying ring.
+##
+DeclareOperation( "AsOrdinaryUnionOfResidueClasses",
+                  [ IsUnionOfResidueClassesWithFixedRepresentatives ] );
+
+#############################################################################
+##
+#A  Density( <S> ) . .  natural density of the set <S> in the underlying ring
+##
+DeclareAttribute( "Density", IsUnionOfResidueClasses );
+
+#############################################################################
+##
+#O  RepresentativeStabilizingRefinement( <U>, <k> ) . . . . refinement of <U>
+##
+##  We define the *representative stabilizing refinement* of a residue class
+##  $[r/m]$ of $\Z$ with fixed representative into $k$ parts by
+##  $[r/km] \cup [(r+m)/km] \cup \dots [(r+(k-1)m)/km]$.
+##
+##  We extend this definition in a natural way to unions of residue classes.
+##
+DeclareOperation( "RepresentativeStabilizingRefinement",
+                  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                    IsRingElement ] );
+
+#############################################################################
+##
+#A  Rho( <U> ) . . . . . . . . . . . . . . . . . . . . . . .  invariant `Rho'
+##
+##  For a residue class $[r/m]$ with fixed representative we set
+##  $\Rho([r/m]) := r/m - 1/2$ and extend this additively to unions of such
+##  residue classes.
+##
+##  If no representatives are fixed, this definition is still unique (mod 1).
+##
+DeclareAttribute( "Rho", IsUnionOfResidueClassesWithFixedRepresentatives );
 
 #############################################################################
 ##
@@ -218,4 +393,3 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-

@@ -37,6 +37,15 @@ InstallTrueMethod( IsUnionOfResidueClassesOfZorZ_pi,
 InstallTrueMethod( IsUnionOfResidueClasses,
                    IsUnionOfResidueClassesOfGFqx );
 
+InstallTrueMethod( IsUnionOfResidueClassesWithFixedRepresentatives,
+                   IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives);
+InstallTrueMethod( IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives,
+                   IsUnionOfResidueClassesOfZWithFixedRepresentatives );
+InstallTrueMethod( IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives,
+                   IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives );
+InstallTrueMethod( IsUnionOfResidueClassesWithFixedRepresentatives,
+                   IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives );
+
 #############################################################################
 ##
 #V  ZResidueClassUnionsFamily . . the family of all residue class unions of Z
@@ -50,27 +59,40 @@ SetElementsFamily( ZResidueClassUnionsFamily, FamilyObj( 1 ) );
 
 #############################################################################
 ##
-#F  Z_piResidueClassUnionsFamily( <R> )
+#V  ZResidueClassUnionsWithFixedRepresentativesFamily .  same with fixed reps
+##
+InstallValue( ZResidueClassUnionsWithFixedRepresentativesFamily,
+              NewFamily( "ResidueClassUnionsFamily( Integers, true )",
+                         IsUnionOfResidueClassesWithFixedRepresentatives,
+                         CanEasilySortElements, CanEasilySortElements ) );
+SetUnderlyingRing( ZResidueClassUnionsWithFixedRepresentativesFamily,
+                   Integers );
+SetElementsFamily( ZResidueClassUnionsWithFixedRepresentativesFamily,
+                   ZResidueClassUnionsWithFixedRepresentativesFamily );
+
+#############################################################################
+##
+#F  Z_piResidueClassUnionsFamily( <R> , <fixedreps> )
 ##
 InstallGlobalFunction( Z_piResidueClassUnionsFamily,
 
-  function ( R )
+  function ( R, fixedreps )
 
-    local  fam, name;
+    local  fam, cat, name;
 
-    if   not IsZ_pi( R )
-    then Error("usage: Z_piResidueClassUnionsFamily( <R> )\n",
-               "where <R> = Z_pi( <pi> ) for a set of primes <pi>.\n");
-    fi;
     fam := First( Z_PI_RESIDUE_CLASS_UNIONS_FAMILIES,
                   fam -> UnderlyingRing( fam ) = R );
     if fam <> fail then return fam; fi;
+    if   not fixedreps
+    then cat := IsUnionOfResidueClassesOfZ_pi;
+    else cat := IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives; fi;
     name := Concatenation( "ResidueClassUnionsFamily( ",
-                           String( R )," )" );
-    fam := NewFamily( name, IsUnionOfResidueClassesOfZ_pi,
+                           String( R ),", ",String(fixedreps)," )" );
+    fam := NewFamily( name, cat,
                       CanEasilySortElements, CanEasilySortElements );
     SetUnderlyingRing( fam, R );
-    SetElementsFamily( fam, FamilyObj( 1 ) );
+    if not fixedreps then SetElementsFamily( fam, FamilyObj( 1 ) );
+                     else SetElementsFamily( fam, fam ); fi;
     MakeReadWriteGlobal( "Z_PI_RESIDUE_CLASS_UNIONS_FAMILIES" );
     Add( Z_PI_RESIDUE_CLASS_UNIONS_FAMILIES, fam );
     MakeReadOnlyGlobal( "Z_PI_RESIDUE_CLASS_UNIONS_FAMILIES" );
@@ -80,30 +102,29 @@ InstallGlobalFunction( Z_piResidueClassUnionsFamily,
 
 #############################################################################
 ##
-#F  GFqxResidueClassUnionsFamily( <R> )
+#F  GFqxResidueClassUnionsFamily( <R>, <fixedreps> )
 ##
 InstallGlobalFunction( GFqxResidueClassUnionsFamily,
 
-  function ( R )
+  function ( R, fixedreps )
 
-    local  fam, x;
+    local  fam, cat, name, x;
 
-    if   not (     IsUnivariatePolynomialRing( R )
-               and IsFiniteFieldPolynomialRing( R ) )
-    then Error("usage: GFqxResidueClassUnionsFamily( <R> ) for a ",
-               "univariate polynomial ring <R> over a finite field.\n");
-    fi;
     x := IndeterminatesOfPolynomialRing( R )[ 1 ];
     fam := First( GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES,
                   fam -> UnderlyingRing( fam ) = R );
     if fam <> fail then return fam; fi;
-    fam := NewFamily( Concatenation( "ResidueClassUnionsFamily( ",
-                                      String( R ), " )" ),
-                      IsUnionOfResidueClassesOfGFqx, CanEasilySortElements,
-                      CanEasilySortElements );
+    if   not fixedreps
+    then cat := IsUnionOfResidueClassesOfGFqx;
+    else cat := IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives; fi;
+    name := Concatenation( "ResidueClassUnionsFamily( ",
+                           String( R ),", ",String(fixedreps)," )" );
+    fam := NewFamily( name, cat,
+                      CanEasilySortElements, CanEasilySortElements );
     SetUnderlyingIndeterminate( fam, x );
     SetUnderlyingRing( fam, R );
-    SetElementsFamily( fam, FamilyObj( x ) );
+    if not fixedreps then SetElementsFamily( fam, FamilyObj( x ) );
+                     else SetElementsFamily( fam, fam ); fi;
     MakeReadWriteGlobal( "GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES" );
     Add( GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES, fam );
     MakeReadOnlyGlobal( "GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES" );
@@ -113,17 +134,28 @@ InstallGlobalFunction( GFqxResidueClassUnionsFamily,
 
 #############################################################################
 ##
-#F  ResidueClassUnionsFamily( <R> ) . family of all residue class unions of R
+#F  ResidueClassUnionsFamily( <R> [ , <fixedreps> ]  )
 ##
 InstallGlobalFunction( ResidueClassUnionsFamily,
 
-  function ( R )
+  function ( arg )
 
-    if   IsIntegers( R ) then return ZResidueClassUnionsFamily;
+    local  R, fixedreps;
+
+    if   not Length(arg) in [1,2]
+    or   Length(arg) = 2 and not arg[2] in [true,false]
+    then Error("Usage: ResidueClassUnionsFamily( <R> [ , <fixedreps> ]\n");
+    fi;
+    R := arg[1];
+    if Length(arg) = 2 then fixedreps := arg[2]; else fixedreps := false; fi;
+    if   IsIntegers( R )
+    then if   not fixedreps
+         then return ZResidueClassUnionsFamily;
+         else return ZResidueClassUnionsWithFixedRepresentativesFamily; fi;
     elif IsZ_pi( R )
-    then return Z_piResidueClassUnionsFamily( R );
+    then return Z_piResidueClassUnionsFamily( R, fixedreps );
     elif IsUnivariatePolynomialRing( R ) and IsFiniteFieldPolynomialRing( R )
-    then return GFqxResidueClassUnionsFamily( R );
+    then return GFqxResidueClassUnionsFamily( R, fixedreps );
     else Error("Sorry, residue class unions of ",R,
                " are not yet implemented.\n");
     fi;
@@ -317,17 +349,39 @@ InstallMethod( ResidueClassUnionCons,
 
 #############################################################################
 ##
-#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  single residue class
+#M  ResidueClassUnionWithFixedRepresentativesCons( <filter>, <R>, <classes> )
 ##
-InstallGlobalFunction( ResidueClass,
+InstallMethod( ResidueClassUnionWithFixedRepresentativesCons,
+               "for Z, Z_pi and GF(q)[x] (ResClasses)", ReturnTrue,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsRing, IsList ], 0,
 
-  function ( R, m, r )
+  function ( filter, R, classes )
 
-    if not ( IsRing(R) and m in R and r in R )
-    then Error( "usage: ResidueClass( <R>, <m>, <r> ) for a ring <R> and ",
-                "elements <m> and <r>.\n" );
+    local  Result, both, fam, type, rep, pos;
+
+    if not ( IsIntegers( R ) or IsZ_pi( R )
+             or (     IsFiniteFieldPolynomialRing( R )
+                  and IsUnivariatePolynomialRing( R ) ) )
+    then TryNextMethod( ); fi;
+    fam := ResidueClassUnionsFamily( R, true );
+    if   IsIntegers( R )
+    then type := IsUnionOfResidueClassesOfZWithFixedRepresentatives;
+    elif IsZ_pi( R )
+    then type := IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives;
+    elif IsPolynomialRing( R )
+    then type := IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives; fi;
+    Result := Objectify( NewType( fam,
+                                  type and IsFixedRepResidueClassUnionRep ),
+                         rec( classes := Set( classes ) ) );
+    if classes <> [] then
+      SetSize( Result, infinity ); SetIsFinite( Result, false );
+      SetIsEmpty( Result, false );
+      SetRepresentative( Result, classes[1][2] );
+    else
+      SetSize( Result, 0 ); SetIsEmpty( Result, true );
     fi;
-    return ResidueClassUnion( R, m, [ r ] );
+    return Result;
   end );
 
 #############################################################################
@@ -339,7 +393,7 @@ InstallGlobalFunction( ResidueClassUnion,
 
   function ( arg )
 
-    local  Result, R, m, r, included, excluded, both, fam, type, rep, pos;
+    local  Result, R, m, r, included, excluded;
 
     if not ( Length(arg) in [3,5] and IsRing(arg[1]) and arg[2] in arg[1]
              and IsList(arg[3]) and IsSubset(arg[1],arg[3])
@@ -358,11 +412,67 @@ InstallGlobalFunction( ResidueClassUnion,
 
 #############################################################################
 ##
+#F  ResidueClassUnionWithFixedRepresentatives( <R>, <classes> )
+##
+InstallGlobalFunction( ResidueClassUnionWithFixedRepresentatives,
+
+  function ( R, classes )
+
+    if   not IsIntegers(R) and not IsZ_pi(R) and not IsPolynomialRing(R)
+      or not IsList(classes) or not ForAll(classes,cl->Length(cl)=2)
+      or not IsSubset(R,Flat(classes))
+      or IsZero(Product(List(classes,cl->cl[1])))
+    then Error("usage: ResidueClassUnionWithFixedRepresentatives( ",
+               "<R>, <classes> )\n"); return fail; fi;
+    return ResidueClassUnionWithFixedRepresentativesCons(
+             IsUnionOfResidueClassesWithFixedRepresentatives, R, classes );
+  end );
+
+#############################################################################
+##
+#F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  single residue class
+##
+InstallGlobalFunction( ResidueClass,
+
+  function ( R, m, r )
+
+    if not ( IsRing(R) and m in R and r in R )
+    then Error( "usage: ResidueClass( <R>, <m>, <r> ) for a ring <R> and ",
+                "elements <m> and <r>.\n" ); fi;
+    return ResidueClassUnion( R, m, [ r ] );
+  end );
+
+#############################################################################
+##
+#F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> ) same with fixed rep.
+##
+InstallGlobalFunction( ResidueClassWithFixedRepresentative,
+
+  function ( R, m, r )
+
+    if not ( IsRing(R) and m in R and r in R )
+    then Error("usage: ResidueClassWithFixedRepresentative( <R>, <m>, <r> )",
+               "\nfor a ring <R> and elements <m> and <r>.\n" ); fi;
+    return ResidueClassUnionWithFixedRepresentatives( R, [ [ m, r ] ] );
+  end );
+
+#############################################################################
+##
 #M  Modulus( <U> ) . . . . . . . . . . . . . . . . .  for residue class union
 ##
 InstallMethod( Modulus,
                "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInSparseRep ], 0, U -> U!.m );
+
+#############################################################################
+##
+#M  Modulus( <U> ) . . . . . . . . .  for residue class union with fixed reps
+##
+InstallMethod( Modulus,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+               U -> Lcm( UnderlyingRing( FamilyObj( U ) ),
+                         List( U!.classes, cl -> cl[1] ) ) );
 
 #############################################################################
 ##
@@ -446,6 +556,15 @@ InstallOtherMethod( ExcludedElements,
 
 #############################################################################
 ##
+#M  Classes( <U> ) . . . . . . . . .  for residue class union with fixed reps
+##
+InstallMethod( Classes,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+               U -> U!.classes );
+
+#############################################################################
+##
 #M  AsUnionOfFewClasses( <U> ) . . . . . .  for pure residue class union of Z
 ##
 ##  The result includes only whole residue classes and does not specify
@@ -481,6 +600,44 @@ InstallMethod( AsUnionOfFewClasses,
 
 #############################################################################
 ##
+#M  AsListOfClasses( <U> ) . . . . .  for residue class union with fixed reps
+##
+InstallMethod( AsListOfClasses,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  U -> Set( Classes( U ),
+            cl -> ResidueClassWithFixedRepresentative(
+                    UnderlyingRing( FamilyObj( U ) ), cl[1], cl[2] ) ) );
+
+#############################################################################
+##
+#M  AsOrdinaryUnionOfResidueClasses( <U> )
+##
+InstallMethod( AsOrdinaryUnionOfResidueClasses,
+               "for residue class unions with fixed reps (ResClasses)",
+               true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U )
+
+    local  R, cl;
+
+    R := UnderlyingRing(FamilyObj(U));
+    return Union(List(Classes(U),cl->ResidueClass(R,cl[1],cl[2])));
+  end );
+
+#############################################################################
+##
+#M  IsOverlappingFree( <U> ) . . . .  for residue class union with fixed reps
+##
+InstallMethod( IsOverlappingFree,
+               "for residue class unions with fixed reps (ResClasses)",
+               true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+               U ->    Density( U )
+                     = Density( AsOrdinaryUnionOfResidueClasses( U ) ) );
+
+#############################################################################
+##
 #M  ViewObj( <U> ) . . . . . . . . . . . . . . . . .  for residue class union
 ##
 InstallMethod( ViewObj,
@@ -489,7 +646,7 @@ InstallMethod( ViewObj,
 
   function ( U )
 
-    local  R, m, r, included, excluded, PrintFiniteSet, n, cl, short, endval;
+    local  R, m, r, included, excluded, PrintFiniteSet, n, cl, endval, short;
 
     PrintFiniteSet := function ( S )
       if   Length(String(S)) <= 32
@@ -565,6 +722,43 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  ViewObj( <U> ) . . . . . . . . .  for residue class union with fixed reps
+##
+InstallMethod( ViewObj,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U )
+
+    local  R, classes, l, i, short;
+
+    short := RESCLASSES_VIEWING_FORMAT = "short";
+    R := UnderlyingRing(FamilyObj(U));
+    classes := Classes(U); l := Length(classes);
+    if l = 0 or l > 8 or IsPolynomialRing(R) and l > 3 then
+      if l = 0 then
+        if not short then
+          Print("Empty union of residue classes of ",RingToString(R),
+                " with fixed representatives");
+        else
+          Print("[]");
+        fi;
+      else
+        Print("<union of ",l," residue classes");
+        if   not short
+        then Print(" of ",RingToString(R)," with fixed representatives>");
+        else Print(" with fixed rep's>"); fi;
+      fi;
+    else
+      for i in [1..l] do
+        if i > 1 then Print(" U "); fi;
+        Print("[",classes[i][2],"/",classes[i][1],"]");
+      od;
+    fi;
+  end );
+
+#############################################################################
+##
 #M  String( <U> ) . . . . . . . . . . . . . . . . . . for residue class union
 ##
 InstallMethod( String,
@@ -573,7 +767,7 @@ InstallMethod( String,
 
   function ( U )
 
-    local  s, R, m, r, included, excluded, n;
+    local  s, R, m, r, included, excluded;
 
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
@@ -584,6 +778,28 @@ InstallMethod( String,
     fi;
     s := Concatenation(s," )");
     return s;
+  end );
+
+#############################################################################
+##
+#M  String( <U> ) . . . . . . . . . . for residue class union with fixed reps
+##
+InstallMethod( String,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U )
+
+    local  R, classes;
+
+    R := UnderlyingRing(FamilyObj(U)); classes := Classes(U);
+    if   Length(classes) = 1
+    then return Concatenation("ResidueClassWithFixedRepresentative( ",
+                              String(R),", ",String(classes[1][1]),", ",
+                              String(classes[1][2])," )");
+    else return Concatenation("ResidueClassUnionWithFixedRepresentatives( ",
+                              String(R),", ",String(classes)," )");
+    fi;
   end );
 
 #############################################################################
@@ -604,6 +820,28 @@ InstallMethod( PrintObj,
     if   included <> [] or excluded <> []
     then Print(", ",included,", ",excluded); fi;
     Print(" )");
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <U> ) . . . . . . . . . for residue class union with fixed reps
+##
+InstallMethod( PrintObj,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U )
+
+    local  R, classes;
+
+    R := UnderlyingRing(FamilyObj(U)); classes := Classes(U);
+    if Length(classes) = 1 then
+      Print("ResidueClassWithFixedRepresentative( ",String(R),", ",
+            classes[1][1],", ",classes[1][2]," )");
+    else
+      Print("ResidueClassUnionWithFixedRepresentatives( ",String(R),", ",
+            classes," )");
+    fi;
   end );
 
 # Display a list of ring elements.
@@ -660,6 +898,29 @@ InstallMethod( Display,
 
 #############################################################################
 ##
+#M  Display( <U> ) . . . . . . . . .  for residue class union with fixed reps
+##
+InstallMethod( Display,
+               "for residue class unions with fixed reps (ResClasses)", true,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U )
+
+    local  R, classes, l, i;
+
+    R := UnderlyingRing(FamilyObj(U));
+    classes := Classes(U); l := Length(classes);
+    if l = 0 then View(U); else
+      for i in [1..l] do
+          if i > 1 then Print(" U "); fi;
+          Print("[",classes[i][2],"/",classes[i][1],"]");
+      od;
+    fi;
+    Print("\n");
+  end );
+
+#############################################################################
+##
 #M  \=( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( \=,
@@ -670,6 +931,20 @@ InstallMethod( \=,
   function ( U1, U2 )
     return U1!.m = U2!.m and U1!.r = U2!.r
            and U1!.included = U2!.included and U1!.excluded = U2!.excluded;
+  end );
+
+#############################################################################
+##
+#M  \=( <U1>, <U2> ) . . . . . . . . for residue class unions with fixed reps
+##
+InstallMethod( \=,
+               "for two residue class unions with fixed reps (ResClasses)",
+               IsIdenticalObj,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U1, U2 )
+    return U1!.classes = U2!.classes;
   end );
 
 #############################################################################
@@ -692,6 +967,20 @@ InstallMethod( \<,
 
 #############################################################################
 ##
+#M  \<( <U1>, <U2> ) . . . . . . . . for residue class unions with fixed reps
+##
+##  Total ordering of residue class unions with fixed representatives
+##  (for tech. purposes, only).
+##
+InstallMethod( \<,
+               "for two residue class unions with fixed reps (ResClasses)",
+               IsIdenticalObj,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+               function ( U1, U2 ) return U1!.classes < U2!.classes; end );
+
+#############################################################################
+##
 #M  \in( <n>, <U> ) . . . . . . . .  for ring element and residue class union
 ##
 InstallMethod( \in,
@@ -708,124 +997,49 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  Iterator( <U> ) . . . . . . . . . . . . . . . . . for residue class union
+#M  \in( <cl>, <U> )  for residue class & residue class union with fixed reps
 ##
-InstallMethod( Iterator,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0,
+InstallMethod( \in,
+               Concatenation("for residue class & residue class union ",
+                             "with fixed reps (ResClasses)"), ReturnTrue,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
-  function ( U )
-    return Objectify( NewType( IteratorsFamily,
-                                   IsIterator
-                               and IsMutable
-                               and IsResidueClassUnionsIteratorRep ),
-                      rec( structure    := U,
-                           counter      := 0,
-                           classpos     := 1,
-                           m_count      := 0,
-                           element      := fail,
-                           rem_included := ShallowCopy( U!.included ) ) );
+  function ( cl, U )
+    if Length(cl!.classes) > 1 then TryNextMethod(); fi;
+    return cl!.classes[1] in U!.classes;
   end );
 
 #############################################################################
 ##
-#M  NextIterator( <iter> ) . . . . . for iterator of residue class union of Z
+#M  Multiplicity( <n>, <U> )
 ##
-InstallMethod( NextIterator,
-               "for iterators of residue class unions (ResClasses)", true,
-               [     IsIterator and IsMutable
-                 and IsResidueClassUnionsIteratorRep ], 0,
+InstallMethod( Multiplicity,
+               Concatenation("for ring element and residue class union ",
+                             "with fixed reps (ResClasses)"), ReturnTrue,
+               [ IsRingElement,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
-  function ( iter )
-
-    local  U, next, R, m, r, excluded;
-
-    U := iter!.structure;
-    if IsUnionOfResidueClassesOfZ(U) then
-      if iter!.rem_included <> [] then
-        next := iter!.rem_included[1];
-        RemoveSet(iter!.rem_included,next);
-        iter!.counter := iter!.counter + 1;
-        return next;
-      else
-        m := Modulus(U); r := Residues(U);
-        excluded := ExcludedElements(U);
-        repeat
-          if iter!.classpos > Length(r) then
-            iter!.classpos := 1;
-            iter!.m_count := iter!.m_count + 1;
-          fi;
-          if iter!.element <> fail and iter!.element >= 0 then
-            next := (-iter!.m_count-1) * m + r[iter!.classpos];
-            iter!.classpos := iter!.classpos + 1;
-          else
-            next := iter!.m_count * m + r[iter!.classpos];
-          fi;
-          iter!.element := next;
-          iter!.counter := iter!.counter  + 1;
-        until not next in excluded;
-        return next;
-      fi;
-    else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  IsDoneIterator( <iter> ) . . . . . .  for iterator of residue class union
-##
-InstallMethod( IsDoneIterator,
-               "for iterators of residue class unions (ResClasses)", true,
-               [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
-               ReturnFalse );
-
-#############################################################################
-##
-#M  ShallowCopy( <iter> ) . . . . . . . . for iterator of residue class union
-##
-InstallMethod( ShallowCopy,
-               "for iterators of residue class unions (ResClasses)", true,
-               [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
-
-  iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
-                     rec( structure    := iter!.structure,
-                          counter      := iter!.counter,
-                          classpos     := iter!.classpos,
-                          m_count      := iter!.m_count,
-                          element      := iter!.element,
-                          rem_included := iter!.rem_included ) ) );
-
-#############################################################################
-##
-#M  ViewObj( <iter> ) . . . . . . . . . . for iterator of residue class union
-##
-InstallMethod( ViewObj,
-               "for iterators of residue class unions (ResClasses)", true,
-               [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
-
-  function ( iter )
-
-    local  R;
-
-    R := UnderlyingRing(FamilyObj(iter!.structure));
-    Print("<iterator of a residue class union of ");
-    if IsIntegers(R) then Print("Z>"); else Print(String(R),">"); fi;
+  function ( n, U )
+    if not n in UnderlyingRing(FamilyObj(U)) then return 0; fi;
+    return Number(U!.classes,cl->n mod cl[1] = cl[2]);
   end );
 
 #############################################################################
 ##
 #M  Density( <l> ) . . . . . . . . . . . . . . . . . . . . . . for empty list
 ##
-InstallMethod( Density,
-               "for empty list (ResClasses)", true,
-               [ IsList and IsEmpty ], 0, l -> 0 );
+InstallOtherMethod( Density,
+                    "for empty list (ResClasses)", true,
+                    [ IsList and IsEmpty ], 0, l -> 0 );
 
 #############################################################################
 ##
 #M  Density( <l> ) . . . . . . . . . . . . . . .  for finite list of elements
 ##
-InstallMethod( Density,
-               "for finite list of elements (ResClasses)", true,
-               [ IsList and IsCollection ], 0,
+InstallOtherMethod( Density,
+                   "for finite list of elements (ResClasses)", true,
+                   [ IsList and IsCollection ], 0,
 
   function ( l )
     if   not IsFinite(DefaultRing(l[1]))
@@ -836,9 +1050,9 @@ InstallMethod( Density,
 ##
 #M  Density( <R> ) . . . . . . . . . . . . . . . . . . .  for whole base ring
 ##
-InstallMethod( Density,
-               "for whole base ring (ResClasses)", true,
-               [ IsRing ], 0, R -> 1 );
+InstallOtherMethod( Density,
+                    "for whole base ring (ResClasses)", true,
+                    [ IsRing ], 0, R -> 1 );
 
 #############################################################################
 ##
@@ -851,6 +1065,23 @@ InstallMethod( Density,
   function ( U )
     return Length(U!.r)/
            Length(AllResidues(UnderlyingRing(FamilyObj(U)),U!.m));
+  end );
+
+#############################################################################
+##
+#M  Density( <U> ) . . . . . . . . .  for residue class union with fixed reps
+##
+InstallOtherMethod( Density,
+                   "for residue class unions with fixed reps (ResClasses)",
+                   true, [ IsUnionOfResidueClassesWithFixedRepresentatives ],
+                   0,
+
+  function ( U )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    return Sum(List(U!.classes,c->1/Length(AllResidues(R,c[1]))));
   end );
 
 #############################################################################
@@ -878,6 +1109,25 @@ InstallMethod( Union2,
     allres := AllResidues(R,m);
     r := Filtered(allres,n->n mod m1 in r1 or n mod m2 in r2);
     return ResidueClassUnion(R,m,r,included,excluded);
+  end );
+
+#############################################################################
+##
+#M  Union2( <U1>, <U2> ) . . . . . . for residue class unions with fixed reps
+##
+InstallMethod( Union2,
+               "for two residue class unions with fixed reps (ResClasses)",
+               IsIdenticalObj,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U1, U2 )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U1));
+    return ResidueClassUnionWithFixedRepresentatives(R,
+             Union(Classes(U1),Classes(U2)));
   end );
 
 #############################################################################
@@ -914,6 +1164,25 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  Intersection2( <U1>, <U2> ) . .  for residue class unions with fixed reps
+##
+InstallMethod( Intersection2,
+               "for two residue class unions with fixed reps (ResClasses)",
+               IsIdenticalObj,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U1, U2 )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U1));
+    return ResidueClassUnionWithFixedRepresentatives( R,
+             Intersection(Classes(U1),Classes(U2)));
+  end );
+
+#############################################################################
+##
 #M  Difference( <U1>, <U2> ) . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( Difference,
@@ -936,6 +1205,25 @@ InstallMethod( Difference,
     allres := AllResidues(R,m);
     r := Filtered(allres,n->n mod m1 in r1 and not n mod m2 in r2);
     return ResidueClassUnion(R,m,r,included,excluded);
+  end );
+
+#############################################################################
+##
+#M  Difference( <U1>, <U2> ) . . . . for residue class unions with fixed reps
+##
+InstallMethod( Difference,
+               "for two residue class unions with fixed reps (ResClasses)",
+               IsIdenticalObj,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U1, U2 )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U1));
+    return ResidueClassUnionWithFixedRepresentatives( R,
+             Difference(Classes(U1),Classes(U2)));
   end );
 
 #############################################################################
@@ -1166,6 +1454,20 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
+#M  IsSubset( <U1>, <U2> ) . . . . . for residue class unions with fixed reps
+##
+InstallMethod( IsSubset,
+               "for two residue class unions with fixed reps (ResClasses)",
+               IsIdenticalObj,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U1, U2 )
+    return IsSubset(Classes(U1),Classes(U2));
+  end );
+
+#############################################################################
+##
 #M  IsSubset( <R>, <U> ) . . . . . . .  for base ring and residue class union
 ##
 InstallMethod( IsSubset,
@@ -1222,6 +1524,38 @@ InstallOtherMethod( \+,
 
 #############################################################################
 ##
+#M  \+( <U>, <x> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \+,
+                    Concatenation( "for residue class union with fixed ",
+                                   "reps and ring element (ResClasses)" ),
+                    ReturnTrue,
+                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                    IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    return ResidueClassUnionWithFixedRepresentatives( R,
+             List(Classes(U),cl->[cl[1],cl[2]+x]) );
+  end );
+
+#############################################################################
+##
+#M  \+( <x>, <U> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \+,
+                    Concatenation( "for ring element and residue class ",
+                                   "union with fixed reps (ResClasses)" ),
+                    ReturnTrue,
+                    [ IsRingElement,
+                      IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+                    function ( x, U ) return U + x; end );
+
+#############################################################################
+##
 #M  \+( <R>, <x> ) . . . . . . . . . . . . . . for base ring and ring element
 ##
 InstallOtherMethod( \+,
@@ -1262,6 +1596,30 @@ InstallOtherMethod( \-,
 
 #############################################################################
 ##
+#M  \-( <U>, <x> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \-,
+                    Concatenation( "for residue class union with fixed ",
+                                   "reps and ring element (ResClasses)" ),
+                    ReturnTrue,
+                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                      IsRingElement ], 0,
+                    function ( U, x ) return U + (-x); end );
+
+#############################################################################
+##
+#M  \-( <x>, <U> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \-,
+                    Concatenation( "for ring element and residue class ",
+                                   "union with fixed reps (ResClasses)" ),
+                    ReturnTrue,
+                    [ IsRingElement,
+                      IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+                    function ( x, U ) return (-U) + x; end );
+
+#############################################################################
+##
 #M  AdditiveInverseOp( <U> ) . . . . . . . . . . . .  for residue class union
 ##
 InstallOtherMethod( AdditiveInverseOp,
@@ -1272,6 +1630,24 @@ InstallOtherMethod( AdditiveInverseOp,
                          List(Residues(U),r -> (-r) mod Modulus(U)),
                          List(IncludedElements(U),el -> -el),
                          List(ExcludedElements(U),el -> -el)) );
+
+#############################################################################
+##
+#M  AdditiveInverseOp( <U> ) . . . .  for residue class union with fixed reps
+##
+InstallOtherMethod( AdditiveInverseOp,
+                    "for residue class union with fixed reps (ResClasses)",
+                    ReturnTrue,
+                    [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U )
+
+    local  R, invclasses;
+
+    R := UnderlyingRing(FamilyObj(U));
+    invclasses := List(Classes(U),cl->[cl[1],-cl[2]]);
+    return ResidueClassUnionWithFixedRepresentatives(R,invclasses);
+  end );
 
 #############################################################################
 ##
@@ -1311,6 +1687,37 @@ InstallOtherMethod( \*,
                     "for ring element and residue class union (ResClasses)",
                     ReturnTrue, [ IsRingElement, IsUnionOfResidueClasses ],
                     0, function ( x, U ) return U * x; end );
+
+#############################################################################
+##
+#M  \*( <U>, <x> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \*,
+                    Concatenation( "for residue class union with fixed ",
+                                   "reps and ring element (ResClasses)" ),
+                                   ReturnTrue,
+                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                      IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    return ResidueClassUnionWithFixedRepresentatives( R, Classes(U) * x );
+  end );
+
+#############################################################################
+##
+#M  \*( <x>, <U> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \*,
+                    Concatenation( "for ring element and residue class ",
+                                   "union with fixed reps (ResClasses)" ),
+                    ReturnTrue,
+                    [ IsRingElement,
+                      IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+                    function ( x, U ) return U * x; end );
 
 #############################################################################
 ##
@@ -1359,6 +1766,27 @@ InstallOtherMethod( \/,
 
 #############################################################################
 ##
+#M  \/( <U>, <x> ) . for residue class union with fixed reps and ring element
+##
+InstallOtherMethod( \/,
+                    Concatenation( "for residue class union with fixed ",
+                                   "reps and ring element (ResClasses)" ),
+                    ReturnTrue,
+                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                      IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R, quotclasses;
+
+    R := UnderlyingRing(FamilyObj(U));
+    quotclasses := Classes(U)/x;
+    if not IsSubset(R,Flat(quotclasses)) then TryNextMethod(); fi;
+    return ResidueClassUnionWithFixedRepresentatives( R, quotclasses );
+  end );
+
+#############################################################################
+##
 #M  \/( [ ], <x> ) . . . . . . . . . . . . .  for empty list and ring element
 ##
 InstallOtherMethod( \/,
@@ -1371,6 +1799,163 @@ InstallOtherMethod( \/,
 
 #############################################################################
 ##
+#M  RepresentativeStabilizingRefinement( <U>, <k> )
+##
+InstallMethod( RepresentativeStabilizingRefinement,
+               Concatenation( "for residue class union of Z with fixed reps",
+                              " and positive integer (ResClasses)" ),
+               ReturnTrue,
+               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
+                 IsPosInt ], 0,
+
+  function ( U, k )
+
+    local  classes;
+
+    classes := Concatenation(List(Classes(U),
+                                  cl->List([0..k-1],
+                                           i->[k*cl[1],i*cl[1]+cl[2]])));
+    return ResidueClassUnionWithFixedRepresentatives(Integers,classes);
+  end );
+
+#############################################################################
+##
+#M  Rho( <U> ) . . . . . . . . . for residue class union of Z with fixed reps
+##
+InstallMethod( Rho,
+               "for residue class unions of Z with fixed reps (ResClasses)",
+               true, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
+               0,
+
+  function ( U )
+    return Sum(List(Classes(U),c->c[2]/c[1])) - Length(Classes(U))/2;
+  end );
+
+#############################################################################
+##
+#M  Rho( <U> ) . . . . . . . . . . . . . . . . . for residue class union of Z
+##
+InstallOtherMethod( Rho,
+                    "for residue class unions of Z (ResClasses)",
+                    true, [ IsUnionOfResidueClassesOfZ ], 0,
+
+  function ( U )
+
+    local  rho;
+
+    if   IsEmpty(U)    then return 0;
+    elif IsIntegers(U) then return 1/2; else
+      rho :=   Sum(Residues(U))/Modulus(U)
+             - Length(Residues(U))/2 + Modulus(U);
+      return rho - Int(rho);
+    fi;
+  end );
+
+#############################################################################
+##
+#M  Iterator( <U> ) . . . . . . . . . . . . . . . . . for residue class union
+##
+InstallMethod( Iterator,
+               "for residue class unions (ResClasses)", true,
+               [ IsResidueClassUnionInSparseRep ], 0,
+
+  function ( U )
+    return Objectify( NewType( IteratorsFamily,
+                                   IsIterator
+                               and IsMutable
+                               and IsResidueClassUnionsIteratorRep ),
+                      rec( structure    := U,
+                           counter      := 0,
+                           classpos     := 1,
+                           m_count      := 0,
+                           element      := fail,
+                           rem_included := ShallowCopy( U!.included ) ) );
+  end );
+
+#############################################################################
+##
+#M  NextIterator( <iter> ) . . . . . for iterator of residue class union of Z
+##
+InstallMethod( NextIterator,
+               "for iterators of residue class unions (ResClasses)", true,
+               [     IsIterator and IsMutable
+                 and IsResidueClassUnionsIteratorRep ], 0,
+
+  function ( iter )
+
+    local  U, next, R, m, r, excluded;
+
+    U := iter!.structure;
+    if IsUnionOfResidueClassesOfZ(U) then
+      if iter!.rem_included <> [] then
+        next := iter!.rem_included[1];
+        RemoveSet(iter!.rem_included,next);
+        iter!.counter := iter!.counter + 1;
+        return next;
+      else
+        m := Modulus(U); r := Residues(U);
+        excluded := ExcludedElements(U);
+        repeat
+          if iter!.classpos > Length(r) then
+            iter!.classpos := 1;
+            iter!.m_count := iter!.m_count + 1;
+          fi;
+          if iter!.element <> fail and iter!.element >= 0 then
+            next := (-iter!.m_count-1) * m + r[iter!.classpos];
+            iter!.classpos := iter!.classpos + 1;
+          else
+            next := iter!.m_count * m + r[iter!.classpos];
+          fi;
+          iter!.element := next;
+          iter!.counter := iter!.counter  + 1;
+        until not next in excluded;
+        return next;
+      fi;
+    else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  IsDoneIterator( <iter> ) . . . . . .  for iterator of residue class union
+##
+InstallMethod( IsDoneIterator,
+               "for iterators of residue class unions (ResClasses)", true,
+               [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
+               ReturnFalse );
+
+#############################################################################
+##
+#M  ShallowCopy( <iter> ) . . . . . . . . for iterator of residue class union
+##
+InstallMethod( ShallowCopy,
+               "for iterators of residue class unions (ResClasses)", true,
+               [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
+
+  iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
+                     rec( structure    := iter!.structure,
+                          counter      := iter!.counter,
+                          classpos     := iter!.classpos,
+                          m_count      := iter!.m_count,
+                          element      := iter!.element,
+                          rem_included := iter!.rem_included ) ) );
+
+#############################################################################
+##
+#M  ViewObj( <iter> ) . . . . . . . . . . for iterator of residue class union
+##
+InstallMethod( ViewObj,
+               "for iterators of residue class unions (ResClasses)", true,
+               [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
+
+  function ( iter )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(iter!.structure));
+    Print("<iterator of a residue class union of ");
+    if IsIntegers(R) then Print("Z>"); else Print(String(R),">"); fi;
+  end );
+
+#############################################################################
+##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
-

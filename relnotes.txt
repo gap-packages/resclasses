@@ -7,9 +7,20 @@ Initial version: 1.0 (January 2004)
 Changes between version 1.0 and version 1.1:
 
  - Improved output routines.
+
  - Added `Density'.
 
-Changes between version 1.1 and version 1.2:
+Changes between version 1.1 and version 2.0:
 
  - Added `AllResidueClassesModulo'.
+
+ - Added support for unions of residue classes with fixed representatives.
+   These domains behave different than `ordinary' unions of residue classes:
+
+   1. They behave like sets of single residue classes with fixed
+      representative rather than like sets of ring elements.
+
+   2. The residue classes are not necessarily disjoint, thus the unions can
+      be viewed as multisets of ring elements.
+
 

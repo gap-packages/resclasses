@@ -1,0 +1,522 @@
+<!-- #################################################################### -->
+<!-- ##                                                                ## -->
+<!-- ##  fixedrep.xml      ResClasses documentation       Stefan Kohl  ## -->
+<!-- ##                                                                ## -->
+<!-- ##  $Id$      ## -->
+<!-- ##                                                                ## -->
+<!-- #################################################################### -->
+
+<Chapter Label="ch:UnionsOfResidueClassesWithFixedReps">
+<Heading>Unions of Residue Classes with Fixed Representatives</Heading>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:AboutUnionsOfResidueClassesWithFixedReps">
+<Heading>
+  About unions of residue classes with fixed representatives
+</Heading>
+
+In this chapter we introduce a different kind of unions of residue classes,
+namely those of residue classes which are endowed with a distinguished
+(<Q>fixed</Q>) representative.
+
+These unions of residue classes behave different than the <Q>ordinary</Q>
+residue class unions which we have described in the previous chapter:
+
+<List>
+
+  <Mark>-</Mark>
+  <Item>
+    They behave like sets of single residue classes with fixed
+    representative rather than like sets of ring elements.
+    We use the term <E>union</E> in particular in order to distinguish
+    the objects representing these sets from plain lists of single
+    residue classes.
+  </Item>
+
+  <Mark>-</Mark>
+  <Item>
+    They can be viewed as <E>multisets</E> of ring elements --
+    the residue classes in such a union are not necessarily disjoint.
+  </Item>
+
+</List>
+
+Unions of residue classes with fixed representatives play an important role
+in computations with residue class-wise affine mappings, and thus are needed
+by the &RCWA; package. <P/>
+
+Throughout this chapter, the argument <A>R</A> denotes the ring whose
+residue classes we are dealing with, and the arguments <A>U</A>, <A>U1</A>
+and <A>U2</A> denote unions of residue classes of <A>R</A> with fixed
+representatives.
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:DefiningUnionsOfResidueClassesWithFixedReps">
+<Heading>
+  Defining unions of residue classes with fixed representatives
+</Heading>
+
+  <ManSection>
+    <Func Name="ResidueClassWithFixedRepresentative" Arg="R, m, r"/>
+    <Func Name="ResidueClassWithFixedRep" Arg="R, m, r"/>
+    <Returns>
+      The residue class <A>r</A> mod <A>m</A> of the ring <A>R</A>,
+      with fixed representative&nbsp;<A>r</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
+[2/3]
+gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
+[1/2]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Func Name="ResidueClassUnionWithFixedRepresentatives" Arg="R, classes"/>
+    <Func Name="ResidueClassUnionWithFixedReps" Arg="R, classes"/>
+    <Returns>
+      The union of the residue classes <A>classes</A>[<M>i</M>][2] mod
+      <A>classes</A>[<M>i</M>][1] of the ring <A>R</A>, with fixed
+      representatives <A>classes</A>[<M>i</M>][2].
+    </Returns>
+    <Description>
+      The argument <A>classes</A> must be a list of pairs of elements of
+      the ring <A>R</A>, those first elements (the moduli) have to be
+      non-zero.
+<Example>
+<![CDATA[
+gap> U := ResidueClassUnionWithFixedRepresentatives(Integers,[[2,1],[7,4]]);
+[1/2] U [4/7]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Modulus" Arg="U"/>
+    <Returns>
+      the lcm of the moduli of the residue classes in <A>U</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Modulus(U);
+14
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Classes" Arg="U"/>
+    <Returns>
+      the list <A>classes</A> of pairs (modulus,residue) as in
+      <Ref Func="ResidueClassUnionWithFixedRepresentatives"/>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Classes(U);
+[ [ 2, 1 ], [ 7, 4 ] ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:MethodsForResidueClassUnions">
+<Heading>
+  Methods for unions of residue classes with fixed representatives
+</Heading>
+
+  <ManSection>
+    <Meth Name="String" Arg="U"/>
+    <Meth Name="String" Arg="U, lng"/>
+    <Returns>
+      a string representation of <A>U</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> String(cl1);
+"ResidueClassWithFixedRepresentative( Integers, 3, 2 )"
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Print" Arg="U"/>
+    <Description>
+      Prints <A>U</A> in a way similar to what a user has to write in order
+      to create this object.
+<Example>
+<![CDATA[
+gap> Print(cl1,"\n");
+ResidueClassWithFixedRepresentative( Integers, 3, 2 )
+gap> Print(U,"\n");
+ResidueClassUnionWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ] ] )
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Display" Arg="U"/>
+    <Description>
+      Displays <A>U</A> in a nice, human-readable form.
+<Example>
+<![CDATA[
+gap> p := List([1..25],i->[Primes[i],i]);;
+gap> P := ResidueClassUnionWithFixedRepresentatives(Integers,p);
+<union of 25 residue classes of Z with fixed representatives>
+gap> Display(P);
+[1/2] U [2/3] U [3/5] U [4/7] U [5/11] U [6/13] U [7/17] U [8/19] U [9/23] U [
+10/29] U [11/31] U [12/37] U [13/41] U [14/43] U [15/47] U [16/53] U [17/
+59] U [18/61] U [19/67] U [20/71] U [21/73] U [22/79] U [23/83] U [24/89] U [
+25/97]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Multiplicity" Arg="x, U"/>
+    <Returns>
+      the multiplicity of <A>x</A> in <A>U</A> regarded as a multiset
+      of ring elements.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Multiplicity(1,U);
+1
+gap> Multiplicity(2,U);
+0
+gap> Multiplicity(11,U);
+2
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Prop Name="IsOverlappingFree" Arg="U"/>
+    <Description>
+      We call a residue class union <A>U</A> with fixed representatives
+      <E>overlapping free</E> if and only if it consists of pairwisely
+      disjoint residue classes.
+<Example>
+<![CDATA[
+gap> IsOverlappingFree(cl1);
+true
+gap> IsOverlappingFree(U);
+false
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="AsOrdinaryUnionOfResidueClasses" Arg="U"/>
+    <Returns>
+      the set-theoretic union of the residue classes in <A>U</A>.
+    </Returns>
+    <Description>
+      The returned object is an ordinary residue class union
+      without fixed representatives as described in
+      Chapter&nbsp;<Ref Label="ch:UnionsOfResidueClasses" />
+      which behaves like a subset of the underlying ring.
+<Example>
+<![CDATA[
+gap> List([cl1,cl2,U],AsOrdinaryUnionOfResidueClasses);
+[ The residue class 2(3) of Z, The residue class 1(2) of Z, 
+  Union of the residue classes 1(2) and 4(14) of Z ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\in" Arg="cl, U"/>
+    <Description>
+      Tests whether the residue class <A>cl</A> with a fixed representative
+      is an element of&nbsp;<A>U</A>. 
+<Example>
+<![CDATA[
+gap> cl1 in U;
+false
+gap> cl2 in U;
+true
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="AsListOfClasses" Arg="U"/>
+    <Returns>
+      the strictly sorted list of the residue classes in <A>U</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> AsListOfClasses(U);
+[ [1/2], [4/7] ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="IsSubset" Arg="U1, U2"/>
+    <Description>
+      Checks whether <A>U2</A> is a subset of <A>U1</A>.
+<Example>
+<![CDATA[
+gap> IsSubset(U,cl1);
+false
+gap> IsSubset(U,cl2);
+true
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Oper Name="Density" Arg="U"/>
+    <Returns>
+      the natural density of <A>U</A> as a multiset (elements with
+      multiplicity&nbsp;<M>k</M> count <M>k</M>-fold).
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Density(U);
+9/14
+gap> 1/2+1/7;
+9/14
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Union" Arg="U1, U2"/>
+    <Returns>
+      the set-theoretic union of <A>U1</A> and <A>U2</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Union(U,cl1);
+[1/2] U [2/3] U [4/7]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Intersection" Arg="U1, U2"/>
+    <Returns>
+      the set-theoretic intersection of <A>U1</A> and <A>U2</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Intersection(cl1,cl2);
+Empty union of residue classes of Z with fixed representatives
+gap> Intersection(List([cl1,cl2],AsOrdinaryUnionOfResidueClasses));
+The residue class 5(6) of Z
+gap> Intersection(cl2,U);
+[1/2]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="Difference"   Arg="U1, U2"/>
+    <Returns>
+      the set-theoretic difference of <A>U1</A> and <A>U2</A>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> Difference(U,cl1);
+[1/2] U [4/7]
+gap> Difference(U,cl2);
+[4/7]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+Throughout the rest of this section we regard <A>U</A> as
+a multiset of ring elements. For sake of simplicity, we abbreviate
+<Q>the multiset of ring elements endowed with the structure of
+a union of residue classes with fixed representatives</Q> by
+<Q>the multiset</Q>.
+
+  <ManSection>
+    <Meth Name="\+" Arg="U, x"/>
+    <Meth Name="\+" Arg="x, U"/>
+    <Returns>
+      the multiset of sums <M>u + x</M>, <M>u \in U</M>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> cl1 + 1;
+[3/3]
+gap> U+23;
+[24/2] U [27/7]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\-" Arg="U, x"/>
+    <Meth Name="\-" Arg="x, U"/>
+    <Meth Name="\-" Arg="U"/>
+    <Returns>
+      the multiset of differences <M>u - x</M>, <M>u \in U</M> resp. the
+      set of differences <M>x - u</M>, <M>u \in U</M> resp. the set of the
+      additive inverses of the elements of&nbsp;<M>U</M>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> cl2 - 1;
+[0/2]
+gap> U - 17;
+[-16/2] U [-13/7]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\*" Arg="U, x"/>
+    <Meth Name="\*" Arg="x, U"/>
+    <Returns>
+      the multiset of products <M>x \cdot u</M>, <M>u \in U</M>.
+    </Returns>
+    <Description>
+<Example>
+<![CDATA[
+gap> 3*cl1;
+[6/9]
+gap> 7*U;
+[7/14] U [28/49]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Meth Name="\/" Arg="U, x"/>
+    <Returns>
+      the multiset of quotients <M>u/x</M>, <M>u \in U</M>.
+    </Returns>
+    <Description>
+      If not all elements of all residue classes in <A>U</A> are divisible
+      by <A>x</A>, the method gives up.
+<Example>
+<![CDATA[
+gap> (2*cl1+2)/3;
+[2/2]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:WhereRepsComeIntoPlay">
+<Heading>
+  Where the representatives come into play
+</Heading>
+
+  <ManSection>
+    <Meth Name="RepresentativeStabilizingRefinement" Arg="U, k"/>
+    <Description>
+      We define the <E>representative stabilizing refinement</E> of a residue
+      class <M>[r/m]</M> of <M>\Z</M> with fixed representative into <M>k</M>
+      parts by <M>[r/km] \cup [(r+m)/km] \cup \dots \cup [(r+(k-1)m)/km]</M>,
+      and extend this definition in a natural way to unions of residue
+      classes.
+<Example>
+<![CDATA[
+gap> RepresentativeStabilizingRefinement(cl1,2);
+[2/6] U [5/6]
+gap> V := RepresentativeStabilizingRefinement(U,3);
+[1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+  <ManSection>
+    <Attr Name="Rho" Arg="U"/>
+    <Description>
+      For a residue class <M>[r/m]</M> with fixed representative we set
+      <M>\rho([r/m]) := r/m - 1/2</M> and extend this additively to unions of
+      such residue classes. If no representatives are fixed, this definition
+      is still unique (mod&nbsp;1).
+<Example>
+<![CDATA[
+gap> Rho(U);
+1/14
+gap> (1/2-1/2)+(4/7-1/2);
+1/14
+gap> Rho(V);
+1/14
+gap> (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
+1/14
+gap> Rho(P);
+-3706053977906326692602106591985470034/1152783981972759212376551073665878035
+gap> Factors(DenominatorRat(last));
+[ 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
+  73, 79, 83, 89, 97 ]
+]]>
+</Example>
+    </Description>
+  </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:CategoriesOfUnionsOfResidueClassesWithFixedReps">
+<Heading>
+  The categories of unions of residue classes with fixed representatives
+</Heading>
+
+The names of the categories of unions of residue classes with fixed
+representatives can be derived from the names of those of the
+<Q>ordinary</Q> unions of residue classes given in
+Section&nbsp;<Ref Label="sec:CategoriesOfUnionsOfResidueClasses" />
+by appending <C>WithFixedRepresentatives</C>.
+
+</Section>
+
+<!-- #################################################################### -->
+
+</Chapter>
+
+<!-- #################################################################### -->

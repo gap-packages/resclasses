@@ -8,7 +8,7 @@
 <!-- ##                                                                ## -->
 <!-- ##  resclasses.xml     ResClasses documentation      Stefan Kohl  ## -->
 <!-- ##                                                                ## -->
-<!-- ##  $Id$    ## -->
+<!-- ##  $Id$   ## -->
 <!-- ##                                                                ## -->
 <!-- #################################################################### -->
 
@@ -35,9 +35,9 @@
       Germany
     </Address>
   </Author>
-  <Date>February 3, 2004</Date>
+  <Date>May 26, 2004</Date>
   <Copyright>
-    &copyright; 2003 by Stefan Kohl <P/>
+    &copyright; 2003, 2004 by Stefan Kohl <P/>
     We adopt the copyright regulations of &GAP; as detailed
     in the copyright notice in the &GAP; manual.
   </Copyright>
@@ -55,6 +55,7 @@
 <#Include SYSTEM "preface.xml">
 <#Include SYSTEM "z_pi.xml">
 <#Include SYSTEM "resclass.xml">
+<#Include SYSTEM "fixedrep.xml">
 <#Include SYSTEM "resclaux.xml">
 
 </Body>
