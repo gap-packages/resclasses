@@ -330,7 +330,19 @@ DeclareSynonym( "AllResidueClassesWithFixedRepsModulo",
 ##
 #O  AsUnionOfFewClasses( <U> ) . . . . .  write <U> as a union of few classes
 ##
+##  The result includes only whole residue classes and does not specify
+##  included / excluded single elements.
+## 
 DeclareOperation( "AsUnionOfFewClasses", [ IsUnionOfResidueClasses ] );
+
+#############################################################################
+##
+#O  SplittedClass( <cl>, <t> ) . . partition of <cl> into <t> residue classes
+##
+##  The argument <cl> must be a single residue class. The return value is a
+##  partition of <cl> into <t> residue classes with the same modulus.
+##
+DeclareOperation( "SplittedClass", [ IsUnionOfResidueClasses, IsPosInt ] );
 
 #############################################################################
 ##

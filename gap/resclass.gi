@@ -621,9 +621,6 @@ InstallMethod( Classes,
 ##
 #M  AsUnionOfFewClasses( <U> ) . . . . . .  for pure residue class union of Z
 ##
-##  The result includes only whole residue classes and does not specify
-##  included / excluded single elements.
-## 
 InstallMethod( AsUnionOfFewClasses,
                "for pure residue class unions of Z (ResClasses)", true,
                [ IsUnionOfResidueClassesOfZ ], 0,
@@ -650,6 +647,42 @@ InstallMethod( AsUnionOfFewClasses,
       if IsList(remaining) then break; fi;
     od;
     return S;
+  end );
+
+#############################################################################
+##
+#M  AsUnionOfFewClasses( [  ] ) . . . . . . . . . . . . . . . . for empty set
+##
+InstallOtherMethod( AsUnionOfFewClasses,
+                    "for empty set (ResClasses)", true,
+                    [ IsList and IsEmpty ], 0, l -> [  ] );
+
+#############################################################################
+##
+#M  AsUnionOfFewClasses( Integers ) . . . . . . . . . . . . . . . . . . for Z
+##
+InstallOtherMethod( AsUnionOfFewClasses,
+                    "for Z (ResClasses)", true, [ IsIntegers ], 0,
+                    ints -> [ Integers ] );
+
+#############################################################################
+##
+#M  SplittedClass( <cl>, <t> ) . . write <cl> as union of <t> residue classes
+##
+InstallMethod( SplittedClass,
+               "for residue class of Z or Z_pi (ResClasses)", true,
+               [ IsUnionOfResidueClassesOfZorZ_pi, IsPosInt ], 0,
+
+  function ( cl, t )
+
+    local  R, r, m;
+
+    R := UnderlyingRing(FamilyObj(cl));
+    if Length(Residues(cl)) > 1 or (IsZ_pi(R) and not
+       IsSubset(Union(NoninvertiblePrimes(R),[1]),Set(Factors(t))))
+    then return fail; fi;
+    r := Residues(cl)[1]; m := Modulus(cl);
+    return List([0..t-1],k->ResidueClass(R,t*m,k*m+r));
   end );
 
 #############################################################################
