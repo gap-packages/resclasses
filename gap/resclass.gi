@@ -205,7 +205,7 @@ AllResidues := function ( R, m )
 
   local  q, d, x;
 
-  if IsIntegers(R) or IsZ_pi(R) then return [0..m-1]; else
+  if IsIntegers(R) or IsZ_pi(R) then return [0..AbsInt(m)-1]; else
     q := Size(CoefficientsRing(R)); d := DegreeOfLaurentPolynomial(m);
     x := IndeterminatesOfPolynomialRing(R)[1];
     return AllGFqPolynomialsModDegree(q,d,x);
@@ -1228,3 +1228,4 @@ InstallOtherMethod( \/,
 #############################################################################
 ##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+
