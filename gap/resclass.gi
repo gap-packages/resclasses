@@ -667,7 +667,7 @@ InstallOtherMethod( AsUnionOfFewClasses,
 
 #############################################################################
 ##
-#M  SplittedClass( <cl>, <t> ) . . write <cl> as union of <t> residue classes
+#M  SplittedClass( <cl>, <t> ) . . . . . . . . for residue class of Z or Z_pi
 ##
 InstallMethod( SplittedClass,
                "for residue class of Z or Z_pi (ResClasses)", true,
@@ -683,6 +683,22 @@ InstallMethod( SplittedClass,
     then return fail; fi;
     r := Residues(cl)[1]; m := Modulus(cl);
     return List([0..t-1],k->ResidueClass(R,t*m,k*m+r));
+  end );
+
+#############################################################################
+##
+#M  SplittedClass( <R>, <t> ) . . . . . . . . . . . . . . . . . for Z or Z_pi
+##
+InstallOtherMethod( SplittedClass,
+                    "for Z or Z_pi (ResClasses)", true,
+                    [ IsRing, IsPosInt ], 0,
+
+  function ( R, t )
+    if not IsIntegers(R) and not IsZ_pi(R) then TryNextMethod(); fi;
+    if IsZ_pi(R) and not
+       IsSubset(Union(NoninvertiblePrimes(R),[1]),Set(Factors(t)))
+    then return fail; fi;
+    return List([0..t-1],k->ResidueClass(R,t,k));
   end );
 
 #############################################################################
