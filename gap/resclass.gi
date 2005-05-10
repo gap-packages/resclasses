@@ -2068,10 +2068,17 @@ InstallMethod( RHO,
 
   function ( U )
 
-    local  delta;
+    local  product, factor, classes, cl, delta;
 
-    delta := DELTA(U)/2;
-    return E(DenominatorRat(delta))^NumeratorRat(delta);
+    product := 1;
+    classes := AsListOfClasses(U);
+    for cl in classes do
+      delta  := DELTA(cl)/2;
+      factor := E(DenominatorRat(delta))^NumeratorRat(delta);
+      if Classes(cl)[1][1] < 0 then factor := factor^-1; fi;
+      product := product * factor;
+    od;
+    return product;
   end );
 
 #############################################################################
