@@ -12,14 +12,14 @@
   unions of residue classes of the ring <M>\mathbb{Z}</M> of the integers,
   of its semilocalisations <M>\Z_{(\pi)}</M> at some finite set of primes
   <M>\pi</M> and of the polynomial rings GF(<M>q</M>)[<M>x</M>] for some
-  prime power <M>q</M> as &GAP; domains and provides basic functionality for
-  computing with these sets (intersection, union, difference etc., any of
-  these also when one of the operands is a finite set of elements). It also
-  implements the above-mentioned rings <M>\Z_{(\pi)}</M> as &GAP; domains.
+  prime power <M>q</M> as &GAP; domains. <P/>
+
+  It provides basic functionality for computing with these sets, like
+  forming intersections, unions and differences. Any of this is also
+  supported in the case that one of the operands is a finite set of elements.
+  The package also implements the mentioned rings <M>\Z_{(\pi)}</M> as &GAP;
+  domains.
 
 </Abstract>
 
 <!-- #################################################################### -->
-
-
-
