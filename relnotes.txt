@@ -35,3 +35,10 @@ Changes between version 2.0.2 and version 2.0.3:
 
  - Added `SplittedClass'.
 
+Changes between version 2.0.3 and version 2.0.6:
+
+ - Name changes: `DELTA' --> `Delta' and `RHO' --> `Rho'.
+
+ - Minor improvements in the manual and addition of a few trivial methods
+   covering pathological cases.
+

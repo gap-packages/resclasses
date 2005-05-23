@@ -2026,9 +2026,9 @@ InstallMethod( RepresentativeStabilizingRefinement,
 
 #############################################################################
 ##
-#M  DELTA( <U> ) . . . . . . . . for residue class union of Z with fixed reps
+#M  Delta( <U> ) . . . . . . . . for residue class union of Z with fixed reps
 ##
-InstallMethod( DELTA,
+InstallMethod( Delta,
                "for residue class unions of Z with fixed reps (ResClasses)",
                true, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
                0,
@@ -2039,9 +2039,9 @@ InstallMethod( DELTA,
 
 #############################################################################
 ##
-#M  DELTA( <U> ) . . . . . . . . . . . . . . . . for residue class union of Z
+#M  Delta( <U> ) . . . . . . . . . . . . . . . . for residue class union of Z
 ##
-InstallOtherMethod( DELTA,
+InstallOtherMethod( Delta,
                     "for residue class unions of Z (ResClasses)",
                     true, [ IsUnionOfResidueClassesOfZ ], 0,
 
@@ -2059,9 +2059,9 @@ InstallOtherMethod( DELTA,
 
 #############################################################################
 ##
-#M  RHO( <U> ) . . . . . . . . . for residue class union of Z with fixed reps
+#M  Rho( <U> ) . . . . . . . . . for residue class union of Z with fixed reps
 ##
-InstallMethod( RHO,
+InstallMethod( Rho,
                "for residue class unions of Z with fixed reps (ResClasses)",
                true, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ],
                0,
@@ -2073,7 +2073,7 @@ InstallMethod( RHO,
     product := 1;
     classes := AsListOfClasses(U);
     for cl in classes do
-      delta  := DELTA(cl)/2;
+      delta  := Delta(cl)/2;
       factor := E(DenominatorRat(delta))^NumeratorRat(delta);
       if Classes(cl)[1][1] < 0 then factor := factor^-1; fi;
       product := product * factor;
@@ -2083,9 +2083,9 @@ InstallMethod( RHO,
 
 #############################################################################
 ##
-#M  RHO( <U> ) . . . . . . . . . . . . . . . . . for residue class union of Z
+#M  Rho( <U> ) . . . . . . . . . . . . . . . . . for residue class union of Z
 ##
-InstallOtherMethod( RHO,
+InstallOtherMethod( Rho,
                     "for residue class unions of Z (ResClasses)",
                     true, [ IsUnionOfResidueClassesOfZ ], 0,
 
@@ -2094,7 +2094,7 @@ InstallOtherMethod( RHO,
     local  delta;
 
     if IsEmpty(U) or IsIntegers(U) then return 1; else
-      delta := DELTA(U)/2;
+      delta := Delta(U)/2;
       delta := delta - Int(delta);
       if delta >= 1/2 then delta := delta - 1/2; fi;
       return E(DenominatorRat(delta))^NumeratorRat(delta);

@@ -31,7 +31,7 @@ residue class unions which were described in the previous chapter:
     with fixed representatives rather than like sets of ring elements.
     There are exceptions from this behaviour, e.g. w.r.t. forming
     differences, in order to ensure <Q><M>\delta</M>-additivity</Q>
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA" Label="U"/>).
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
   </Item>
 
   <Mark>-</Mark>
@@ -292,9 +292,9 @@ gap> 1/2+1/7;
     The union of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
   <Description>
-    It holds <C>DELTA(Union(<A>U1</A>,<A>U2</A>))
-    = DELTA(<A>U1</A>) + DELTA(<A>U2</A>)</C>.
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA" Label="U"/>).
+    It holds <C>Delta(Union(<A>U1</A>,<A>U2</A>))
+    = Delta(<A>U1</A>) + Delta(<A>U2</A>)</C>.
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
 <Example>
 <![CDATA[
 gap> Union(U,cl1);
@@ -331,9 +331,9 @@ gap> Intersection(cl2,U);
     The difference of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
   <Description>
-    It holds <C>DELTA(Difference(<A>U1</A>,<A>U2</A>))
-    = DELTA(<A>U1</A>) - DELTA(<A>U2</A>)</C>.
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA" Label="U"/>).
+    It holds <C>Delta(Difference(<A>U1</A>,<A>U2</A>))
+    = Delta(<A>U1</A>) - Delta(<A>U2</A>)</C>.
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
     This is ensured by setting the difference of the empty residue class
     union with fixed representatives and some residue class <M>[r/m]</M>
     equal to <M>[(m-r)/m]</M>.
@@ -401,7 +401,7 @@ gap> U - 17;
   </Returns>
   <Description>
     Scalar multiplication leaves <M>\delta</M> invariant
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA" Label="U"/>).
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
 <Example>
 <![CDATA[
 gap> 3*cl1;
@@ -420,7 +420,7 @@ gap> 7*U;
   </Returns>
   <Description>
     Scalar division leaves <M>\delta</M> invariant
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA" Label="U"/>).
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
     If not all elements of all residue classes in <A>U</A> are divisible
     by&nbsp;<A>x</A>, the method gives up.
 <Example>
@@ -459,8 +459,8 @@ gap> (2*cl1+2)/3;
     The method tries to perform a simplification of <A>U</A> by joining
     appropriate residue classes if the argument <A>k</A> is zero. <P/>
 
-    In any case the value of <C>DELTA(<A>U</A>)</C> is invariant under
-    this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="DELTA" Label="U"/>).
+    In any case the value of <C>Delta(<A>U</A>)</C> is invariant under
+    this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
 <Example>
 <![CDATA[
 gap> cl := ResidueClassUnionWithFixedReps(Integers,[[2,1]]);
@@ -482,7 +482,7 @@ gap> RepresentativeStabilizingRefinement(S,0);
 </ManSection>
 
 <ManSection>
-  <Attr Name="DELTA" Arg="U" Label="U"/>
+  <Attr Name="Delta" Arg="U" Label="U"/>
   <Returns>
     The value of the invariant <M>\delta</M> of the
     residue class union&nbsp;<A>U</A>.
@@ -494,11 +494,11 @@ gap> RepresentativeStabilizingRefinement(S,0);
     is still unique (mod&nbsp;1).
 <Example>
 <![CDATA[
-gap> [ DELTA(U), (1/2-1/2)+(4/7-1/2) ];
+gap> [ Delta(U), (1/2-1/2)+(4/7-1/2) ];
 [ 1/14, 1/14 ]
 gap> V := RepresentativeStabilizingRefinement(U,3);
 [1/6] U [3/6] U [5/6] U [4/21] U [11/21] U [18/21]
-gap> DELTA(V) = (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
+gap> Delta(V) = (1/6-1/2)+(3/6-1/2)+(5/6-1/2)+(4/21-1/2)+(11/21-1/2)+(18/21-1/2);
 true
 ]]>
 </Example>
@@ -506,7 +506,7 @@ true
 </ManSection>
 
 <ManSection>
-  <Attr Name="RHO" Arg="U" Label="U"/>
+  <Attr Name="Rho" Arg="U" Label="U"/>
   <Returns>
     The value of the invariant <M>\rho</M> of the
     residue class union&nbsp;<A>U</A>.
