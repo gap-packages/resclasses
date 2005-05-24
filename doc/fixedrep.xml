@@ -512,7 +512,7 @@ true
     residue class union&nbsp;<A>U</A>.
   </Returns>
   <Description>
-    For a union $U \subseteq \Z$ of finitely many residue classes,
+    For a union <M>U \subseteq \Z</M> of finitely many residue classes,
     we set <M>\rho(U) := e^{\pi i \delta(U)}</M>.
   </Description>
 </ManSection>
