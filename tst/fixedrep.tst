@@ -133,6 +133,9 @@ gap> U := RepresentativeStabilizingRefinement(U,3);
 <union of 12 residue classes of Z with fixed representatives>
 gap> RepresentativeStabilizingRefinement(U,0);
 [1/3] U [1/3]
+gap> U := ResidueClassUnionWithFixedReps([[-1,3],[1,3],[3,3]]);;
+gap> U = RepresentativeStabilizingRefinement(U,0);
+true
 gap> R := PolynomialRing(GF(2),1);;
 gap> x := IndeterminatesOfPolynomialRing(R)[1];; SetName(x,"x");;
 gap> cl := ResidueClassWithFixedRepresentative(R,x^2+One(R),One(R));
