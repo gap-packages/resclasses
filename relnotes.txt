@@ -48,3 +48,10 @@ Changes between version 2.0.5 and version 2.0.6:
    gap> U := ResidueClassUnionWithFixedReps([[-1,3],[1,3],[3,3]]);;
    gap> U = RepresentativeStabilizingRefinement(U,0);
    true
+
+Changes between version 2.0.6 and version 2.1.0:
+
+ - Significant performance improvements in `Union', `Intersection',
+   `Difference' and `AsUnionOfFewClasses' for `sparse' unions of
+   residue classes.
+

@@ -633,7 +633,8 @@ InstallMethod( AsUnionOfFewClasses,
     S := []; remaining := U;
     div := DivisorsInt(m);
     for d in div do
-      if m mod d <> 0 then continue; fi; pos := 1;
+      if m mod d <> 0 or m/d > Length(res) then continue; fi;
+      pos := 1;
       while pos <= Length(res) do
         if IsSubset(res,List([1..m/d],i->(i-1)*d+(res[pos] mod d))) then
           Si := ResidueClass(Integers,d,res[pos]);
@@ -1198,7 +1199,8 @@ InstallMethod( Union2,
 
   function ( U1, U2 )
 
-    local  R, m1, m2, m, r1, r2, r, included, excluded, allres;
+    local  R, m1, m2, m, r1, r2, r, included, excluded,
+           r1exp, r2exp, allres;
 
     R := UnderlyingRing(FamilyObj(U1));
     m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
@@ -1206,8 +1208,14 @@ InstallMethod( Union2,
     included := Union(U1!.included,U2!.included);
     excluded := Difference(Union(Difference(U1!.excluded,U2),
                                  Difference(U2!.excluded,U1)),included);
-    allres := AllResidues(R,m);
-    r := Filtered(allres,n->n mod m1 in r1 or n mod m2 in r2);
+    if IsIntegers(R) then
+      r1exp := Concatenation(List([0..m/m1-1],i->i*m1+r1));
+      r2exp := Concatenation(List([0..m/m2-1],i->i*m2+r2));
+      r     := Union(r1exp,r2exp);
+    else
+      allres := AllResidues(R,m);
+      r := Filtered(allres,n->n mod m1 in r1 or n mod m2 in r2);
+    fi;
     return ResidueClassUnion(R,m,r,included,excluded);
   end );
 
@@ -1241,7 +1249,9 @@ InstallMethod( Intersection2,
 
   function ( U1, U2 )
 
-    local  R, m1, m2, m, r1, r2, r, included, excluded, gcd, allres;
+    local  R, m1, m2, m, r1, r2, r, included, excluded,
+           gcd, rescsd, res, res1, res2, pairs, pair, allres,
+           crt, bruteforce;
 
     R := UnderlyingRing(FamilyObj(U1));
     m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
@@ -1251,10 +1261,19 @@ InstallMethod( Intersection2,
                                     or n in U2!.included and n mod m1 in r1);
     included := Union(included,Intersection(U1!.included,U2!.included));
     excluded := Union(U1!.excluded,U2!.excluded);
-    if IsIntegers(R) and m * Gcd(m1,m2) > 100 * Length(r1) * Length(r2) then
-      gcd := Gcd(m1,m2);
-      r := List(Filtered(Cartesian(r1,r2),t1->(t1[1]-t1[2]) mod gcd = 0),
-                t2->ChineseRem([m1,m2],t2));
+    crt        := ValueOption("CRTIntersection")        = true;
+    bruteforce := ValueOption("BruteForceIntersection") = true;
+    if IsIntegers(R)
+      and (crt or m > 10^6 or m1 * m2 > 100 * Length(r1) * Length(r2))
+      and not bruteforce
+    then
+      gcd    := Gcd(m1,m2);
+      rescsd := Intersection(Set(r1 mod gcd),Set(r2 mod gcd));
+      r1 := Filtered(r1,res->res mod gcd in rescsd);
+      r2 := Filtered(r2,res->res mod gcd in rescsd);
+      pairs := Concatenation(List(r1,res1->List(Filtered(r2,
+                 res->(res1-res) mod gcd = 0),res2->[res1,res2])));
+      r := Set(List(pairs,pair->ChineseRem([m1,m2],pair)));
     else
       allres := AllResidues(R,m);
       r := Filtered(allres,n->n mod m1 in r1 and n mod m2 in r2);
@@ -1294,7 +1313,7 @@ InstallMethod( Difference,
 
   function ( U1, U2 )
 
-    local  R, m1, m2, m, r1, r2, r, included, excluded, allres;
+    local  R, m1, m2, m, r1, r2, r, included, excluded, allres, expres;
 
     R := UnderlyingRing(FamilyObj(U1));
     m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
@@ -1304,8 +1323,13 @@ InstallMethod( Difference,
                          n -> n in U1!.included and not n mod m2 in r2
                            or n in U2!.excluded and n mod m1 in r1);
     excluded := Union(U1!.excluded,U2!.included);
-    allres := AllResidues(R,m);
-    r := Filtered(allres,n->n mod m1 in r1 and not n mod m2 in r2);
+    if IsIntegers(R) then
+      expres := Concatenation(List([0..m/m1-1],i->i*m1+r1));
+      r      := Filtered(expres,n -> not n mod m2 in r2);
+    else
+      allres := AllResidues(R,m);
+      r      := Filtered(allres,n -> n mod m1 in r1 and not n mod m2 in r2);
+    fi;
     return ResidueClassUnion(R,m,r,included,excluded);
   end );
 
