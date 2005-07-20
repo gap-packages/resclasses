@@ -530,6 +530,26 @@ InstallMethod( Modulus,
 
 #############################################################################
 ##
+#M  Modulus( [  ] ) . . . . . . . . . . . . . . . . . . . . . . for empty set
+##
+##  Since the empty list carries no information about the objects it does not
+##  contain, this method silently assumes that these are supposed to be
+##  integers, and returns 0.
+##
+InstallOtherMethod( Modulus,
+                    "for empty set (ResClasses)", true,
+                    [ IsList and IsEmpty ], 0, empty -> 0 );
+
+#############################################################################
+##
+#M  Modulus( <l> ) . . . . . . . . . . . . . . . . . . . . . . for finite set
+##
+InstallOtherMethod( Modulus,
+                    "for empty set (ResClasses)", true,
+                    [ IsList ], 0, l -> Zero( l[ 1 ] ) );
+
+#############################################################################
+##
 #M  Modulus( <R> ) . . . . . . . . . . . . . . . . . . . . . .  for base ring
 ##
 InstallOtherMethod( Modulus,
