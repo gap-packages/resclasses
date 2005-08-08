@@ -179,7 +179,8 @@ InstallMethod( String,
     local  F, q, x, IndNr, IndName;
 
     F := CoefficientsRing(R); q := Size(F);
-    if not IsFinite(F) or F <> GF(q) then TryNextMethod(); fi;
+    if   not IsFinite(F) or q > MAXSIZE_GF_INTERNAL or F <> GF(q)
+    then TryNextMethod(); fi;
     x := IndeterminatesOfPolynomialRing(R)[1];
     IndNr := IndeterminateNumberOfUnivariateLaurentPolynomial(x);
     IndName := IndeterminateName(FamilyObj(x),IndNr);
@@ -202,7 +203,8 @@ InstallMethod( ViewObj,
     local  F, q;
 
     F := CoefficientsRing(R); q := Size(F);
-    if not IsFinite(F) or F <> GF(q) then TryNextMethod(); fi;
+    if   not IsFinite(F) or q > MAXSIZE_GF_INTERNAL or F <> GF(q)
+    then TryNextMethod(); fi;
     Print(String(R));
   end );
 
