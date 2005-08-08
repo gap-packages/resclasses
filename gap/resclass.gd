@@ -446,4 +446,12 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 
 #############################################################################
 ##
+#A  UnderlyingField( <obj> ) . . . . . . .  field underlying the object <obj>
+#A  UnderlyingVectorSpace( <obj> ) . vector space underlying the object <obj>
+##
+DeclareAttribute( "UnderlyingField", IsObject );
+DeclareAttribute( "UnderlyingVectorSpace", IsObject );
+
+#############################################################################
+##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
