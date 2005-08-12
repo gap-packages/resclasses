@@ -49,9 +49,15 @@ Changes between version 2.0.5 and version 2.0.6:
    gap> U = RepresentativeStabilizingRefinement(U,0);
    true
 
-Changes between version 2.0.6 and version 2.1.0:
+Changes between version 2.0.6 and version 2.1.0 (August 8, 2005):
 
  - Significant performance improvements in `Union', `Intersection',
    `Difference' and `AsUnionOfFewClasses' for `sparse' unions of
    residue classes.
+
+Changes between version 2.0.6 and version 2.1.1:
+
+ - Adapt to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
+   for families.
+
 
