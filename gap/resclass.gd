@@ -135,14 +135,6 @@ DeclareGlobalFunction( "ResidueClassUnionsFamily" );
 
 #############################################################################
 ##
-#V  ZResidueClassUnionsFamily . . . . family of all residue class unions of Z
-#V  ZFResidueClassUnionsWithFixedRepresentativesFamily . same with fixed reps
-##
-DeclareGlobalVariable( "ZResidueClassUnionsFamily" );
-DeclareGlobalVariable( "ZResidueClassUnionsWithFixedRepresentativesFamily" );
-
-#############################################################################
-##
 #F  Z_piResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
 ##
 ##  Family of unions of residue classes of the ring $R = \Z_{(\pi)}$ and

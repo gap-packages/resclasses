@@ -50,25 +50,27 @@ InstallTrueMethod( IsUnionOfResidueClassesWithFixedRepresentatives,
 ##
 #V  ZResidueClassUnionsFamily . . the family of all residue class unions of Z
 ##
-InstallValue( ZResidueClassUnionsFamily,
-              NewFamily( "ResidueClassUnionsFamily( Integers )",
-                         IsUnionOfResidueClassesOfZ,
-                         CanEasilySortElements, CanEasilySortElements ) );
+ZResidueClassUnionsFamily :=
+  NewFamily( "ResidueClassUnionsFamily( Integers )",
+             IsUnionOfResidueClassesOfZ,
+             CanEasilySortElements, CanEasilySortElements );
 SetUnderlyingRing( ZResidueClassUnionsFamily, Integers );
 SetElementsFamily( ZResidueClassUnionsFamily, FamilyObj( 1 ) );
+MakeReadOnlyGlobal( "ZResidueClassUnionsFamily" );
 
 #############################################################################
 ##
 #V  ZResidueClassUnionsWithFixedRepresentativesFamily .  same with fixed reps
 ##
-InstallValue( ZResidueClassUnionsWithFixedRepresentativesFamily,
-              NewFamily( "ResidueClassUnionsFamily( Integers, true )",
-                         IsUnionOfResidueClassesWithFixedRepresentatives,
-                         CanEasilySortElements, CanEasilySortElements ) );
+ZResidueClassUnionsWithFixedRepresentativesFamily :=
+  NewFamily( "ResidueClassUnionsFamily( Integers, true )",
+             IsUnionOfResidueClassesWithFixedRepresentatives,
+             CanEasilySortElements, CanEasilySortElements );
 SetUnderlyingRing( ZResidueClassUnionsWithFixedRepresentativesFamily,
                    Integers );
 SetElementsFamily( ZResidueClassUnionsWithFixedRepresentativesFamily,
                    ZResidueClassUnionsWithFixedRepresentativesFamily );
+MakeReadOnlyGlobal( "ZResidueClassUnionsWithFixedRepresentativesFamily" );
 
 #############################################################################
 ##
