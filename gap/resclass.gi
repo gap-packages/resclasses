@@ -173,22 +173,21 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
 ##
 InstallMethod( String,
                Concatenation("for univariate polynomial rings ",
-                             "over finite fields (ResClasses)"),
-               true, [ IsUnivariatePolynomialRing ], 0,
+                             "over finite fields (ResClasses)"), true, 
+               [     IsUnivariatePolynomialRing
+                 and IsFiniteFieldPolynomialRing ], 0,
 
   function ( R )
 
-    local  F, q, x, IndNr, IndName;
+    local  x, IndNr, IndName;
 
-    F := CoefficientsRing(R); q := Size(F);
-    if   not IsFinite(F) or q > MAXSIZE_GF_INTERNAL or F <> GF(q)
-    then TryNextMethod(); fi;
     x := IndeterminatesOfPolynomialRing(R)[1];
     IndNr := IndeterminateNumberOfUnivariateLaurentPolynomial(x);
     IndName := IndeterminateName(FamilyObj(x),IndNr);
     if   IndName = fail
     then IndName := Concatenation("x_",String(IndNr)); fi;
-    return Concatenation( "GF(", String(q), ")[", IndName, "]" );
+    return Concatenation( "GF(", String(Size(CoefficientsRing(R))),
+                          ")[", IndName, "]" );
   end );
 
 #############################################################################
@@ -197,18 +196,10 @@ InstallMethod( String,
 ##
 InstallMethod( ViewObj,
                Concatenation("for univariate polynomial rings ",
-                             "over finite fields (ResClasses)"),
-               true, [ IsUnivariatePolynomialRing ], 100,
-
-  function ( R )
-
-    local  F, q;
-
-    F := CoefficientsRing(R); q := Size(F);
-    if   not IsFinite(F) or q > MAXSIZE_GF_INTERNAL or F <> GF(q)
-    then TryNextMethod(); fi;
-    Print(String(R));
-  end );
+                             "over finite fields (ResClasses)"), true,
+               [     IsUnivariatePolynomialRing
+                 and IsFiniteFieldPolynomialRing ], 100,
+               function ( R ) Print( String( R ) ); end );
 
 # Buffer for storing already computed polynomial residue systems.
 
