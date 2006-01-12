@@ -64,5 +64,8 @@ Changes between version 2.1.1 and version 2.1.2 :
 
  - Added property `IsResidueClass'.
 
+Changes between version 2.1.2 and version ... :
 
+ - Made `AsUnionOfFewClasses' more efficient for `dense' unions
+   of residue classes.
 
