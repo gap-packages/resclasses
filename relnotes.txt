@@ -60,4 +60,9 @@ Changes between version 2.0.6 and version 2.1.1:
  - Adapted to an incompatible change in GAP 4.4.6 w.r.t. `InstallValue'
    for families.
 
+Changes between version 2.1.1 and version 2.1.2 :
+
+ - Added property `IsResidueClass'.
+
+
 

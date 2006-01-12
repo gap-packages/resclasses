@@ -44,6 +44,25 @@ The residue class Z(7) ( mod x+Z(7)^0 ) of GF(7)[x]
 </ManSection>
 
 <ManSection>
+  <Prop Name="IsResidueClass" Arg="obj" Label="obj"/>
+  <Returns>
+    <C>true</C> if <A>obj</A> is a (single) residue class and <C>false</C>
+    otherwise.
+  </Returns>
+  <Description>
+    Rings are regarded as residue class 0&nbsp;(mod&nbsp;1).
+<Example>
+<![CDATA[
+gap> IsResidueClass(A);
+true
+gap> IsResidueClass(Z_pi([2,5]));
+true
+]]>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Func Name="ResidueClassUnion"
         Arg="R, m, r" Label="R, m, r"/>
   <Func Name="ResidueClassUnion"
@@ -105,8 +124,10 @@ gap> AllResidueClassesModulo(R,x);
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 A transversal for the set of residue classes (mod&nbsp;<M>m</M>)
-can be obtained with the following function:
+can be obtained by the following function:
 
 <ManSection>
   <Func Name="AllResidues" Arg="R, m" Label="R, m"/>
@@ -263,8 +284,6 @@ Z_( 2, 3, 7 ) \ [ 1/55, 1/5 ]
   </Description>
 </ManSection>
 
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
-
 If the underlying ring has a residue class ring of some cardinality
 <M>t</M>, then a residue class can be written as a disjoint union of
 <M>t</M> residue classes with equal moduli:
@@ -319,8 +338,6 @@ gap> AsUnionOfFewClasses(K);
 </Example>
   </Description>
 </ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 One can add / subtract a constant to / from all elements of a union of
 residue classes, and one can multiply or divide the elements by a constant:
@@ -387,8 +404,6 @@ gap> 2*Difference(Integers,[1,2,3]);
 </Example>
   </Description>
 </ManSection>
-
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Meth Name="\/" Arg="U, x" Label="U, x"/>

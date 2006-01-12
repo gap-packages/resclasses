@@ -465,7 +465,7 @@ InstallGlobalFunction( ResidueClass,
 
   function ( arg )
 
-    local  R, m, r;
+    local  R, m, r, cl;
 
     if Length(arg) = 3 then
       R := arg[1]; m := arg[2]; r := arg[3];
@@ -476,9 +476,26 @@ InstallGlobalFunction( ResidueClass,
       then Error( "usage: see ?ResidueClass\n"); fi;
       R := Integers; m := Maximum(arg); r := Minimum(arg);
     else
-     Error( "usage: see ?ResidueClass\n");
+      Error( "usage: see ?ResidueClass\n");
     fi;
-    return ResidueClassUnion( R, m, [ r ] );
+    cl := ResidueClassUnion( R, m, [ r ] );
+    SetIsResidueClass(cl,true);
+    return cl;
+  end );
+
+#############################################################################
+##
+#M  IsResidueClass( <obj> ) . . . . . . . . . . . . . . . . .  generic method
+##
+InstallMethod( IsResidueClass,
+               "generic method (ResClasses)", true, [ IsObject ], 0,
+
+  function ( obj )
+    if IsRing(obj) then return true; fi;
+    if    IsUnionOfResidueClasses(obj) and Length(Residues(obj)) = 1
+      and IncludedElements(obj) = [] and ExcludedElements(obj) = []
+    then return true; fi;
+    return false;
   end );
 
 #############################################################################

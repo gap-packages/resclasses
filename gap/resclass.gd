@@ -238,6 +238,12 @@ DeclareGlobalFunction( "ResidueClass" );
 
 #############################################################################
 ##
+#P  IsResidueClass( <obj> ) . . . . . . . . . . <obj> is single residue class
+##
+DeclareProperty( "IsResidueClass", IsObject );
+
+#############################################################################
+##
 #F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> )  same with fixed rep
 #F  ResidueClassWithFixedRepresentative( <m>, <r> )
 #F  ResidueClassWithFixedRep( <R>, <m>, <r> )
