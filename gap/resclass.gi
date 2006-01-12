@@ -659,27 +659,39 @@ InstallMethod( AsUnionOfFewClasses,
 
   function ( U )
 
-    local  S, Si, remaining, m, res, div, d, pos;
+    local  cls, cl, remaining, m, res, div, d, pos, r;
 
     m := Modulus(U); res := Residues(U);
-    S := []; remaining := U;
+    cls := []; remaining := U;
     div := DivisorsInt(m);
     for d in div do
       if m mod d <> 0 or m/d > Length(res) then continue; fi;
-      pos := 1;
-      while pos <= Length(res) do
-        if IsSubset(res,List([1..m/d],i->(i-1)*d+(res[pos] mod d))) then
-          Si := ResidueClass(Integers,d,res[pos]);
-          Add(S,Si); remaining := Difference(remaining,Si);
-          if IsList(remaining) then break; fi;
-          m := Modulus(remaining); res := Residues(remaining); pos := 0;
-          if m mod d <> 0 then break; fi;
-        fi;
-        pos := pos + 1;
-      od;
+      if 100 * Length(res) > m then
+        for r in [0..d-1] do
+          if IsSubset(res,[r,r+d..r+(m/d-1)*d]) then
+            cl := ResidueClass(Integers,d,r);
+            Add(cls,cl);  remaining := Difference(remaining,cl);
+            if IsList(remaining) then break; fi;
+            m := Modulus(remaining); res := Residues(remaining);
+            if m mod d <> 0 then break; fi;
+          fi;
+        od;
+      else
+        pos := 1;
+        while pos <= Length(res) do
+          if IsSubset(res,List([1..m/d],i->(i-1)*d+(res[pos] mod d))) then
+            cl := ResidueClass(Integers,d,res[pos]);
+            Add(cls,cl); remaining := Difference(remaining,cl);
+            if IsList(remaining) then break; fi;
+            m := Modulus(remaining); res := Residues(remaining); pos := 0;
+            if m mod d <> 0 then break; fi;
+          fi;
+          pos := pos + 1;
+        od;
+      fi;
       if IsList(remaining) then break; fi;
     od;
-    return S;
+    return cls;
   end );
 
 #############################################################################
