@@ -38,8 +38,7 @@
   <Date>January 12, 2006</Date>
   <Copyright>
     &copyright; 2003 - 2006 by Stefan Kohl <P/>
-    This package is distributed under the same conditions as
-    the &GAP; system.
+    This package is distributed under the GNU General Public License.
   </Copyright>
   <#Include SYSTEM "abstract.xml">
 </TitlePage>
