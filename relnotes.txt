@@ -10,7 +10,7 @@ Changes between version 1.0 and version 1.1:
 
  - An attribute `Density' has been added.
 
-Changes between version 1.1 and version 2.0:
+Changes between version 1.1 and version 2.0 (June 3, 2004):
 
  - A function `AllResidueClassesModulo' has been added.
 
@@ -65,6 +65,4 @@ Changes between version 2.0.6 and version 2.1.1:
 Changes between version 2.1.1 and version 2.1.2 :
 
  - A property `IsResidueClass' has been added.
-
-
 
