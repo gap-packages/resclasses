@@ -142,9 +142,9 @@ gap> Difference([2,4,7,8],A);
 gap> I := ResidueClassUnion(Integers,6,[1,5]);
 Union of the residue classes 1(6) and 5(6) of Z
 gap> J := ResidueClassUnion(Integers,5,[1,2,3,4]);
-Union of the residue classes 1(5), 2(5), 3(5) and 4(5) of Z
+Z \ The residue class 0(5) of Z
 gap> K := Union(I,J);
-<union of 26 residue classes (mod 30) of Z>
+Z \ Union of the residue classes 0(10) and 15(30) of Z
 gap> Residues(K);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24, 
   25, 26, 27, 28, 29 ]
@@ -266,7 +266,7 @@ true
 gap> Difference(ResidueClass(Integers,6,1),Integers);
 [  ]
 gap> Difference(Integers,ResidueClass(Integers,6,1));
-Union of the residue classes 0(2), 3(6) and 5(6) of Z
+Z \ The residue class 1(6) of Z
 gap> Difference(Integers,Integers);
 [  ]
 gap> Intersection(Integers,ResidueClass(Integers,6,1));
