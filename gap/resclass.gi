@@ -662,6 +662,7 @@ InstallMethod( AsUnionOfFewClasses,
     local  cls, cl, remaining, m, res, div, d, pos, r;
 
     m := Modulus(U); res := Residues(U);
+    if Length(res) = 1 then return [ ResidueClass(Integers,m,res[1]) ]; fi;
     cls := []; remaining := U;
     div := DivisorsInt(m);
     for d in div do
@@ -696,11 +697,11 @@ InstallMethod( AsUnionOfFewClasses,
 
 #############################################################################
 ##
-#M  AsUnionOfFewClasses( [  ] ) . . . . . . . . . . . . . . . . for empty set
+#M  AsUnionOfFewClasses( <l> ) . . . . . . . . . . for finite set of elements
 ##
 InstallOtherMethod( AsUnionOfFewClasses,
-                    "for empty set (ResClasses)", true,
-                    [ IsList and IsEmpty ], 0, l -> [  ] );
+                    "for finite set of elements (ResClasses)", true,
+                    [ IsList ], 0, l -> [  ] );
 
 #############################################################################
 ##
@@ -794,19 +795,32 @@ InstallMethod( ViewObj,
 
   function ( U )
 
-    local  R, m, r, included, excluded, PrintFiniteSet, n, cl, endval, short;
+    local  R, m, r, included, excluded, PrintFiniteSet, n, cl, endval,
+           short, display;
 
     PrintFiniteSet := function ( S )
-      if   Length(String(S)) <= 32
+      if   Length(String(S)) <= 32 or display
       then Print(S);
       else Print("<set of cardinality ",Length(S),">"); fi;
     end;
 
-    short := RESCLASSES_VIEWING_FORMAT = "short";
+    short   := RESCLASSES_VIEWING_FORMAT = "short";
+    display := ValueOption("RC_DISPLAY") = true;
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
-    if   IsIntegers(R) and Length(r) < 20 and m < 1000
-    then cl := AsUnionOfFewClasses(U); fi;
+    if IsIntegers(R) or display then
+      if   Length(r) <= 20 or (display and Length(r) <= m/2)
+      then cl := AsUnionOfFewClasses(U); fi;
+      if   (display or Length(r) > m - 20)
+        and Length(r) > m/2
+        and included = [] and excluded = []
+        and Length(AsUnionOfFewClasses(Difference(Integers,U))) <= 3
+      then
+        Print("Z \\ ");
+        View(Difference(Integers,U));
+        return;
+      fi;
+    fi;
     if   IsIntegers(R) and (IsBound(cl) and Length(cl) < 6 or Length(r) < 6)
       or Length(r) = 1
     then
