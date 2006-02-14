@@ -66,3 +66,10 @@ Changes between version 2.1.1 and version 2.1.2 :
 
  - A property `IsResidueClass' has been added.
 
+Changes between version 2.1.2 and version ... :
+
+ - The output of the `View' and `Display' methods for unions of residue
+   classes has been improved.
+
+ - `AsUnionOfFewClasses' has been made another bit more efficient.
+

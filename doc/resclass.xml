@@ -236,11 +236,8 @@ Z \ The residue class 0(3) of Z
 gap> L := Intersection(I,J);
 <union of 8 residue classes (mod 30) of Z>
 gap> Display(L);
-
-The union of the residue classes r ( mod 30 ) of Z for r =
-
-  1  7 11 13 17 19 23 29
-
+Union of the residue classes 1(30), 7(30), 11(30), 13(30), 17(30), 19(30), 23(
+30) and 29(30) of Z
 gap> cl := List([1..25],i->ResidueClass(Integers,Primes[i],i));;
 gap> cl_int := Intersection(cl);
 The residue class 941584379775558526136539054851975983(
@@ -270,11 +267,8 @@ Union of the residue classes 5(30) and 25(30) of Z
 gap> N := Difference(J,I);
 <union of 16 residue classes (mod 30) of Z>
 gap> Display(N);
-
-The union of the residue classes r ( mod 30 ) of Z for r =
-
-  2  3  4  6  8  9 12 14 16 18 21 22 24 26 27 28
-
+Union of the residue classes 2(10), 4(10), 6(10), 8(10), 3(30), 9(30), 21(
+30) and 27(30) of Z
 gap> Difference(Integers,[1,2,3]);
 Z \ [ 1, 2, 3 ]
 gap> Difference(Z_pi([2,3,7]),[1/5,1/55]);
@@ -352,11 +346,8 @@ residue classes, and one can multiply or divide the elements by a constant:
 <Example>
 <![CDATA[
 gap> Display(L+1);
-
-The union of the residue classes r ( mod 30 ) of Z for r =
-
-  0  2  8 12 14 18 20 24
-
+Union of the residue classes 0(30), 2(30), 8(30), 12(30), 14(30), 18(30), 20(
+30) and 24(30) of Z
 gap> L+30 = L;
 true
 ]]>

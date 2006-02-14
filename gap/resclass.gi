@@ -808,7 +808,7 @@ InstallMethod( ViewObj,
     display := ValueOption("RC_DISPLAY") = true;
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
-    if IsIntegers(R) or display then
+    if IsIntegers(R) then
       if   Length(r) <= 20 or (display and Length(r) <= m/2)
       then cl := AsUnionOfFewClasses(U); fi;
       if   (display or Length(r) > m - 20)
@@ -821,8 +821,8 @@ InstallMethod( ViewObj,
         return;
       fi;
     fi;
-    if   IsIntegers(R) and (IsBound(cl) and Length(cl) < 6 or Length(r) < 6)
-      or Length(r) = 1
+    if IsIntegers(R) and (display or IsBound(cl) and Length(cl) < 6
+      or Length(r) < 6) or Length(r) = 1
     then
       if IsOne(m) then
         Print(RingToString(R)," \\ "); PrintFiniteSet(excluded);
@@ -1023,6 +1023,15 @@ DisplayArray := function ( l )
   Print("\n\n");
 end;
 MakeReadOnlyGlobal( "DisplayArray" );
+
+#############################################################################
+##
+#M  Display( <U> ) . . . . . . . . . . . . . . . for residue class union of Z
+##
+InstallMethod( Display,
+               "for residue class unions of Z (ResClasses)", true,
+               [ IsUnionOfResidueClassesOfZ ], 0,
+               function ( U ) ViewObj(U:RC_DISPLAY); Print("\n"); end );
 
 #############################################################################
 ##
