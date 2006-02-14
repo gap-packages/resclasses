@@ -57,7 +57,7 @@ Changes between version 2.0.6 and version 2.1.0 (August 8, 2005):
    `Difference' and `AsUnionOfFewClasses' for `sparse' unions of
    residue classes have been obtained.
 
-Changes between version 2.0.6 and version 2.1.1:
+Changes between version 2.1.0 and version 2.1.1:
 
  - An adaptation to an incompatible change in GAP 4.4.6 w.r.t.
    `InstallValue' for families has been made.
@@ -66,7 +66,7 @@ Changes between version 2.1.1 and version 2.1.2 :
 
  - A property `IsResidueClass' has been added.
 
-Changes between version 2.1.2 and version ... :
+Changes between version 2.1.2 and version 2.2.0 (February 14, 2006):
 
  - The output of the `View' and `Display' methods for unions of residue
    classes has been improved.
