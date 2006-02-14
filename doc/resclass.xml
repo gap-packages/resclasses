@@ -250,6 +250,8 @@ gap> List(Primes{[1..25]},p->Representative(cl_int) mod p);
   </Description>
 </ManSection>
 
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <ManSection>
   <Meth Name="Difference" Arg="U1, U2" Label="U1, U2"/>
   <Meth Name="Difference" Arg="U, S" Label="U, S"/>
@@ -310,6 +312,8 @@ classes into <Q>few</Q> residue classes. Ensuring to get always a
 partition of minimal possible length seems to be algorithmically
 difficult. The following yields usually <Q>reasonably short</Q>
 partitions:
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Oper Name="AsUnionOfFewClasses" Arg="U" Label="U"/>
