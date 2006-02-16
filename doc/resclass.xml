@@ -29,6 +29,8 @@
     and <A>r</A> is assumed to lie in the range <C>[0..<A>m</A>-1]</C>.
     The latter is used to decide which of the two arguments is the modulus
     <A>m</A>, and which is the residue&nbsp;<A>r</A>.
+    For convenience, in the two-argument case it is permitted to enclose
+    the argument list in list brackets. 
 <Example>
 <![CDATA[
 gap> A := ResidueClass(2,3);
