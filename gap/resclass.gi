@@ -815,7 +815,7 @@ InstallMethod( ViewObj,
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
     if IsIntegers(R) then
-      if   Length(r) <= 20 or (display and Length(r) <= m/2)
+      if   display or Length(r) <= 20
       then cl := AsUnionOfFewClasses(U); fi;
       if   (display or Length(r) > m - 20)
         and Length(r) > m/2
