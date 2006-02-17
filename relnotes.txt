@@ -62,7 +62,7 @@ Changes between version 2.1.0 and version 2.1.1:
  - An adaptation to an incompatible change in GAP 4.4.6 w.r.t.
    `InstallValue' for families has been made.
 
-Changes between version 2.1.1 and version 2.1.2 :
+Changes between version 2.1.1 and version 2.1.2:
 
  - A property `IsResidueClass' has been added.
 
@@ -72,4 +72,11 @@ Changes between version 2.1.2 and version 2.2.0 (February 14, 2006):
    classes has been improved.
 
  - `AsUnionOfFewClasses' has been made another bit more efficient.
+
+Changes between version 2.2.0 and version 2.2.1:
+
+ - For convenience, `ResidueClass' now accepts also a list [r,m] as argument.
+
+ - The output of `Display' for unions of residue classes has been improved
+   a bit further.
 
