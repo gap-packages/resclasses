@@ -444,10 +444,4 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 
 #############################################################################
 ##
-#A  UnderlyingField( <obj> ) . . . . . . .  field underlying the object <obj>
-##
-DeclareAttribute( "UnderlyingField", IsObject );
-
-#############################################################################
-##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
