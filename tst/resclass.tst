@@ -58,13 +58,13 @@ gap> String(C);
 gap> String(F);
 "ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )"
 gap> String(H);
-"ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )"
+"ResidueClassUnion( Z_pi( [ 2, 3 ] ), 8, [ 3, 5 ] )"
 gap> Print(C,"\n");
 ResidueClassUnion( PolynomialRing( GF(7), ["x"] ), x+Z(7)^0, [ Z(7) ] )
 gap> Print(F,"\n");
 ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )
 gap> Print(H,"\n");
-ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )
+ResidueClassUnion( Z_pi( [ 2, 3 ] ), 8, [ 3, 5 ] )
 gap> Display(F);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> Display(G);

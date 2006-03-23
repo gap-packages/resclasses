@@ -68,7 +68,16 @@ InstallOtherMethod( IsZ_pi, "for non-Z_pi (ResClasses)", true,
 ##
 InstallMethod( String,
                "for Z_pi (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
-               R -> Name( R ) );
+
+  R -> Concatenation( "Z_pi( ", String( NoninvertiblePrimes( R ) ), " )" ) );
+
+#############################################################################
+##
+#M  PrintObj( <R> ) . . . . . . . . . . . . . . . . . . . . . . . .  for Z_pi
+##
+InstallMethod( PrintObj,
+               "for Z_pi (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
+               function ( R ) Print( String( R ) ); end );
 
 #############################################################################
 ##

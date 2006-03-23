@@ -31,11 +31,15 @@ InstallMethod( String,
 
 #############################################################################
 ##
-#M  ViewString( <obj> ) . . . . . . . . default method - dispatch to `String'
+#M  ViewString( <obj> ) . default method - use `Name' or dispatch to `String'
 ##
 InstallMethod( ViewString,
-               "default method - dispatches to `String' (ResClasses)", true, 
-               [ IsObject ], 0, String );
+               Concatenation("default method - use `Name' or dispatch to ",
+                             "`String' (ResClasses)"), true, [ IsObject ], 0,
+
+  function ( obj )
+    if HasName(obj) then return Name(obj); else return String(obj); fi;
+  end );
 
 #############################################################################
 ##
