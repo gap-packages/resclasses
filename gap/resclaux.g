@@ -12,7 +12,7 @@ Revision.resclaux_g :=
 
 #############################################################################
 ##
-#M  String( <obj> ) . . . . . .  default method, returns the output by `Print'
+#M  String( <obj> ) . . . . . . default method, returns the output by `Print'
 ##
 InstallMethod( String,
                "default method, returns the output by `Print' (ResClasses)",
