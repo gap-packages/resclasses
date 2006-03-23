@@ -80,3 +80,7 @@ Changes between version 2.2.0 and version 2.2.1:
  - The output of `Display' for unions of residue classes has been improved
    a bit further.
 
+Changes between version 2.2.1 and version 2.2.2:
+
+ - A couple of minor output formatting improvements have been made.
+
