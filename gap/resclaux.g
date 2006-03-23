@@ -4,15 +4,59 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains auxiliary functions for the ResClasses package.
+##  This file contains some auxiliary functions for the ResClasses package
+##  and a couple of methods which might later be moved into the GAP Library.
 ##
 Revision.resclaux_g :=
   "@(#)$Id$";
 
-# Missing `String' method for Integers.
+#############################################################################
+##
+#M  String( <obj> ) . . . . . .  default method, returns the output by `Print'
+##
+InstallMethod( String,
+               "default method, returns the output by `Print' (ResClasses)",
+               true, [ IsObject ], 0,
 
-InstallMethod( String, "for Integers (ResClasses)", true, [ IsIntegers ], 0,
-               Ints -> "Integers" );
+  function( obj )
+
+    local  str, out;
+
+    str := "";
+    out := OutputTextString( str, true );
+    PrintTo( out, obj );
+    CloseStream(out);
+    return str;
+  end );
+
+#############################################################################
+##
+#M  ViewString( <obj> ) . . . . . . . . default method - dispatch to `String'
+##
+InstallMethod( ViewString,
+               "default method - dispatches to `String' (ResClasses)", true, 
+               [ IsObject ], 0, String );
+
+#############################################################################
+##
+#M  ViewString( <R> ) . . . . . . . . . . . . . . . . . for a polynomial ring
+##
+InstallMethod( ViewString,
+               "for polynomial rings (ResClasses)", true, 
+               [ IsPolynomialRing ], 0,
+
+  R -> Concatenation(String(LeftActingDomain(R)),
+                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
+                              ch -> ch <> ' ')) );
+
+#############################################################################
+##
+#M  ViewObj( <R> ) . . . . . . . . . . . . . . . . . .  for a polynomial ring
+##
+InstallMethod( ViewObj,
+               "for polynomial rings (ResClasses)", true,
+               [ IsPolynomialRing ], 100,
+               function( R ) Print( ViewString(R) ); end );
 
 RESCLASSES_VIEWING_FORMAT := "long";
 MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );

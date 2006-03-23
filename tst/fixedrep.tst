@@ -147,7 +147,8 @@ gap> cl+x;
 gap> -cl;
 [Z(2)^0/x^2+Z(2)^0]
 gap> Print(cl,"\n");
-ResidueClassWithFixedRepresentative( GF(2)[x], x^2+Z(2)^0, Z(2)^0 )
+ResidueClassWithFixedRepresentative( PolynomialRing( GF(2), ["x"] ), x^2+Z(2)^\
+0, Z(2)^0 )
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "fixedrep.tst", 100000000 );
 

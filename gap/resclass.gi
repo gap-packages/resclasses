@@ -11,7 +11,7 @@ Revision.resclass_gi :=
   "@(#)$Id$";
 
 RingToString := function ( R )
-  if IsIntegers(R) then return "Z"; else return String(R); fi;
+  if IsIntegers(R) then return "Z"; else return ViewString(R); fi;
 end;
 MakeReadOnlyGlobal( "RingToString");
 
@@ -124,7 +124,7 @@ InstallGlobalFunction( GFqxResidueClassUnionsFamily,
     then cat := IsUnionOfResidueClassesOfGFqx;
     else cat := IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives; fi;
     name := Concatenation( "ResidueClassUnionsFamily( ",
-                           String( R ),", ",String(fixedreps)," )" );
+                           ViewString( R ),", ",String(fixedreps)," )" );
     fam := NewFamily( name, cat,
                       CanEasilySortElements, CanEasilySortElements );
     SetUnderlyingIndeterminate( fam, x );
@@ -166,40 +166,6 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
                " are not yet implemented.\n");
     fi;
   end );
-
-#############################################################################
-##
-#M  String( <R> ) . . . . . for univariate polynomial ring over finite field
-##
-InstallMethod( String,
-               Concatenation("for univariate polynomial rings ",
-                             "over finite fields (ResClasses)"), true, 
-               [     IsUnivariatePolynomialRing
-                 and IsFiniteFieldPolynomialRing ], 0,
-
-  function ( R )
-
-    local  x, IndNr, IndName;
-
-    x := IndeterminatesOfPolynomialRing(R)[1];
-    IndNr := IndeterminateNumberOfUnivariateLaurentPolynomial(x);
-    IndName := IndeterminateName(FamilyObj(x),IndNr);
-    if   IndName = fail
-    then IndName := Concatenation("x_",String(IndNr)); fi;
-    return Concatenation( "GF(", String(Size(CoefficientsRing(R))),
-                          ")[", IndName, "]" );
-  end );
-
-#############################################################################
-##
-#M  ViewObj( <R> ) . . . . . for univariate polynomial ring over finite field
-##
-InstallMethod( ViewObj,
-               Concatenation("for univariate polynomial rings ",
-                             "over finite fields (ResClasses)"), true,
-               [     IsUnivariatePolynomialRing
-                 and IsFiniteFieldPolynomialRing ], 100,
-               function ( R ) Print( String( R ) ); end );
 
 # Buffer for storing already computed polynomial residue systems.
 
@@ -2302,8 +2268,7 @@ InstallMethod( ViewObj,
     local  R;
 
     R := UnderlyingRing(FamilyObj(iter!.structure));
-    Print("<iterator of a residue class union of ");
-    if IsIntegers(R) then Print("Z>"); else Print(String(R),">"); fi;
+    Print("<iterator of a residue class union of ",RingToString(R),">");
   end );
 
 #############################################################################

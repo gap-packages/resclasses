@@ -54,13 +54,13 @@ gap> ExcludedElements(G);
 gap> ExcludedElements(H);
 [  ]
 gap> String(C);
-"ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )"
+"ResidueClassUnion( PolynomialRing( GF(7), [\"x\"] ), x+Z(7)^0, [ Z(7) ] )"
 gap> String(F);
 "ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )"
 gap> String(H);
 "ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )"
 gap> Print(C,"\n");
-ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )
+ResidueClassUnion( PolynomialRing( GF(7), ["x"] ), x+Z(7)^0, [ Z(7) ] )
 gap> Print(F,"\n");
 ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )
 gap> Print(H,"\n");
