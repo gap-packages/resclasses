@@ -12,7 +12,7 @@
 
 This package provides an easy-to-use implementation of residue classes as
 sets which permits to form unions, intersections and differences and which
-interacts smoothly with finite sets of elements w.r.t. these operations.
+interacts smoothly with finite sets of ring elements w.r.t. these operations.
 The functionality of this package is used in a group theoretical context
 by the &RCWA; package written by the same author. <P/>
 
