@@ -182,9 +182,9 @@ true
 gap> x in G;
 false
 gap> Perform( [ C, F, H ], function( U ) Print(U,"\n"); end );
-ResidueClassUnion( GF(7)[x], x+Z(7)^0, [ Z(7) ] )
+ResidueClassUnion( PolynomialRing( GF(7), ["x"] ), x+Z(7)^0, [ Z(7) ] )
 ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )
-ResidueClassUnion( Z_( 2, 3 ), 8, [ 3, 5 ] )
+ResidueClassUnion( Z_pi( [ 2, 3 ] ), 8, [ 3, 5 ] )
 ]]>
 </Example>
 
