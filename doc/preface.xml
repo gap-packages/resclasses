@@ -10,11 +10,9 @@
 
 <!-- #################################################################### -->
 
-Although most functionality provided by this package is mathematically
-trivial, the author thinks that having available a nice and easy-to-use
-implementation of residue classes as sets which permits to form unions,
-intersections and differences and which interacts smoothly with finite sets
-of elements w.r.t. these operations is often useful.
+This package provides an easy-to-use implementation of residue classes as
+sets which permits to form unions, intersections and differences and which
+interacts smoothly with finite sets of elements w.r.t. these operations.
 The functionality of this package is used in a group theoretical context
 by the &RCWA; package written by the same author. <P/>
 
