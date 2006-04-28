@@ -16,16 +16,18 @@ MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
 ##
 #F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
 ##
-ResidueClassUnionViewingFormat := function ( format )
-  if   not format in [ "short", "long" ]
-  then Error( "viewing formats other than \"short\" and \"long\" ",
-              "are not supported.\n");
-  fi;
-  MakeReadWriteGlobal( "RESCLASSES_VIEWING_FORMAT" );
-  RESCLASSES_VIEWING_FORMAT := format;
-  MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
-end;
-MakeReadOnlyGlobal( "ResidueClassUnionViewingFormat" );
+BindGlobal( "ResidueClassUnionViewingFormat",
+
+  function ( format )
+
+    if   not format in [ "short", "long" ]
+    then Error( "viewing formats other than \"short\" and \"long\" ",
+                "are not supported.\n");
+    fi;
+    MakeReadWriteGlobal( "RESCLASSES_VIEWING_FORMAT" );
+    RESCLASSES_VIEWING_FORMAT := format;
+    MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
+  end );
 
 #############################################################################
 ##
@@ -37,17 +39,18 @@ MakeReadOnlyGlobal( "ResidueClassUnionViewingFormat" );
 ##  This is done using the GAPDoc package by Frank L\"ubeck and
 ##  Max Neunh\"offer.
 ##
-ResClassesBuildManual := function ( )
+BindGlobal( "ResClassesBuildManual",
 
-  local  ResClassesDir;
+  function ( )
 
-  ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-  MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "resclasses.xml",
-                 [ "../gap/resclaux.g", "../gap/z_pi.gd", "../gap/z_pi.gi",
-                   "../gap/resclass.gd", "../gap/resclass.gi" ],
-                   "ResClasses", "../../../" );
-end;
-MakeReadOnlyGlobal( "ResClassesBuildManual" );
+    local  ResClassesDir;
+
+    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "resclasses.xml",
+                   [ "../gap/resclaux.g", "../gap/z_pi.gd", "../gap/z_pi.gi",
+                     "../gap/resclass.gd", "../gap/resclass.gi" ],
+                     "ResClasses", "../../../" );
+  end );
 
 #############################################################################
 ##
@@ -58,15 +61,16 @@ MakeReadOnlyGlobal( "ResClassesBuildManual" );
 ##  This function makes use of an adaptation of the test file `tst/testall.g'
 ##  of the {\GAP}-library to this package. 
 ##
-ResClassesTest := function (  )
+BindGlobal( "ResClassesTest",
 
-  local  ResClassesDir, dir;
+  function (  )
 
-  ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-  dir := Concatenation( ResClassesDir, "/tst/" );
-  Read( Concatenation( dir, "testall.g" ) );
-end;
-MakeReadOnlyGlobal( "ResClassesTest" );
+    local  ResClassesDir, dir;
+
+    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    dir := Concatenation( ResClassesDir, "/tst/" );
+    Read( Concatenation( dir, "testall.g" ) );
+  end );
 
 #############################################################################
 ##
