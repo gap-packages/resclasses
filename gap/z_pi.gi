@@ -159,10 +159,10 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
-#M  StandardAssociate( <R>, <x> ) . . . . . . .  for Z_pi and element thereof
+#M  StandardAssociate( <R>, <x> ) . . . . . . for Z_pi and an element thereof
 ##
 InstallMethod( StandardAssociate,
-               "for Z_pi and element thereof (ResClasses)", ReturnTrue,
+               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
@@ -203,10 +203,10 @@ InstallMethod( LcmOp,
 
 #############################################################################
 ##
-#M  Factors( <R>, <x> ) . . . . . . . . . . . .  for Z_pi and element thereof
+#M  Factors( <R>, <x> ) . . . . . . . . . . . for Z_pi and an element thereof
 ##
 InstallMethod( Factors,
-               "for Z_pi and element thereof (ResClasses)", ReturnTrue,
+               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
@@ -222,10 +222,10 @@ InstallMethod( Factors,
 
 #############################################################################
 ##
-#M  IsUnit( <R>, <x> ) . . . . . . . . . . . . . for Z_pi and element thereof
+#M  IsUnit( <R>, <x> ) . . . . . . . . . . .  for Z_pi and an element thereof
 ##
 InstallMethod( IsUnit,
-               "for Z_pi and element thereof (ResClasses)", ReturnTrue,
+               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
@@ -239,10 +239,10 @@ InstallMethod( IsUnit,
 
 #############################################################################
 ##
-#M  IsIrreducibleRingElement( <R>, <x> ) . . . . for Z_pi and element thereof
+#M  IsIrreducibleRingElement( <R>, <x> ) . .  for Z_pi and an element thereof
 ##
 InstallMethod( IsIrreducibleRingElement,
-               "for Z_pi and element thereof (ResClasses)", ReturnTrue,
+               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
