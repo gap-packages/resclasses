@@ -1548,6 +1548,15 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  Intersection2( <R>, [  ] ) . . . . .  for the base ring and the empty set
+##
+InstallMethod( Intersection2,
+               "for the base ring and the empty set (ResClasses)",
+               ReturnTrue, [ IsRing, IsList and IsEmpty ], 0,
+               function ( R, l ) return [  ]; end );
+
+#############################################################################
+##
 #M  Difference( <U>, <S> ) . . . . for a residue class union and a finite set
 ##
 InstallMethod( Difference,
