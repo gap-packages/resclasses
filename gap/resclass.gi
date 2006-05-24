@@ -1548,12 +1548,15 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  Intersection2( <R>, [  ] ) . . . . .  for the base ring and the empty set
+#M  Intersection2( <set>, [ ] ) . . . . . . . . . for a set and the empty set
+#M  Intersection2( [ ], <set> ) . . . . . . . . . for the empty set and a set
 ##
-InstallMethod( Intersection2,
-               "for the base ring and the empty set (ResClasses)",
-               ReturnTrue, [ IsRing, IsList and IsEmpty ], 0,
-               function ( R, l ) return [  ]; end );
+InstallMethod( Intersection2, "for a set and the empty set (ResClasses)",
+               ReturnTrue, [ IsListOrCollection, IsList and IsEmpty ], 0,
+               function ( S, empty ) return [  ]; end );
+InstallMethod( Intersection2, "for the empty set and a set (ResClasses)",
+               ReturnTrue, [ IsList and IsEmpty, IsListOrCollection ], 0,
+               function ( empty, S ) return [  ]; end );
 
 #############################################################################
 ##
@@ -1719,6 +1722,16 @@ InstallMethod( IsSubset,
     if   R = UnderlyingRing(FamilyObj(U))
     then return U = R; else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  IsSubset( Integers, Rationals ) . . . . . . . . . . . . . . . for Z and Q
+#M  IsSubset( Z_pi( <pi> ), Rationals ) . . . . . . . . . . .  for Z_pi and Q
+##
+InstallMethod( IsSubset, "for Integers and Rationals (ResClasses)",
+               ReturnTrue, [ IsIntegers, IsRationals ], 0, ReturnFalse );
+InstallMethod( IsSubset, "for Z_pi and Rationals (ResClasses)",
+               ReturnTrue, [ IsZ_pi, IsRationals ], 0, ReturnFalse );
 
 #############################################################################
 ##
