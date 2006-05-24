@@ -84,3 +84,8 @@ Changes between version 2.2.1 and version 2.2.2:
 
  - A couple of minor output formatting improvements have been made.
 
+Changes between version 2.2.2 and version 2.2.3:
+
+ - Some trivial methods have been added which are needed by RCWA.
+
+
