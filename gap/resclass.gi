@@ -1140,6 +1140,18 @@ InstallMethod( \in,
 
 #############################################################################
 ##
+#M  \in( <n>, <U> ) .  for ring element & residue class union with fixed reps
+##
+InstallMethod( \in,
+               Concatenation("for ring element & residue class union ",
+                             "with fixed reps (ResClasses)"), ReturnTrue,
+               [ IsRingElement,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ],
+               SUM_FLAGS,
+               function ( n, U ) return Multiplicity(n,U) >= 1; end );
+
+#############################################################################
+##
 #M  \in( <cl>, <U> )  for residue class & residue class union with fixed reps
 ##
 InstallMethod( \in,
@@ -1166,6 +1178,20 @@ InstallMethod( Multiplicity,
   function ( n, U )
     if not n in UnderlyingRing(FamilyObj(U)) then return 0; fi;
     return Number(U!.classes,cl->n mod cl[1] = cl[2]);
+  end );
+
+#############################################################################
+##
+#M  Multiplicity( <cl>, <U> )
+##
+InstallMethod( Multiplicity,
+               Concatenation("for residue class and residue class union ",
+                             "with fixed reps (ResClasses)"), ReturnTrue,
+               [ IsUnionOfResidueClassesWithFixedRepresentatives,
+                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( cl, U )
+    return Number( AsListOfClasses( U ), unioncl -> unioncl = cl );
   end );
 
 #############################################################################

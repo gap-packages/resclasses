@@ -354,12 +354,15 @@ DeclareOperation( "AsListOfClasses",
 
 #############################################################################
 ##
-#O  Multiplicity( <n>, <U> ) . . . . . . . . . . . multiplicity of <n> in <U>
+#O  Multiplicity( <n>, <U> )  . . . . . . . . . . multiplicity of  <n> in <U>
+#O  Multiplicity( <cl>, <U> ) . . . . . . . . . . multiplicity of <cl> in <U>
 ##
-##  The multiplicity of the ring element <n> in the residue class union <U>
-##  with fixed representatives, viewed as a multiset.
+##  The multiplicity of the ring element <n> / the residue class <cl> in the
+##  residue class union <U> with fixed representatives.
 ##
-DeclareOperation( "Multiplicity", [ IsRingElement, IsListOrCollection ] );
+DeclareOperation( "Multiplicity",
+                  [ IsObject,
+                    IsUnionOfResidueClassesWithFixedRepresentatives ] );
 
 #############################################################################
 ##
