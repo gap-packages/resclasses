@@ -19,7 +19,7 @@
 <TitlePage>
   <Title>ResClasses</Title>
   <Subtitle>
-    Computations with Residue Classes and their Set-Theoretic Unions
+    Set-Theoretic Computations with Residue Classes
   </Subtitle>
   <Version>
     ( Version <#Include SYSTEM "../version"> )
@@ -35,7 +35,7 @@
       Germany
     </Address>
   </Author>
-  <Date>May 24, 2006</Date>
+  <Date>May 29, 2006</Date>
   <Copyright>
     &copyright; 2003 - 2006 by Stefan Kohl <P/>
     This package is distributed under the GNU General Public License.
@@ -52,9 +52,9 @@
 <Body>
 
 <#Include SYSTEM "preface.xml">
-<#Include SYSTEM "z_pi.xml">
 <#Include SYSTEM "resclass.xml">
 <#Include SYSTEM "fixedrep.xml">
+<#Include SYSTEM "z_pi.xml">
 <#Include SYSTEM "resclaux.xml">
 
 </Body>
