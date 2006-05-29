@@ -84,7 +84,7 @@ Changes between version 2.2.1 and version 2.2.2:
 
  - A couple of minor output formatting improvements have been made.
 
-Changes between version 2.2.2 and version 2.3.0 (May 29, 2006):
+Changes between version 2.2.2 and version 2.3.0 (May 30, 2006):
 
 The main change is that the manual has been revised.
 
