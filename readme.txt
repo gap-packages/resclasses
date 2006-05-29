@@ -16,9 +16,9 @@ mentioned rings Z_(pi) as GAP domains.
 
                                 Requirements
 
-The ResClasses Package needs at least version 4.4 of GAP, is completely writ-
-ten in the  GAP language and does neither contain  nor require external bina-
-ries. A recent version of the package GAPDoc is needed.
+The  ResClasses Package  needs at least  version 4.4.7 of GAP,  is completely
+written  in the  GAP language  and does neither contain  nor require external
+binaries. A recent version of the package GAPDoc is needed.
 
 
                                 Installation
