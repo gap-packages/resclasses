@@ -149,6 +149,14 @@ gap> -cl;
 gap> Print(cl,"\n");
 ResidueClassWithFixedRepresentative( PolynomialRing( GF(2), ["x"] ), x^2+Z(2)^\
 0, Z(2)^0 )
+gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
+[0/2] U [0/3]
+gap> 0 in U;
+true
+gap> cl := ResidueClassWithFixedRep(2,0);
+[0/2]
+gap> Multiplicity(cl,U);
+1
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "fixedrep.tst", 100000000 );
 
