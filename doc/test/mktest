@@ -51,8 +51,8 @@ options=$*
 ##
 ##  Run the test for all documentation files (in some arbitrary order).
 ##
-$mkxtest $options -r resclasses z_pi
 $mkxtest $options -r resclasses resclass
 $mkxtest $options -r resclasses fixedrep
+$mkxtest $options -r resclasses z_pi
 $mkxtest $options -r resclasses resclaux
 
