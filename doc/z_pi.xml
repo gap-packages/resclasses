@@ -9,10 +9,8 @@
 <Chapter Label="ch:Z_pi">
 <Heading>Semilocalizations of the Integers</Heading>
 
-In the following the semilocalizations <M>\Z_{(\pi)}</M> of the ring
-of integers are needed as base rings for unions of residue classes.
-Since these rings are not already implemented as domains in the &GAP;
-library, they had to be implemented in this package. 
+In this package, the semilocalizations <M>\Z_{(\pi)}</M> of the ring
+of integers are used as base rings for unions of residue classes.
 
 <!-- #################################################################### -->
 
@@ -21,38 +19,25 @@ library, they had to be implemented in this package.
 
 <ManSection>
   <Func Name="Z_pi" Arg="pi" Label="pi"/>
-  <Func Name="Z_pi" Arg="p" Label="pi"/>
-  <Returns> The ring <M>\Z_{(\pi)}</M>. </Returns>
+  <Func Name="Z_pi" Arg="p" Label="p"/>
+  <Returns> The ring <M>\Z_{(\pi)}</M> resp. the ring <M>\Z_p</M>. </Returns>
   <Description>
-    The function also accepts a single prime <A>p</A> instead of the
-    one-element list <C><A>pi</A> = [ <A>p</A> ]</C> as argument.
+    The returned ring has the property <C>IsZ&uscore;pi</C>. 
+    The set <A>pi</A> of noninvertible primes can be retrieved
+    by the operation <C>NoninvertiblePrimes</C>.
+    <Index Key="IsZ_pi" Subkey="R"><C>IsZ&uscore;pi</C></Index>
+    <Index Key="NoninvertiblePrimes" Subkey="R">
+      <C>NoninvertiblePrimes</C>
+    </Index>
 <Example>
 <![CDATA[
 gap> R := Z_pi(2);
 Z_( 2 )
 gap> S := Z_pi([2,5,7]);
 Z_( 2, 5, 7 )
-gap> T := Z_pi([3,11]);
-Z_( 3, 11 )
 ]]>
 </Example>
   </Description>
-</ManSection>
-
-<ManSection>
-  <Prop Name="IsZ_pi" Arg="R" Label="R"/>
-  <Returns>
-    <C>true</C> if <A>R</A> is a ring <M>\Z_{(\pi)}</M> for some
-    set of primes&nbsp;<M>\pi</M> and <C>false</C> otherwise.
-  </Returns>
-</ManSection>
-
-<ManSection>
-  <Attr Name="NoninvertiblePrimes" Arg="R" Label="R"/>
-  <Returns>
-    The set of noninvertible primes&nbsp;<A>pi</A>
-    in the semilocalization&nbsp;<A>R</A> of the integers.
-  </Returns>
 </ManSection>
 
 </Section>
@@ -62,24 +47,33 @@ Z_( 3, 11 )
 <Section Label="sec:MethodsForZ_pi">
 <Heading>Methods for semilocalizations of the integers</Heading>
 
+<Index Key="StandardAssociate" Subkey="R, x"><C>StandardAssociate</C></Index>
+<Index Key="Gcd" Subkey="R, x, y"><C>Gcd</C></Index>
+<Index Key="Lcm" Subkey="R, x, y"><C>Lcm</C></Index>
+<Index Key="Factors" Subkey="R, x"><C>Factors</C></Index>
+<Index Key="IsUnit" Subkey="R, x"><C>IsUnit</C></Index>
+
 There are methods for the operations <C>in</C>, <C>Intersection</C>,
 <C>IsSubset</C>, <C>StandardAssociate</C>, <C>Gcd</C>, <C>Lcm</C>,
 <C>Factors</C> and <C>IsUnit</C> available for semilocalizations of the
 integers. For the documentation of these operations, see the &GAP;
 reference manual. The standard associate of an element of a ring
-<M>\Z_{(\pi)}</M> is defined by the product of the non-invertible prime
+<M>\Z_{(\pi)}</M> is defined by the product of the noninvertible prime
 factors of its numerator.
 
 <Example>
 <![CDATA[
-gap> 4/7 in R;
+gap> 4/7 in R; 3/2 in R;
 true
-gap> 3/2 in R;
 false
-gap> U := Intersection(R,S,T);
-Z_( 2, 3, 5, 7, 11 )
-gap> IsSubset(R,U);
+gap> Intersection(R,Z_pi([3,11])); IsSubset(R,S);
+Z_( 2, 3, 11 )
 true
+]]>
+</Example>
+
+<Example>
+<![CDATA[
 gap> StandardAssociate(R,-6/7);
 2
 gap> Gcd(S,90/3,60/17,120/33);

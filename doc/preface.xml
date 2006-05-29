@@ -16,9 +16,8 @@ interacts smoothly with finite sets of ring elements w.r.t. these operations.
 The functionality of this package is used in a group theoretical context
 by the &RCWA; package written by the same author. <P/>
 
-The introduction of unions of residue classes with fixed representatives
-which are implemented in this package since version&nbsp;2.0 follows a
-suggestion by Wolfgang&nbsp;Rump. <P/>
+The implementation of unions of residue classes with fixed representatives
+follows a suggestion by Wolfgang&nbsp;Rump.
 
 <!-- #################################################################### -->
 
