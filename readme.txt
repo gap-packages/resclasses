@@ -6,12 +6,12 @@
                                   Abstract
 
 ResClasses is a GAP 4 package which implements  set-theoretic unions of resi-
-due classes of  the ring of integers,  its semilocalisations  Z_(pi)  at some
-finite  set of primes  pi  and the polynomial rings  GF(q)[x]  for some prime
-power q as  GAP domains.   It provides basic functionality for computing with
-these sets: intersection, union, difference etc.,  any of these also when one
-of the operands is a finite set of elements.   It also implements the  above-
-mentioned rings Z_(pi) as GAP domains.
+due classes of the ring of integers, of its semilocalisations Z_(pi)  at some
+finite set of primes pi  and of the polynomial rings GF(q)[x] as GAP domains.
+It provides basic functionality for computing with these sets: forming inter-
+sections,  unions,  differences etc.,  any of these also when one of the ope-
+rands is  a finite set of ring elements.  It also implements the rings Z_(pi)
+as GAP domains.
 
 
                                 Requirements
