@@ -149,13 +149,13 @@ gap> Multiplicity(ResidueClassWithFixedRep(2,0),U);
   <C>AsOrdinaryUnionOfResidueClasses</C>
 </Index>
 
-A union of residue classes with fixed representatives can have an attribute
-<C>Density</C> which denotes its <E>natural density</E> as a multiset, i.e.
-elements with multiplicity&nbsp;<M>k</M> count <M>k</M>-fold.
-A union of residue classes with fixed representatives has the property
-<C>IsOverlappingFree</C> if it consists of pairwise disjoint residue
-classes. The set-theoretic union of the residue classes forming a union
-of residue classes with fixed representatives can be determined by the
+Let <C>U</C> be a union of residue classes with fixed representatives.
+The multiset <C>U</C> can have an attribute <C>Density</C> which denotes
+its <E>natural density</E> as a multiset, i.e. elements with
+multiplicity&nbsp;<M>k</M> count <M>k</M>-fold.
+The multiset <C>U</C> has the property <C>IsOverlappingFree</C> if it
+consists of pairwise disjoint residue classes. The set-theoretic union of
+the residue classes forming <C>U</C> can be determined by the
 operation <C>AsOrdinaryUnionOfResidueClasses</C>. The object returned
 by this operation is an <Q>ordinary</Q> residue class union as described
 in Chapter&nbsp;<Ref Label="ch:UnionsOfResidueClasses"/>.
@@ -175,9 +175,40 @@ gap> Density(last);
 ]]>
 </Example>
 
-All statements made below on a certain invariant&nbsp;<M>\delta</M>
-(<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>)
-apply only to the case that <A>R</A> is the ring of integers.
+In the sequel we abbreviate the term <Q>the multiset of ring elements
+endowed with the structure of a union of residue classes with fixed
+representatives</Q> by <Q>the multiset</Q>. <P/>
+
+There are methods for <C>+</C> and <C>-</C> available for computing the
+multiset of sums <M>u + x</M>, <M>u \in U</M>, the multiset of differences
+<M>u - x</M> resp. <M>x - u</M>, <M>u \in U</M> and the multiset of the
+additive inverses of the elements of&nbsp;<M>U</M>.
+Further there are methods for <C>*</C> and <C>/</C> available for
+computing the multiset of products <M>x \cdot u</M>, <M>u \in U</M>
+and the multiset of quotients <M>u/x</M>, <M>u \in U</M>.
+The division method requires all elements of&nbsp;<C>U</C> to be divisible
+by&nbsp;<M>x</M>. If the underlying ring is the ring of integers, scalar
+multiplication and division leave <M>\delta</M> invariant
+(<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
+
+<Example>
+<![CDATA[
+gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
+[0/2] U [0/3]
+gap> U + 7;
+[7/2] U [7/3]
+gap> U - 7; 7 - U; -U;
+[-7/2] U [-7/3]
+[7/-3] U [7/-2]
+[0/-3] U [0/-2]
+gap> V := 2 * U;
+[0/4] U [0/6]
+gap> V/2;
+[0/2] U [0/3]
+]]>
+</Example>
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
   <Meth Name="Union" Arg="U1, U2" Label="U1, U2"/>
@@ -207,8 +238,8 @@ gap> Union(U,U);
     The intersection of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
   <Description>
-    The multiplicity of any ring element resp. residue class in the
-    intersection is the minimum of its multiplicities in the arguments. 
+    The multiplicity of any residue class in the intersection
+    is the minimum of its multiplicities in the arguments. 
 <Example>
 <![CDATA[
 gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
@@ -249,92 +280,6 @@ gap> Difference(U,V);
   </Description>
 </ManSection>
 
-In the sequel we abbreviate the term <Q>the multiset of ring elements
-endowed with the structure of a union of residue classes with fixed
-representatives</Q> by <Q>the multiset</Q>.
-
-<ManSection>
-  <Meth Name="\+" Arg="U, x" Label="U, x"/>
-  <Meth Name="\+" Arg="x, U" Label="x, U"/>
-  <Returns>
-    The multiset of sums <M>u + x</M>, <M>u \in U</M>.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
-[0/2] U [0/3]
-gap> U + 7;
-[7/2] U [7/3]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Meth Name="\-" Arg="U, x" Label="U, x"/>
-  <Meth Name="\-" Arg="x, U" Label="x, U"/>
-  <Meth Name="\-" Arg="U" Label="U"/>
-  <Returns>
-    The multiset of differences <M>u - x</M>, <M>u \in U</M> resp. the
-    multiset of differences <M>x - u</M>, <M>u \in U</M> resp. the multiset
-    of the additive inverses of the elements of&nbsp;<M>U</M>.
-  </Returns>
-  <Description>
-<Example>
-<![CDATA[
-gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
-[0/2] U [0/3]
-gap> U - 7; 7 - U; -U;
-[-7/2] U [-7/3]
-[7/-3] U [7/-2]
-[0/-3] U [0/-2]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Meth Name="\*" Arg="U, x" Label="U, x"/>
-  <Meth Name="\*" Arg="x, U" Label="x, U"/>
-  <Returns>
-    The multiset of products <M>x \cdot u</M>, <M>u \in U</M>.
-  </Returns>
-  <Description>
-    Scalar multiplication leaves <M>\delta</M> invariant
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
-<Example>
-<![CDATA[
-gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
-[0/2] U [0/3]
-gap> 2 * U;
-[0/4] U [0/6]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Meth Name="\/" Arg="U, x" Label="U, x"/>
-  <Returns>
-    The multiset of quotients <M>u/x</M>, <M>u \in U</M>.
-  </Returns>
-  <Description>
-    Scalar division leaves <M>\delta</M> invariant
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
-    If not all elements of all residue classes in <A>U</A> are divisible
-    by&nbsp;<A>x</A>, the method gives up.
-<Example>
-<![CDATA[
-gap> U := ResidueClassUnionWithFixedReps(Integers,[[4,0],[6,0]]);
-[0/4] U [0/6]
-gap> U/2;
-[0/2] U [0/3]
-]]>
-</Example>
-  </Description>
-</ManSection>
-
 </Section>
 
 <!-- #################################################################### -->
@@ -355,42 +300,22 @@ gap> U/2;
     <M>\delta([r/m]) := r/m - 1/2</M> and extend this definition additively
     to unions of such residue classes. If no representatives are fixed,
     this definition is still unique (mod&nbsp;1).
-<Example>
-<![CDATA[
-gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,4],[3,9]]);
-[4/2] U [9/3]
-gap> Delta(U);             
-4
-gap> last = (4/2-1/2) + (9/3-1/2);
-true
-gap> V := RepresentativeStabilizingRefinement(U,3);
-[4/6] U [6/6] U [8/6] U [9/9] U [12/9] U [15/9]
-gap> Delta(V);
-4
-]]>
-</Example>
-  </Description>
-</ManSection>
-
-<ManSection>
-  <Attr Name="Rho" Arg="U" Label="U"/>
-  <Returns>
-    The value of the invariant <M>\rho</M> of the residue class
-    union&nbsp;<A>U</A>, i.e <M>e^{\pi i \delta(U)}</M>
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
-  </Returns>
-  <Description>
+    There is a related invariant&nbsp;<M>\rho</M> which is defined by
+    <M>e^{\pi i \delta(U)}</M>. The corresponding attribute is called
+    <C>Rho</C>.
+    <Index Key="Rho" Subkey="U"><C>Rho</C></Index>
 <Example>
 <![CDATA[
 gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,3],[3,4]]);
 [3/2] U [4/3]
-gap> Rho(U); Rho(2*U);
-E(12)^11
-E(12)^11
-gap> Rho(Union(U,U));                                            
--E(3)
-gap> last = Rho(U)^2;
+gap> Delta(U) = (3/2-1/2) + (4/3-1/2);
 true
+gap> V := RepresentativeStabilizingRefinement(U,3);
+[3/6] U [5/6] U [7/6] U [4/9] U [7/9] U [10/9]
+gap> Delta(V) = Delta(U);
+true
+gap> Rho(V);
+E(12)^11
 ]]>
 </Example>
   </Description>
