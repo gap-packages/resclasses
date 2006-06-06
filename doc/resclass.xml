@@ -33,9 +33,14 @@
     the argument list in list brackets. <P/>
 
     <Index Key="IsResidueClass" Subkey="U"><C>IsResidueClass</C></Index>
+    <Index Key="Modulus" Subkey="cl"><C>Modulus</C></Index>
+    <Index Key="Residue" Subkey="cl"><C>Residue</C></Index>
+
     Residue classes have the property <C>IsResidueClass</C>.
     Rings are regarded as residue class 0&nbsp;(mod&nbsp;1),
-    and therefore have this property.
+    and therefore have this property. There are operations <C>Modulus</C>
+    and <C>Residue</C> to retrieve the modulus&nbsp;<A>m</A> resp.
+    residue&nbsp;<A>r</A> of a residue class.
 <Example>
 <![CDATA[
 gap> ResidueClass(2,3);

@@ -318,6 +318,10 @@ gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),2);
 [ The residue class 2(6) of Z_( 2, 3 ), The residue class 5(6) of Z_( 2, 3 ) ]
 gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),5);
 fail
+gap> Residue(ResidueClass(8,16));
+8
+gap> Residue(Integers);
+0
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 

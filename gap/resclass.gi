@@ -540,6 +540,23 @@ InstallOtherMethod( Modulus,
                     "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> One( R ) );
 
+
+#############################################################################
+##
+#M  Residue( <cl> ) . . . . . . . . . . . . . . . . . . . . .  default method
+##
+InstallMethod( Residue,
+               "default method for residue classes (ResClasses)", true,
+               [ IsResidueClass ], 0, cl -> Residues(cl)[1] );
+
+#############################################################################
+##
+#M  Residue( <R> ) . . . . . . . . . . . . . . . . . . . .  for the base ring
+##
+InstallOtherMethod( Residue,
+                    "for the base ring (ResClasses)", true,
+                    [ IsRing ], 0, R -> Zero( R ) );
+
 #############################################################################
 ##
 #M  Residues( <U> ) . . . . . . . . . . . . . . . .  for residue class unions

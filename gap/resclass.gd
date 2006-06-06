@@ -267,8 +267,10 @@ DeclareSynonym( "Mod", Modulus );
 #############################################################################
 ##
 #O  Residues( <U> ) . . . . . . . . . . . . . residues of residue class union
+#O  Residue( <cl> ) . . . . . . . . . . . . . . . .  residue of residue class
 ##
 DeclareOperation( "Residues", [ IsUnionOfResidueClasses ] );
+DeclareOperation( "Residue", [ IsResidueClass ] );
 
 #############################################################################
 ##
