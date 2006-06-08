@@ -10,10 +10,10 @@
 Revision.resclass_gi :=
   "@(#)$Id$";
 
-RingToString := function ( R )
-  if IsIntegers(R) then return "Z"; else return ViewString(R); fi;
-end;
-MakeReadOnlyGlobal( "RingToString");
+BindGlobal( "RingToString",
+  function ( R )
+    if IsIntegers(R) then return "Z"; else return ViewString(R); fi;
+  end );
 
 # Internal variables storing the residue class unions families used in the
 # current GAP session.
@@ -171,30 +171,31 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
 
 BindGlobal( "POLYNOMIAL_RESIDUE_CACHE", [] );
 
-AllGFqPolynomialsModDegree := function ( q, d, x )
+BindGlobal( "AllGFqPolynomialsModDegree",
 
-  local  erg, mon, gflist;
+  function ( q, d, x )
 
-  if   d = 0
-  then return [ Zero( x ) ];
-  elif     IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
-       and IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] )
-  then return ShallowCopy( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] );
-  else gflist := AsList( GF( q ) );
-       mon := List( gflist, el -> List( [ 0 .. d - 1 ], i -> el * x^i ) );
-       erg := List( Tuples( GF( q ), d ),
-                    t -> Sum( List( [ 1 .. d ],
-                                    i -> mon[ Position( gflist, t[ i ] ) ]
-                                            [ d - i + 1 ] ) ) );
-       MakeReadWriteGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
-       if not IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
-       then POLYNOMIAL_RESIDUE_CACHE[ q ] := [ ]; fi;
-       POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] := Immutable( erg );
-       MakeReadOnlyGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
-       return erg;
-  fi;
-end;
-MakeReadOnlyGlobal( "AllGFqPolynomialsModDegree" );
+    local  erg, mon, gflist;
+
+    if   d = 0
+    then return [ Zero( x ) ];
+    elif     IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
+         and IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] )
+    then return ShallowCopy( POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] );
+    else gflist := AsList( GF( q ) );
+         mon := List( gflist, el -> List( [ 0 .. d - 1 ], i -> el * x^i ) );
+         erg := List( Tuples( GF( q ), d ),
+                      t -> Sum( List( [ 1 .. d ],
+                                      i -> mon[ Position( gflist, t[ i ] ) ]
+                                              [ d - i + 1 ] ) ) );
+         MakeReadWriteGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
+         if not IsBound( POLYNOMIAL_RESIDUE_CACHE[ q ] )
+         then POLYNOMIAL_RESIDUE_CACHE[ q ] := [ ]; fi;
+         POLYNOMIAL_RESIDUE_CACHE[ q ][ d ] := Immutable( erg );
+         MakeReadOnlyGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
+         return erg;
+    fi;
+  end );
 
 #############################################################################
 ##
@@ -250,38 +251,6 @@ InstallGlobalFunction( AllResidueClassesWithFixedRepresentativesModulo,
     return List(AllResidues(R,m),r->ResidueClassWithFixedRep(R,m,r));
   end );
 
-# Bring the residue class union <U> to normalized, reduced form.
-
-ReduceResidueClassUnion := function ( U )
-
-  local  R, m, r, mRed, mRedBuf, rRed, rRedBuf, valid, fact, p;
-
-  R := UnderlyingRing(FamilyObj(U));
-  m := StandardAssociate(R,U!.m);  mRed := m;
-  r := List( U!.r, n -> n mod m ); rRed := r;
-  fact := Set(Factors(R,m));
-  for p in fact do
-    repeat
-      mRedBuf := mRed; rRedBuf := ShallowCopy(rRed);
-      mRed := mRed/p;
-      rRed := Set(List( rRedBuf, n -> n mod mRed ));
-      if   IsIntegers(R) or IsZ_pi(R)
-      then valid := Length(rRed) = Length(rRedBuf)/p;
-      else valid := Length(rRed) = Length(rRedBuf)/
-                    Size(CoefficientsRing(R))^DegreeOfLaurentPolynomial(p);
-      fi;
-    until not valid or not IsZero(mRed mod p) or IsOne(mRed);
-    if not valid then mRed := mRedBuf; rRed := rRedBuf; fi;
-  od;
-  U!.m := mRed; U!.r := Immutable(rRed);
-  U!.included := Immutable(Set(Filtered( U!.included,
-                                         n -> not (n mod mRed in rRed) )));
-  U!.excluded := Immutable(Set(Filtered( U!.excluded,
-                                         n -> n mod mRed in rRed )));
-  if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
-end;
-MakeReadOnlyGlobal( "ReduceResidueClassUnion" );
-
 #############################################################################
 ##
 #M  ResidueClassUnionCons( <filter>, <R>, <m>, <r>, <included>, <excluded> )
@@ -293,7 +262,36 @@ InstallMethod( ResidueClassUnionCons,
 
   function ( filter, R, m, r, included, excluded )
 
-    local  Result, both, fam, type, rep, pos;
+    local  ReduceResidueClassUnion, Result, both, fam, type, rep, pos;
+
+    ReduceResidueClassUnion := function ( U )
+
+      local  R, m, r, mRed, mRedBuf, rRed, rRedBuf, valid, fact, p;
+
+      R := UnderlyingRing(FamilyObj(U));
+      m := StandardAssociate(R,U!.m);  mRed := m;
+      r := List( U!.r, n -> n mod m ); rRed := r;
+      fact := Set(Factors(R,m));
+      for p in fact do
+        repeat
+          mRedBuf := mRed; rRedBuf := ShallowCopy(rRed);
+          mRed := mRed/p;
+          rRed := Set(List( rRedBuf, n -> n mod mRed ));
+          if   IsIntegers(R) or IsZ_pi(R)
+          then valid := Length(rRed) = Length(rRedBuf)/p;
+          else valid := Length(rRed) = Length(rRedBuf)/
+                      Size(CoefficientsRing(R))^DegreeOfLaurentPolynomial(p);
+          fi;
+        until not valid or not IsZero(mRed mod p) or IsOne(mRed);
+        if not valid then mRed := mRedBuf; rRed := rRedBuf; fi;
+      od;
+      U!.m := mRed; U!.r := Immutable(rRed);
+      U!.included := Immutable(Set(Filtered(U!.included,
+                                            n -> not (n mod mRed in rRed))));
+      U!.excluded := Immutable(Set(Filtered(U!.excluded,
+                                            n -> n mod mRed in rRed)));
+      if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
+    end;
 
     if not ( IsIntegers( R ) or IsZ_pi( R )
              or (     IsFiniteFieldPolynomialRing( R )
@@ -995,24 +993,6 @@ InstallMethod( PrintObj,
     fi;
   end );
 
-# Display a list of ring elements.
-
-DisplayArray := function ( l )
-
-  local ellng, elperline, sign, i;
-
-  Print("\n\n");
-  ellng     := Maximum(List(l,n->Length(String(n)))) + 1;
-  elperline := Int((SizeScreen()[1]-3)/ellng);
-  if IsRat(l[1]) then sign := 1; else sign := -1; fi;
-  for i in [1..Length(l)] do
-    Print(String(l[i],sign*ellng));
-    if i mod elperline = 0 and i < Length(l) then Print("\n"); fi;
-  od;
-  Print("\n\n");
-end;
-MakeReadOnlyGlobal( "DisplayArray" );
-
 #############################################################################
 ##
 #M  Display( <U> ) . . . . . . . . . . . . . .  for residue class unions of Z
@@ -1032,7 +1012,22 @@ InstallMethod( Display,
 
   function ( U )
 
-    local  R, m, r, included, excluded, plin, plex;
+    local  R, m, r, included, excluded, plin, plex, DisplayArray;
+
+    DisplayArray := function ( l )
+
+      local ellng, elperline, sign, i;
+
+      Print("\n\n");
+      ellng     := Maximum(List(l,n->Length(String(n)))) + 1;
+      elperline := Int((SizeScreen()[1]-3)/ellng);
+      if IsRat(l[1]) then sign := 1; else sign := -1; fi;
+      for i in [1..Length(l)] do
+        Print(String(l[i],sign*ellng));
+        if i mod elperline = 0 and i < Length(l) then Print("\n"); fi;
+      od;
+      Print("\n\n");
+    end;
 
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
