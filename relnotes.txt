@@ -95,5 +95,9 @@ Changes between version 2.3.0 and version 2.3.1:
 
  - For convenience, an operation `Residue' has been introduced.
 
+Changes between version 2.3.1 and version 2.3.2:
+
+ - A few trivial methods have been added, and some undocumented
+   global functions have been made local.
 
 
