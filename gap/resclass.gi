@@ -1111,7 +1111,7 @@ InstallMethod( \=,
 ##
 #M  \<( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
-##  Total ordering of residue class unions (for tech. purposes, only).
+##  Total ordering of residue class unions (for technical purposes, only).
 ##
 InstallMethod( \<,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
@@ -1127,10 +1127,24 @@ InstallMethod( \<,
 
 #############################################################################
 ##
+#M  \<( <R>, <U> ) . . . .  for a ring and a union of residue classes thereof
+#M  \<( <U>, <R> )                             (for technical purposes, only)
+##
+InstallMethod( \<,
+               Concatenation("for a ring and a union of residue classes ",
+                             "thereof (ResClasses)"), ReturnTrue,
+               [ IsRing, IsResidueClassUnionInSparseRep ], 0, ReturnTrue );
+InstallMethod( \<,
+               "for a residue class union and its base ring (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsRing ], 0,
+               ReturnFalse );
+
+#############################################################################
+##
 #M  \<( <U1>, <U2> ) . . . . . . . . for residue class unions with fixed reps
 ##
 ##  Total ordering of residue class unions with fixed representatives
-##  (for tech. purposes, only).
+##  (for technical purposes, only).
 ##
 InstallMethod( \<,
                "for two residue class unions with fixed reps (ResClasses)",
