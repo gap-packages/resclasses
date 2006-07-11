@@ -17,12 +17,12 @@
 <!-- #################################################################### -->
 
 <TitlePage>
-  <Title>ResClasses</Title>
+  <Title>&ResClasses;</Title>
   <Subtitle>
     Set-Theoretic Computations with Residue Classes
   </Subtitle>
   <Version>
-    ( Version <#Include SYSTEM "../version"> )
+    Version <#Include SYSTEM "../version">
   </Version>
   <Author>
     Stefan Kohl
