@@ -2181,9 +2181,9 @@ InstallMethod( Delta,
 ##
 #M  Delta( <U> ) . . . . . . . . . . . . . . .  for residue class unions of Z
 ##
-InstallOtherMethod( Delta,
-                    "for residue class unions of Z (ResClasses)",
-                    true, [ IsUnionOfResidueClassesOfZ ], 0,
+InstallMethod( Delta,
+               "for residue class unions of Z (ResClasses)",
+               true, [ IsUnionOfResidueClassesOfZ ], 0,
 
   function ( U )
 
@@ -2225,9 +2225,9 @@ InstallMethod( Rho,
 ##
 #M  Rho( <U> ) . . . . . . . . . . . . . . . .  for residue class unions of Z
 ##
-InstallOtherMethod( Rho,
-                    "for residue class unions of Z (ResClasses)",
-                    true, [ IsUnionOfResidueClassesOfZ ], 0,
+InstallMethod( Rho,
+               "for residue class unions of Z (ResClasses)",
+               true, [ IsUnionOfResidueClassesOfZ ], 0,
 
   function ( U )
 

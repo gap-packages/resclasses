@@ -33,9 +33,9 @@ DeclareCategory( "IsUnionOfResidueClassesWithFixedRepresentatives",
 ##
 #R  IsResidueClassUnionSparseRep . . .  `sparse' rep. of residue class unions
 ##
-##  Representation of unions of residue classes of the integers, a
-##  semilocalization $\Z_{(\pi)}$ of the integers or a univariate polynomial
-##  ring GF($q$)[$x$] over a finite field.
+##  Representation of unions of residue classes of the integers,
+##  a semilocalization Z_(pi) of the integers or a univariate polynomial ring
+##  GF(q)[x] over a finite field.
 ## 
 ##  The component <m> stores the common modulus, <r> is the list of class
 ##  representatives and <included> resp. <excluded> are lists of single
@@ -50,8 +50,8 @@ DeclareRepresentation( "IsResidueClassUnionSparseRep",
 #R  IsFixedRepResidueClassUnionRep
 ##
 ##  Representation of unions of residue classes of the integers, a
-##  semilocalization $\Z_{(\pi)}$ of the integers or a univariate polynomial
-##  ring GF($q$)[$x$] over a finite field, with fixed representatives.
+##  semilocalization Z_(pi) of the integers or a univariate polynomial
+##  ring GF(q)[x] over a finite field, with fixed representatives.
 ## 
 ##  The component <classes> is a list of residue classes, given as pairs
 ##  ( <modulus>, <representative> ). The representatives are *not* reduced
@@ -83,9 +83,9 @@ DeclareCategory( "IsUnionOfResidueClassesOfZWithFixedRepresentatives",
 #C  IsUnionOfResidueClassesOfZ_pi . unions of residue classes and finite sets
 #C  IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives
 ##
-##  The category of unions of residue classes of some ring $\Z_{(\pi)}$ and
-##  finite subsets of of this ring, resp. of unions of residue classes of
-##  these rings with fixed representatives.
+##  The category of unions of residue classes of some ring Z_(pi) and finite
+##  subsets of of this ring, resp. of unions of residue classes of these
+##  rings with fixed representatives.
 ##
 DeclareCategory( "IsUnionOfResidueClassesOfZ_pi",
                  IsDomain and IsListOrCollection );
@@ -112,7 +112,7 @@ DeclareCategory( "IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives",
 #C  IsUnionOfResidueClassesOfGFqx . . .  unions of res. classes and fin. sets
 #C  IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives
 ##
-##  The category of unions of residue classes of some ring GF($q$)[$x$] and
+##  The category of unions of residue classes of some ring GF(q)[x] and
 ##  finite subsets of of this ring, resp. of unions of residue classes of
 ##  these rings with fixed representatives.
 ##
@@ -137,8 +137,8 @@ DeclareGlobalFunction( "ResidueClassUnionsFamily" );
 ##
 #F  Z_piResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
 ##
-##  Family of unions of residue classes of the ring $R = \Z_{(\pi)}$ and
-##  finite subsets of this ring. For the meaning of the optional argument
+##  Family of unions of residue classes of the ring R = Z_(pi) and finite
+##  subsets of this ring. For the meaning of the optional argument
 ##  <fixedreps> see `ResidueClassUnionsFamily'.
 ##
 DeclareGlobalFunction( "Z_piResidueClassUnionsFamily" );
@@ -147,8 +147,8 @@ DeclareGlobalFunction( "Z_piResidueClassUnionsFamily" );
 ##
 #F  GFqxResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
 ##
-##  Family of unions of residue classes of the ring $R$ = GF($q$)[$x$] and
-##  finite subsets of this ring. For the meaning of the optional argument
+##  Family of unions of residue classes of the ring R = GF(q)[x] and finite
+##  subsets of this ring. For the meaning of the optional argument
 ##  <fixedreps> see `ResidueClassUnionsFamily'.
 ##
 DeclareGlobalFunction( "GFqxResidueClassUnionsFamily" );
@@ -259,9 +259,11 @@ DeclareSynonym( "ResidueClassWithFixedRep",
 
 #############################################################################
 ##
-#O  Modulus( <obj> ) . . . . modulus of a residue class union or other object
+#O  Modulus( <U> ) . . . . . . . . . . . . . modulus of a residue class union
 ##
-DeclareOperation( "Modulus", [ IsObject ] );
+DeclareOperation( "Modulus", [ IsUnionOfResidueClasses ] );
+DeclareOperation( "Modulus",
+                  [ IsUnionOfResidueClassesWithFixedRepresentatives ] );
 DeclareSynonym( "Mod", Modulus );
 
 #############################################################################
@@ -400,8 +402,8 @@ DeclareAttribute( "Density", IsUnionOfResidueClasses );
 #O  RepresentativeStabilizingRefinement( <U>, <k> ) . . . . refinement of <U>
 ##
 ##  We define the *representative stabilizing refinement* of a residue class
-##  $[r/m]$ of $\Z$ with fixed representative into $k$ parts by
-##  $[r/km] \cup [(r+m)/km] \cup \dots [(r+(k-1)m)/km]$.
+##  [r/m] of Z with fixed representative into k parts by [r/km] U [(r+m)/km]
+##  U ... U [(r+(k-1)m)/km].
 ##
 ##  We extend this definition in a natural way to unions of residue classes.
 ##
@@ -416,28 +418,30 @@ DeclareOperation( "RepresentativeStabilizingRefinement",
 ##
 #A  Delta( <U> ) . . . . . . . . . . . . . . . . . . . . .  invariant `Delta'
 ##
-##  For a residue class $[r/m]$ with fixed representative we set
-##  $\delta([r/m]) := r/m - 1/2$ and extend this additively to unions of such
-##  residue classes.
+##  For a residue class [r/m] with fixed representative we set
+##  Delta([r/m]) := r/m - 1/2 and extend this definition additively to unions
+##  of such residue classes.
 ##
 ##  If no representatives are fixed, this definition is still unique (mod 1).
 ##
 DeclareAttribute( "Delta", IsUnionOfResidueClassesWithFixedRepresentatives );
+DeclareAttribute( "Delta", IsUnionOfResidueClasses );
 
 #############################################################################
 ##
 #A  Rho( <U> ) . . . . . . . . . . . . . . . . . . . . . . .  invariant `Rho'
 ##
-##  For a residue class $[r/m]$ with fixed representative and
-##  fixed orientation, i.e. fixed sign of $m$, we set
-##  $\rho([r/m]) := exp(sgn(m)*\delta([r/m])/2)$
-##  and extend this additively to unions of such residue classes.
+##  For a residue class [r/m] with fixed representative and
+##  fixed orientation, i.e. fixed sign of m, we set
+##  Rho([r/m]) := exp(sgn(m)*Delta([r/m])/2) and extend this definition in
+##  the obvious way to unions of such residue classes.
 ##
 ##  If no representatives and no orientation is fixed, this definition
 ##  can still be made unique by restricting the exponent to the interval
-##  $[0,1/2[$.
+##  [0,1/2[.
 ##
 DeclareAttribute( "Rho", IsUnionOfResidueClassesWithFixedRepresentatives );
+DeclareAttribute( "Rho", IsUnionOfResidueClasses );
 
 #############################################################################
 ##
