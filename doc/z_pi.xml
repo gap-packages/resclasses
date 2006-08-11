@@ -20,7 +20,9 @@ of integers are used as base rings for unions of residue classes.
 <ManSection>
   <Func Name="Z_pi" Arg="pi" Label="pi"/>
   <Func Name="Z_pi" Arg="p" Label="p"/>
-  <Returns> The ring <M>\Z_{(\pi)}</M> resp. the ring <M>\Z_p</M>. </Returns>
+  <Returns>
+    The ring <M>\Z_{(\pi)}</M> resp. the ring <M>\Z_{(p)}</M>.
+  </Returns>
   <Description>
     The returned ring has the property <C>IsZ&uscore;pi</C>. 
     The set <A>pi</A> of noninvertible primes can be retrieved
