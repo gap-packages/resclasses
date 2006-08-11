@@ -5,16 +5,16 @@
 #H  @(#)$Id$
 ##
 ##  This file contains implementations of methods for computing with the
-##  semilocalizations Z_pi of the ring of integers.
+##  semilocalizations Z_(pi) of the ring of integers.
 ##
 Revision.z_pi_gi :=
   "@(#)$Id$";
 
 #############################################################################
 ##
-#M  Z_piCons( <filter>, <pi> ) . . . . . . . . . . . . . . . . . . . . . Z_pi
+#M  Z_piCons( <filter>, <pi> ) . . . . . . . . . . . . . . . . . . . . Z_(pi)
 ##
-##  Semilocalization Z_pi of the ring of integers, for prime set <pi>.
+##  Semilocalization Z_(pi) of the ring of integers, for prime set <pi>.
 ##
 InstallMethod( Z_piCons, "natural Z_pi (ResClasses)", true, 
                [ IsRing, IsList ], 0,
@@ -41,7 +41,7 @@ InstallMethod( Z_piCons, "natural Z_pi (ResClasses)", true,
 
 #############################################################################
 ##
-#F  Z_pi( <pi> ) . . . . . . . . . . semilocalization Z_pi for prime set <pi>
+#F  Z_pi( <pi> ) . . . . . . . . . semilocalization Z_(pi) for prime set <pi>
 ##
 InstallGlobalFunction( Z_pi, 
 
@@ -55,45 +55,46 @@ InstallGlobalFunction( Z_pi,
 
 #############################################################################
 ##
-#M  IsZ_pi( <obj> ) . . . . . . . . . . . . . . . . . . . . . . . . . .  Z_pi
+#M  IsZ_pi( <obj> ) . . . . . . . . . . . . . . . . . . . . . . . . .  Z_(pi)
 ##
 ##  Return false, if the converse is not known explicitly.
 ##
-InstallOtherMethod( IsZ_pi, "for non-Z_pi (ResClasses)", true,
+InstallOtherMethod( IsZ_pi, "for non-Z_(pi) (ResClasses)", true,
                     [ IsObject ], 0, ReturnFalse );
 
 #############################################################################
 ##
-#M  String( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . .  for Z_pi
+#M  String( <R> ) . . . . . . . . . . . . . . . . . . . . . . . .  for Z_(pi)
 ##
 InstallMethod( String,
-               "for Z_pi (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
+               "for Z_(pi) (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
 
   R -> Concatenation( "Z_pi( ", String( NoninvertiblePrimes( R ) ), " )" ) );
 
 #############################################################################
 ##
-#M  PrintObj( <R> ) . . . . . . . . . . . . . . . . . . . . . . . .  for Z_pi
+#M  PrintObj( <R> ) . . . . . . . . . . . . . . . . . . . . . . .  for Z_(pi)
 ##
 InstallMethod( PrintObj,
-               "for Z_pi (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
+               "for Z_(pi) (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
                function ( R ) Print( String( R ) ); end );
 
 #############################################################################
 ##
-#M  \=( <R>, <S> ) . . . . . . . . . . . . . . . . . . . . . . . . for Z_pi's
+#M  \=( <R>, <S> ) . . . . . . . . . . . . . . . . . . . . . . . for Z_(pi)'s
 ##
 InstallMethod( \=,
-               "for Z_pi's (ResClasses)", ReturnTrue, [ IsZ_pi, IsZ_pi ], 0,
+               "for Z_(pi)'s (ResClasses)", ReturnTrue,
+               [ IsZ_pi, IsZ_pi ], 0,
 
   function ( R, S ) return R!.primes = S!.primes; end );
 
 #############################################################################
 ##
-#M  \in( <x>, <R> ) . . . . . . . . . . . . . . . . . . . for object and Z_pi
+#M  \in( <x>, <R> ) . . . . . . . . . . . . . . . . . . for object and Z_(pi)
 ##
 InstallMethod( \in,
-               "for object and Z_pi (ResClasses)", ReturnTrue,
+               "for object and Z_(pi) (ResClasses)", ReturnTrue,
                [ IsObject, IsZ_pi ], 0,
 
   function ( x, R )
@@ -104,10 +105,11 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  Intersection2( <R>, <S> ) . . . . . . . . . . . . . . . . . .  for Z_pi's
+#M  Intersection2( <R>, <S> ) . . . . . . . . . . . . . . . . .  for Z_(pi)'s
 ##
 InstallMethod( Intersection2,
-               "for Z_pi's (ResClasses)", ReturnTrue, [ IsZ_pi, IsZ_pi ], 0,
+               "for Z_(pi)'s (ResClasses)", ReturnTrue,
+               [ IsZ_pi, IsZ_pi ], 0,
 
   function ( R, S )
 
@@ -116,53 +118,54 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  Intersection2( Rationals, <R> ) . . . . . . . . .  for Rationals and Z_pi
+#M  Intersection2( Rationals, <R> ) . . . . . . . .  for Rationals and Z_(pi)
 ##
 InstallMethod( Intersection2,
-               "for Rationals and Z_pi (ResClasses)", ReturnTrue,
+               "for Rationals and Z_(pi) (ResClasses)", ReturnTrue,
                [ IsRationals, IsZ_pi ], 0,
   function ( Rat, R ) return R; end );
 
 #############################################################################
 ##
-#M  Intersection2( <R>, Rationals ) . . . . . . . . .  for Z_pi and Rationals
+#M  Intersection2( <R>, Rationals ) . . . . . . . .  for Z_(pi) and Rationals
 ##
 InstallMethod( Intersection2,
-               "for Z_pi and Rationals (ResClasses)", ReturnTrue,
+               "for Z_(pi) and Rationals (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRationals ], 0,
   function ( R, Rat ) return R; end );
 
 #############################################################################
 ##
-#M  IsSubset( <R>, <S> ) . . . . . . . . . . . . . . . . . . . . . for Z_pi's
+#M  IsSubset( <R>, <S> ) . . . . . . . . . . . . . . . . . . . . for Z_(pi)'s
 ##
 InstallMethod( IsSubset,
-               "for Z_pi's (ResClasses)", ReturnTrue, [ IsZ_pi, IsZ_pi ], 0,
+               "for Z_(pi)'s (ResClasses)", ReturnTrue,
+               [ IsZ_pi, IsZ_pi ], 0,
 
   function ( R, S ) return IsSubset( S!.primes, R!.primes ); end );
 
 #############################################################################
 ##
-#M  IsSubset( Rationals, <R> ) . . . . . . . . . . . . for Rationals and Z_pi
+#M  IsSubset( Rationals, <R> ) . . . . . . . . . . . for Rationals and Z_(pi)
 ##
 InstallMethod( IsSubset,
-               "for Rationals and Z_pi (ResClasses)", ReturnTrue,
+               "for Rationals and Z_(pi) (ResClasses)", ReturnTrue,
                [ IsRationals, IsZ_pi ], 0, ReturnTrue );
 
 #############################################################################
 ##
-#M  IsSubset( <R>, Integers ) . . . . . . . . . . . . . for Z_pi and Integers
+#M  IsSubset( <R>, Integers ) . . . . . . . . . . . . for Z_(pi) and Integers
 ##
 InstallMethod( IsSubset,
-               "for Z_pi and Integers (ResClasses)", ReturnTrue,
+               "for Z_(pi) and Integers (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsIntegers ], 0, ReturnTrue );
 
 #############################################################################
 ##
-#M  StandardAssociate( <R>, <x> ) . . . . . . for Z_pi and an element thereof
+#M  StandardAssociate( <R>, <x> ) . . . . . for Z_(pi) and an element thereof
 ##
 InstallMethod( StandardAssociate,
-               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
+               "for Z_(pi) and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
@@ -177,11 +180,11 @@ InstallMethod( StandardAssociate,
 
 #############################################################################
 ##
-#M  GcdOp( <R>, <x>, <y> ) . . . . . . . .  for Z_pi and two elements thereof
+#M  GcdOp( <R>, <x>, <y> ) . . . . . . .  for Z_(pi) and two elements thereof
 ##
 InstallMethod( GcdOp,
-               "for Z_pi and two elements thereof (ResClasses)", ReturnTrue,
-               [ IsZ_pi, IsRat, IsRat ], 0,
+               "for Z_(pi) and two elements thereof (ResClasses)",
+               ReturnTrue, [ IsZ_pi, IsRat, IsRat ], 0,
 
   function ( R, x, y )
     if not x in R or not y in R then return fail; fi;
@@ -190,11 +193,11 @@ InstallMethod( GcdOp,
 
 #############################################################################
 ##
-#M  LcmOp( <R>, <x>, <y> ) . . . . . . . .  for Z_pi and two elements thereof
+#M  LcmOp( <R>, <x>, <y> ) . . . . . . .  for Z_(pi) and two elements thereof
 ##
 InstallMethod( LcmOp,
-               "for Z_pi and two elements thereof (ResClasses)", ReturnTrue,
-               [ IsZ_pi, IsRat, IsRat ], 0,
+               "for Z_(pi) and two elements thereof (ResClasses)",
+               ReturnTrue, [ IsZ_pi, IsRat, IsRat ], 0,
 
   function ( R, x, y )
     if not x in R or not y in R then return fail; fi;
@@ -203,10 +206,10 @@ InstallMethod( LcmOp,
 
 #############################################################################
 ##
-#M  Factors( <R>, <x> ) . . . . . . . . . . . for Z_pi and an element thereof
+#M  Factors( <R>, <x> ) . . . . . . . . . . for Z_(pi) and an element thereof
 ##
 InstallMethod( Factors,
-               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
+               "for Z_(pi) and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
@@ -222,10 +225,10 @@ InstallMethod( Factors,
 
 #############################################################################
 ##
-#M  IsUnit( <R>, <x> ) . . . . . . . . . . .  for Z_pi and an element thereof
+#M  IsUnit( <R>, <x> ) . . . . . . . . . .  for Z_(pi) and an element thereof
 ##
 InstallMethod( IsUnit,
-               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
+               "for Z_(pi) and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
@@ -239,10 +242,10 @@ InstallMethod( IsUnit,
 
 #############################################################################
 ##
-#M  IsIrreducibleRingElement( <R>, <x> ) . .  for Z_pi and an element thereof
+#M  IsIrreducibleRingElement( <R>, <x> ) .  for Z_(pi) and an element thereof
 ##
 InstallMethod( IsIrreducibleRingElement,
-               "for Z_pi and an element thereof (ResClasses)", ReturnTrue,
+               "for Z_(pi) and an element thereof (ResClasses)", ReturnTrue,
                [ IsZ_pi, IsRat ], 0,
 
   function ( R, x )
