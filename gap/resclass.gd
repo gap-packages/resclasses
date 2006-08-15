@@ -155,9 +155,9 @@ DeclareGlobalFunction( "GFqxResidueClassUnionsFamily" );
 
 #############################################################################
 ##
-#F  UnderlyingRing( <obj> ) . . . . . . . . . . . . . . . . . underlying ring
+#F  UnderlyingRing( <fam> ) . . . . . . . underlying ring of the family <fam>
 ##
-##  The underlying ring of the object <obj>.
+##  The underlying ring of the family <fam>.
 ##
 DeclareAttribute( "UnderlyingRing", IsFamily );
 
