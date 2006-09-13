@@ -297,9 +297,9 @@ gap> Density(Difference(Integers,ResidueClass(0,5)));
   <Oper Name="RandomPartitionIntoResidueClasses"
         Arg="R, length, primes" Label="R, length, primes"/>
   <Returns>
-    A random partition of the ring&nbsp;<A>R</A> into <A>length</A> residue
-    classes whose moduli have only prime factors in <A>primes</A>, resp.
-    <C>fail</C> if no such partition exists.
+    A <Q>random</Q> partition of the ring&nbsp;<A>R</A> into <A>length</A>
+    residue classes whose moduli have only prime factors in <A>primes</A>,
+    resp. <C>fail</C> if no such partition exists.
   </Returns>
   <Description>
 <Log>
