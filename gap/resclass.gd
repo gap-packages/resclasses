@@ -348,6 +348,16 @@ DeclareOperation( "SplittedClass", [ IsUnionOfResidueClasses, IsPosInt ] );
 
 #############################################################################
 ##
+#O  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> )
+##
+##  A random partition of the ring <R> into <length> residue classes whose
+##  moduli have only prime factors in <primes>.
+##
+DeclareOperation( "RandomPartitionIntoResidueClasses",
+                  [ IsRing, IsPosInt, IsList ] );
+
+#############################################################################
+##
 #O  AsListOfClasses( <U> )
 ##
 ##  A list of the classes which form the union <U> of residue classes with

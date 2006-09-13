@@ -736,6 +736,33 @@ InstallOtherMethod( SplittedClass,
 
 #############################################################################
 ##
+#M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> ) . . .  for Z
+##
+InstallMethod( RandomPartitionIntoResidueClasses,
+               "for Z", ReturnTrue, [ IsIntegers, IsPosInt, IsList ], 0,
+
+  function ( Z, length, primes )
+
+    local  P, diff, p, parts, part, i, j;
+
+    if   not ForAll(primes,IsInt) or not ForAll(primes,IsPrime)
+    then TryNextMethod(); fi;
+    parts := Filtered(Partitions(length-1),
+                      part->IsSubset(primes-1,part));
+    if IsEmpty(parts) then return fail; fi;
+    part := Random(parts);
+    P    := [ Integers ];
+    for i in [1..Length(part)] do
+      p    := part[i] + 1;
+      j    := Random([1..Length(P)]);
+      P[j] := SplittedClass(P[j],p);
+      P    := Flat(P);
+    od;
+    return Set(P);
+  end );
+
+#############################################################################
+##
 #M  AsListOfClasses( <U> ) . . . . . for residue class unions with fixed reps
 ##
 InstallMethod( AsListOfClasses,

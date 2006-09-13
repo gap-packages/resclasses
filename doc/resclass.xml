@@ -293,6 +293,33 @@ gap> Density(Difference(Integers,ResidueClass(0,5)));
   </Description>
 </ManSection>
 
+<ManSection>
+  <Oper Name="RandomPartitionIntoResidueClasses"
+        Arg="R, length, primes" Label="R, length, primes"/>
+  <Returns>
+    A random partition of the ring&nbsp;<A>R</A> into <A>length</A> residue
+    classes whose moduli have only prime factors in <A>primes</A>, resp.
+    <C>fail</C> if no such partition exists.
+  </Returns>
+  <Description>
+<Log>
+<![CDATA[
+gap> ResidueClassUnionViewingFormat("short");
+gap> RandomPartitionIntoResidueClasses(Integers,30,[2,3,5,7]);
+[ 2(7), 3(7), 4(7), 5(7), 6(7), 1(35), 8(35), 14(35), 21(35), 22(35), 28(35), 
+  29(35), 7(105), 15(105), 42(105), 50(105), 77(105), 85(105), 70(175), 
+  105(175), 35(350), 210(350), 0(525), 140(525), 315(525), 350(525), 
+  490(525), 175(1575), 700(1575), 1225(1575) ]
+gap> Union(last);
+Integers
+gap> Sum(List(last2,Density));
+1
+]]>
+</Log>
+  </Description>
+</ManSection>
+
+
 <Index Key="Iterator" Subkey="U"><C>Iterator</C></Index>
 <Index Key="NextIterator" Subkey="iter"><C>NextIterator</C></Index>
 

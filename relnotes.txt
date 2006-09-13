@@ -104,4 +104,8 @@ Changes between version 2.3.2 and version 2.3.3:
 
  - A few minor internal changes have been made.
 
+Changes between version 2.3.3 and version 2.3.4:
+
+ - An operation `RandomPartitionIntoResidueClasses' has been introduced.
+
 
