@@ -348,11 +348,11 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
   <Description>
     Often the same methods can be used for residue classes of the ring of
     integers and of its semilocalizations. For this reason there is
-    a category <C>IsUnionOfResidueClassesOfZOrZ&uscore;pi</C> which is the
+    a category <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C> which is the
     union of <C>IsUnionOfResidueClassesOfZ</C> and
     <C>IsUnionOfResidueClassesOfZ&uscore;pi</C>.
-    <Index Key="IsUnionOfResidueClassesOfZOrZ_pi" Subkey="U">
-      <C>IsUnionOfResidueClassesOfZOrZ&uscore;pi</C>
+    <Index Key="IsUnionOfResidueClassesOfZorZ_pi" Subkey="U">
+      <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C>
     </Index>
     The internal representation of unions of residue classes is called
     <C>IsResidueClassUnionSparseRep</C>.
