@@ -275,18 +275,17 @@ Integers
 ]]>
 </Example>
 
-The <E>natural density</E> of a residue class <M>r(m)</M>
-of a ring&nbsp;<M>R</M> is defined by <M>1/|R/mR|</M>, and
-the <E>natural density</E> of a union&nbsp;<M>U</M> of finitely many
-residue classes is defined by the sum of the densities of the elements
-of a partition of&nbsp;<M>U</M> into finitely many residue classes:
-
 <ManSection>
   <Oper Name="Density" Arg="U" Label="U"/>
   <Returns>
     The natural density of&nbsp;<A>U</A> as a subset of the underlying ring.
   </Returns>
   <Description>
+    The <E>natural density</E> of a residue class <M>r(m)</M>
+    of a ring&nbsp;<M>R</M> is defined by <M>1/|R/mR|</M>, and
+    the <E>natural density</E> of a union&nbsp;<M>U</M> of finitely many
+    residue classes is defined by the sum of the densities of the elements
+    of a partition of&nbsp;<M>U</M> into finitely many residue classes.
 <Example>
 <![CDATA[
 gap> Density(ResidueClass(0,2));
