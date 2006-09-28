@@ -199,21 +199,46 @@ BindGlobal( "AllGFqPolynomialsModDegree",
 
 #############################################################################
 ##
-#F  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
+#M  AllResidues( <R>, <m> ) . . . . . . . . . . . .  for Z, Z_pi and GF(q)[x]
 ##
-InstallGlobalFunction( AllResidues,
+InstallMethod( AllResidues,
+               "for Z, Z_pi and GF(q)[x] (ResClasses)", ReturnTrue,
+               [ IsRing, IsRingElement ], 0,
 
   function ( R, m )
 
     local  q, d, x;
 
     if   IsIntegers(R) or IsZ_pi(R)
-    then return [0..StandardAssociate(R,m)-1];
-    else q := Size(CoefficientsRing(R));
-         d := DegreeOfLaurentPolynomial(m);
-         x := IndeterminatesOfPolynomialRing(R)[1];
-         return AllGFqPolynomialsModDegree(q,d,x);
+    then return [0..StandardAssociate(R,m)-1]; fi;
+    if IsUnivariatePolynomialRing(R) and Characteristic(R) <> 0 then
+      q := Size(CoefficientsRing(R));
+      d := DegreeOfLaurentPolynomial(m);
+      x := IndeterminatesOfPolynomialRing(R)[1];
+      return AllGFqPolynomialsModDegree(q,d,x);
     fi;
+    TryNextMethod();
+  end );
+
+#############################################################################
+##
+#M  NumberOfResidues( <R>, <m> ) . . . . . . . . . . for Z, Z_pi and GF(q)[x]
+##
+InstallMethod( NumberOfResidues,
+               "for Z, Z_pi and GF(q)[x] (ResClasses)", ReturnTrue,
+               [ IsRing, IsRingElement ], 0,
+
+  function ( R, m )
+
+    local  q, d, x;
+
+    if IsIntegers(R) or IsZ_pi(R) then return StandardAssociate(R,m); fi;
+    if IsUnivariatePolynomialRing(R) and Characteristic(R) <> 0 then
+      q := Size(CoefficientsRing(R));
+      d := DegreeOfLaurentPolynomial(m);
+      return q^d;
+    fi;
+    TryNextMethod();
   end );
 
 #############################################################################
@@ -638,6 +663,57 @@ InstallMethod( Classes,
 
 #############################################################################
 ##
+#M  AsUnionOfFewClasses( <U> ) . . . . . . . .  for pure residue class unions
+##
+InstallMethod( AsUnionOfFewClasses,
+               "for pure residue class unions (ResClasses)", true,
+               [ IsUnionOfResidueClasses ], 0,
+
+  function ( U )
+
+    local  R, cls, cl, remaining, m, res, div, d, prog, pos, r;
+
+    R := UnderlyingRing(FamilyObj(U));
+    m := Modulus(U); res := Residues(U);
+    if Length(res) = 1 then return [ ResidueClass(R,m,res[1]) ]; fi;
+    cls := []; remaining := U;
+    div := List(Combinations(Factors(R,m)),Product);
+    div[1] := One(R); div := Set(div);
+    for d in div do
+      if   not IsZero(m mod d) or NumberOfResidues(R,m/d) > Length(res)
+      then continue; fi;
+      if 100 * Length(res) > NumberOfResidues(R,m) then
+        for r in AllResidues(R,d) do
+          prog := List(AllResidues(R,m/d),s->r+s*d);
+          if IsSubset(res,prog) then
+            cl := ResidueClass(R,d,r);
+            Add(cls,cl); remaining := Difference(remaining,cl);
+            if IsList(remaining) then break; fi;
+            m := Modulus(remaining); res := Residues(remaining);
+            if not IsZero(m mod d) then break; fi;
+          fi;
+        od;
+      else
+        pos := 1;
+        while pos <= Length(res) do
+          if IsSubset(res,List(AllResidues(R,m/d),r->r*d+(res[pos] mod d)))
+          then
+            cl := ResidueClass(R,d,res[pos]);
+            Add(cls,cl); remaining := Difference(remaining,cl);
+            if IsList(remaining) then break; fi;
+            m := Modulus(remaining); res := Residues(remaining); pos := 0;
+            if not IsZero(m mod d) then break; fi;
+          fi;
+          pos := pos + 1;
+        od;
+      fi;
+      if IsList(remaining) then break; fi;
+    od;
+    return cls;
+  end );
+
+#############################################################################
+##
 #M  AsUnionOfFewClasses( <U> ) . . . . . . for pure residue class unions of Z
 ##
 InstallMethod( AsUnionOfFewClasses,
@@ -658,7 +734,7 @@ InstallMethod( AsUnionOfFewClasses,
         for r in [0..d-1] do
           if IsSubset(res,[r,r+d..r+(m/d-1)*d]) then
             cl := ResidueClass(Integers,d,r);
-            Add(cls,cl);  remaining := Difference(remaining,cl);
+            Add(cls,cl); remaining := Difference(remaining,cl);
             if IsList(remaining) then break; fi;
             m := Modulus(remaining); res := Residues(remaining);
             if m mod d <> 0 then break; fi;

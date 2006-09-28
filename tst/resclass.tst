@@ -322,6 +322,17 @@ gap> Residue(ResidueClass(8,16));
 8
 gap> Residue(Integers);
 0
+gap> U := ResidueClassUnion(Z_pi(2),8,[1,2,3,5,7]);
+<union of 5 residue classes (mod 8) of Z_( 2 )>
+gap> AsUnionOfFewClasses(U);
+[ The residue class 1(2) of Z_( 2 ), The residue class 2(8) of Z_( 2 ) ]
+gap> x := Indeterminate(GF(2));; SetName(x,"x");;
+gap> R := PolynomialRing(GF(2),1);;
+gap> U := ResidueClassUnion(R,x^3,[Zero(R),One(R),x,x^2,x^2+x]);
+<union of 5 residue classes (mod x^3) of GF(2)[x]>
+gap> AsUnionOfFewClasses(U);
+[ The residue class 0*Z(2) ( mod x ) of GF(2)[x], 
+  The residue class Z(2)^0 ( mod x^3 ) of GF(2)[x] ]
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 

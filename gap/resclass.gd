@@ -299,11 +299,17 @@ DeclareOperation( "Classes",
 
 #############################################################################
 ##
-#F  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
+#O  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
 ##
 ##  Returns a sorted list of all residues modulo <m> in the ring <R>.
 ##
-DeclareGlobalFunction( "AllResidues" );
+DeclareOperation( "AllResidues", [ IsRing, IsRingElement ] );
+
+#############################################################################
+##
+#O  NumberOfResidues( <R>, <m> ) . . . . . . the number of residues (mod <m>)
+##
+DeclareOperation( "NumberOfResidues", [ IsRing, IsRingElement ] );
 
 #############################################################################
 ##

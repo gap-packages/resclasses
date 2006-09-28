@@ -108,4 +108,12 @@ Changes between version 2.3.3 and version 2.3.4:
 
  - An operation `RandomPartitionIntoResidueClasses' has been introduced.
 
+Changes between version 2.3.4 and version 2.3.5:
+
+ - A method for `AsUnionOfFewClasses' for unions of residue classes of the
+   rings Z_pi and GF(q)[x] has been added.
+
+ - The function `AllResidues' has been turned into an operation, and
+   an operation `NumberOfResidues' has been introduced.
+
 

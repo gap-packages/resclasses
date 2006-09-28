@@ -125,9 +125,16 @@ Union of the residue classes 0(4) and 1(6) of Z
     If the argument <A>R</A> is omitted it defaults to the default ring of
     <A>m</A> -- cp. the documentation of <C>DefaultRing</C> in the &GAP;
     reference manual.
-    <Index Key="AllResidues" Subkey="R, m"><C>AllResidues</C></Index>
+    <Index Key="AllResidues" Subkey="R, m">
+      <C>AllResidues</C>
+    </Index>
+    <Index Key="NumberOfResidues" Subkey="R, m">
+      <C>NumberOfResidues</C>
+    </Index>
     A transversal for the residue classes (mod&nbsp;<A>m</A>) can be
-    obtained by the function <C>AllResidues(<A>R</A>,<A>m</A>)</C>.
+    obtained by the operation <C>AllResidues(<A>R</A>,<A>m</A>)</C>,
+    and their number can be determined by the operation
+    <C>NumberOfResidues(<A>R</A>,<A>m</A>)</C>.
 <Example>
 <![CDATA[
 gap> AllResidueClassesModulo(Integers,2);
@@ -137,10 +144,8 @@ gap> AllResidueClassesModulo(Z_pi(2),2);
 gap> AllResidueClassesModulo(R,x);
 [ The residue class 0*Z(2) ( mod x ) of GF(2)[x], 
   The residue class Z(2)^0 ( mod x ) of GF(2)[x] ]
-gap> AllResidues(Integers,6); 
+gap> AllResidues(Integers,6);
 [ 0 .. 5 ]
-gap> AllResidues(Z_pi(2),100);
-[ 0 .. 3 ]
 gap> AllResidues(R,x^3);  
 [ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0 ]
 ]]>
