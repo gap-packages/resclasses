@@ -8,15 +8,16 @@
 
 <Abstract>
 
-  &ResClasses; is a package for &GAP; 4 which implements set-theoretic unions
-  of residue classes of the ring of integers, of its semilocalisations and of
-  univariate polynomial rings over finite fields as &GAP; domains. <P/>
+  &ResClasses; is a package for &GAP; 4, which provides a fully-featured
+  and easy-to-use implementation of residue classes of&nbsp;<M>\Z</M> and
+  a few other rings as sets.
 
-  It provides basic functionality for computing with these sets, like
-  forming intersections, unions and differences. It supports these operations
-  also in the case that one of the operands is a finite set of ring elements.
-  The package further implements the mentioned semilocalisations
-  <M>\Z_{(\pi)}</M> of&nbsp;<M>\Z</M> as &GAP; domains.
+  The package further provides slightly more specialized functionality
+  for unions of residue classes with distinguished representatives and
+  signed moduli.
+
+  The &ResClasses; package is used in a group theoretical context by the
+  &RCWA; package&nbsp;<Cite Key="RCWA"/>.
 
 </Abstract>
 

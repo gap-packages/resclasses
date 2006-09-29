@@ -36,7 +36,7 @@
       Germany
     </Address>
   </Author>
-  <Date>September 20, 2006</Date>
+  <Date>September 29, 2006</Date>
   <Copyright>
     &copyright; 2003 - 2006 by Stefan Kohl <P/>
     This package is distributed under the GNU General Public License.
@@ -52,7 +52,6 @@
 
 <Body>
 
-<#Include SYSTEM "preface.xml">
 <#Include SYSTEM "resclass.xml">
 <#Include SYSTEM "fixedrep.xml">
 <#Include SYSTEM "z_pi.xml">
