@@ -116,4 +116,6 @@ Changes between version 2.3.4 and version 2.3.5:
  - The function `AllResidues' has been turned into an operation, and
    an operation `NumberOfResidues' has been introduced.
 
+ - The documentation has been slightly improved.
+
 
