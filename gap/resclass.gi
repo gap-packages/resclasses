@@ -2124,7 +2124,10 @@ InstallOtherMethod( \*,
                     ReturnTrue, [ IsRing, IsRingElement ], 0,
                     
   function ( R, x )
-    if not x in R then TryNextMethod(); fi;
+    if not IsIntegers(R) and not IsZ_pi(R)
+       and not (     IsUnivariatePolynomialRing(R)
+                 and IsFiniteFieldPolynomialRing(R)) or not x in R
+    then TryNextMethod(); fi;
     return ResidueClass(R,x,Zero(x));
   end );
 
