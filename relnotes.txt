@@ -118,4 +118,11 @@ Changes between version 2.3.4 and version 2.3.5:
 
  - The documentation has been slightly improved.
 
+Changes between version 2.3.5 and version 2.3.6:
+
+ - A problem w.r.t. residue classes vs. ideals has been fixed.
+   This problem has caused a `no method found' message when trying
+   to form a principal ideal by multiplying a ring by one of its
+   elements.
+
 
