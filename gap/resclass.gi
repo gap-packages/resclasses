@@ -671,7 +671,7 @@ InstallMethod( AsUnionOfFewClasses,
 
   function ( U )
 
-    local  R, cls, cl, remaining, m, res, div, d, prog, pos, r;
+    local  R, cls, cl, remaining, m, res, res_d, div, d, r;
 
     R := UnderlyingRing(FamilyObj(U));
     m := Modulus(U); res := Residues(U);
@@ -682,31 +682,17 @@ InstallMethod( AsUnionOfFewClasses,
     for d in div do
       if   not IsZero(m mod d) or NumberOfResidues(R,m/d) > Length(res)
       then continue; fi;
-      if 100 * Length(res) > NumberOfResidues(R,m) then
-        for r in AllResidues(R,d) do
-          prog := List(AllResidues(R,m/d),s->r+s*d);
-          if IsSubset(res,prog) then
-            cl := ResidueClass(R,d,r);
-            Add(cls,cl); remaining := Difference(remaining,cl);
-            if IsList(remaining) then break; fi;
-            m := Modulus(remaining); res := Residues(remaining);
-            if not IsZero(m mod d) then break; fi;
-          fi;
-        od;
-      else
-        pos := 1;
-        while pos <= Length(res) do
-          if IsSubset(res,List(AllResidues(R,m/d),r->r*d+(res[pos] mod d)))
-          then
-            cl := ResidueClass(R,d,res[pos]);
-            Add(cls,cl); remaining := Difference(remaining,cl);
-            if IsList(remaining) then break; fi;
-            m := Modulus(remaining); res := Residues(remaining); pos := 0;
-            if not IsZero(m mod d) then break; fi;
-          fi;
-          pos := pos + 1;
-        od;
-      fi;
+      res_d := Set(res mod d);
+      for r in res_d do
+        if IsSubset(res,List(AllResidues(R,m/d),s->r+s*d)) then
+          cl := ResidueClass(R,d,r);
+          Add(cls,cl); remaining := Difference(remaining,cl);
+          if IsList(remaining) then break; fi;
+          m := Modulus(remaining); res := Residues(remaining);
+          if   not IsZero(m mod d) or Length(res) < NumberOfResidues(R,m/d)
+          then break; fi;
+        fi;
+      od;
       if IsList(remaining) then break; fi;
     od;
     return cls;
@@ -717,12 +703,12 @@ InstallMethod( AsUnionOfFewClasses,
 #M  AsUnionOfFewClasses( <U> ) . . . . . . for pure residue class unions of Z
 ##
 InstallMethod( AsUnionOfFewClasses,
-               "for pure residue class unions of Z (ResClasses)", true,
-               [ IsUnionOfResidueClassesOfZ ], 0,
+               "for pure residue class unions of Z, 2 (ResClasses)", true,
+               [ IsUnionOfResidueClassesOfZ ], 20,
 
   function ( U )
 
-    local  cls, cl, remaining, m, res, div, d, pos, r;
+    local  cls, cl, remaining, m, res, res_d, div, d, r;
 
     m := Modulus(U); res := Residues(U);
     if Length(res) = 1 then return [ ResidueClass(Integers,m,res[1]) ]; fi;
@@ -730,29 +716,16 @@ InstallMethod( AsUnionOfFewClasses,
     div := DivisorsInt(m);
     for d in div do
       if m mod d <> 0 or m/d > Length(res) then continue; fi;
-      if 100 * Length(res) > m then
-        for r in [0..d-1] do
-          if IsSubset(res,[r,r+d..r+(m/d-1)*d]) then
-            cl := ResidueClass(Integers,d,r);
-            Add(cls,cl); remaining := Difference(remaining,cl);
-            if IsList(remaining) then break; fi;
-            m := Modulus(remaining); res := Residues(remaining);
-            if m mod d <> 0 then break; fi;
-          fi;
-        od;
-      else
-        pos := 1;
-        while pos <= Length(res) do
-          if IsSubset(res,List([1..m/d],i->(i-1)*d+(res[pos] mod d))) then
-            cl := ResidueClass(Integers,d,res[pos]);
-            Add(cls,cl); remaining := Difference(remaining,cl);
-            if IsList(remaining) then break; fi;
-            m := Modulus(remaining); res := Residues(remaining); pos := 0;
-            if m mod d <> 0 then break; fi;
-          fi;
-          pos := pos + 1;
-        od;
-      fi;
+      res_d := Set(res mod d);
+      for r in res_d do
+        if IsSubset(res,[r,r+d..r+(m/d-1)*d]) then
+          cl := ResidueClass(Integers,d,r);
+          Add(cls,cl); remaining := Difference(remaining,cl);
+          if IsList(remaining) then break; fi;
+          m := Modulus(remaining); res := Residues(remaining);
+          if m mod d <> 0 or Length(res) < m/d then break; fi;
+        fi;
+      od;
       if IsList(remaining) then break; fi;
     od;
     return cls;
