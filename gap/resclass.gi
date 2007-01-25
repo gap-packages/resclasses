@@ -1758,6 +1758,18 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
+#M  Difference( <R>, <R_> ) . . . . . . . . . . . for two times the same ring
+##
+InstallMethod( Difference,
+               "for two times the same ring (ResClasses)", ReturnTrue,
+               [ IsRing, IsRing ], SUM_FLAGS,
+
+  function ( R, R_ )
+    if R = R_ then return []; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #M  Difference( <S>, <S_> ) . . . . . . . . . . .  for two times the same set
 ##
 InstallMethod( Difference,
