@@ -125,4 +125,5 @@ Changes between version 2.3.5 and version 2.3.6:
    to form a principal ideal by multiplying a ring by one of its
    elements.
 
+ - A missing `Difference' method for two times the same ring has been added.
 
