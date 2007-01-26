@@ -131,7 +131,7 @@ Changes between version 2.3.5 and version 2.3.6:
    been renamed to `IsResidueClassUnionResidueListRep'. This change will not
    affect the use of this package.
 
- - Fixed a bug in the \< method for residue class unions.
+ - A bug in the \< method for residue class unions has been fixed.
    This bug caused an error message when sorting lists of residue class
    unions (in rare cases).
 
