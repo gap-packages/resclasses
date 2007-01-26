@@ -41,6 +41,9 @@ DeclareCategory( "IsUnionOfResidueClassesWithFixedRepresentatives",
 ##  representatives and <included> resp. <excluded> are lists of single
 ##  elements added to resp. subtracted from the union of classes.
 ##
+##  The representation is unique, i.e. two residue class unions are equal
+##  if and only if their stored representations are equal.
+##
 DeclareRepresentation( "IsResidueClassUnionResidueListRep", 
                        IsComponentObjectRep and IsAttributeStoringRep, 
                        [ "m", "r", "included", "excluded" ] );
