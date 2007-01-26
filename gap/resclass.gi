@@ -281,7 +281,7 @@ InstallGlobalFunction( AllResidueClassesWithFixedRepresentativesModulo,
 #M  ResidueClassUnionCons( <filter>, <R>, <m>, <r>, <included>, <excluded> )
 ##
 InstallMethod( ResidueClassUnionCons,
-               "sparse rep., for Z, Z_pi and GF(q)[x] (ResClasses)",
+               "residue list rep., for Z, Z_pi and GF(q)[x] (ResClasses)",
                ReturnTrue, [ IsUnionOfResidueClasses, IsRing, IsRingElement,
                              IsList, IsList, IsList ], 0,
 
