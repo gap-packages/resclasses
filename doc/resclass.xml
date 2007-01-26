@@ -359,9 +359,9 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
       <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C>
     </Index>
     The internal representation of unions of residue classes is called
-    <C>IsResidueClassUnionSparseRep</C>.
-    <Index Key="IsResidueClassUnionSparseRep">
-      <C>IsResidueClassUnionSparseRep</C>
+    <C>IsResidueClassUnionResidueListRep</C>.
+    <Index Key="IsResidueClassUnionResidueListRep">
+      <C>IsResidueClassUnionResidueListRep</C>
     </Index>
   </Description>
 </ManSection>

@@ -127,3 +127,8 @@ Changes between version 2.3.5 and version 2.3.6:
 
  - A missing `Difference' method for two times the same ring has been added.
 
+ - For consistency, the representation `IsResidueClassUnionSparseRep' has
+   been renamed to `IsResidueClassUnionResidueListRep'. This change will not
+   affect the use of this package.
+
+

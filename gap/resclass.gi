@@ -23,8 +23,8 @@ BindGlobal( "GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES", [] );
 
 # Shorthand for commonly used filter.
 
-BindGlobal( "IsResidueClassUnionInSparseRep",
-            IsUnionOfResidueClasses and IsResidueClassUnionSparseRep );
+BindGlobal( "IsResidueClassUnionInResidueListRep",
+            IsUnionOfResidueClasses and IsResidueClassUnionResidueListRep );
 
 # Implications between types of unions of residue classes.
 
@@ -333,8 +333,8 @@ InstallMethod( ResidueClassUnionCons,
     elif IsZ_pi( R )           then type := IsUnionOfResidueClassesOfZ_pi;
     elif IsPolynomialRing( R ) then type := IsUnionOfResidueClassesOfGFqx;
     fi;
-    Result := Objectify( NewType( fam,
-                                  type and IsResidueClassUnionSparseRep ),
+    Result := Objectify( NewType( fam, type and
+                                  IsResidueClassUnionResidueListRep ),
                          rec( m := m, r := r,
                               included := included, excluded := excluded ) );
     SetSize( Result, infinity ); SetIsFinite( Result, false );
@@ -523,7 +523,7 @@ InstallGlobalFunction( ResidueClassWithFixedRepresentative,
 ##
 InstallMethod( Modulus,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0, U -> U!.m );
+               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.m );
 
 #############################################################################
 ##
@@ -586,7 +586,7 @@ InstallOtherMethod( Residue,
 ##
 InstallMethod( Residues,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0, U -> U!.r );
+               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.r );
 
 #############################################################################
 ##
@@ -610,7 +610,7 @@ InstallOtherMethod( Residues,
 ##
 InstallMethod( IncludedElements,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0, U -> U!.included );
+               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.included );
 
 #############################################################################
 ##
@@ -634,7 +634,7 @@ InstallOtherMethod( IncludedElements,
 ##
 InstallMethod( ExcludedElements,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0, U -> U!.excluded );
+               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.excluded );
 
 #############################################################################
 ##
@@ -1156,8 +1156,8 @@ InstallMethod( Display,
 ##
 InstallMethod( \=,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionInSparseRep,
-                 IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
     return U1!.m = U2!.m and U1!.r = U2!.r
@@ -1186,8 +1186,8 @@ InstallMethod( \=,
 ##
 InstallMethod( \<,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionInSparseRep,
-                 IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
     if   U1!.m <> U2!.m then return U1!.m < U2!.m;
@@ -1204,10 +1204,11 @@ InstallMethod( \<,
 InstallMethod( \<,
                Concatenation("for a ring and a union of residue classes ",
                              "thereof (ResClasses)"), ReturnTrue,
-               [ IsRing, IsResidueClassUnionInSparseRep ], 0, ReturnTrue );
+               [ IsRing, IsResidueClassUnionInResidueListRep ],
+               0, ReturnTrue );
 InstallMethod( \<,
                "for a residue class union and its base ring (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsRing ], 0,
+               ReturnTrue, [ IsResidueClassUnionInResidueListRep, IsRing ], 0,
                ReturnFalse );
 
 #############################################################################
@@ -1230,8 +1231,8 @@ InstallMethod( \<,
 ##
 InstallMethod( \in,
                "for a ring element and a residue class union (ResClasses)",
-               ReturnTrue, [ IsRingElement, IsResidueClassUnionInSparseRep ],
-               0,
+               ReturnTrue,
+               [ IsRingElement, IsResidueClassUnionInResidueListRep ], 0,
 
   function ( n, U )
     if not n in UnderlyingRing(FamilyObj(U)) then return false; fi;
@@ -1331,7 +1332,7 @@ InstallOtherMethod( Density,
 ##
 InstallMethod( Density,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U )
     return Length(U!.r)/
@@ -1361,8 +1362,8 @@ InstallOtherMethod( Density,
 ##
 InstallMethod( Union2,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionInSparseRep,
-                 IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
 
@@ -1411,8 +1412,8 @@ InstallMethod( Union2,
 ##
 InstallMethod( Intersection2,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionInSparseRep,
-                 IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
 
@@ -1475,8 +1476,8 @@ InstallMethod( Intersection2,
 ##
 InstallMethod( Difference,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionInSparseRep,
-                 IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
 
@@ -1536,7 +1537,8 @@ InstallMethod( Difference,
 ##
 InstallMethod( Union2,
                "for a residue class union and a finite set (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsList ], 0,
+               ReturnTrue, [ IsResidueClassUnionInResidueListRep, IsList ],
+               0,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
@@ -1619,7 +1621,8 @@ InstallMethod( Union2,
 ##
 InstallMethod( Intersection2,
                "for a residue class union and a finite set (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsList ], 0,
+               ReturnTrue, [ IsResidueClassUnionInResidueListRep, IsList ],
+               0,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
@@ -1692,7 +1695,8 @@ InstallMethod( Intersection2, "for the empty set and a set (ResClasses)",
 ##
 InstallMethod( Difference,
                "for a residue class union and a finite set (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnionInSparseRep, IsList ], 100,
+               ReturnTrue, [ IsResidueClassUnionInResidueListRep, IsList ],
+               100,
 
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
@@ -1798,8 +1802,8 @@ InstallMethod( IsSubset,
 ##
 InstallMethod( IsSubset,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionInSparseRep,
-                 IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
 
@@ -2338,7 +2342,7 @@ InstallMethod( Rho,
 ##
 InstallMethod( Iterator,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInSparseRep ], 0,
+               [ IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U )
     return Objectify( NewType( IteratorsFamily,

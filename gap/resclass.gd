@@ -31,17 +31,17 @@ DeclareCategory( "IsUnionOfResidueClassesWithFixedRepresentatives",
 
 #############################################################################
 ##
-#R  IsResidueClassUnionSparseRep . . .  `sparse' rep. of residue class unions
+#R  IsResidueClassUnionResidueListRep . .  representation by list of residues
 ##
 ##  Representation of unions of residue classes of the integers,
-##  a semilocalization Z_(pi) of the integers or a univariate polynomial ring
-##  GF(q)[x] over a finite field.
+##  of a semilocalization Z_(pi) of the integers or of a univariate
+##  polynomial ring GF(q)[x] over a finite field, by list of residues.
 ## 
-##  The component <m> stores the common modulus, <r> is the list of class
+##  The component <m> stores the modulus, <r> is the list of class
 ##  representatives and <included> resp. <excluded> are lists of single
 ##  elements added to resp. subtracted from the union of classes.
 ##
-DeclareRepresentation( "IsResidueClassUnionSparseRep", 
+DeclareRepresentation( "IsResidueClassUnionResidueListRep", 
                        IsComponentObjectRep and IsAttributeStoringRep, 
                        [ "m", "r", "included", "excluded" ] );
 
@@ -56,7 +56,7 @@ DeclareRepresentation( "IsResidueClassUnionSparseRep",
 ##  The component <classes> is a list of residue classes, given as pairs
 ##  ( <modulus>, <representative> ). The representatives are *not* reduced
 ##  modulo the respective moduli, and the moduli may be different --
-##  in contrast to `IsResidueClassUnionSparseRep' no common modulus is
+##  in contrast to `IsResidueClassUnionResidueListRep' no common modulus is
 ##  stored, and *unions which are equal as sets are distinguished* if their
 ##  respective <classes> - components are distinct.
 ##
