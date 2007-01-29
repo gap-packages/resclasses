@@ -6,7 +6,11 @@
                                   Abstract
 
 ResClasses is  a GAP 4 package for  set-theoretic computations  with  residue
-classes of the integers and a couple of other rings.
+classes of the integers and a couple of other rings.  The class of sets which
+ResClasses can deal with  includes the open and the closed sets in the  topo-
+logy on the respective ring which is induced by taking the set of all residue
+classes as a basis,  as far as the usual restrictions  imposed by the finite-
+ness of computing resources permit this.
 
 
                                 Requirements

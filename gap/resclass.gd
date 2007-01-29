@@ -13,11 +13,13 @@ Revision.resclass_gd :=
 #############################################################################
 ##
 #C  IsUnionOfResidueClasses . . . . unions of residue classes and finite sets
+#C  IsResidueClassUnion
 ##
 ##  The category of all unions of residue classes and finite sets.
 ##
 DeclareCategory( "IsUnionOfResidueClasses",
                  IsDomain and IsListOrCollection );
+DeclareSynonym( "IsResidueClassUnion", IsUnionOfResidueClasses );
 
 #############################################################################
 ##
@@ -70,6 +72,7 @@ DeclareRepresentation( "IsFixedRepResidueClassUnionRep",
 #############################################################################
 ##
 #C  IsUnionOfResidueClassesOfZ . .  unions of residue classes and finite sets
+#C  IsResidueClassUnionOfZ
 #C  IsUnionOfResidueClassesOfZWithFixedRepresentatives
 ##
 ##  The category of unions of residue classes of the integers and finite sets
@@ -78,12 +81,14 @@ DeclareRepresentation( "IsFixedRepResidueClassUnionRep",
 ##
 DeclareCategory( "IsUnionOfResidueClassesOfZ",
                  IsDomain and IsListOrCollection );
+DeclareSynonym( "IsResidueClassUnionOfZ", IsUnionOfResidueClassesOfZ );
 DeclareCategory( "IsUnionOfResidueClassesOfZWithFixedRepresentatives",
                  IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
 #C  IsUnionOfResidueClassesOfZ_pi . unions of residue classes and finite sets
+#C  IsResidueClassUnionOfZ_pi
 #C  IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives
 ##
 ##  The category of unions of residue classes of some ring Z_(pi) and finite
@@ -92,12 +97,14 @@ DeclareCategory( "IsUnionOfResidueClassesOfZWithFixedRepresentatives",
 ##
 DeclareCategory( "IsUnionOfResidueClassesOfZ_pi",
                  IsDomain and IsListOrCollection );
+DeclareSynonym( "IsResidueClassUnionOfZ_pi", IsUnionOfResidueClassesOfZ_pi );
 DeclareCategory( "IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives",
                  IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
 #C  IsUnionOfResidueClassesOfZorZ_pi . unions of res. classes and finite sets
+#C  IsResidueClassUnionOfZorZ_pi
 #C  IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives
 ##
 ##  The union of the categories `IsUnionOfResidueClassesOfZ' and
@@ -107,12 +114,15 @@ DeclareCategory( "IsUnionOfResidueClassesOfZ_piWithFixedRepresentatives",
 ##
 DeclareCategory( "IsUnionOfResidueClassesOfZorZ_pi",
                  IsDomain and IsListOrCollection );
+DeclareSynonym( "IsResidueClassUnionOfZorZ_pi",
+                IsUnionOfResidueClassesOfZorZ_pi );
 DeclareCategory( "IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives",
                  IsDomain and IsListOrCollection );
 
 #############################################################################
 ##
 #C  IsUnionOfResidueClassesOfGFqx . . .  unions of res. classes and fin. sets
+#C  IsResidueClassUnionOfGFqx
 #C  IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives
 ##
 ##  The category of unions of residue classes of some ring GF(q)[x] and
@@ -121,6 +131,7 @@ DeclareCategory( "IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives",
 ##
 DeclareCategory( "IsUnionOfResidueClassesOfGFqx",
                  IsDomain and IsListOrCollection );
+DeclareSynonym( "IsResidueClassUnionOfGFqx", IsUnionOfResidueClassesOfGFqx );
 DeclareCategory( "IsUnionOfResidueClassesOfGFqxWithFixedRepresentatives",
                  IsDomain and IsListOrCollection );
 

@@ -135,5 +135,13 @@ Changes between version 2.3.5 and version 2.3.6:
    This bug caused an error message when sorting lists of residue class
    unions (in rare cases).
 
+Changes between version 2.3.6 and version 2.3.7:
+
+ - Synonyms `IsResidueClassUnion[OfZ|OfZ_pi|OfZorZ_pi|OfGFqx]' for the five
+   categories `IsUnionOfResidueClasses[OfZ|OfZ_pi|OfZorZ_pi|OfGFqx]' have
+   been defined.
+
+ - The documentation has been improved in a few places.
+
 
 

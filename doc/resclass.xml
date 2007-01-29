@@ -7,12 +7,12 @@
 <!-- #################################################################### -->
 
 <Chapter Label="ch:UnionsOfResidueClasses">
-<Heading>Unions of Residue Classes</Heading>
+<Heading>Set-Theoretic Unions of Residue Classes</Heading>
 
 <!-- #################################################################### -->
 
 <Section Label="sec:DefiningUnionsOfResidueClasses">
-<Heading>Entering residue classes and unions thereof</Heading>
+<Heading>Entering residue classes and set-theoretic unions thereof</Heading>
 
 <ManSection>
   <Func Name="ResidueClass" Arg="R, m, r" Label="R, m, r"/>
@@ -85,15 +85,26 @@ gap> ResidueClassUnion(R,x^2,[One(R),x],[Zero(R)],[One(R)]);
   </Description>
 </ManSection>
 
+<Index Key="union of residue classes" Subkey="definition">
+  union of residue classes
+</Index>
+<Index Key="residue class union" Subkey="definition">
+  residue class union
+</Index>
+
+When talking about a <E>union of residue classes</E> or a <E>residue class
+union</E> in this chapter, we always mean an object as it is returned by
+this function. <P/>
+
 <Index Key="Modulus" Subkey="U"><C>Modulus</C></Index>
 <Index Key="Residues" Subkey="U"><C>Residues</C></Index>
 <Index Key="IncludedElements" Subkey="U"><C>IncludedElements</C></Index>
 <Index Key="ExcludedElements" Subkey="U"><C>ExcludedElements</C></Index>
 
-For extracting the components of a residue class union as passed as
-arguments to <Ref Func="ResidueClassUnion" Label="R, m, r"/>, there are
-operations <C>Modulus</C>, <C>Residues</C>, <C>IncludedElements</C> and
-<C>ExcludedElements</C>. <P/>
+There are operations <C>Modulus</C>, <C>Residues</C>,
+<C>IncludedElements</C> and <C>ExcludedElements</C> to extract
+the components of a residue class union as passed as arguments
+to <Ref Func="ResidueClassUnion" Label="R, m, r"/>. <P/>
 
 <Index Key="ResidueClassUnionViewingFormat" Subkey="format">
   <C>ResidueClassUnionViewingFormat</C>
@@ -106,9 +117,9 @@ unions thereof:
 <Example>
 <![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
-gap> ResidueClassUnion(Integers,12,[0,1,4,7,8]);  
+gap> ResidueClassUnion(Integers,12,[0,1,4,7,8]);
 0(4) U 1(6)
-gap> ResidueClassUnionViewingFormat("long");    
+gap> ResidueClassUnionViewingFormat("long");
 gap> ResidueClassUnion(Integers,12,[0,1,4,7,8]);
 Union of the residue classes 0(4) and 1(6) of Z
 ]]>
@@ -234,26 +245,26 @@ fail
 </ManSection>
 
 Often one needs a partition of a given union of residue classes into
-<Q>few</Q> residue classes. Ensuring to get always a partition of minimal
-possible length seems to be algorithmically difficult.
-The following operation finds usually <Q>reasonably short</Q> partitions:
+<Q>few</Q> residue classes. The following operation takes care of this:
 
 <ManSection>
   <Oper Name="AsUnionOfFewClasses" Arg="U" Label="U"/>
   <Returns>
-    A set of disjoint residue classes whose union is <A>U</A>.
+    A set of disjoint residue classes whose union is equal to&nbsp;<A>U</A>,
+    up to the finite sets <C>IncludedElements(<A>U</A>)</C> and
+    <C>ExcludedElements(<A>U</A>)</C>.
   </Returns>
   <Description>
     As the name of the operation suggests, it is taken care that
     the number of residue classes in the returned list is kept
-    <Q>reasonably small</Q>. It is not necessarily minimal.
-    No care is taken of <C>IncludedElements</C> and
-    <C>ExcludedElements</C>.
+    <Q>reasonably small</Q>. It is not guaranteed that it is minimal.
 <Example>
 <![CDATA[
 gap> AsUnionOfFewClasses(Difference(Integers,ResidueClass(0,12)));
 [ The residue class 1(2) of Z, The residue class 2(4) of Z, 
   The residue class 4(12) of Z, The residue class 8(12) of Z ]
+gap> Union(last);
+Z \ The residue class 0(12) of Z
 ]]>
 </Example>
   </Description>
@@ -351,13 +362,32 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
   </Returns>
   <Description>
     Often the same methods can be used for residue classes of the ring of
-    integers and of its semilocalizations. For this reason there is
+    integers and of its semilocalizations. For this reason, there is
     a category <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C> which is the
     union of <C>IsUnionOfResidueClassesOfZ</C> and
     <C>IsUnionOfResidueClassesOfZ&uscore;pi</C>.
     <Index Key="IsUnionOfResidueClassesOfZorZ_pi" Subkey="U">
       <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C>
     </Index>
+    <Index Key="IsResidueClassUnion" Subkey="U">
+      <C>IsResidueClassUnion</C>
+    </Index>
+    <Index Key="IsResidueClassUnionOfZ" Subkey="U">
+      <C>IsResidueClassUnionOfZ</C>
+    </Index>
+    <Index Key="IsResidueClassUnionOfZ_pi" Subkey="U">
+      <C>IsResidueClassUnionOfZ&uscore;pi</C>
+    </Index>
+    <Index Key="IsResidueClassUnionOfZorZ_pi" Subkey="U">
+      <C>IsResidueClassUnionZorZ&uscore;pi</C>
+    </Index>
+    <Index Key="IsResidueClassUnionOfGFqx" Subkey="U">
+      <C>IsResidueClassUnionOfGFqx</C>
+    </Index>
+    There are synonyms
+    <C>IsResidueClassUnion[OfZ|OfZ&uscore;pi|OfZorZ&uscore;pi|OfGFqx]</C>
+    for the five categories
+    <C>IsUnionOfResidueClasses[OfZ|OfZ&uscore;pi|OfZorZ&uscore;pi|OfGFqx]</C>.
     The internal representation of unions of residue classes is called
     <C>IsResidueClassUnionResidueListRep</C>.
     <Index Key="IsResidueClassUnionResidueListRep">
