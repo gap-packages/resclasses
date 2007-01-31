@@ -760,8 +760,9 @@ InstallMethod( SplittedClass,
     local  R, r, m;
 
     R := UnderlyingRing(FamilyObj(cl));
-    if Length(Residues(cl)) > 1 or (IsZ_pi(R) and not
-       IsSubset(Union(NoninvertiblePrimes(R),[1]),Set(Factors(t))))
+    if not IsResidueClass(cl)
+       or (IsZ_pi(R) and not IsSubset(Union(NoninvertiblePrimes(R),[1]),
+                                      Set(Factors(t))))
     then return fail; fi;
     r := Residues(cl)[1]; m := Modulus(cl);
     return List([0..t-1],k->ResidueClass(R,t*m,k*m+r));
@@ -769,18 +770,53 @@ InstallMethod( SplittedClass,
 
 #############################################################################
 ##
-#M  SplittedClass( <R>, <t> ) . . . . . . . . . . . . . . . . . for Z or Z_pi
+#M  SplittedClass( <cl>, <t> ) . . . . . . .  for residue classes of GF(q)[x]
+##
+InstallMethod( SplittedClass,
+               "for residue classes of GF(q)[x] (ResClasses)", true,
+               [ IsUnionOfResidueClassesOfGFqx, IsPosInt ], 0,
+
+  function ( cl, t )
+
+    local  R, r, m1, m2, m;
+
+    if IsOne(t) then return [cl]; fi;
+    R := UnderlyingRing(FamilyObj(cl));
+    if   not IsResidueClass(cl) or SmallestRootInt(t) <> Characteristic(R)
+    then return fail; fi;
+    r  := Residues(cl)[1];
+    m1 := Modulus(cl);
+    m2 := IndeterminatesOfPolynomialRing(R)[1]^LogInt(t,Characteristic(R));
+    m  := m1 * m2;
+    return List(AllResidues(R,m2),k->ResidueClass(R,m,k*m1+r));
+  end );
+
+#############################################################################
+##
+#M  SplittedClass( <R>, <t> ) . . . . . . . . . . . . for Z, Z_pi or GF(q)[x]
 ##
 InstallOtherMethod( SplittedClass,
-                    "for Z or Z_pi (ResClasses)", true,
+                    "for Z, Z_pi or GF(q)[x] (ResClasses)", true,
                     [ IsRing, IsPosInt ], 0,
 
   function ( R, t )
-    if not IsIntegers(R) and not IsZ_pi(R) then TryNextMethod(); fi;
-    if IsZ_pi(R) and not
-       IsSubset(Union(NoninvertiblePrimes(R),[1]),Set(Factors(t)))
+
+    local  m;
+
+    if IsOne(t) then return [R]; fi;
+    if    not IsIntegers(R) and not IsZ_pi(R)
+      and not IsFiniteFieldPolynomialRing(R)
+    then TryNextMethod(); fi;
+    if IsZ_pi(R)
+      and not IsSubset(Union(NoninvertiblePrimes(R),[1]),Set(Factors(t)))
     then return fail; fi;
-    return List([0..t-1],k->ResidueClass(R,t,k));
+    if IsFiniteFieldPolynomialRing(R)
+      and SmallestRootInt(t) <> Characteristic(R)
+    then return fail; fi;
+    if IsIntegers(R) or IsZ_pi(R) then m := t; else
+      m := IndeterminatesOfPolynomialRing(R)[1]^LogInt(t,Characteristic(R));
+    fi;
+    return AllResidueClassesModulo(R,m);
   end );
 
 #############################################################################
