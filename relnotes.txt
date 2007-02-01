@@ -145,9 +145,12 @@ Changes between version 2.3.6 and version 2.3.7:
 
 Changes between version 2.3.7 and version 2.3.8:
 
- - Various new methods for existing operations have been added.
-   In particular the support of residue class unions of polynomial rings
-   GF(q)[x] has been improved.
+ - The support of residue class unions of polynomial rings GF(q)[x] has
+   been improved. For example there are now methods for `SplittedClass'
+   and `RandomPartitionIntoResidueClasses' which are applicable to residue
+   classes of GF(q)[x] resp. to GF(q)[x] itself. Further the `Viev'ing and
+   `Display' format for unions of residue classes of GF(q)[x] has been
+   improved.
 
 
 
