@@ -752,7 +752,7 @@ InstallOtherMethod( AsUnionOfFewClasses,
 #M  SplittedClass( <cl>, <t> ) . . . . . . . for residue classes of Z or Z_pi
 ##
 InstallMethod( SplittedClass,
-               "for residue classes of Z or Z_pi (ResClasses)", true,
+               "for residue classes of Z or Z_pi (ResClasses)", ReturnTrue,
                [ IsUnionOfResidueClassesOfZorZ_pi, IsPosInt ], 0,
 
   function ( cl, t )
@@ -764,7 +764,7 @@ InstallMethod( SplittedClass,
        or (IsZ_pi(R) and not IsSubset(Union(NoninvertiblePrimes(R),[1]),
                                       Set(Factors(t))))
     then return fail; fi;
-    r := Residues(cl)[1]; m := Modulus(cl);
+    r := Residue(cl); m := Modulus(cl);
     return List([0..t-1],k->ResidueClass(R,t*m,k*m+r));
   end );
 
@@ -773,18 +773,18 @@ InstallMethod( SplittedClass,
 #M  SplittedClass( <cl>, <t> ) . . . . . . .  for residue classes of GF(q)[x]
 ##
 InstallMethod( SplittedClass,
-               "for residue classes of GF(q)[x] (ResClasses)", true,
+               "for residue classes of GF(q)[x] (ResClasses)", ReturnTrue,
                [ IsUnionOfResidueClassesOfGFqx, IsPosInt ], 0,
 
   function ( cl, t )
 
     local  R, r, m1, m2, m;
 
-    if IsOne(t) then return [cl]; fi;
+    if t = 1 then return [cl]; fi;
     R := UnderlyingRing(FamilyObj(cl));
     if   not IsResidueClass(cl) or SmallestRootInt(t) <> Characteristic(R)
     then return fail; fi;
-    r  := Residues(cl)[1];
+    r  := Residue(cl);
     m1 := Modulus(cl);
     m2 := IndeterminatesOfPolynomialRing(R)[1]^LogInt(t,Characteristic(R));
     m  := m1 * m2;
@@ -796,7 +796,7 @@ InstallMethod( SplittedClass,
 #M  SplittedClass( <R>, <t> ) . . . . . . . . . . . . for Z, Z_pi or GF(q)[x]
 ##
 InstallOtherMethod( SplittedClass,
-                    "for Z, Z_pi or GF(q)[x] (ResClasses)", true,
+                    "for Z, Z_pi or GF(q)[x] (ResClasses)", ReturnTrue,
                     [ IsRing, IsPosInt ], 0,
 
   function ( R, t )
@@ -821,24 +821,77 @@ InstallOtherMethod( SplittedClass,
 
 #############################################################################
 ##
-#M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> ) . . .  for Z
+#M  SplittedClass( <cl>, <m2> ) .  for a residue class of GF(q)[x] and a pol.
+##
+InstallOtherMethod( SplittedClass,
+                    Concatenation("for a residue class of GF(q)[x] and a ",
+                                  "polynomial (ResClasses)"), ReturnTrue,
+                    [ IsUnionOfResidueClassesOfGFqx, IsPolynomial ], 0,
+
+  function ( cl, m2 )
+
+    local  R, r, m1, m;
+
+    R := UnderlyingRing(FamilyObj(cl));
+    if not IsResidueClass(cl) or not m2 in R then return fail; fi;
+    if IsOne(m2) then return [cl]; fi;
+    r  := Residue(cl);
+    m1 := Modulus(cl);
+    m  := m1 * m2;
+    return List(AllResidues(R,m2),k->ResidueClass(R,m,k*m1+r));
+  end );
+
+#############################################################################
+##
+#M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> )  for Z, Z_pi
 ##
 InstallMethod( RandomPartitionIntoResidueClasses,
-               "for Z", ReturnTrue, [ IsIntegers, IsPosInt, IsList ], 0,
+               "for Z or Z_pi", ReturnTrue,
+               [ IsRing, IsPosInt, IsList ], 0,
 
-  function ( Z, length, primes )
+  function ( R, length, primes )
 
     local  P, diff, p, parts, part, i, j;
 
-    if   not ForAll(primes,IsInt) or not ForAll(primes,IsPrime)
+    if   not (IsIntegers(R) or IsZ_pi(R))
+      or not ForAll(primes,IsInt) or not ForAll(primes,IsPrime)
     then TryNextMethod(); fi;
+    if   IsZ_pi(R)
+    then primes := Intersection(primes,NoninvertiblePrimes(R)); fi;
     parts := Filtered(Partitions(length-1),
                       part->IsSubset(primes-1,part));
     if IsEmpty(parts) then return fail; fi;
     part := Random(parts);
-    P    := [ Integers ];
+    P    := [ R ];
     for i in [1..Length(part)] do
       p    := part[i] + 1;
+      j    := Random([1..Length(P)]);
+      P[j] := SplittedClass(P[j],p);
+      P    := Flat(P);
+    od;
+    return Set(P);
+  end );
+
+#############################################################################
+##
+#M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> ) for GF(q)[x]
+##
+InstallMethod( RandomPartitionIntoResidueClasses,
+               "for GF(q)[x]", ReturnTrue,
+               [ IsFiniteFieldPolynomialRing, IsPosInt, IsList ], 0,
+
+  function ( R, length, primes )
+
+    local  P, splitparts, parts, part, p, i, j;
+
+    if not IsSubset(R,primes) then TryNextMethod(); fi;
+    splitparts := List(primes,p->NumberOfResidues(R,p)-1);
+    parts := Filtered(Partitions(length-1),part->IsSubset(splitparts,part));
+    if IsEmpty(parts) then return fail; fi;
+    part := Random(parts);
+    P    := [ R ];
+    for i in [1..Length(part)] do
+      p    := Random(Filtered(primes, q->NumberOfResidues(R,q) = part[i]+1));
       j    := Random([1..Length(P)]);
       P[j] := SplittedClass(P[j],p);
       P    := Flat(P);
@@ -895,7 +948,7 @@ InstallMethod( ViewObj,
   function ( U )
 
     local  R, m, r, included, excluded, PrintFiniteSet, n, cl, endval,
-           short, display;
+           short, bound, display;
 
     PrintFiniteSet := function ( S )
       if   Length(String(S)) <= 32 or display
@@ -907,22 +960,18 @@ InstallMethod( ViewObj,
     display := ValueOption("RC_DISPLAY") = true;
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
-    if IsIntegers(R) then
-      if   display or Length(r) <= 20
-      then cl := AsUnionOfFewClasses(U); fi;
-      if   (display or Length(r) > m - 20)
-        and Length(r) > m/2
-        and included = [] and excluded = []
-        and Length(AsUnionOfFewClasses(Difference(Integers,U))) <= 3
-      then
-        Print("Z \\ ");
-        View(Difference(Integers,U));
-        return;
-      fi;
-    fi;
-    if IsIntegers(R) and (display or IsBound(cl) and Length(cl) < 6
-      or Length(r) < 6) or Length(r) = 1
+    if display or Length(r) <= 20 then cl := AsUnionOfFewClasses(U); fi;
+    if   (display or Length(r) > NumberOfResidues(R,m) - 20)
+      and Length(r) > NumberOfResidues(R,m)/2
+      and included = [] and excluded = []
+      and Length(AsUnionOfFewClasses(Difference(R,U))) <= 3
     then
+      Print(RingToString(R)," \\ "); View(Difference(R,U));
+      return;
+    fi;
+    if   IsIntegers(R) or IsZ_pi(R)
+    then bound := 5; elif short then bound := 3; else bound := 1; fi;
+    if display or (IsBound(cl) and Length(cl) <= bound) then
       if IsOne(m) then
         Print(RingToString(R)," \\ "); PrintFiniteSet(excluded);
       else
@@ -934,7 +983,11 @@ InstallMethod( ViewObj,
           if IsBound(cl) then
             endval := Length(cl) - 1;
             for n in [1..endval] do
-              Print(Residues(cl[n])[1],"(",Modulus(cl[n]),")");
+              Print(Residue(cl[n]));
+              if   IsIntegers(R) or IsZ_pi(R)
+              then Print("(",Modulus(cl[n]),")");
+              elif short then Print("(mod ",Modulus(cl[n]),")");
+              else Print(" ( mod ",Modulus(cl[n])," )"); fi;
               if n < endval then
                 if short then Print(" U "); else Print(", "); fi;
               fi;
@@ -960,7 +1013,9 @@ InstallMethod( ViewObj,
              then Print(Residues(cl[Length(cl)])[1],"(",
                         Modulus(cl[Length(cl)]),")");
              else Print(r[Length(r)],"(",m,")"); fi;
-        else Print(r[Length(r)]," ( mod ",m," )"); fi;
+        else if short then Print(r[Length(r)],"(mod ",m,")");
+                      else Print(r[Length(r)]," ( mod ",m," )"); fi;
+        fi;
         if not short then Print(" of ",RingToString(R)); fi;
         if included <> [] then
           if short then Print(" U "); else Print(") U "); fi;
@@ -1111,57 +1166,8 @@ InstallMethod( PrintObj,
 ##
 InstallMethod( Display,
                "for residue class unions of Z (ResClasses)", true,
-               [ IsUnionOfResidueClassesOfZ ], 0,
-               function ( U ) ViewObj(U:RC_DISPLAY); Print("\n"); end );
-
-#############################################################################
-##
-#M  Display( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
-##
-InstallMethod( Display,
-               "for residue class unions (ResClasses)", true,
                [ IsUnionOfResidueClasses ], 0,
-
-  function ( U )
-
-    local  R, m, r, included, excluded, plin, plex, DisplayArray;
-
-    DisplayArray := function ( l )
-
-      local ellng, elperline, sign, i;
-
-      Print("\n\n");
-      ellng     := Maximum(List(l,n->Length(String(n)))) + 1;
-      elperline := Int((SizeScreen()[1]-3)/ellng);
-      if IsRat(l[1]) then sign := 1; else sign := -1; fi;
-      for i in [1..Length(l)] do
-        Print(String(l[i],sign*ellng));
-        if i mod elperline = 0 and i < Length(l) then Print("\n"); fi;
-      od;
-      Print("\n\n");
-    end;
-
-    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
-    included := IncludedElements(U); excluded := ExcludedElements(U);
-    if Length(included) > 1 then plin := "s"; else plin := ""; fi;
-    if Length(excluded) > 1 then plex := "s"; else plex := ""; fi;
-    if IsOne(m) then
-      Print(RingToString(R)," \\ ",excluded,"\n"); return;
-    elif Length(r) = 1 then
-      if [included,excluded] <> [[],[]] then Print("\n"); fi;
-      Print("The residue class ",r[1]," ( mod ",m," )");
-      Print(" of ",RingToString(R),"\n");
-      if [included,excluded] <> [[],[]] then Print("\n"); fi;
-    else
-      Print("\nThe union of the residue classes r ( mod ",m," ) ");
-      Print("of ",RingToString(R));
-      Print(" for r ="); DisplayArray(r);
-    fi;
-    if   included <> []
-    then Print("and the element",plin); DisplayArray(included); fi;
-    if   excluded <> []
-    then Print("without the element",plex); DisplayArray(excluded); fi;
-  end );
+               function ( U ) ViewObj(U:RC_DISPLAY); Print("\n"); end );
 
 #############################################################################
 ##
