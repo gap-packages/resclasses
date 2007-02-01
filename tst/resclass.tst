@@ -286,6 +286,11 @@ gap> SplittedClass(R,2);
   The residue class Z(2)^0 ( mod x ) of GF(2)[x] ]
 gap> SplittedClass(R,3);
 fail
+gap> SplittedClass(R,x+1);
+[ The residue class 0*Z(2) ( mod x+Z(2)^0 ) of GF(2)[x], 
+  The residue class Z(2)^0 ( mod x+Z(2)^0 ) of GF(2)[x] ]
+gap> Union(last);
+GF(2)[x]
 gap> cl := ResidueClass(R,x,Zero(R));;
 gap> SplittedClass(cl,1);
 [ The residue class 0*Z(2) ( mod x ) of GF(2)[x] ]
@@ -294,6 +299,13 @@ gap> SplittedClass(cl,2);
   The residue class x ( mod x^2 ) of GF(2)[x] ]
 gap> SplittedClass(cl,3);
 fail
+gap> SplittedClass(cl,x^2+x+1);
+[ The residue class 0*Z(2) ( mod x^3+x^2+x ) of GF(2)[x], 
+  The residue class x ( mod x^3+x^2+x ) of GF(2)[x], 
+  The residue class x^2 ( mod x^3+x^2+x ) of GF(2)[x], 
+  The residue class x^2+x ( mod x^3+x^2+x ) of GF(2)[x] ]
+gap> Union(last);
+The residue class 0*Z(2) ( mod x ) of GF(2)[x]
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 
