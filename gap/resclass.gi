@@ -843,6 +843,19 @@ InstallOtherMethod( SplittedClass,
 
 #############################################################################
 ##
+#M  SplittedClass( <R>, <m> ) . . . . . . . . . for GF(q)[x] and a polynomial
+##
+InstallOtherMethod( SplittedClass,
+                    "for GF(q)[x] and a polynomial (ResClasses)", ReturnTrue,
+                    [ IsFiniteFieldPolynomialRing, IsPolynomial ], 0,
+
+  function ( R, m )
+    if not m in R then return fail; fi;
+    return AllResidueClassesModulo(R,m);
+  end );
+
+#############################################################################
+##
 #M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> )  for Z, Z_pi
 ##
 InstallMethod( RandomPartitionIntoResidueClasses,
