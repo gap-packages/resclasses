@@ -77,7 +77,7 @@ Union of the residue classes 2(6) and 4(6) of Z
 gap> ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
-<union of 2 residue classes (mod 8) of Z_( 2, 3 )>
+Union of the residue classes 3(8) and 5(8) of Z_( 2, 3 )
 gap> ResidueClassUnion(R,x^2,[One(R),x],[Zero(R)],[One(R)]);
 <union of 2 residue classes (mod x^2) of GF(2)[x]> U [ 0*Z(2) ] \ [ Z(2)^0 ]
 ]]>
