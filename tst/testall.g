@@ -94,6 +94,17 @@ TEST_FILES := [ [ "z_pi.tst"     ,    3000000 ],
 
 Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 
+#############################################################################
+##
+#V  One-character global variables
+##
+##  The tests use one-letter global variable names like `R' for a ring,
+##  `S' for a set and `U' for a union of residue classes.
+##  Therefore these variables must not be read-only when running the tests.
+##
+for ch in "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz" do
+  if IsReadOnlyGlobal([ch]) then MakeReadWriteGlobal([ch]); fi;
+od;
 
 #############################################################################
 ##
