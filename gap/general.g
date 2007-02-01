@@ -64,4 +64,19 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#V  One-character global variables
+##
+##  For the convenience of the reader, the manual uses one-character global
+##  variables such as `R' for a ring and `U' for a union of residue classes.
+##  Further, for the convenience of the user these variables should remain
+##  available for redefinition in an interactive session. Therefore these
+##  variables must not be readonly -- of course with the natural exception
+##  of the `traditional' identifiers `E', `X' and `Z'.
+##
+for ch in "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz" do
+  if IsReadOnlyGlobal([ch]) then MakeReadWriteGlobal([ch]); fi;
+od;
+
+#############################################################################
+##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
