@@ -150,7 +150,7 @@ InstallGlobalFunction( ResidueClassWithFixedRepresentative,
 #M  AsOrdinaryUnionOfResidueClasses( <U> )
 ##
 InstallMethod( AsOrdinaryUnionOfResidueClasses,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
@@ -169,20 +169,20 @@ InstallMethod( AsOrdinaryUnionOfResidueClasses,
 
 #############################################################################
 ##
-#M  Modulus( <U> ) . . . . . .  for unions of residue classes with fixed reps
+#M  Modulus( <U> ) . . . . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( Modulus,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
                U -> Lcm( UnderlyingRing( FamilyObj( U ) ),
                          List( U!.classes, cl -> cl[1] ) ) );
 
 #############################################################################
 ##
-#M  Classes( <U> ) . . . . . .  for unions of residue classes with fixed reps
+#M  Classes( <U> ) . . . . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( Classes,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
                U -> U!.classes );
 
@@ -194,13 +194,14 @@ InstallMethod( Classes,
 
 #############################################################################
 ##
-#M  \=( <U1>, <U2> ) . . . . .  for unions of residue classes with fixed reps
+#M  \=( <U1>, <U2> ) . . . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( \=,
-               Concatenation("for two unions of residue classes with ",
-                             "fixed reps (ResClasses)"), IsIdenticalObj,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for two unions of residue classes with fixed rep's (ResClasses)",
+  IsIdenticalObj,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
     return U1!.classes = U2!.classes;
@@ -208,17 +209,19 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \<( <U1>, <U2> ) . . . . .  for unions of residue classes with fixed reps
+#M  \<( <U1>, <U2> ) . . . . . for unions of residue classes with fixed rep's
 ##
 ##  Total ordering of unions of residue classes with fixed representatives
 ##  (for technical purposes, only).
 ##
 InstallMethod( \<,
-               Concatenation("for two unions of residue classes with ",
-                             "fixed reps (ResClasses)"), IsIdenticalObj,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
-               function ( U1, U2 ) return U1!.classes < U2!.classes; end );
+
+  "for two unions of residue classes with fixed rep's (ResClasses)",
+  IsIdenticalObj,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( U1, U2 ) return U1!.classes < U2!.classes; end );
 
 #############################################################################
 ##
@@ -228,25 +231,27 @@ InstallMethod( \<,
 
 #############################################################################
 ##
-#M  \in( <n>, <U> ) . . for ring elm. & union of res.-classes with fixed reps
+#M  \in( <n>, <U> ) . for ring element and union of res.-cl. with fixed rep's
 ##
 InstallMethod( \in,
-               Concatenation("for ring element & union of residue classes ",
-                             "with fixed reps (ResClasses)"), ReturnTrue,
-               [ IsRingElement,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ],
-               SUM_FLAGS,
-               function ( n, U ) return Multiplicity(n,U) >= 1; end );
+
+  "for a ring element and a union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsRingElement, IsUnionOfResidueClassesWithFixedRepresentatives ],
+  SUM_FLAGS,
+
+  function ( n, U ) return Multiplicity(n,U) >= 1; end );
 
 #############################################################################
 ##
-#M  \in( <cl>, <U> ) .  for residue class & union of res.-cl. with fixed reps
+#M  \in( <cl>, <U> ) . . . for res.-cl and union of res.-cl. with fixed rep's
 ##
 InstallMethod( \in,
-               Concatenation("for residue class & union of residue classes ",
-                             "with fixed reps (ResClasses)"), ReturnTrue,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for a res.-cl. and a union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( cl, U )
     if Length(cl!.classes) > 1 then TryNextMethod(); fi;
@@ -258,11 +263,10 @@ InstallMethod( \in,
 #M  Multiplicity( <n>, <U> )
 ##
 InstallMethod( Multiplicity,
-               Concatenation("for ring element and union of residue ",
-                             "classes with fixed reps (ResClasses)"),
-               ReturnTrue,
-               [ IsRingElement,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for a ring element and a union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsRingElement, IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( n, U )
     if not n in UnderlyingRing(FamilyObj(U)) then return 0; fi;
@@ -274,11 +278,11 @@ InstallMethod( Multiplicity,
 #M  Multiplicity( <cl>, <U> )
 ##
 InstallMethod( Multiplicity,
-               Concatenation("for residue class and union of residue ",
-                             "classes with fixed reps (ResClasses)"),
-               ReturnTrue,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for a res.-cl. and union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( cl, U )
     return Number( AsListOfClasses( U ), unioncl -> unioncl = cl );
@@ -292,12 +296,12 @@ InstallMethod( Multiplicity,
 
 #############################################################################
 ##
-#M  Density( <U> ) . . . . . .  for unions of residue classes with fixed reps
+#M  Density( <U> ) . . . . . . for unions of residue classes with fixed rep's
 ##
 InstallOtherMethod( Density,
-                    Concatenation("for unions of residue classes ",
-                                  "with fixed reps (ResClasses)"), true,
-                   [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for unions of residue classes with fixed rep's (ResClasses)",
+  true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
 
@@ -309,23 +313,25 @@ InstallOtherMethod( Density,
 
 #############################################################################
 ##
-#M  IsOverlappingFree( <U> ) .  for unions of residue classes with fixed reps
+#M  IsOverlappingFree( <U> ) . for unions of residue classes with fixed rep's
 ##
 InstallMethod( IsOverlappingFree,
-               "for unions of residue classes with fixed reps (ResClasses)",
-               true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
-               U ->    Density( U )
-                     = Density( AsOrdinaryUnionOfResidueClasses( U ) ) );
+
+  "for unions of residue classes with fixed rep's (ResClasses)",
+  true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  U -> Density( U ) = Density( AsOrdinaryUnionOfResidueClasses( U ) ) );
 
 #############################################################################
 ##
-#M  IsSubset( <U1>, <U2> ) . .  for unions of residue classes with fixed reps
+#M  IsSubset( <U1>, <U2> ) . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( IsSubset,
-               Concatenation("for two unions of residue classes ",
-                             "with fixed reps (ResClasses)"), IsIdenticalObj,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for two unions of residue classes with fixed rep's (ResClasses)",
+  IsIdenticalObj,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
 
@@ -346,13 +352,14 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
-#M  Union2( <U1>, <U2> ) . . .  for unions of residue classes with fixed reps
+#M  Union2( <U1>, <U2> ) . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( Union2,
-               Concatenation("for two unions of residue classes ",
-                             "with fixed reps (ResClasses)"), IsIdenticalObj,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for two unions of residue classes with fixed rep's (ResClasses)",
+  IsIdenticalObj,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
     return UnionOfResidueClassesWithFixedRepresentatives(
@@ -362,13 +369,14 @@ InstallMethod( Union2,
 
 #############################################################################
 ##
-#M  Intersection2( <U1>, <U2> ) for unions of residue classes with fixed reps
+#M  Intersection2( <U1>, <U2> ) . for unions of res.-classes with fixed rep's
 ##
 InstallMethod( Intersection2,
-               Concatenation("for two unions of residue classes ",
-                             "with fixed reps (ResClasses)"), IsIdenticalObj,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for two unions of residue classes with fixed rep's (ResClasses)",
+  IsIdenticalObj,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
 
@@ -383,13 +391,14 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  Difference( <U1>, <U2> ) .  for unions of residue classes with fixed reps
+#M  Difference( <U1>, <U2> ) . for unions of residue classes with fixed rep's
 ##
 InstallMethod( Difference,
-               Concatenation("for two unions of residue classes with ",
-                             "fixed reps (ResClasses)"), IsIdenticalObj,
-               [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                 IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for two unions of residue classes with fixed rep's (ResClasses)",
+  IsIdenticalObj,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
 
@@ -419,14 +428,13 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
-#M  \+( <U>, <x> ) . . for union of res.-cl. with fixed reps and ring element
+#M  \+( <U>, <x> ) .  for union of res.-cl. with fixed rep's and ring element
 ##
 InstallOtherMethod( \+,
-                    Concatenation("for a union of residue classes with fixe",
-                                  "d reps and a ring element (ResClasses)"),
-                    ReturnTrue,
-                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                    IsRingElement ], 0,
+
+  "for a union of res.-cl. with fixed rep's and a ring element (ResClasses)",
+  ReturnTrue,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives, IsRingElement ], 0,
 
   function ( U, x )
     return UnionOfResidueClassesWithFixedRepresentatives(
@@ -436,24 +444,24 @@ InstallOtherMethod( \+,
 
 #############################################################################
 ##
-#M  \+( <x>, <U> ) . . for ring element and union of res.-cl. with fixed reps
+#M  \+( <x>, <U> ) .  for ring element and union of res.-cl. with fixed rep's
 ##
 InstallOtherMethod( \+,
-                    Concatenation("for a ring element and a union of resid",
-                                  "ue classes with fixed reps (ResClasses)"),
-                    ReturnTrue,
-                    [ IsRingElement,
-                      IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
-                    function ( x, U ) return U + x; end );
+
+  "for a ring element and a union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsRingElement, IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( x, U ) return U + x; end );
 
 #############################################################################
 ##
-#M  AdditiveInverseOp( <U> ) .  for unions of residue classes with fixed reps
+#M  AdditiveInverseOp( <U> ) . for unions of residue classes with fixed rep's
 ##
 InstallOtherMethod( AdditiveInverseOp,
-                    Concatenation("for unions of residue classes with ",
-                                  "fixed reps (ResClasses)"), ReturnTrue,
-                    [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  "for unions of residue classes with fixed rep's (ResClasses)",
+  ReturnTrue, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
 
@@ -466,38 +474,37 @@ InstallOtherMethod( AdditiveInverseOp,
 
 #############################################################################
 ##
-#M  \-( <U>, <x> ) . . for union of res.-cl. with fixed reps and ring element
+#M  \-( <U>, <x> ) .  for union of res.-cl. with fixed rep's and ring element
 ##
 InstallOtherMethod( \-,
-                    Concatenation("for a union of residue classes with fixe",
-                                  "d reps and a ring element (ResClasses)"),
-                    ReturnTrue,
-                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                      IsRingElement ], 0,
-                    function ( U, x ) return U + (-x); end );
+
+  "for a union of res.-cl. with fixed rep's and a ring element (ResClasses)",
+  ReturnTrue,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives, IsRingElement ], 0,
+
+  function ( U, x ) return U + (-x); end );
 
 #############################################################################
 ##
-#M  \-( <x>, <U> ) . . for ring element and union of res.-cl. with fixed reps
+#M  \-( <x>, <U> ) .  for ring element and union of res.-cl. with fixed rep's
 ##
 InstallOtherMethod( \-,
-                    Concatenation( "for a ring element and a residue class ",
-                                   "union with fixed reps (ResClasses)"),
-                    ReturnTrue,
-                    [ IsRingElement,
-                      IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
-                    function ( x, U ) return (-U) + x; end );
+
+  "for a ring element and a union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsRingElement, IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( x, U ) return (-U) + x; end );
 
 #############################################################################
 ##
-#M  \*( <U>, <x> ) . . for union of res.-cl. with fixed reps and ring element
+#M  \*( <U>, <x> ) .  for union of res.-cl. with fixed rep's and ring element
 ##
 InstallOtherMethod( \*,
-                    Concatenation("for union of residue classes with fixed ",
-                                  "reps and ring element (ResClasses)"),
-                    ReturnTrue,
-                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                      IsRingElement ], 0,
+
+  "for a union of res.-cl. with fixed rep's and a ring element (ResClasses)",
+  ReturnTrue,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives, IsRingElement ], 0,
 
   function ( U, x )
 
@@ -509,26 +516,25 @@ InstallOtherMethod( \*,
 
 #############################################################################
 ##
-#M  \*( <x>, <U> ) . . for ring element and union of res.-cl. with fixed reps
+#M  \*( <x>, <U> ) .  for ring element and union of res.-cl. with fixed rep's
 ##
 InstallOtherMethod( \*,
-                    Concatenation("for a ring element and a union of residu",
-                                  "e classes with fixed reps (ResClasses)"),
-                    ReturnTrue,
-                    [ IsRingElement,
-                      IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
-                    function ( x, U ) return U * x; end );
+
+  "for a ring element and a union of res.-cl. with fixed rep's (ResClasses)",
+  ReturnTrue,
+  [ IsRingElement, IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
+
+  function ( x, U ) return U * x; end );
 
 #############################################################################
 ##
-#M  \/( <U>, <x> ) . . for union of res.-cl. with fixed reps and ring element
+#M  \/( <U>, <x> ) .  for union of res.-cl. with fixed rep's and ring element
 ##
 InstallOtherMethod( \/,
-                    Concatenation("for a union of residue classes with fixe",
-                                  "d reps and a ring element (ResClasses)"),
-                    ReturnTrue,
-                    [ IsUnionOfResidueClassesWithFixedRepresentatives,
-                      IsRingElement ], 0,
+
+  "for a union of res.-cl. with fixed rep's and a ring element (ResClasses)",
+  ReturnTrue,
+  [ IsUnionOfResidueClassesWithFixedRepresentatives, IsRingElement ], 0,
 
   function ( U, x )
 
@@ -548,10 +554,10 @@ InstallOtherMethod( \/,
 
 #############################################################################
 ##
-#M  AsListOfClasses( <U> ) . .  for unions of residue classes with fixed reps
+#M  AsListOfClasses( <U> ) . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( AsListOfClasses,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   U -> SortedList( List( Classes( U ),
@@ -566,23 +572,23 @@ InstallMethod( AsListOfClasses,
 
 #############################################################################
 ##
-#M  Delta( <U> ) . . . . . for unions of residue classes of Z with fixed reps
+#M  Delta( <U> ) . . . .  for unions of residue classes of Z with fixed rep's
 ##
 InstallMethod( Delta,
-               Concatenation("for unions of residue classes of Z with fixed",
-                             " reps (ResClasses)"), true,
-               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ], 0,
-               U -> Sum(List(Classes(U),c->c[2]/c[1]))
-                  - Length(Classes(U))/2 );
+
+  "for unions of residue classes of Z with fixed rep's (ResClasses)",
+  true, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ], 0,
+
+  U -> Sum(List(Classes(U),c->c[2]/c[1])) - Length(Classes(U))/2 );
 
 #############################################################################
 ##
-#M  Rho( <U> ) . . . . . . for unions of residue classes of Z with fixed reps
+#M  Rho( <U> ) . . . . .  for unions of residue classes of Z with fixed rep's
 ##
 InstallMethod( Rho,
-               Concatenation("for unions of residue classes of Z with fixed",
-                             " reps (ResClasses)"), true,
-               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ], 0,
+
+  "for unions of residue classes of Z with fixed rep's (ResClasses)", true,
+  [ IsUnionOfResidueClassesOfZWithFixedRepresentatives ], 0,
 
   function ( U )
 
@@ -604,11 +610,10 @@ InstallMethod( Rho,
 #M  RepresentativeStabilizingRefinement( <U>, <k> )
 ##
 InstallMethod( RepresentativeStabilizingRefinement,
-               Concatenation("for a union of residue classes of Z with fixe",
-                             "d reps and a positive integer (ResClasses)"),
-               ReturnTrue,
-               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
-                 IsPosInt ], 0,
+
+  Concatenation("for a union of residue classes of Z with fixed rep's and ",
+                "a positive integer (ResClasses)"), ReturnTrue,
+  [ IsUnionOfResidueClassesOfZWithFixedRepresentatives, IsPosInt ], 0,
 
   function ( U, k )
 
@@ -625,11 +630,11 @@ InstallMethod( RepresentativeStabilizingRefinement,
 #M  RepresentativeStabilizingRefinement( <U>, 0 )
 ##
 InstallMethod( RepresentativeStabilizingRefinement,
-               Concatenation("for a union of residue classes of Z with fixe",
-                             "d reps and 0 (simplify) (ResClasses)"),
-               ReturnTrue,
-               [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
-                 IsInt and IsZero ], 0,
+
+  Concatenation("for a union of residue classes of Z with fixed rep's and 0",
+                " (simplify) (ResClasses)"),
+  ReturnTrue, [ IsUnionOfResidueClassesOfZWithFixedRepresentatives,
+                IsInt and IsZero ], 0,
 
   function ( U, k )
 
@@ -681,10 +686,10 @@ InstallMethod( RepresentativeStabilizingRefinement,
 
 #############################################################################
 ##
-#M  ViewObj( <U> ) . . . . . .  for unions of residue classes with fixed reps
+#M  ViewObj( <U> ) . . . . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( ViewObj,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
@@ -718,10 +723,10 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#M  String( <U> ) . . . . . . . for unions of residue classes with fixed reps
+#M  String( <U> ) . . . . . .  for unions of residue classes with fixed rep's
 ##
 InstallMethod( String,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
@@ -740,10 +745,10 @@ InstallMethod( String,
 
 #############################################################################
 ##
-#M  PrintObj( <U> ) . . . . . . for unions of residue classes with fixed reps
+#M  PrintObj( <U> ) . . . . .  for unions of residue classes with fixed rep's
 ##
 InstallMethod( PrintObj,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
@@ -762,10 +767,10 @@ InstallMethod( PrintObj,
 
 #############################################################################
 ##
-#M  Display( <U> ) . . . . . .  for unions of residue classes with fixed reps
+#M  Display( <U> ) . . . . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( Display,
-               "for unions of residue classes with fixed reps (ResClasses)",
+               "for unions of residue classes with fixed rep's (ResClasses)",
                true, [ IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U )
