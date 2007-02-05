@@ -6,6 +6,7 @@
 ##
 
 gap> START_TEST("$Id$");
+gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> R := Z_pi([2]);
 Z_( 2 )
 gap> R = Z_pi(2);
@@ -144,6 +145,7 @@ gap> IsIrreducibleRingElement(R,-4);
 false
 gap> IsIrreducibleRingElement(T,-3);
 true
+gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> STOP_TEST( "z_pi.tst", 3000000 );
 
 #############################################################################

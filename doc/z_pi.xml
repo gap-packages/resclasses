@@ -9,8 +9,9 @@
 <Chapter Label="ch:Z_pi">
 <Heading>Semilocalizations of the Integers</Heading>
 
-In this package, the semilocalizations <M>\Z_{(\pi)}</M> of the ring
-of integers are used as base rings for unions of residue classes.
+This package implements residue class unions of the semilocalizations
+<M>\Z_{(\pi)}</M> of the ring of integers. It also provides the underlying
+&GAP; implementation of these rings themselves.
 
 <!-- #################################################################### -->
 

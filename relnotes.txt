@@ -143,15 +143,21 @@ Changes between version 2.3.6 and version 2.3.7:
 
  - The documentation has been improved in a few places.
 
-Changes between version 2.3.7 and version 2.3.8:
+Changes between version 2.3.7 and version 2.4.0:
 
- - The support of residue class unions of polynomial rings GF(q)[x] has
+ - The support for residue class unions of polynomial rings GF(q)[x] has
    been improved. For example there are now methods for `SplittedClass'
    and `RandomPartitionIntoResidueClasses' which are applicable to residue
    classes of GF(q)[x] resp. to GF(q)[x] itself. Further the `Viev'ing and
-   `Display' format for unions of residue classes of GF(q)[x] has been
+   `Display' format for residue class unions of GF(q)[x] has been
    improved.
 
+ - A "cleanup" of the source files has taken place -- many comments have
+   been improved, and the declarations / implementations have been rearranged
+   and grouped together in sections by "topic".
 
+ - The documentation now uses consistently the term "residue class union"
+   for the objects returned by `ResidueClassUnion' (instead of "union of
+   residue classes").
 
 

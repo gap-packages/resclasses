@@ -64,6 +64,18 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#F  RingToString( <R> ) . . . how the ring <R> is printed by `View'/`Display'
+##
+##  The return value of this function determines the way the ring <R> is
+##  printed by the methods for `View'/`Display' for residue class unions.
+##
+BindGlobal( "RingToString",
+  function ( R )
+    if IsIntegers(R) then return "Z"; else return ViewString(R); fi;
+  end );
+
+#############################################################################
+##
 #V  One-character global variables
 ##
 ##  For the convenience of the reader, the manual uses one-character global
@@ -73,8 +85,10 @@ InstallMethod( ViewObj,
 ##  variables must not be readonly -- of course with the natural exception
 ##  of the `traditional' identifiers `E', `X' and `Z'.
 ##
-for ch in "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz" do
-  if IsReadOnlyGlobal([ch]) then MakeReadWriteGlobal([ch]); fi;
+BindGlobal( "FREE_ONE_LETTER_GLOBALS",
+  List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
+for ch in FREE_ONE_LETTER_GLOBALS do
+  if IsReadOnlyGlobal(ch) then MakeReadWriteGlobal(ch); fi;
 od;
 
 #############################################################################

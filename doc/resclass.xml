@@ -85,16 +85,12 @@ gap> ResidueClassUnion(R,x^2,[One(R),x],[Zero(R)],[One(R)]);
   </Description>
 </ManSection>
 
-<Index Key="union of residue classes" Subkey="definition">
-  union of residue classes
-</Index>
 <Index Key="residue class union" Subkey="definition">
   residue class union
 </Index>
 
-When talking about a <E>union of residue classes</E> or a <E>residue class
-union</E> in this chapter, we always mean an object as it is returned by
-this function. <P/>
+When talking about a <E>residue class union</E> in this chapter,
+we always mean an object as it is returned by this function. <P/>
 
 <Index Key="Modulus" Subkey="U"><C>Modulus</C></Index>
 <Index Key="Residues" Subkey="U"><C>Residues</C></Index>
@@ -169,16 +165,16 @@ gap> AllResidues(R,x^3);
 <!-- #################################################################### -->
 
 <Section Label="sec:MethodsForResidueClassUnions">
-<Heading>Methods for unions of residue classes</Heading>
+<Heading>Methods for residue class unions</Heading>
 
 <Index Key="Print" Subkey="U"><C>Print</C></Index>
 <Index Key="String" Subkey="U"><C>String</C></Index>
 <Index Key="Display" Subkey="U"><C>Display</C></Index>
 
 There are methods for <C>Print</C>, <C>String</C> and <C>Display</C>
-which are applicable to unions of residue classes. There is a method
-for <C>in</C> which tests whether some ring element lies in a given union
-of residue classes.
+which are applicable to residue class unions. There is a method
+for <C>in</C> which tests whether some ring element lies in a given
+residue class union.
 
 <Example>
 <![CDATA[
@@ -195,7 +191,7 @@ true
 <Index Key="IsSubset" Subkey="U1, U2"><C>IsSubset</C></Index>
 
 There are methods for <C>Union</C>, <C>Intersection</C>, <C>Difference</C>
-and <C>IsSubset</C> available for unions of residue classes.
+and <C>IsSubset</C> available for residue class unions.
 They also accept finite subsets of the base ring as arguments.
 
 <Example>
@@ -244,7 +240,7 @@ fail
   </Description>
 </ManSection>
 
-Often one needs a partition of a given union of residue classes into
+Often one needs a partition of a given residue class union into
 <Q>few</Q> residue classes. The following operation takes care of this:
 
 <ManSection>
@@ -271,7 +267,7 @@ Z \ The residue class 0(12) of Z
 </ManSection>
 
 One can compute the sets of sums, differences, products and quotients of
-the elements of a union of residue classes and an element of the base ring:
+the elements of a residue class union and an element of the base ring:
 
 <Example>
 <![CDATA[
@@ -338,7 +334,7 @@ gap> Sum(List(last2,Density));
 <Index Key="Iterator" Subkey="U"><C>Iterator</C></Index>
 <Index Key="NextIterator" Subkey="iter"><C>NextIterator</C></Index>
 
-For looping over unions of residue classes of the integers, there are
+For looping over residue class unions of the integers, there are
 methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 
 </Section>
@@ -346,49 +342,27 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 <!-- #################################################################### -->
 
 <Section Label="sec:CategoriesOfUnionsOfResidueClasses">
-<Heading>The categories and families of unions of residue classes</Heading>
+<Heading>The categories and families of residue class unions</Heading>
 
 <ManSection>
-  <Filt Name="IsUnionOfResidueClasses" Arg="U" Label="U"/>
-  <Filt Name="IsUnionOfResidueClassesOfZ" Arg="U" Label="U"/>
-  <Filt Name="IsUnionOfResidueClassesOfZ_pi" Arg="U" Label="U"/>
-  <Filt Name="IsUnionOfResidueClassesOfGFqx" Arg="U" Label="U"/>
+  <Filt Name="IsResidueClassUnion" Arg="U" Label="U"/>
+  <Filt Name="IsResidueClassUnionOfZ" Arg="U" Label="U"/>
+  <Filt Name="IsResidueClassUnionOfZ_pi" Arg="U" Label="U"/>
+  <Filt Name="IsResidueClassUnionOfGFqx" Arg="U" Label="U"/>
   <Returns>
-    <C>true</C> if <A>U</A> is a union of residue classes resp.
-    a union of residue classes of the ring of integers resp.
-    a union of residue classes of a semilocalization of the ring of integers
-    resp. a union of residue classes of a polynomial ring in one variable
+    <C>true</C> if <A>U</A> is a residue class union resp.
+    a residue class union of the ring of integers resp.
+    a residue class union of a semilocalization of the ring of integers
+    resp. a residue class union of a polynomial ring in one variable
     over a finite field, and <C>false</C> otherwise.
   </Returns>
   <Description>
-    Often the same methods can be used for residue classes of the ring of
-    integers and of its semilocalizations. For this reason, there is
-    a category <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C> which is the
-    union of <C>IsUnionOfResidueClassesOfZ</C> and
-    <C>IsUnionOfResidueClassesOfZ&uscore;pi</C>.
-    <Index Key="IsUnionOfResidueClassesOfZorZ_pi" Subkey="U">
-      <C>IsUnionOfResidueClassesOfZorZ&uscore;pi</C>
-    </Index>
-    <Index Key="IsResidueClassUnion" Subkey="U">
-      <C>IsResidueClassUnion</C>
-    </Index>
-    <Index Key="IsResidueClassUnionOfZ" Subkey="U">
-      <C>IsResidueClassUnionOfZ</C>
-    </Index>
-    <Index Key="IsResidueClassUnionOfZ_pi" Subkey="U">
-      <C>IsResidueClassUnionOfZ&uscore;pi</C>
-    </Index>
-    <Index Key="IsResidueClassUnionOfZorZ_pi" Subkey="U">
-      <C>IsResidueClassUnionZorZ&uscore;pi</C>
-    </Index>
-    <Index Key="IsResidueClassUnionOfGFqx" Subkey="U">
-      <C>IsResidueClassUnionOfGFqx</C>
-    </Index>
-    There are synonyms
-    <C>IsResidueClassUnion[OfZ|OfZ&uscore;pi|OfZorZ&uscore;pi|OfGFqx]</C>
-    for the five categories
-    <C>IsUnionOfResidueClasses[OfZ|OfZ&uscore;pi|OfZorZ&uscore;pi|OfGFqx]</C>.
-    The internal representation of unions of residue classes is called
+    Often the same methods can be used for residue class unions of the ring
+    of integers and of its semilocalizations. For this reason, there is
+    a category <C>IsResidueClassUnionOfZorZ&uscore;pi</C> which is the
+    union of <C>IsResidueClassUnionOfZ</C> and
+    <C>IsResidueClassUnionOfZ&uscore;pi</C>.
+    The internal representation of residue class unions is called
     <C>IsResidueClassUnionResidueListRep</C>.
     <Index Key="IsResidueClassUnionResidueListRep">
       <C>IsResidueClassUnionResidueListRep</C>
@@ -402,8 +376,8 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
   <Func Name="ResidueClassUnionsFamily"
         Arg="R, fixedreps" Label="R, fixedreps"/>
   <Returns>
-    The family of unions of residue classes resp. the family of unions
-    of residue classes with fixed representatives of the ring&nbsp;<A>R</A>,
+    The family of residue class unions resp. the family of unions of
+    residue classes with fixed representatives of the ring&nbsp;<A>R</A>,
     depending on whether <A>fixedreps</A> is present and <C>true</C>.
   </Returns>
   <Description>

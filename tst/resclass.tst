@@ -8,6 +8,7 @@
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> ResidueClassUnionViewingFormat("long");;
+gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> cl1 := ResidueClass(Integers,3,2);
 The residue class 2(3) of Z
 gap> cl2 := ResidueClass(Z_pi([2,5]),2,1);
@@ -306,6 +307,7 @@ gap> SplittedClass(cl,x^2+x+1);
   The residue class x^2+x ( mod x^3+x^2+x ) of GF(2)[x] ]
 gap> Union(last);
 The residue class 0*Z(2) ( mod x ) of GF(2)[x]
+gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
 

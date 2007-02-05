@@ -8,11 +8,12 @@
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> ResidueClassUnionViewingFormat("long");;
+gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
 [2/3]
 gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
 [1/2]
-gap> U := ResidueClassUnionWithFixedRepresentatives(Integers,[[2,1],[7,4]]);
+gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,1],[7,4]]);
 [1/2] U [4/7]
 gap> AllResidueClassesWithFixedRepresentativesModulo(Z_pi(2),4);
 [ [0/4], [1/4], [2/4], [3/4] ]
@@ -27,9 +28,10 @@ gap> String(cl1);
 gap> Print(cl1,"\n");
 ResidueClassWithFixedRepresentative( Integers, 3, 2 )
 gap> Print(U,"\n");
-ResidueClassUnionWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ] ] )
+UnionOfResidueClassesWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ]
+ ] )
 gap> p := List([1..25],i->[Primes[i],i]);;
-gap> P := ResidueClassUnionWithFixedRepresentatives(Integers,p);
+gap> P := UnionOfResidueClassesWithFixedRepresentatives(Integers,p);
 <union of 25 residue classes of Z with fixed representatives>
 gap> Display(P);
 [1/2] U [2/3] U [3/5] U [4/7] U [5/11] U [6/13] U [7/17] U [8/19] U [9/23] U [
@@ -110,7 +112,7 @@ gap> Delta(P);
 gap> Factors(DenominatorRat(last));
 [ 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
   73, 79, 83, 89, 97 ]
-gap> cl := ResidueClassUnionWithFixedReps(Integers,[[2,1]]);
+gap> cl := UnionOfResidueClassesWithFixedReps(Integers,[[2,1]]);
 [1/2]
 gap> S := RepresentativeStabilizingRefinement(cl,3);
 [1/6] U [3/6] U [5/6]
@@ -133,7 +135,7 @@ gap> U := RepresentativeStabilizingRefinement(U,3);
 <union of 12 residue classes of Z with fixed representatives>
 gap> RepresentativeStabilizingRefinement(U,0);
 [1/3] U [1/3]
-gap> U := ResidueClassUnionWithFixedReps([[-1,3],[1,3],[3,3]]);;
+gap> U := UnionOfResidueClassesWithFixedReps([[-1,3],[1,3],[3,3]]);;
 gap> U = RepresentativeStabilizingRefinement(U,0);
 true
 gap> R := PolynomialRing(GF(2),1);;
@@ -149,7 +151,7 @@ gap> -cl;
 gap> Print(cl,"\n");
 ResidueClassWithFixedRepresentative( PolynomialRing( GF(2), ["x"] ), x^2+Z(2)^\
 0, Z(2)^0 )
-gap> U := ResidueClassUnionWithFixedReps(Integers,[[2,0],[3,0]]);
+gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> 0 in U;
 true
@@ -157,6 +159,7 @@ gap> cl := ResidueClassWithFixedRep(2,0);
 [0/2]
 gap> Multiplicity(cl,U);
 1
+gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "fixedrep.tst", 100000000 );
 
