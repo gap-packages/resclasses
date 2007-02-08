@@ -401,25 +401,24 @@ InstallGlobalFunction( ResidueClass,
 
     local  R, m, r, cl;
 
-    if   Length(arg) = 3 then
+    if   Length( arg ) = 3 then
       R := arg[1]; m := arg[2]; r := arg[3];
-      if   not ( IsRing(R) and m in R and r in R )
-      then Error( "usage: see ?ResidueClass\n"); fi;
-    elif Length(arg) = 2 then
-      if   not (ForAll(arg,IsInt) and Minimum(arg) >= 0 and Maximum(arg) > 0)
-      then Error( "usage: see ?ResidueClass\n"); fi;
-      R := Integers; m := Maximum(arg); r := Minimum(arg);
+      if   not ( IsRing(R) and m in R and r in R and not IsZero(m) )
+      then Error( "usage: see ?ResidueClass\n" ); fi;
+    elif Length( arg ) = 2 then
+      R := DefaultRing( arg ); 
+      m := Maximum( arg ); r := Minimum( arg );
+      if   IsZero( m )
+      then Error( "usage: see ?ResidueClass\n" ); fi;
     elif Length(arg) = 1 then
-      if   not (    IsList(arg[1]) and Length(arg[1]) = 2
-                and ForAll(arg[1],IsInt) and Minimum(arg[1]) >= 0
-                and Maximum(arg[1]) > 0)
-      then Error( "usage: see ?ResidueClass\n"); fi;
-      R := Integers; m := Maximum(arg[1]); r := Minimum(arg[1]);
+      if   IsList( arg[1] )
+      then return CallFuncList( ResidueClass, arg[1] );
+      else Error( "usage: see ?ResidueClass\n" ); fi;
     else
-      Error( "usage: see ?ResidueClass\n");
+      Error( "usage: see ?ResidueClass\n" );
     fi;
     cl := ResidueClassUnion( R, m, [ r ] );
-    SetIsResidueClass(cl,true);
+    SetIsResidueClass( cl, true );
     return cl;
   end );
 

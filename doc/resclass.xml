@@ -20,17 +20,17 @@
   <Func Name="ResidueClass" Arg="r, m" Label="r, m"/>
   <Returns>
     In the three-argument form the residue class
-    <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the ring&nbsp;<A>R</A>, and
-    in the two-argument form the residue class
-    <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the integers.
+    <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the ring&nbsp;<A>R</A>,
+    and in the two-argument form the residue class
+    <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the <Q>default ring</Q>
+    (<M>\rightarrow</M> <C>DefaultRing</C> in the &GAP; Reference Manual)
+    of the arguments.
   </Returns>
   <Description>
-    In the two-argument case, <A>r</A> and <A>m</A> must not be negative,
-    and <A>r</A> is assumed to lie in the range <C>[0..<A>m</A>-1]</C>.
-    The latter is used to decide which of the two arguments is the
-    modulus&nbsp;<A>m</A> and which is the residue&nbsp;<A>r</A>.
-    For convenience, in the two-argument case it is permitted to enclose
-    the argument list in list brackets. <P/>
+    In the two-argument case, <A>m</A> is taken to be the larger and
+    <A>r</A> is taken to be the smaller of the arguments.
+    For convenience, it is permitted to enclose the argument list in
+    list brackets. <P/>
 
     <Index Key="IsResidueClass" Subkey="U"><C>IsResidueClass</C></Index>
     <Index Key="Modulus" Subkey="cl"><C>Modulus</C></Index>
