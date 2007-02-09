@@ -79,6 +79,8 @@ DeclareConstructor( "UnionOfResidueClassesWithFixedRepresentativesCons",
                     [ IsUnionOfResidueClassesWithFixedRepresentatives,
                       IsRing, IsList ] );
 DeclareGlobalFunction( "UnionOfResidueClassesWithFixedRepresentatives" );
+DeclareSynonym( "ResidueClassUnionWithFixedRepresentatives",
+                UnionOfResidueClassesWithFixedRepresentatives );
 DeclareSynonym( "UnionOfResidueClassesWithFixedReps",
                 UnionOfResidueClassesWithFixedRepresentatives );
 
