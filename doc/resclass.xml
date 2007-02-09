@@ -72,8 +72,6 @@ The residue class 0*Z(2) ( mod x+Z(2)^0 ) of GF(2)[x]
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 <Example>
 <![CDATA[
-gap> ResidueClassUnion(Integers,6,[2,4]);
-Union of the residue classes 2(6) and 4(6) of Z
 gap> ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
@@ -151,10 +149,10 @@ gap> AllResidueClassesModulo(Z_pi(2),2);
 gap> AllResidueClassesModulo(R,x);
 [ The residue class 0*Z(2) ( mod x ) of GF(2)[x], 
   The residue class Z(2)^0 ( mod x ) of GF(2)[x] ]
-gap> AllResidues(Integers,6);
-[ 0 .. 5 ]
 gap> AllResidues(R,x^3);  
 [ 0*Z(2), Z(2)^0, x, x+Z(2)^0, x^2, x^2+Z(2)^0, x^2+x, x^2+x+Z(2)^0 ]
+gap> NumberOfResidues(Z_pi([2,3]),360);
+72
 ]]>
 </Example>
   </Description>
@@ -383,6 +381,11 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
   <Description>
     The ring <A>R</A> can be retrieved as
     <C>UnderlyingRing(ResidueClassUnionsFamily(<A>R</A>))</C>.
+    <Index Key="residue class union" Subkey="coercion">
+      residue class union
+    </Index>
+    There is no coercion between residue class unions or unions of residue
+    classes with fixed representatives which belong to different families.
     Unions of residue classes with fixed representatives are described
     in the next chapter.
   </Description>
