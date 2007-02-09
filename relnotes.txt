@@ -143,7 +143,7 @@ Changes between version 2.3.6 and version 2.3.7:
 
  - The documentation has been improved in a few places.
 
-Changes between version 2.3.7 and version 2.4.0:
+Changes between version 2.3.7 and version 2.4.0 (February 9, 2007):
 
  - The support for residue class unions of polynomial rings GF(q)[x] has
    been improved. For example there are now methods for `SplittedClass'
