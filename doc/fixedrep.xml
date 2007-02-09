@@ -325,7 +325,7 @@ E(12)^11
   <Meth Name="RepresentativeStabilizingRefinement" Arg="U, k" Label="U, k"/>
   <Returns>
     The representative stabilizing refinement of <A>U</A>
-    into <M>k</M>&nbsp;parts.
+    into <A>k</A>&nbsp;parts.
   </Returns>
   <Description>
     The <E>representative stabilizing refinement</E> of a residue class
