@@ -156,6 +156,9 @@ Changes between version 2.3.7 and version 2.4.0:
    been improved, and the declarations / implementations have been rearranged
    and grouped together in sections by "topic".
 
+ - The two-argument form ResidueClass( <r>, <m> ) is now also available
+   for rings other than Z.
+
  - The documentation now uses consistently the term "residue class union"
    for the objects returned by `ResidueClassUnion' (instead of "union of
    residue classes").
