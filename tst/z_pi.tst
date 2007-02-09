@@ -4,7 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
-
+##  This file contains automated tests of ResClasses' functionality for
+##  computing with semilocalizations Z_(pi) of the ring of integers.
+##
 gap> START_TEST("$Id$");
 gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> R := Z_pi([2]);

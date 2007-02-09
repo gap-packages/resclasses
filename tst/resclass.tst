@@ -4,7 +4,9 @@
 ##
 #H  @(#)$Id$
 ##
-
+##  This file contains automated tests of ResClasses' functionality for
+##  computing with residue class unions.
+##
 gap> START_TEST("$Id$");
 gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
 gap> ResidueClassUnionViewingFormat("long");;
