@@ -364,7 +364,7 @@ gap> RepresentativeStabilizingRefinement(last,0);
 
 The names of the categories of unions of residue classes with fixed
 representatives are
-<C>IsUnionOfResidueClasses[OfZ|OfZ&uscore;pi|OfZorZ&uscore;pi|OfGFqx]WithFixedRepresentatives></C>.
+<C>IsUnionOfResidueClasses[OfZ|OfZ&uscore;pi|OfZorZ&uscore;pi|OfGFqx]WithFixedRepresentatives</C>.
 
 </Section>
 

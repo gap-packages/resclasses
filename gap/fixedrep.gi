@@ -290,7 +290,7 @@ InstallMethod( Multiplicity,
 
 #############################################################################
 ##
-#S  Density and subset relations.
+#S  Density and subset relations. ///////////////////////////////////////////
 ##
 #############################################################################
 
@@ -422,7 +422,7 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
-#S  Applying arithmetic operations to the residue classes.
+#S  Applying arithmetic operations to the residue classes. //////////////////
 ##
 #############################################################################
 
