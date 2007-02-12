@@ -163,4 +163,9 @@ Changes between version 2.3.7 and version 2.4.0 (February 9, 2007):
    for the objects returned by `ResidueClassUnion' (instead of "union of
    residue classes").
 
+Changes between version 2.4.0 and version 2.4.1:
+
+ - Minor changes.
+
+
 
