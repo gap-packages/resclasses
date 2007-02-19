@@ -45,9 +45,11 @@ InstallMethod( Z_piCons, "natural Z_pi (ResClasses)", true,
 ##
 InstallGlobalFunction( Z_pi, 
 
-  function ( pi )
+  function ( arg )
 
-    if IsInt( pi ) and IsPrimeInt( pi ) then pi := [ pi ]; fi;
+    local  pi;
+
+    if IsInt( arg[1] ) then pi := arg; else pi := arg[1]; fi;
     if not IsList( pi ) or not ForAll( pi, IsPrimeInt )
     then Error( "Z_pi( <pi> ): <pi> must be a set of primes.\n" ); fi;
     return Z_piCons( IsRing, Set( pi ) );
