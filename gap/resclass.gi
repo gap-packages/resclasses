@@ -1812,11 +1812,19 @@ InstallMethod( ViewObj,
         fi;
         if   IsIntegers(R) or IsZ_pi(R)
         then if   IsBound(cl)
-             then Print(Residues(cl[Length(cl)])[1],"(",
+             then Print(Residue(cl[Length(cl)]),"(",
                         Modulus(cl[Length(cl)]),")");
              else Print(r[Length(r)],"(",m,")"); fi;
-        else if short then Print(r[Length(r)],"(mod ",m,")");
-                      else Print(r[Length(r)]," ( mod ",m," )"); fi;
+        else if   IsBound(cl)
+             then if   short
+                  then Print(Residue(cl[Length(cl)]),"(mod ",
+                             Modulus(cl[Length(cl)]),")");
+                  else Print(Residue(cl[Length(cl)])," ( mod ",
+                             Modulus(cl[Length(cl)])," )"); fi;
+             else if   short
+                  then Print(r[Length(r)],"(mod ",m,")");
+                  else Print(r[Length(r)]," ( mod ",m," )"); fi;
+             fi;
         fi;
         if not short then Print(" of ",RingToString(R)); fi;
         if included <> [] then
