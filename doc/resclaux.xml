@@ -15,7 +15,7 @@
 <Heading>Requirements</Heading>
 
 The &ResClasses; package needs at least &GAP;&nbsp;4.4.7 and
-&GAPDoc;&nbsp;0.999&nbsp;<Cite Key="GAPDoc"/>.
+&GAPDoc;&nbsp;0.99999&nbsp;<Cite Key="GAPDoc"/>.
 It can be used under UNIX, under Windows and on the MacIntosh.
 &ResClasses; is completely written in the &GAP; language and does
 neither contain nor require external binaries.
