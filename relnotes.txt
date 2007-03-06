@@ -172,4 +172,9 @@ Changes between version 2.4.1 and version 2.4.2:
  - A bug in the `View' method for residue class unions of polynomial rings
    has been fixed.
 
+Changes between version 2.4.2 and version 2.4.3:
+
+ - A quirk with the style file for the HTML version of the manual has
+   been fixed.
+
 
