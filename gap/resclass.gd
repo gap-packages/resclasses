@@ -216,6 +216,15 @@ DeclareOperation( "SplittedClass", [ IsResidueClassUnion, IsPosInt ] );
 
 #############################################################################
 ##
+#O  PartitionsIntoResidueClasses( <R>, <length> )
+##
+##  Returns a list of all partitions of the ring <R> into <length> residue
+##  classes.
+##
+DeclareOperation( "PartitionsIntoResidueClasses", [ IsRing, IsPosInt ] );
+
+#############################################################################
+##
 #O  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> )
 ##
 ##  Returns a random partition of the ring <R> into <length> residue classes

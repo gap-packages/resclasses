@@ -179,5 +179,11 @@ Changes between version 2.4.2 and version 2.4.3:
 
 Changes between version 2.4.3 and version 2.4.4:
 
- - ResClasses needs at least GAPDoc 0.99999.
+ - Now ResClasses needs GAPDoc 0.99999.
+
+Changes between version 2.4.4 and version 2.4.5:
+
+ - An operation `PartitionsIntoResidueClasses' has been added.
+   This operation returns a sorted list of all partitions of a given ring
+   into a given number of residue classes.
 

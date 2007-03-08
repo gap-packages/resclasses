@@ -1521,10 +1521,65 @@ InstallOtherMethod( AsUnionOfFewClasses,
 
 #############################################################################
 ##
+#M  PartitionsIntoResidueClasses( <R>, <length> ) . . . . . .  general method
+##
+InstallMethod( PartitionsIntoResidueClasses,
+               "general method (ResClasses)",
+               ReturnTrue, [ IsRing, IsPosInt ], 0,
+
+  function ( R, length )
+
+    local  Recurse, partitions, primes, p, q, x;
+
+    Recurse := function ( P, pos, p )
+
+      local  remaining_primes;
+
+      P[pos] := SplittedClass(P[pos],p);
+      if P[pos] = fail then return; fi;
+      P := Flat(P);
+
+      if Length(P) = length then Add(partitions,Set(P)); return; fi;
+
+      if   IsIntegers(R) or IsZ_pi(P)
+      then remaining_primes := Intersection(primes,[2..length-Length(P)+1]);
+      else remaining_primes := Filtered(primes,p->NumberOfResidues(R,p)
+                                               <= length-Length(P)+1);
+      fi;
+
+      for p in remaining_primes do
+        for pos in [1..Length(P)] do
+          Recurse(ShallowCopy(P),pos,p);
+        od;
+      od;
+    end;
+
+    if length = 1 then return [[R]]; fi;
+
+    partitions := [];
+
+    if   IsIntegers(R)
+    then primes := Filtered([2..length],IsPrime);
+    elif IsZ_pi(R)
+    then primes := Intersection([2..length],NoninvertiblePrimes(R));
+    elif IsUnivariatePolynomialRing(R) and IsFiniteFieldPolynomialRing(R)
+    then x := IndeterminatesOfPolynomialRing(R)[1];
+         q := Size(CoefficientsRing(R));
+         primes := Filtered(AllResidues(R,x^(LogInt(length,q)+1)),
+                            p -> IsIrreducibleRingElement(R,p));
+    else TryNextMethod(); fi;
+
+    for p in primes do Recurse([R],1,p); od;
+
+    return Set(partitions);
+  end );
+
+#############################################################################
+##
 #M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> )  for Z, Z_pi
 ##
 InstallMethod( RandomPartitionIntoResidueClasses,
-               "for Z or Z_pi", ReturnTrue,
+               "for Z or Z_pi (ResClasses)", ReturnTrue,
                [ IsRing, IsPosInt, IsList ], 0,
 
   function ( R, length, primes )
@@ -1555,7 +1610,7 @@ InstallMethod( RandomPartitionIntoResidueClasses,
 #M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> ) for GF(q)[x]
 ##
 InstallMethod( RandomPartitionIntoResidueClasses,
-               "for GF(q)[x]", ReturnTrue,
+               "for GF(q)[x] (ResClasses)", ReturnTrue,
                [ IsFiniteFieldPolynomialRing, IsPosInt, IsList ], 0,
 
   function ( R, length, primes )

@@ -309,6 +309,43 @@ gap> SplittedClass(cl,x^2+x+1);
   The residue class x^2+x ( mod x^3+x^2+x ) of GF(2)[x] ]
 gap> Union(last);
 The residue class 0*Z(2) ( mod x ) of GF(2)[x]
+gap> ResidueClassUnionViewingFormat("short");;
+gap> PartitionsIntoResidueClasses(Integers,1);
+[ [ Integers ] ]
+gap> PartitionsIntoResidueClasses(Integers,2);
+[ [ 0(2), 1(2) ] ]
+gap> PartitionsIntoResidueClasses(Integers,3);
+[ [ 0(2), 1(4), 3(4) ], [ 1(2), 0(4), 2(4) ], [ 0(3), 1(3), 2(3) ] ]
+gap> PartitionsIntoResidueClasses(Integers,4);
+[ [ 0(2), 1(4), 3(8), 7(8) ], [ 0(2), 3(4), 1(8), 5(8) ], 
+  [ 0(2), 1(6), 3(6), 5(6) ], [ 1(2), 0(4), 2(8), 6(8) ], 
+  [ 1(2), 2(4), 0(8), 4(8) ], [ 1(2), 0(6), 2(6), 4(6) ], 
+  [ 0(3), 1(3), 2(6), 5(6) ], [ 0(3), 2(3), 1(6), 4(6) ], 
+  [ 1(3), 2(3), 0(6), 3(6) ], [ 0(4), 1(4), 2(4), 3(4) ] ]
+gap> PartitionsIntoResidueClasses(Z_pi(2),1);
+[ [ Z_( 2 ) ] ]
+gap> PartitionsIntoResidueClasses(Z_pi(2),2);
+[ [ 0(2), 1(2) ] ]
+gap> PartitionsIntoResidueClasses(Z_pi(2),3);
+[ [ 0(2), 1(4), 3(4) ], [ 1(2), 0(4), 2(4) ] ]
+gap> PartitionsIntoResidueClasses(Z_pi(2),4);
+[ [ 0(2), 1(4), 3(8), 7(8) ], [ 0(2), 3(4), 1(8), 5(8) ], 
+  [ 1(2), 0(4), 2(8), 6(8) ], [ 1(2), 2(4), 0(8), 4(8) ], 
+  [ 0(4), 1(4), 2(4), 3(4) ] ]
+gap> PartitionsIntoResidueClasses(R,1);
+[ [ GF(2)[x] ] ]
+gap> PartitionsIntoResidueClasses(R,2);
+[ [ 0*Z(2)(mod x), Z(2)^0(mod x) ], 
+  [ 0*Z(2)(mod x+Z(2)^0), Z(2)^0(mod x+Z(2)^0) ] ]
+gap> PartitionsIntoResidueClasses(R,3);
+[ [ 0*Z(2)(mod x), Z(2)^0(mod x^2), x+Z(2)^0(mod x^2) ], 
+  [ 0*Z(2)(mod x), Z(2)^0(mod x^2+x), x+Z(2)^0(mod x^2+x) ], 
+  [ Z(2)^0(mod x), 0*Z(2)(mod x^2), x(mod x^2) ], 
+  [ Z(2)^0(mod x), 0*Z(2)(mod x^2+x), x(mod x^2+x) ], 
+  [ 0*Z(2)(mod x+Z(2)^0), Z(2)^0(mod x^2+Z(2)^0), x(mod x^2+Z(2)^0) ], 
+  [ 0*Z(2)(mod x+Z(2)^0), Z(2)^0(mod x^2+x), x(mod x^2+x) ], 
+  [ Z(2)^0(mod x+Z(2)^0), 0*Z(2)(mod x^2+Z(2)^0), x+Z(2)^0(mod x^2+Z(2)^0) ], 
+  [ Z(2)^0(mod x+Z(2)^0), 0*Z(2)(mod x^2+x), x+Z(2)^0(mod x^2+x) ] ]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
