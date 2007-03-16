@@ -352,7 +352,7 @@ E(12)^11
 
 <ManSection>
   <Meth Name="RepresentativeStabilizingRefinement" Arg="U, k"
-        Label="of a union of residue classes with fixed rep's, into k parts"/>
+        Label="of a union of res.-classes with fixed rep's"/>
   <Returns>
     The representative stabilizing refinement of <A>U</A>
     into <A>k</A>&nbsp;parts.
