@@ -187,3 +187,6 @@ Changes between version 2.4.4 and version 2.4.5:
    This operation returns a sorted list of all partitions of a given ring
    into a given number of residue classes.
 
+ - The index of the manual has been improved.
+
+
