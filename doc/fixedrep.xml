@@ -24,9 +24,9 @@ only distinct.
 
 <ManSection>
   <Func Name="ResidueClassWithFixedRep"
-        Arg="R, m, r" Label="R, m, r"/>
+        Arg="R, m, r" Label="by ring, modulus and residue"/>
   <Func Name="ResidueClassWithFixedRep"
-        Arg="m, r" Label="m, r"/>
+        Arg="m, r" Label="of Z, by modulus and residue"/>
   <Returns>
     The residue class <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the
     ring&nbsp;<A>R</A>, with the fixed representative&nbsp;<A>r</A>.
@@ -43,10 +43,10 @@ gap> ResidueClassWithFixedRep(Integers,2,1);
 </ManSection>
 
 <ManSection>
-  <Func Name="UnionOfResidueClassesWithFixedReps"
-        Arg="R, classes" Label="R, classes"/>
-  <Func Name="UnionOfResidueClassesWithFixedReps"
-        Arg="classes" Label="classes"/>
+  <Func Name="UnionOfResidueClassesWithFixedReps" Arg="R, classes"
+        Label="by ring and list of classes"/>
+  <Func Name="UnionOfResidueClassesWithFixedReps" Arg="classes"
+        Label="of Z, by list of classes"/>
   <Returns>
     The union of the residue classes <A>classes</A>[<M>i</M>][2] mod
     <A>classes</A>[<M>i</M>][1] of the ring <A>R</A>, with fixed
@@ -65,9 +65,18 @@ gap> UnionOfResidueClassesWithFixedReps(Integers,[[2,4],[3,9]]);
   </Description>
 </ManSection>
 
-<Index Key="Modulus" Subkey="U"><C>Modulus</C></Index>
-<Index Key="Classes" Subkey="U"><C>Classes</C></Index>
-<Index Key="AsListOfClasses" Subkey="U"><C>AsListOfClasses</C></Index>
+<Index Key="Modulus"
+       Subkey="of a union of residue classes with fixed rep's">
+  <C>Modulus</C>
+</Index>
+<Index Key="Classes"
+       Subkey="of a union of residue classes with fixed rep's">
+  <C>Classes</C>
+</Index>
+<Index Key="AsListOfClasses"
+       Subkey="for a union of residue classes with fixed rep's">
+  <C>AsListOfClasses</C>
+</Index>
 
 There is a method for the operation <C>Modulus</C> which returns the lcm of
 the moduli of the residue classes forming such a union. Further there is an
@@ -81,9 +90,9 @@ with fixed representatives.
 
 <ManSection>
   <Func Name="AllResidueClassesWithFixedRepsModulo"
-        Arg="R, m" Label="R, m"/>
+        Arg="R, m" Label="by ring and modulus"/>
   <Func Name="AllResidueClassesWithFixedRepsModulo"
-        Arg="m" Label="m"/>
+        Arg="m" Label="by modulus, of the default ring of that modulus"/>
   <Returns>
     A sorted list of all residue classes (mod&nbsp;<A>m</A>)
     of the ring&nbsp;<A>R</A>, with fixed representatives.
@@ -93,7 +102,8 @@ with fixed representatives.
     of&nbsp;<A>m</A>, cp. the documentation of <C>DefaultRing</C> in the
     &GAP; reference manual. The representatives are the same as those
     chosen by the operation <C>mod</C>.
-    See also <Ref Func="AllResidueClassesModulo" Label="R, m"/>.
+    See also <Ref Func="AllResidueClassesModulo"
+                  Label="of a given ring, modulo a given modulus"/>.
 <Example>
 <![CDATA[
 gap> AllResidueClassesWithFixedRepsModulo(Z_pi(2),4);
@@ -122,8 +132,10 @@ Unions of residue classes with fixed representatives are multisets.
 Elements and residue classes can be contained with multiplicities:
 
 <ManSection>
-  <Meth Name="Multiplicity" Arg="x, U" Label="x, U"/>
-  <Meth Name="Multiplicity" Arg="cl, U" Label="cl, U"/>
+  <Meth Name="Multiplicity" Arg="x, U"
+        Label="of an element in a union of residue classes with fixed rep's"/>
+  <Meth Name="Multiplicity" Arg="cl, U"
+        Label="of a residue class in a union of residue classes with fixed rep's"/>
   <Returns>
     The multiplicity of <A>x</A> in&nbsp;<A>U</A> regarded as a multiset
     of ring elements, resp. the multiplicity of the residue class <A>cl</A>
@@ -143,9 +155,16 @@ gap> Multiplicity(ResidueClassWithFixedRep(2,0),U);
   </Description>
 </ManSection>
 
-<Index Key="Density" Subkey="U"><C>Density</C></Index>
-<Index Key="IsOverlappingFree" Subkey="U"><C>IsOverlappingFree</C></Index>
-<Index Key="AsOrdinaryUnionOfResidueClasses" Subkey="U">
+<Index Key="Density"
+       Subkey="of a union of residue classes with fixed rep's">
+  <C>Density</C>
+</Index>
+<Index Key="IsOverlappingFree"
+       Subkey="for a union of residue classes with fixed rep's">
+  <C>IsOverlappingFree</C>
+</Index>
+<Index Key="AsOrdinaryUnionOfResidueClasses"
+       Subkey="for a union of residue classes with fixed rep's">
   <C>AsOrdinaryUnionOfResidueClasses</C>
 </Index>
 
@@ -189,7 +208,8 @@ and the multiset of quotients <M>u/x</M>, <M>u \in U</M>.
 The division method requires all elements of&nbsp;<C>U</C> to be divisible
 by&nbsp;<M>x</M>. If the underlying ring is the ring of integers, scalar
 multiplication and division leave <M>\delta</M> invariant
-(<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
+(<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
+Label="for a union of residue classes with fixed representatives"/>).
 
 <Example>
 <![CDATA[
@@ -211,7 +231,8 @@ gap> V/2;
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
 <ManSection>
-  <Meth Name="Union" Arg="U1, U2" Label="U1, U2"/>
+  <Meth Name="Union" Arg="U1, U2"
+        Label="for unions of residue classes with fixed representatives"/>
   <Returns>
     The union of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
@@ -220,7 +241,8 @@ gap> V/2;
     the union is the sum of its multiplicities in the arguments. 
     It holds that <C>Delta(Union(<A>U1</A>,<A>U2</A>))
     = Delta(<A>U1</A>) + Delta(<A>U2</A>)</C>.
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
+    Label="for a union of residue classes with fixed representatives"/>).
 <Example>
 <![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
@@ -233,7 +255,8 @@ gap> Union(U,U);
 </ManSection>
 
 <ManSection>
-  <Meth Name="Intersection" Arg="U1, U2" Label="U1, U2"/>
+  <Meth Name="Intersection" Arg="U1, U2"
+        Label="for unions of residue classes with fixed representatives"/>
   <Returns>
     The intersection of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
@@ -254,7 +277,8 @@ Empty union of residue classes of Z with fixed representatives
 </ManSection>
 
 <ManSection>
-  <Meth Name="Difference" Arg="U1, U2" Label="U1, U2"/>
+  <Meth Name="Difference" Arg="U1, U2"
+        Label="for unions of residue classes with fixed representatives"/>
   <Returns>
     The difference of <A>U1</A> and&nbsp;<A>U2</A>.
   </Returns>
@@ -266,7 +290,8 @@ Empty union of residue classes of Z with fixed representatives
     is set equal to <M>[(m-r)/m]</M>.
     It holds that <C>Delta(Difference(<A>U1</A>,<A>U2</A>))
     = Delta(<A>U1</A>) - Delta(<A>U2</A>)</C>.
-    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
+    (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
+    Label="for a union of residue classes with fixed representatives"/>).
 <Example>
 <![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
@@ -290,7 +315,8 @@ gap> Difference(U,V);
 </Heading>
 
 <ManSection>
-  <Attr Name="Delta" Arg="U" Label="U"/>
+  <Attr Name="Delta" Arg="U"
+        Label="for a union of residue classes with fixed representatives"/>
   <Returns>
     The value of the invariant <M>\delta</M> of the
     residue class union&nbsp;<A>U</A>.
@@ -303,7 +329,10 @@ gap> Difference(U,V);
     There is a related invariant&nbsp;<M>\rho</M> which is defined by
     <M>e^{\delta(U) \pi i}</M>. The corresponding attribute is called
     <C>Rho</C>.
-    <Index Key="Rho" Subkey="U"><C>Rho</C></Index>
+    <Index Key="Rho"
+           Subkey="for a union of residue classes with fixed rep's">
+      <C>Rho</C>
+    </Index>
 <Example>
 <![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,3],[3,4]]);
@@ -322,7 +351,8 @@ E(12)^11
 </ManSection>
 
 <ManSection>
-  <Meth Name="RepresentativeStabilizingRefinement" Arg="U, k" Label="U, k"/>
+  <Meth Name="RepresentativeStabilizingRefinement" Arg="U, k"
+        Label="of a union of residue classes with fixed rep's, into k parts"/>
   <Returns>
     The representative stabilizing refinement of <A>U</A>
     into <A>k</A>&nbsp;parts.
@@ -339,7 +369,8 @@ E(12)^11
     <P/>
 
     In any case the value of <C>Delta(<A>U</A>)</C> is invariant under
-    this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta" Label="U"/>).
+    this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
+    Label="for a union of residue classes with fixed representatives"/>).
 <Example>
 <![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);

@@ -19,17 +19,17 @@ This package implements residue class unions of the semilocalizations
 <Heading>Entering semilocalizations of the integers</Heading>
 
 <ManSection>
-  <Func Name="Z_pi" Arg="pi" Label="pi"/>
-  <Func Name="Z_pi" Arg="p" Label="p"/>
+  <Func Name="Z_pi" Arg="pi" Label="by set of noninvertible primes"/>
+  <Func Name="Z_pi" Arg="p" Label="by noninvertible prime"/>
   <Returns>
-    The ring <M>\Z_{(\pi)}</M> resp. the ring <M>\Z_{(p)}</M>.
+    The ring <M>\Z_{(\pi)}</M> or the ring <M>\Z_{(p)}</M>, respectively.
   </Returns>
   <Description>
     The returned ring has the property <C>IsZ&uscore;pi</C>. 
     The set <A>pi</A> of noninvertible primes can be retrieved
     by the operation <C>NoninvertiblePrimes</C>.
-    <Index Key="IsZ_pi" Subkey="R"><C>IsZ&uscore;pi</C></Index>
-    <Index Key="NoninvertiblePrimes" Subkey="R">
+    <Index Key="IsZ_pi"><C>IsZ&uscore;pi</C></Index>
+    <Index Key="NoninvertiblePrimes" Subkey="of a semilocalization of Z">
       <C>NoninvertiblePrimes</C>
     </Index>
 <Example>
@@ -50,11 +50,22 @@ Z_( 2, 5, 7 )
 <Section Label="sec:MethodsForZ_pi">
 <Heading>Methods for semilocalizations of the integers</Heading>
 
-<Index Key="StandardAssociate" Subkey="R, x"><C>StandardAssociate</C></Index>
-<Index Key="Gcd" Subkey="R, x, y"><C>Gcd</C></Index>
-<Index Key="Lcm" Subkey="R, x, y"><C>Lcm</C></Index>
-<Index Key="Factors" Subkey="R, x"><C>Factors</C></Index>
-<Index Key="IsUnit" Subkey="R, x"><C>IsUnit</C></Index>
+<Index Key="StandardAssociate"
+       Subkey="of an element of a semilocalization of Z">
+  <C>StandardAssociate</C>
+</Index>
+<Index Key="Gcd" Subkey="of elements of a semilocalization of Z">
+  <C>Gcd</C>
+</Index>
+<Index Key="Lcm" Subkey="of elements of a semilocalization of Z">
+  <C>Lcm</C>
+</Index>
+<Index Key="Factors" Subkey="of an element of a semilocalization of Z">
+  <C>Factors</C>
+</Index>
+<Index Key="IsUnit" Subkey="for an element of a semilocalization of Z">
+  <C>IsUnit</C>
+</Index>
 
 There are methods for the operations <C>in</C>, <C>Intersection</C>,
 <C>IsSubset</C>, <C>StandardAssociate</C>, <C>Gcd</C>, <C>Lcm</C>,

@@ -15,9 +15,12 @@
 <Heading>Entering residue classes and set-theoretic unions thereof</Heading>
 
 <ManSection>
-  <Func Name="ResidueClass" Arg="R, m, r" Label="R, m, r"/>
-  <Func Name="ResidueClass" Arg="m, r" Label="m, r"/>
-  <Func Name="ResidueClass" Arg="r, m" Label="r, m"/>
+  <Func Name="ResidueClass"
+        Arg="R, m, r" Label="by ring, modulus and residue"/>
+  <Func Name="ResidueClass"
+        Arg="m, r" Label="by modulus and residue"/>
+  <Func Name="ResidueClass"
+        Arg="r, m" Label="by residue and modulus"/>
   <Returns>
     In the three-argument form the residue class
     <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the ring&nbsp;<A>R</A>,
@@ -32,9 +35,9 @@
     For convenience, it is permitted to enclose the argument list in
     list brackets. <P/>
 
-    <Index Key="IsResidueClass" Subkey="U"><C>IsResidueClass</C></Index>
-    <Index Key="Modulus" Subkey="cl"><C>Modulus</C></Index>
-    <Index Key="Residue" Subkey="cl"><C>Residue</C></Index>
+    <Index Key="IsResidueClass"><C>IsResidueClass</C></Index>
+    <Index Key="Modulus" Subkey="of a residue class"><C>Modulus</C></Index>
+    <Index Key="Residue" Subkey="of a residue class"><C>Residue</C></Index>
 
     Residue classes have the property <C>IsResidueClass</C>.
     Rings are regarded as residue class 0&nbsp;(mod&nbsp;1),
@@ -58,10 +61,11 @@ The residue class 0*Z(2) ( mod x+Z(2)^0 ) of GF(2)[x]
 
 <ManSection>
   <Func Name="ResidueClassUnion"
-        Arg="R, m, r" Label="R, m, r"/>
+        Arg="R, m, r"
+        Label="by ring, modulus and residues"/>
   <Func Name="ResidueClassUnion"
         Arg="R, m, r, included, excluded"
-        Label="R, m, r, included, excluded"/>
+        Label="by ring, modulus, residues and included / excluded elements"/>
   <Returns>
     The union of the residue classes
     <A>r</A>[<M>i</M>]&nbsp;mod&nbsp;<A>m</A>
@@ -90,17 +94,26 @@ gap> ResidueClassUnion(R,x^2,[One(R),x],[Zero(R)],[One(R)]);
 When talking about a <E>residue class union</E> in this chapter,
 we always mean an object as it is returned by this function. <P/>
 
-<Index Key="Modulus" Subkey="U"><C>Modulus</C></Index>
-<Index Key="Residues" Subkey="U"><C>Residues</C></Index>
-<Index Key="IncludedElements" Subkey="U"><C>IncludedElements</C></Index>
-<Index Key="ExcludedElements" Subkey="U"><C>ExcludedElements</C></Index>
+<Index Key="Modulus" Subkey="of a residue class union">
+  <C>Modulus</C>
+</Index>
+<Index Key="Residues" Subkey="of a residue class union">
+  <C>Residues</C>
+</Index>
+<Index Key="IncludedElements" Subkey="of a residue class union">
+  <C>IncludedElements</C>
+</Index>
+<Index Key="ExcludedElements" Subkey="of a residue class union">
+  <C>ExcludedElements</C>
+</Index>
 
 There are operations <C>Modulus</C>, <C>Residues</C>,
-<C>IncludedElements</C> and <C>ExcludedElements</C> to extract
-the components of a residue class union as passed as arguments
-to <Ref Func="ResidueClassUnion" Label="R, m, r"/>. <P/>
+<C>IncludedElements</C> and <C>ExcludedElements</C> to retrieve the
+components of a residue class union as they have originally been passed
+as arguments to <Ref Func="ResidueClassUnion"
+                     Label="by ring, modulus and residues"/>. <P/>
 
-<Index Key="ResidueClassUnionViewingFormat" Subkey="format">
+<Index Key="ResidueClassUnionViewingFormat">
   <C>ResidueClassUnionViewingFormat</C>
 </Index>
 
@@ -120,8 +133,10 @@ Union of the residue classes 0(4) and 1(6) of Z
 </Example>
 
 <ManSection>
-  <Func Name="AllResidueClassesModulo" Arg="R, m" Label="R, m"/>
-  <Func Name="AllResidueClassesModulo" Arg="m" Label="m"/>
+  <Func Name="AllResidueClassesModulo"
+        Arg="R, m" Label="of a given ring, modulo a given modulus"/>
+  <Func Name="AllResidueClassesModulo"
+        Arg="m" Label="by modulus, of the default ring of that modulus"/>
   <Returns>
     A sorted list of all residue classes (mod&nbsp;<A>m</A>)
     of the ring&nbsp;<A>R</A>.
@@ -130,10 +145,10 @@ Union of the residue classes 0(4) and 1(6) of Z
     If the argument <A>R</A> is omitted it defaults to the default ring of
     <A>m</A> -- cp. the documentation of <C>DefaultRing</C> in the &GAP;
     reference manual.
-    <Index Key="AllResidues" Subkey="R, m">
+    <Index Key="AllResidues" Subkey="by ring and modulus">
       <C>AllResidues</C>
     </Index>
-    <Index Key="NumberOfResidues" Subkey="R, m">
+    <Index Key="NumberOfResidues" Subkey="by ring and modulus">
       <C>NumberOfResidues</C>
     </Index>
     A transversal for the residue classes (mod&nbsp;<A>m</A>) can be
@@ -165,9 +180,15 @@ gap> NumberOfResidues(Z_pi([2,3]),360);
 <Section Label="sec:MethodsForResidueClassUnions">
 <Heading>Methods for residue class unions</Heading>
 
-<Index Key="Print" Subkey="U"><C>Print</C></Index>
-<Index Key="String" Subkey="U"><C>String</C></Index>
-<Index Key="Display" Subkey="U"><C>Display</C></Index>
+<Index Key="Print" Subkey="for a residue class union">
+  <C>Print</C>
+</Index>
+<Index Key="String" Subkey="for a residue class union">
+  <C>String</C>
+</Index>
+<Index Key="Display" Subkey="for a residue class union">
+  <C>Display</C>
+</Index>
 
 There are methods for <C>Print</C>, <C>String</C> and <C>Display</C>
 which are applicable to residue class unions. There is a method
@@ -183,10 +204,18 @@ true
 ]]>
 </Example>
 
-<Index Key="Union" Subkey="U1, U2"><C>Union</C></Index>
-<Index Key="Intersection" Subkey="U1, U2"><C>Intersection</C></Index>
-<Index Key="Difference" Subkey="U1, U2"><C>Difference</C></Index>
-<Index Key="IsSubset" Subkey="U1, U2"><C>IsSubset</C></Index>
+<Index Key="Union" Subkey="for residue class unions">
+  <C>Union</C>
+</Index>
+<Index Key="Intersection" Subkey="for residue class unions">
+  <C>Intersection</C>
+</Index>
+<Index Key="Difference" Subkey="for residue class unions">
+  <C>Difference</C>
+</Index>
+<Index Key="IsSubset" Subkey="for residue class unions">
+  <C>IsSubset</C>
+</Index>
 
 There are methods for <C>Union</C>, <C>Intersection</C>, <C>Difference</C>
 and <C>IsSubset</C> available for residue class unions.
@@ -220,7 +249,8 @@ cardinality&nbsp;<M>t</M>, then a residue class can be written as
 a disjoint union of <M>t</M> residue classes with equal moduli:
 
 <ManSection>
-  <Oper Name="SplittedClass" Arg="cl, t" Label="cl, t"/>
+  <Oper Name="SplittedClass"
+        Arg="cl, t" Label="for a residue class and a number of parts"/>
   <Returns>
     A partition of the residue class <A>cl</A> into <A>t</A> residue
     classes with equal moduli, provided that such a partition exists.
@@ -242,7 +272,8 @@ Often one needs a partition of a given residue class union into
 <Q>few</Q> residue classes. The following operation takes care of this:
 
 <ManSection>
-  <Oper Name="AsUnionOfFewClasses" Arg="U" Label="U"/>
+  <Oper Name="AsUnionOfFewClasses"
+        Arg="U" Label="for a residue class union"/>
   <Returns>
     A set of disjoint residue classes whose union is equal to&nbsp;<A>U</A>,
     up to the finite sets <C>IncludedElements(<A>U</A>)</C> and
@@ -282,7 +313,7 @@ Integers
 
 <ManSection>
   <Oper Name="PartitionsIntoResidueClasses"
-        Arg="R, length" Label="R, length"/>
+        Arg="R, length" Label="of a given ring, of given length"/>
   <Returns>
     A sorted list of all partitions of the ring <A>R</A> into <A>length</A>
     residue classes.
@@ -303,11 +334,12 @@ gap> PartitionsIntoResidueClasses(Integers,4);
 
 <ManSection>
   <Oper Name="RandomPartitionIntoResidueClasses"
-        Arg="R, length, primes" Label="R, length, primes"/>
+        Arg="R, length, primes"
+        Label="of a given ring, of given length"/>
   <Returns>
     A <Q>random</Q> partition of the ring&nbsp;<A>R</A> into <A>length</A>
     residue classes whose moduli have only prime factors in <A>primes</A>,
-    resp. <C>fail</C> if no such partition exists.
+    respectively <C>fail</C> if no such partition exists.
   </Returns>
   <Description>
 <Log>
@@ -327,7 +359,7 @@ gap> Sum(List(last2,Density));
 </ManSection>
 
 <ManSection>
-  <Oper Name="Density" Arg="U" Label="U"/>
+  <Oper Name="Density" Arg="U" Label="of a residue class union"/>
   <Returns>
     The natural density of&nbsp;<A>U</A> as a subset of the underlying ring.
   </Returns>
@@ -348,8 +380,12 @@ gap> Density(Difference(Integers,ResidueClass(0,5)));
   </Description>
 </ManSection>
 
-<Index Key="Iterator" Subkey="U"><C>Iterator</C></Index>
-<Index Key="NextIterator" Subkey="iter"><C>NextIterator</C></Index>
+<Index Key="Iterator" Subkey="for a residue class union">
+  <C>Iterator</C>
+</Index>
+<Index Key="NextIterator" Subkey="for an iterator of a residue class union">
+  <C>NextIterator</C>
+</Index>
 
 For looping over residue class unions of the integers, there are
 methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
@@ -362,16 +398,16 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 <Heading>The categories and families of residue class unions</Heading>
 
 <ManSection>
-  <Filt Name="IsResidueClassUnion" Arg="U" Label="U"/>
-  <Filt Name="IsResidueClassUnionOfZ" Arg="U" Label="U"/>
-  <Filt Name="IsResidueClassUnionOfZ_pi" Arg="U" Label="U"/>
-  <Filt Name="IsResidueClassUnionOfGFqx" Arg="U" Label="U"/>
+  <Filt Name="IsResidueClassUnion" Arg="U"/>
+  <Filt Name="IsResidueClassUnionOfZ" Arg="U"/>
+  <Filt Name="IsResidueClassUnionOfZ_pi" Arg="U"/>
+  <Filt Name="IsResidueClassUnionOfGFqx" Arg="U"/>
   <Returns>
-    <C>true</C> if <A>U</A> is a residue class union resp.
-    a residue class union of the ring of integers resp.
-    a residue class union of a semilocalization of the ring of integers
-    resp. a residue class union of a polynomial ring in one variable
-    over a finite field, and <C>false</C> otherwise.
+    <C>true</C> if <A>U</A> is a residue class union,
+    a residue class union of the ring of integers,
+    a residue class union of a semilocalization of the ring of integers or
+    a residue class union of a polynomial ring in one variable
+    over a finite field, respectively, and <C>false</C> otherwise.
   </Returns>
   <Description>
     Often the same methods can be used for residue class unions of the ring
@@ -379,6 +415,9 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
     a category <C>IsResidueClassUnionOfZorZ&uscore;pi</C> which is the
     union of <C>IsResidueClassUnionOfZ</C> and
     <C>IsResidueClassUnionOfZ&uscore;pi</C>.
+    <Index Key="IsResidueClassUnionOfZ_pi">
+      <C>IsResidueClassUnionOfZ&uscore;pi</C>
+    </Index>
     The internal representation of residue class unions is called
     <C>IsResidueClassUnionResidueListRep</C>.
     <Index Key="IsResidueClassUnionResidueListRep">
@@ -389,13 +428,13 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 
 <ManSection>
   <Func Name="ResidueClassUnionsFamily"
-        Arg="R" Label="R"/>
+        Arg="R" Label="of a ring"/>
   <Func Name="ResidueClassUnionsFamily"
-        Arg="R, fixedreps" Label="R, fixedreps"/>
+        Arg="R, fixedreps" Label="of a ring, with fixed representatives"/>
   <Returns>
-    The family of residue class unions resp. the family of unions of
+    The family of residue class unions or the family of unions of
     residue classes with fixed representatives of the ring&nbsp;<A>R</A>,
-    depending on whether <A>fixedreps</A> is present and <C>true</C>.
+    depending on whether <A>fixedreps</A> is present and <C>true</C> or not.
   </Returns>
   <Description>
     The ring <A>R</A> can be retrieved as
