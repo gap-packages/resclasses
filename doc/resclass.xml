@@ -65,7 +65,7 @@ The residue class 0*Z(2) ( mod x+Z(2)^0 ) of GF(2)[x]
         Label="by ring, modulus and residues"/>
   <Func Name="ResidueClassUnion"
         Arg="R, m, r, included, excluded"
-        Label="by ring, modulus, residues and included / excluded elements"/>
+        Label="dito, plus included / excluded elements"/>
   <Returns>
     The union of the residue classes
     <A>r</A>[<M>i</M>]&nbsp;mod&nbsp;<A>m</A>
