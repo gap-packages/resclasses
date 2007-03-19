@@ -346,6 +346,20 @@ gap> PartitionsIntoResidueClasses(R,3);
   [ 0*Z(2)(mod x+Z(2)^0), Z(2)^0(mod x^2+x), x(mod x^2+x) ], 
   [ Z(2)^0(mod x+Z(2)^0), 0*Z(2)(mod x^2+Z(2)^0), x+Z(2)^0(mod x^2+Z(2)^0) ], 
   [ Z(2)^0(mod x+Z(2)^0), 0*Z(2)(mod x^2+x), x+Z(2)^0(mod x^2+x) ] ]
+gap> 0 * Integers;
+[ 0 ]
+gap> Integers * 0;
+[ 0 ]
+gap> 0 * Z_pi(2,3);
+[ 0 ]
+gap> Zero(R) * R;
+[ 0*Z(2) ]
+gap> [1,2,3] > ResidueClass(0,2);
+true
+gap> Integers < ResidueClass(0,2);
+true
+gap> [1,2,3] > Integers;
+true
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
