@@ -360,6 +360,10 @@ gap> Integers < ResidueClass(0,2);
 true
 gap> [1,2,3] > Integers;
 true
+gap> Integers = [0];
+false
+gap> [0] = Integers;
+false
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );

@@ -590,6 +590,18 @@ InstallMethod( \=,
 
 #############################################################################
 ##
+#M  \=( <R>, <l> ) . . . . . . . . . . . .  for a ring and a list of elements
+#M  \=( <l>, <R> ) . . . . . . . . . . . .  for a list of elements and a ring
+##
+InstallMethod( \=,
+               "for a ring and a list of elements (ResClasses)", 
+               IsIdenticalObj, [ IsRing, IsList ], 0, ReturnFalse );
+InstallMethod( \=,
+               "for a list of elements and a ring (ResClasses)", 
+               IsIdenticalObj, [ IsList, IsRing ], 0, ReturnFalse );
+
+#############################################################################
+##
 #M  \<( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
 ##  Total ordering of residue class unions (for technical purposes, only).
