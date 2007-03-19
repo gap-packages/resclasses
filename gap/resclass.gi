@@ -609,18 +609,31 @@ InstallMethod( \<,
 
 #############################################################################
 ##
-#M  \<( <R>, <U> ) . . . .  for a ring and a union of residue classes thereof
-#M  \<( <U>, <R> )                             (for technical purposes, only)
+#M  \<( <U>, <R> ) . . . . . . . . . . . for a residue class union and a ring
+#M  \<( <R>, <U> ) . . . . . . . . . . . for a ring and a residue class union
+#M  \<( <l>, <R> ) . . . . . . . . . for a finite list of elements and a ring
+#M  \<( <R>, <l> ) . . . . . . . . . for a ring and a finite list of elements
+#M  \<( <l>, <U> ) .  for a finite list of elements and a residue class union
+#M  \<( <U>, <l> ) .  for a residue class union and a finite list of elements
 ##
 InstallMethod( \<,
-               Concatenation("for a ring and a union of residue classes ",
-                             "thereof (ResClasses)"), ReturnTrue,
-               [ IsRing, IsResidueClassUnionInResidueListRep ],
-               0, ReturnTrue );
+               "for a residue class union and a ring (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnion, IsRing ], 0, ReturnFalse );
 InstallMethod( \<,
-               "for a residue class union and its base ring (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnionInResidueListRep, IsRing ], 0,
-               ReturnFalse );
+               "for a ring and a residue class union (ResClasses)",
+               ReturnTrue, [ IsRing, IsResidueClassUnion ], 0, ReturnTrue );
+InstallMethod( \<,
+               "for a list of elements and a ring (ResClasses)",
+               IsIdenticalObj, [ IsList, IsRing ], 0, ReturnFalse );
+InstallMethod( \<,
+               "for a ring and a list of elements (ResClasses)",
+               IsIdenticalObj, [ IsRing, IsList ], 0, ReturnTrue );
+InstallMethod( \<,
+               "for an element list and a residue class union (ResClasses)",
+               ReturnTrue, [ IsList, IsResidueClassUnion ], 0, ReturnFalse );
+InstallMethod( \<,
+               "for a residue class union and an element list (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnion, IsList ], 0, ReturnTrue );
 
 #############################################################################
 ##
@@ -1268,7 +1281,8 @@ InstallOtherMethod( \*,
        and not (     IsUnivariatePolynomialRing(R)
                  and IsFiniteFieldPolynomialRing(R)) or not x in R
     then TryNextMethod(); fi;
-    return ResidueClass(R,x,Zero(x));
+    if IsZero(x) then return [Zero(R)]; 
+                 else return ResidueClass(R,x,Zero(x)); fi;
   end );
 
 #############################################################################
