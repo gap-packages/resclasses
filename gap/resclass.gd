@@ -72,7 +72,7 @@ DeclareRepresentation( "IsResidueClassUnionResidueListRep",
 
 #############################################################################
 ##
-#R  IsResidueClassUnionsIteratorRep( <U> ) . . . . .  iterator representation
+#R  IsResidueClassUnionsIteratorRep . . . . . . . . . iterator representation
 ##
 DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
                        IsComponentObjectRep,
