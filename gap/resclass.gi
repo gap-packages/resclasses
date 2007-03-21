@@ -1723,7 +1723,7 @@ InstallMethod( Iterator,
                                    IsIterator
                                and IsMutable
                                and IsResidueClassUnionsIteratorRep ),
-                      rec( structure    := U,
+                      rec( U            := U,
                            counter      := 0,
                            classpos     := 1,
                            m_count      := 0,
@@ -1744,7 +1744,7 @@ InstallMethod( NextIterator,
 
     local  U, next, R, m, r, excluded;
 
-    U := iter!.structure;
+    U := iter!.U;
     if IsResidueClassUnionOfZ(U) then
       if iter!.rem_included <> [] then
         next := iter!.rem_included[1];
@@ -1791,7 +1791,7 @@ InstallMethod( ShallowCopy,
                [ IsIterator and IsResidueClassUnionsIteratorRep ], 0,
 
   iter -> Objectify( Subtype( TypeObj( iter ), IsMutable ),
-                     rec( structure    := iter!.structure,
+                     rec( U            := iter!.U,
                           counter      := iter!.counter,
                           classpos     := iter!.classpos,
                           m_count      := iter!.m_count,
@@ -1810,7 +1810,7 @@ InstallMethod( ViewObj,
 
     local  R;
 
-    R := UnderlyingRing(FamilyObj(iter!.structure));
+    R := UnderlyingRing(FamilyObj(iter!.U));
     Print("<iterator of a residue class union of ",RingToString(R),">");
   end );
 

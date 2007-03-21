@@ -76,7 +76,7 @@ DeclareRepresentation( "IsResidueClassUnionResidueListRep",
 ##
 DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
                        IsComponentObjectRep,
-                       [ "structure", "counter", "element", "classpos" ] );
+                       [ "U", "counter", "element", "classpos" ] );
 
 #############################################################################
 ##
