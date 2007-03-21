@@ -1775,7 +1775,7 @@ InstallMethod( NextIterator,
 
 #############################################################################
 ##
-#M  IsDoneIterator( <iter> ) . . . . . . for iterators of residue class union
+#M  IsDoneIterator( <iter> ) . . . . .  for iterators of residue class unions
 ##
 InstallMethod( IsDoneIterator,
                "for iterators of residue class unions (ResClasses)", true,
@@ -1784,7 +1784,7 @@ InstallMethod( IsDoneIterator,
 
 #############################################################################
 ##
-#M  ShallowCopy( <iter> ) . . . . . . .  for iterators of residue class union
+#M  ShallowCopy( <iter> ) . . . . . . . for iterators of residue class unions
 ##
 InstallMethod( ShallowCopy,
                "for iterators of residue class unions (ResClasses)", true,
@@ -1800,7 +1800,7 @@ InstallMethod( ShallowCopy,
 
 #############################################################################
 ##
-#M  ViewObj( <iter> ) . . . . . . . . .  for iterators of residue class union
+#M  ViewObj( <iter> ) . . . . . . . . . for iterators of residue class unions
 ##
 InstallMethod( ViewObj,
                "for iterators of residue class unions (ResClasses)", true,
