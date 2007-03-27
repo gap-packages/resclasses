@@ -423,6 +423,10 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
     <Index Key="IsResidueClassUnionResidueListRep">
       <C>IsResidueClassUnionResidueListRep</C>
     </Index>
+    There are methods available for <C>ExtRepOfObj</C> and
+    <C>ObjByExtRep</C>.
+    <Index Key="ExtRepOfObj"><C>ExtRepOfObj</C></Index>
+    <Index Key="ObjByExtRep"><C>ObjByExtRep</C></Index>
   </Description>
 </ManSection>
 
