@@ -439,6 +439,41 @@ InstallMethod( IsResidueClass,
 
 #############################################################################
 ##
+#S  ExtRepOfObj / ObjByExtRep for residue class unions. /////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  ExtRepOfObj( <U> ) . . . . . . . . . . . . . . . for residue class unions
+##
+InstallMethod( ExtRepOfObj,
+               "for residue class unions (ResClasses)",
+               true, [ IsResidueClassUnion ], 0,
+               U -> [ Modulus( U ), ShallowCopy( Residues( U ) ),
+                      ShallowCopy( IncludedElements( U ) ),
+                      ShallowCopy( ExcludedElements( U ) ) ] );
+
+#############################################################################
+##
+#M  ObjByExtRep( <fam>, <l> ) . . . . . . . reconstruct a residue class union
+##
+InstallMethod( ObjByExtRep,
+               "reconstruct a residue class union (ResClasses)",
+               ReturnTrue, [ IsFamily, IsList ], 0,
+
+  function ( fam, l )
+
+    local  R;
+
+    if not HasUnderlyingRing(fam) or Length(l) <> 4 then TryNextMethod(); fi;
+    R := UnderlyingRing(fam);
+    if fam <> ResidueClassUnionsFamily(R) then TryNextMethod(); fi;
+    return ResidueClassUnion(R,l[1],l[2],l[3],l[4]);
+  end );
+
+#############################################################################
+##
 #S  Accessing the components of a residue class union object. ///////////////
 ##
 #############################################################################

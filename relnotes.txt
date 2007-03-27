@@ -189,6 +189,9 @@ Changes between version 2.4.4 and version 2.4.5:
 
  - The index of the manual has been improved.
 
+ - Methods for `ExtRepOfObj' and `ObjByExtRep' for residue class unions
+   have been added.
+
  - A couple of auxiliary trivial methods have been added.
 
 

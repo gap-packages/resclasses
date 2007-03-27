@@ -364,6 +364,24 @@ gap> Integers = [0];
 false
 gap> [0] = Integers;
 false
+gap> S := ResidueClassUnion(Integers,6,[1,2,4],[3,9],[1,7]);
+1(3) U 2(6) U [ 3, 9 ] \ [ 1, 7 ]
+gap> l := ExtRepOfObj(S);
+[ 6, [ 1, 2, 4 ], [ 3, 9 ], [ 1, 7 ] ]
+gap> ObjByExtRep(FamilyObj(S),l);
+1(3) U 2(6) U [ 3, 9 ] \ [ 1, 7 ]
+gap> last = S;
+true
+gap> S := ResidueClassUnion(Z_pi(2,3),6,[1,2,4],[3,9],[1,7]);
+1(3) U 2(6) U [ 3, 9 ] \ [ 1, 7 ]
+gap> l := ExtRepOfObj(S);
+[ 6, [ 1, 2, 4 ], [ 3, 9 ], [ 1, 7 ] ]
+gap> ObjByExtRep(FamilyObj(S),l);
+1(3) U 2(6) U [ 3, 9 ] \ [ 1, 7 ]
+gap> last = S;
+true
+gap> UnderlyingRing(FamilyObj(last2));
+Z_( 2, 3 )
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "resclass.tst", 200000000 );
