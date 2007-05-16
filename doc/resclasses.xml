@@ -61,7 +61,7 @@
 
 <!-- #################################################################### -->
 
-<Bibliography Databases="resclasses.bib"/>
+<Bibliography Databases="resclassesbib.xml"/>
 
 <TheIndex/>
 

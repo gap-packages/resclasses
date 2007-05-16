@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ########################################################################################### -->
+<!-- ##                                                                                       ## -->
+<!-- ##  resclassesbib.xml              ResClasses documentation                 Stefan Kohl  ## -->
+<!-- ##                                                                                       ## -->
+<!-- ##  $Id$                        ## -->
+<!-- ##                                                                                       ## -->
+<!-- ########################################################################################### -->
+
+<!DOCTYPE file SYSTEM "../../gapdoc/bibxmlext.dtd"[]>
+
+<file>
+
+<entry id="GAPDoc"><manual>
+  <author>
+    <name><first>Frank</first><last>Luebeck</last></name>
+    <name><first>Max</first><last>Neunhoeffer</last></name>
+  </author>
+  <title><C>GAPDoc (Version 0.99999)</C></title>
+  <organization>RWTH Aachen</organization>
+  <year>2006</year>
+  <other type="note">
+    GAP package, <URL>http://www.gap-system.org/Packages/gapdoc.html</URL>
+  </other>
+</manual></entry>
+
+<entry id="RCWA"><manual>
+  <author>
+    <name><first>Stefan</first><last>Kohl</last></name>
+  </author>
+  <title><C>RCWA - Residue Class-Wise Affine Groups (Version 2.5)</C></title>
+  <year>2007</year>
+  <other type="note">
+    GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>
+  </other>
+</manual></entry>
+
+</file>
+
+<!-- ########################################################################################### -->
