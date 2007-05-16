@@ -194,4 +194,6 @@ Changes between version 2.4.4 and version 2.4.5:
 
  - A couple of auxiliary trivial methods have been added.
 
+ - The bibliography format has been changed from BibTeX to GAPDoc XML.
+
 
