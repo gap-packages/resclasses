@@ -192,6 +192,8 @@ Changes between version 2.4.4 and version 2.4.5:
  - Methods for `ExtRepOfObj' and `ObjByExtRep' for residue class unions
    have been added.
 
+ - A property `IsResidueClassWithFixedRepresentative' has been introduced.
+
  - A couple of auxiliary trivial methods have been added.
 
  - The bibliography format has been changed from BibTeX to GAPDoc XML.
