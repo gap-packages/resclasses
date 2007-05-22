@@ -91,7 +91,7 @@ There is a method for the operation <C>Modulus</C> which returns the lcm of
 the moduli of the residue classes forming such a union. Further there is an
 operation <C>Classes</C> for retrieving the list of classes which has been
 passed as an argument to <C>UnionOfResidueClassesWithFixedReps</C>.
-The operation <C>AsListOfClasses</C> does the same except that the returned
+The operation <C>AsListOfClasses</C> does the same, except that the returned
 list contains residue classes instead of pairs
 <C>[<A>modulus</A>,<A>residue</A>]</C>. There are methods for <C>Print</C>,
 <C>String</C> and <C>Display</C> available for unions of residue classes
