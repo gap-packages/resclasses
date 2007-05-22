@@ -132,7 +132,7 @@ InstallGlobalFunction( ResidueClassWithFixedRepresentative,
 
   function ( arg )
 
-    local  R, m, r, usage;
+    local  R, m, r, cl, usage;
 
     usage := Concatenation("usage: ResidueClassWithFixedRepresentative",
                            "( [ <R>, ] <m>, <r> ) for a ring <R> and ",
@@ -142,8 +142,42 @@ InstallGlobalFunction( ResidueClassWithFixedRepresentative,
                        else R := Integers; m := arg[1]; r := arg[2]; fi;
     if not ( IsRing(R) and m in R and r in R )
     then Error(usage); return fail; fi;
-    return UnionOfResidueClassesWithFixedRepresentatives( R, [ [ m, r ] ] );
+    cl := UnionOfResidueClassesWithFixedRepresentatives( R, [ [ m, r ] ] );
+    SetIsResidueClassWithFixedRepresentative( cl, true );
+    return cl;
   end );
+
+#############################################################################
+##
+#M  IsResidueClassWithFixedRepresentative( <obj> )  . . . . .  general method
+##
+InstallMethod( IsResidueClassWithFixedRepresentative,
+               "general method (ResClasses)", true, [ IsObject ], 0,
+
+  function ( obj )
+    if    IsUnionOfResidueClassesWithFixedRepresentatives(obj)
+      and Length(Classes(obj)) = 1
+    then return true; fi;
+    return false;
+  end );
+
+#############################################################################
+##
+#M  Modulus( <cl> ) . . . . . . for residue classes with fixed representative
+##
+InstallMethod( Modulus,
+               "for residue classes with fixed representative (ResClasses)",
+               true, [ IsResidueClassWithFixedRepresentative ], SUM_FLAGS,
+               cl -> Classes(cl)[1][1] );
+
+#############################################################################
+##
+#M  Residue( <cl> ) . . . . . . for residue classes with fixed representative
+##
+InstallMethod( Residue,
+               "for residue classes with fixed representative (ResClasses)",
+               true, [ IsResidueClassWithFixedRepresentative ], 0,
+               cl -> Classes(cl)[1][2] );
 
 #############################################################################
 ##

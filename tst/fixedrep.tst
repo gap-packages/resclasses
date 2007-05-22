@@ -162,6 +162,14 @@ gap> cl := ResidueClassWithFixedRep(2,0);
 [0/2]
 gap> Multiplicity(cl,U);
 1
+gap> cl := ResidueClassWithFixedRep(-4,37);
+[37/-4]
+gap> IsResidueClassWithFixedRep(cl);
+true
+gap> Modulus(cl);
+-4
+gap> Residue(cl);
+37
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "fixedrep.tst", 100000000 );

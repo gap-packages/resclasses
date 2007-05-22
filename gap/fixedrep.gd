@@ -86,18 +86,24 @@ DeclareSynonym( "UnionOfResidueClassesWithFixedReps",
 
 #############################################################################
 ##
-#F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> )  same with fixed rep
-#F  ResidueClassWithFixedRepresentative( <m>, <r> )
-#F  ResidueClassWithFixedRep( <R>, <m>, <r> )
-#F  ResidueClassWithFixedRep( <m>, <r> )
+#F  ResidueClassWithFixedRepresentative( <R>, <m>, <r> )  rc. with fixed rep.
+#F  ResidueClassWithFixedRepresentative( <m>, <r> ) . . . . . . . . .  (dito)
+#F  ResidueClassWithFixedRep( <R>, <m>, <r> ) . . . . . . . . . . . .  (dito)
+#F  ResidueClassWithFixedRep( <m>, <r> )  . . . . . . . . . . . . . .  (dito)
+#P  IsResidueClassWithFixedRepresentative( <obj> )  .  corresponding property
+#P  IsResidueClassWithFixedRep( <obj> ) . . . . . . . . . . . . . . .  (dito)
 ##
 ##  The residue class <r> ( mod <m> ) of the ring <R>, with the fixed
 ##  representative <r>. If the argument <R> is not given, it defaults to
-##  `Integers'.
+##  `Integers'.  Residue classes with fixed representatives have the property
+##  `IsResidueClassWithFixedRepresentative'.
 ##
 DeclareGlobalFunction( "ResidueClassWithFixedRepresentative" );
 DeclareSynonym( "ResidueClassWithFixedRep",
                 ResidueClassWithFixedRepresentative );
+DeclareProperty( "IsResidueClassWithFixedRepresentative", IsObject );
+DeclareSynonym( "IsResidueClassWithFixedRep",
+                IsResidueClassWithFixedRepresentative );
 
 #############################################################################
 ##
@@ -116,6 +122,14 @@ DeclareOperation( "Modulus",
 ##
 DeclareOperation( "Classes",
                   [ IsUnionOfResidueClassesWithFixedRepresentatives ] );
+
+#############################################################################
+##
+#O  Modulus( <cl> ) . . .  modulus of residue class with fixed representative
+#O  Residue( <cl> ) . . .  residue of residue class with fixed representative
+##
+DeclareOperation( "Modulus", [ IsResidueClassWithFixedRepresentative ] );
+DeclareOperation( "Residue", [ IsResidueClassWithFixedRepresentative ] );
 
 #############################################################################
 ##

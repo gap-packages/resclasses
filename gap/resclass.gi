@@ -424,10 +424,10 @@ InstallGlobalFunction( ResidueClass,
 
 #############################################################################
 ##
-#M  IsResidueClass( <obj> ) . . . . . . . . . . . . . . . . .  generic method
+#M  IsResidueClass( <obj> ) . . . . . . . . . . . . . . . . .  general method
 ##
 InstallMethod( IsResidueClass,
-               "generic method (ResClasses)", true, [ IsObject ], 0,
+               "general method (ResClasses)", true, [ IsObject ], 0,
 
   function ( obj )
     if IsRing(obj) then return true; fi;

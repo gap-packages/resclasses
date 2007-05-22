@@ -33,6 +33,15 @@ only distinct.
   </Returns>
   <Description>
     If the argument <A>R</A> is omitted, it defaults to <C>Integers</C>.
+
+    <Index Key="IsResidueClassWithFixedRep">
+      <C>IsResidueClassWithFixedRep</C>
+    </Index>
+
+    Residue classes with fixed representatives have the property
+    <C>IsResidueClassWithFixedRep</C>. The fixed representative&nbsp;<A>r</A>
+    can be retrieved by the operation <C>Residue</C>, and the
+    modulus&nbsp;<A>m</A> can be retrieved by the operation <C>Modulus</C>.
 <Example>
 <![CDATA[
 gap> ResidueClassWithFixedRep(Integers,2,1);
