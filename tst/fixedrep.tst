@@ -170,6 +170,26 @@ gap> Modulus(cl);
 -4
 gap> Residue(cl);
 37
+gap> cl := ResidueClassWithFixedRep(-4,23);
+[23/-4]
+gap> Rho(cl);
+E(8)
+gap> U := RepresentativeStabilizingRefinement(cl,3);
+[15/-12] U [19/-12] U [23/-12]
+gap> Rho(U);
+E(8)
+gap> RepresentativeStabilizingRefinement(U,0);
+[23/-4]
+gap> cl := ResidueClassWithFixedRep(4,23);
+[23/4]
+gap> Rho(cl);
+-E(8)
+gap> U := RepresentativeStabilizingRefinement(cl,3);
+[23/12] U [27/12] U [31/12]
+gap> Rho(U);
+-E(8)
+gap> RepresentativeStabilizingRefinement(U,0);
+[23/4]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "fixedrep.tst", 100000000 );
