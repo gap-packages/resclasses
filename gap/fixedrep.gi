@@ -690,8 +690,10 @@ InstallMethod( RepresentativeStabilizingRefinement,
           if complete <> fail then
             progression := Set(Filtered(part,t->t[2] mod m = complete[1]));
             if   Set(List([1..Length(progression)-1],
-                          i->progression[i+1][2]-progression[i][2])) <> [m]
+                          i->progression[i+1][2]-progression[i][2]))
+              <> [AbsInt(m)]
             then continue; fi;
+            if m < 0 then progression := Reversed(progression); fi;
             replacement := [[m,progression[1][2]]];
             while progression <> [] do
               cl := progression[1];
