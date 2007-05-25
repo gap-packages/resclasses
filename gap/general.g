@@ -76,6 +76,50 @@ BindGlobal( "RingToString",
 
 #############################################################################
 ##
+#M  Intersection2( <C1>, <C2> ) . . . . . . . . . . . . .  GAP Library bugfix
+##
+InstallMethod( Intersection2,
+    "for two collections in the same family, the second being a list",
+    IsIdenticalObj,
+    [ IsCollection, IsCollection and IsList ], 1,
+    function ( C1, C2 )
+    local   I, elm;
+    if ( HasIsFinite( C1 ) or CanComputeSize( C1 ) ) and IsFinite( C1 ) then
+        I := ShallowCopy( AsSSortedList( C1 ) );
+        IntersectSet( I, C2 );
+    else
+        I := [];
+        for elm in C2 do
+            if elm in C1 then
+                AddSet( I, elm );
+            fi;
+        od;
+    fi;
+    return I;
+    end );
+
+InstallMethod( Intersection2,
+    "for two collections in the same family, the first being a list",
+    IsIdenticalObj,
+    [ IsCollection and IsList, IsCollection ], 1,
+    function ( C1, C2 )
+    local   I, elm;
+    if ( HasIsFinite( C2 ) or CanComputeSize( C2 ) ) and IsFinite( C2 ) then
+        I := ShallowCopy( AsSSortedList( C2 ) );
+        IntersectSet( I, C1 );
+    else
+        I := [];
+        for elm in C1 do
+            if elm in C2 then
+                AddSet( I, elm );
+            fi;
+        od;
+    fi;
+    return I;
+    end );
+
+#############################################################################
+##
 #V  One-character global variables
 ##
 ##  For the convenience of the reader, the manual uses one-character global
