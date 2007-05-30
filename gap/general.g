@@ -12,20 +12,6 @@ Revision.general_g :=
 
 #############################################################################
 ##
-#M  \in( <obj>, <coll> ) . . . . . . . . . . . . .  for wrong family relation
-##
-InstallMethod( \in,
-               "for wrong family relation (ResClasses)",
-               ReturnTrue, [ IsObject, IsCollection ], 0,
-
-  function ( obj, coll )
-    if   not IsIdenticalObj(FamilyObj(obj),ElementsFamily(FamilyObj(coll)))
-    then return false; fi;
-    TryNextMethod();
-  end );
-
-#############################################################################
-##
 #M  String( <obj> ) . . . . . . default method, returns the output by `Print'
 ##
 InstallMethod( String,
