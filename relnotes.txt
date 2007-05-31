@@ -201,4 +201,9 @@ Changes between version 2.4.4 and version 2.5.0:
 
  - The bibliography format has been changed from BibTeX to GAPDoc XML.
 
+Changes between version 2.5.0 and version 2.5.1:
+
+ - Some minor adjustments have been made, and ResClasses needs now the
+   recently released version 1.0 of GAPDoc.
+
 

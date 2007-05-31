@@ -9,10 +9,10 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "2.5.0",
-Date             := "25/05/2007",
+Version          := "2.5.1",
+Date             := "01/06/2007",
 ArchiveURL       := Concatenation("http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/",
-                                  "resclasses/resclasses-2.5.0"),
+                                  "resclasses/resclasses-2.5.1"),
 ArchiveFormats   := ".tar.gz",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -51,8 +51,8 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.4.7",
-                         NeededOtherPackages    := [ ["GAPDoc",">=0.99999"] ],
-                         SuggestedOtherPackages := [ ["GAPDoc",">=1.0"] ],
+                         NeededOtherPackages    := [ ["GAPDoc",">=1.0"] ],
+                         SuggestedOtherPackages := [ ],
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,
