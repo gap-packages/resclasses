@@ -34,8 +34,8 @@ only distinct.
   <Description>
     If the argument <A>R</A> is omitted, it defaults to <C>Integers</C>.
 
-    <Index Key="IsResidueClassWithFixedRepresentative">
-      <C>IsResidueClassWithFixedRepresentative</C>
+    <Index Key="IsResidueClassWithFixedRep">
+      <C>IsResidueClassWithFixedRep</C>
     </Index>
 
     Residue classes with fixed representatives have the property
@@ -66,6 +66,9 @@ gap> ResidueClassWithFixedRepresentative(Integers,2,1);
     The argument <A>classes</A> must be a list of pairs of elements of the
     ring <A>R</A>. Their first entries -- the moduli -- must be nonzero.
     If the argument <A>R</A> is omitted, it defaults to <C>Integers</C>.
+
+<Alt Only="LaTeX">\pagebreak[4]</Alt>
+
 <Example>
 <![CDATA[
 gap> UnionOfResidueClassesWithFixedReps(Integers,[[2,4],[3,9]]);
@@ -116,10 +119,8 @@ with fixed representatives.
                   Label="of a given ring, modulo a given modulus"/>.
 <Example>
 <![CDATA[
-gap> AllResidueClassesWithFixedRepsModulo(Z_pi(2),4);
+gap> AllResidueClassesWithFixedRepsModulo(4);
 [ [0/4], [1/4], [2/4], [3/4] ]
-gap> AllResidueClassesWithFixedRepsModulo(9);
-[ [0/9], [1/9], [2/9], [3/9], [4/9], [5/9], [6/9], [7/9], [8/9] ]
 ]]>
 </Example>
   </Description>
