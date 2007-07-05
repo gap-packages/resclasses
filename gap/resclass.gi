@@ -639,7 +639,7 @@ InstallMethod( \=,
 ##
 #M  \<( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
-##  Total ordering of residue class unions (for technical purposes, only).
+##  A total ordering of residue class unions (for technical purposes, only).
 ##
 InstallMethod( \<,
                "for two residue class unions (ResClasses)", IsIdenticalObj,

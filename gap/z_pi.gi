@@ -14,7 +14,8 @@ Revision.z_pi_gi :=
 ##
 #M  Z_piCons( <filter>, <pi> ) . . . . . . . . . . . . . . . . . . . . Z_(pi)
 ##
-##  Semilocalization Z_(pi) of the ring of integers, for prime set <pi>.
+##  Returns the semilocalization Z_(pi) of the ring of integers,
+##  for given prime set <pi>.
 ##
 InstallMethod( Z_piCons, "natural Z_pi (ResClasses)", true, 
                [ IsRing, IsList ], 0,
@@ -59,7 +60,7 @@ InstallGlobalFunction( Z_pi,
 ##
 #M  IsZ_pi( <obj> ) . . . . . . . . . . . . . . . . . . . . . . . . .  Z_(pi)
 ##
-##  Return false, if the converse is not known explicitly.
+##  Return false, if the contrary is not known explicitly.
 ##
 InstallOtherMethod( IsZ_pi, "for non-Z_(pi) (ResClasses)", true,
                     [ IsObject ], 0, ReturnFalse );

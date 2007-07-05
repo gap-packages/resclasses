@@ -245,7 +245,7 @@ InstallMethod( \=,
 ##
 #M  \<( <U1>, <U2> ) . . . . . for unions of residue classes with fixed rep's
 ##
-##  Total ordering of unions of residue classes with fixed representatives
+##  A total ordering of unions of residue classes with fixed representatives
 ##  (for technical purposes, only).
 ##
 InstallMethod( \<,

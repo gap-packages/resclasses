@@ -55,9 +55,9 @@ DeclareSynonym( "IsUnionOfResidueClassesOfZorZ_pi",
 ##
 #R  IsResidueClassUnionResidueListRep . .  representation by list of residues
 ##
-##  Representation of unions of residue classes of the integers,
-##  of a semilocalization Z_(pi) of the integers or of a univariate
-##  polynomial ring GF(q)[x] over a finite field, by list of residues.
+##  The representation of unions of residue classes of the integers,
+##  of semilocalizations Z_(pi) of the integers and of univariate
+##  polynomial rings GF(q)[x] over finite fields, by list of residues.
 ## 
 ##  The component <m> stores the modulus, <r> is the list of class
 ##  representatives and <included> resp. <excluded> are lists of single
@@ -84,7 +84,8 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #F  ResidueClassUnion( <R>, <m>, <r> ) . . . . . . . union of residue classes
 #F  ResidueClassUnion( <R>, <m>, <r>, <included>, <excluded> )
 ##
-##  Constructor for unions of residue classes +/- finite sets of elements.
+##  The constructor for *residue class unions*,
+##  i.e. unions of residue classes +/- finite sets of elements.
 ##
 ##  Returns the union of the residue classes <r>[i] ( mod <m> ) of
 ##  the ring <R>, plus a finite set <included> and minus a finite set
@@ -102,10 +103,13 @@ DeclareGlobalFunction( "ResidueClassUnion" );
 #F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . .  ( dito )
 #P  IsResidueClass( <obj> ) . . . . . . . . . . <obj> is single residue class
 ##
-##  Returns the residue class <r> ( mod <m> ) of the ring <R>, resp. the
-##  residue class <r> ( mod <m> ) of the integers. In the two-argument
-##  case, <r> and <m> must be nonnegative, and <r> must lie in the range
-##  [0..<m>-1]. Residue classes have the property `IsResidueClass'.
+##  Returns the residue class <r> ( mod <m> ) of the ring <R>, respectively
+##  the residue class <r> ( mod <m> ) of the integers.
+##
+##  In the two-argument case, <r> and <m> must be nonnegative, and <r> must
+##  lie in the range [0..<m>-1].
+##
+##  Residue classes have the property `IsResidueClass'.
 ##
 DeclareGlobalFunction( "ResidueClass" );
 DeclareProperty( "IsResidueClass", IsObject );
@@ -141,11 +145,12 @@ DeclareOperation( "ExcludedElements", [ IsResidueClassUnion ] );
 ##
 #F  ResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
 ##
-##  The family of all residue class unions of <R>. The optional argument
-##  <fixedreps> is a boolean which determines whether the function returns
-##  the family of "usual" residue class unions of <R> (<fixedreps> = `false'
-##  or not given) or the family of unions of residue classes with fixed
-##  representatives (<fixedreps> = `true').
+##  Returns the family of all residue class unions of <R>.
+##
+##  The optional argument <fixedreps> is a boolean which determines whether
+##  the function returns the family of "usual" residue class unions of <R>
+##  (<fixedreps> = `false' or not given) or the family of unions of residue
+##  classes with fixed representatives (<fixedreps> = `true').
 ##
 DeclareGlobalFunction( "ResidueClassUnionsFamily" );
 
@@ -155,8 +160,10 @@ DeclareGlobalFunction( "ResidueClassUnionsFamily" );
 #F  Z_piResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
 #F  GFqxResidueClassUnionsFamily( <R> [ , <fixedreps> ] )
 ##
-##  Family of unions of residue classes of Z, of a ring R = Z_(pi) resp. of a
-##  ring R = GF(q)[x]. For the meaning of the optional argument <fixedreps>,
+##  Returns the family of unions of residue classes of Z,
+##  of a ring <R> = Z_(pi) or of a ring <R> = GF(q)[x], respectively.
+##
+##  For the meaning of the optional argument <fixedreps>,
 ##  see `ResidueClassUnionsFamily'.
 ##
 DeclareGlobalFunction( "ZResidueClassUnionsFamily" );

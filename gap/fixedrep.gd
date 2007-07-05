@@ -44,9 +44,10 @@ DeclareCategory( "IsUnionOfResidueClassesOfZorZ_piWithFixedRepresentatives",
 ##
 #R  IsUnionOfResidueClassesWithFixedRepsStandardRep
 ##
-##  Representation of unions of residue classes of the integers, a
-##  semilocalization Z_(pi) of the integers or a univariate polynomial
-##  ring GF(q)[x] over a finite field, with fixed representatives.
+##  The representation of unions of residue classes with fixed
+##  representatives -- of the integers, of semilocalizations Z_(pi)
+##  of the integers and of univariate polynomial rings GF(q)[x]
+##  over finite fields.
 ## 
 ##  The component <classes> is a list of residue classes, given as pairs
 ##  ( <modulus>, <representative> ). The representatives are *not* reduced
@@ -67,9 +68,9 @@ DeclareRepresentation( "IsUnionOfResidueClassesWithFixedRepsStandardRep",
 #F  UnionOfResidueClassesWithFixedReps( <R>, <classes> )
 #F  UnionOfResidueClassesWithFixedReps( <classes> )
 ##
-##  Constructor for unions of residue classes with fixed representatives.
+##  The constructor for unions of residue classes with fixed representatives.
 ##
-##  Constructs the union of the residue classes
+##  Returns the union of the residue classes
 ##
 ##   <classes>[i][2] ( mod <classes>[i][1] )
 ##
@@ -93,9 +94,11 @@ DeclareSynonym( "UnionOfResidueClassesWithFixedReps",
 #P  IsResidueClassWithFixedRepresentative( <obj> )  .  corresponding property
 #P  IsResidueClassWithFixedRep( <obj> ) . . . . . . . . . . . . . . .  (dito)
 ##
-##  The residue class <r> ( mod <m> ) of the ring <R>, with the fixed
-##  representative <r>. If the argument <R> is not given, it defaults to
-##  `Integers'.  Residue classes with fixed representatives have the property
+##  Returns the residue class <r> ( mod <m> ) of the ring <R>,
+##  with the fixed representative <r>.
+##
+##  If the argument <R> is not given, it defaults to `Integers'.
+##  Residue classes with fixed representatives have the property
 ##  `IsResidueClassWithFixedRepresentative'.
 ##
 DeclareGlobalFunction( "ResidueClassWithFixedRepresentative" );
@@ -116,8 +119,8 @@ DeclareOperation( "Modulus",
 ##
 #O  Classes( <U> )
 ##
-##  The list of pairs ( <representative>, <modulus> ) as given as argument
-##  <classes> when constructing <U> via
+##  Returns the list of pairs ( <representative>, <modulus> )
+##  as passed as argument <classes> when constructing <U> via
 ##  `UnionOfResidueClassesWithFixedRepresentatives'.
 ##
 DeclareOperation( "Classes",
@@ -136,9 +139,11 @@ DeclareOperation( "Residue", [ IsResidueClassWithFixedRepresentative ] );
 #F  AllResidueClassesWithFixedRepresentativesModulo( [ <R>, ] <m> )
 #F  AllResidueClassesWithFixedRepsModulo( [ <R>, ] <m> )
 ##
-##  The same as `AllResidueClassesModulo', but with fixed representatives.
-##  The fixed representatives are the same as those returned by the function
-##  `AllResidues' when called with the arguments <R> and <m>.
+##  Returns a list of all residue classes (mod <m>) of the ring <R>,
+##  with fixed representatives.
+##
+##  The fixed representatives are the same as those returned by the
+##  function `AllResidues' when called with the arguments <R> and <m>.
 ##
 DeclareGlobalFunction( "AllResidueClassesWithFixedRepresentativesModulo" );
 DeclareSynonym( "AllResidueClassesWithFixedRepsModulo",
@@ -148,8 +153,8 @@ DeclareSynonym( "AllResidueClassesWithFixedRepsModulo",
 ##
 #O  AsListOfClasses( <U> )
 ##
-##  A list of the classes which form the union <U> of residue classes with
-##  fixed representatives.
+##  Returns a list of the classes which form the union <U> of residue classes
+##  with fixed representatives.
 ##
 DeclareOperation( "AsListOfClasses",
                   [ IsUnionOfResidueClassesWithFixedRepresentatives ] );
@@ -159,8 +164,8 @@ DeclareOperation( "AsListOfClasses",
 #O  Multiplicity( <n>, <U> )  . . . . . . . . . . multiplicity of  <n> in <U>
 #O  Multiplicity( <cl>, <U> ) . . . . . . . . . . multiplicity of <cl> in <U>
 ##
-##  The multiplicity of the ring element <n> / the residue class <cl> in the
-##  residue class union <U> with fixed representatives.
+##  Returns the multiplicity of the ring element <n> / the residue class <cl>
+##  in the residue class union <U> with fixed representatives.
 ##
 DeclareOperation( "Multiplicity",
                   [ IsObject,
@@ -181,9 +186,9 @@ DeclareProperty( "IsOverlappingFree",
 ##
 #O  AsOrdinaryUnionOfResidueClasses( <U> )
 ##
-##  The set-theoretic union of the residue classes in the union <U> of
-##  residue classes with fixed representatives. The returned object is an
-##  ordinary residue class union without fixed representatives which
+##  Returns the set-theoretic union of the residue classes in the union <U>
+##  of residue classes with fixed representatives. The returned object is
+##  an ordinary residue class union without fixed representatives which
 ##  behaves like a subset of the underlying ring.
 ##
 DeclareOperation( "AsOrdinaryUnionOfResidueClasses",
@@ -192,6 +197,8 @@ DeclareOperation( "AsOrdinaryUnionOfResidueClasses",
 #############################################################################
 ##
 #O  RepresentativeStabilizingRefinement( <U>, <k> ) . . . . refinement of <U>
+##
+##  Returns the representative stabilizing refinement of <U> into <k> parts.
 ##
 ##  We define the *representative stabilizing refinement* of a residue class
 ##  [r/m] of Z with fixed representative into k parts by [r/km] U [(r+m)/km]
