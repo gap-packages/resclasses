@@ -78,6 +78,42 @@ of packages off, you can load &ResClasses; via
 
 <!-- #################################################################### -->
 
+<Section Label="sec:SendEmailAndEmailLogFile">
+<Heading>SendEmail and EmailLogFile</Heading>
+
+<ManSection>
+  <Func Name="SendEmail" Arg="sendto, copyto, subject, text"/>
+  <Returns>
+    Zero if everything worked correctly, and a system error number otherwise.
+  </Returns>
+  <Description>
+    Sends an e-mail with subject <A>subject</A> and body <A>text</A> to the
+    addresses in the list <A>sendto</A>, and copies it to those in the list
+    <A>copyto</A>. The first two arguments must be lists of strings, and
+    the latter two must be strings.
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Func Name="EmailLogFile" Arg="addresses"/>
+  <Returns>
+    Zero if everything worked correctly, and a system error number otherwise.
+  </Returns>
+  <Description>
+    Sends the current log file by e-mail to <A>addresses</A>, if &GAP; is in
+    logging mode and one is working under UNIX, and does nothing otherwise.
+    The argument <A>addresses</A> must be either a list of e-mail addresses
+    or a single e-mail address. Long log files are abbreviated, i.e. if the
+    log file is larger than 64KB, then any output is truncated at 1KB, and
+    if the log file is still longer than 64KB afterwards, it is truncated
+    at&nbsp;64KB.
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
 </Chapter>
 
 <!-- #################################################################### -->

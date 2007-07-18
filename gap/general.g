@@ -4,11 +4,78 @@
 ##
 #H  @(#)$Id$
 ##
-##  This file contains a couple of methods which might perhaps later be moved
-##  into the GAP Library.
+##  This file contains a couple of functions and methods which are not
+##  directly related to computations with residue classes, and which might
+##  perhaps later be moved into the GAP Library.
 ##
 Revision.general_g :=
   "@(#)$Id$";
+
+#############################################################################
+##
+#F  SendEmail( <sendto>, <copyto>, <subject>, <text> ) . . . .  send an email
+##
+##  Sends an e-mail with subject <subject> and body <text> to the addresses
+##  in the list <sendto>, and copies it to those in the list <copyto>.
+##  The first two arguments must be lists of strings, and the latter two must
+##  be strings.
+##
+BindGlobal( "SendEmail",
+
+  function ( sendto, copyto, subject, text )
+
+    local  sendmail, inp;
+
+    sendto   := JoinStringsWithSeparator( sendto, "," );
+    copyto   := JoinStringsWithSeparator( copyto, "," );
+    sendmail := Filename( DirectoriesSystemPrograms(  ), "mail" );
+    inp      := InputTextString( text );
+    return Process( DirectoryCurrent(  ), sendmail, inp, OutputTextNone(  ),
+                    [ "-s", subject, "-c", copyto, sendto ] );
+  end );
+
+#############################################################################
+##
+#F  EmailLogFile( <addresses> )  send current logfile by email to <addresses>
+##
+##  Sends the current logfile by e-mail to <addresses>, if GAP is in logging
+##  mode and one is working under UNIX, and does nothing otherwise.
+##  The argument <addresses> must be either a list of email addresses or
+##  a single e-mail address. Long log files are abbreviated, i.e. if the log
+##  file is larger than 64KB, then any output is truncated at 1KB, and if the
+##  log file is still longer than 64KB afterwards, it is truncated at 64KB.
+##
+BindGlobal( "EmailLogFile", 
+
+  function ( addresses )
+
+    local  filename, logfile, selection, pos1, pos2;
+
+    if ARCH_IS_UNIX() and IN_LOGGING_MODE <> false then
+      if IsString(addresses) then addresses := [addresses]; fi;
+      filename := USER_HOME_EXPAND(IN_LOGGING_MODE);
+      logfile  := ReadAll(InputTextFile(filename));
+      if Length(logfile) > 2^16 then # Abbreviate output in long logfiles.
+        selection := ""; pos1 := 1;
+        repeat
+          pos2 := PositionSublist(logfile,"gap> ",pos1);
+          if pos2 = fail then pos2 := Length(logfile) + 1; fi;
+          Append(selection,logfile{[pos1..Minimum(pos1+1024,pos2-1)]});
+          if pos1 + 1024 < pos2 - 1 then
+            Append(selection,
+                   logfile{[pos1+1025..Position(logfile,'\n',pos1+1024)]});
+            Append(selection,"                                    ");
+            Append(selection,"[ ... ]\n");
+          fi;
+          pos1 := pos2;
+        until pos2 >= Length(logfile);
+        logfile := selection;
+        if Length(logfile) > 2^16 then logfile := logfile{[1..2^16]}; fi;
+      fi;
+      return SendEmail(addresses,[],Concatenation("GAP logfile ",filename),
+                       logfile);
+    fi;
+  end );
 
 #############################################################################
 ##
