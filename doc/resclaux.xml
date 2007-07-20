@@ -90,7 +90,10 @@ of packages off, you can load &ResClasses; via
     Sends an e-mail with subject <A>subject</A> and body <A>text</A> to the
     addresses in the list <A>sendto</A>, and copies it to those in the list
     <A>copyto</A>. The first two arguments must be lists of strings, and
-    the latter two must be strings.
+    the latter two must be strings. <P/>
+
+    As most system-related functions, <C>SendEmail</C> works only under UNIX.
+    Further, the computer must of course be connected to the internet.
   </Description>
 </ManSection>
 
