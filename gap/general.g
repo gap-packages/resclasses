@@ -13,7 +13,7 @@ Revision.general_g :=
 
 #############################################################################
 ##
-#F  SendEmail( <sendto>, <copyto>, <subject>, <text> ) . . . .  send an email
+#F  SendEmail( <sendto>, <copyto>, <subject>, <text> ) . . . . send an e-mail
 ##
 ##  Sends an e-mail with subject <subject> and body <text> to the addresses
 ##  in the list <sendto>, and copies it to those in the list <copyto>.
@@ -36,7 +36,7 @@ BindGlobal( "SendEmail",
 
 #############################################################################
 ##
-#F  EmailLogFile( <addresses> )  send current logfile by email to <addresses>
+#F  EmailLogFile( <addresses> ) . . .  send log file by e-mail to <addresses>
 ##
 ##  Sends the current logfile by e-mail to <addresses>, if GAP is in logging
 ##  mode and one is working under UNIX, and does nothing otherwise.
