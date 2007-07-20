@@ -206,4 +206,8 @@ Changes between version 2.5.0 and version 2.5.1:
  - Some minor adjustments have been made, and ResClasses needs now the
    recently released version 1.0 of GAPDoc.
 
+Changes between version 2.5.1 and version 2.5.2:
+
+ - Functions `SendEmail' and `EmailLogFile' have been added.
+
 
