@@ -112,7 +112,7 @@ with fixed representatives.
   </Returns>
   <Description>
     If the argument <A>R</A> is omitted it defaults to the default ring
-    of&nbsp;<A>m</A>, cp. the documentation of <C>DefaultRing</C> in the
+    of&nbsp;<A>m</A>, cf. the documentation of <C>DefaultRing</C> in the
     &GAP; reference manual. The representatives are the same as those
     chosen by the operation <C>mod</C>.
     See also <Ref Func="AllResidueClassesModulo"
