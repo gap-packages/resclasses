@@ -9,6 +9,14 @@
 <Chapter Label="ch:Z_pi">
 <Heading>Semilocalizations of the Integers</Heading>
 
+<Ignore Remark="set screen width to 75, for the example tester">
+<Example>
+<![CDATA[
+gap> SizeScreen([75,24]);;
+]]>
+</Example>
+</Ignore>
+
 This package implements residue class unions of the semilocalizations
 <M>\Z_{(\pi)}</M> of the ring of integers. It also provides the underlying
 &GAP; implementation of these rings themselves.

@@ -9,6 +9,14 @@
 <Chapter Label="ch:UnionsOfResidueClasses">
 <Heading>Set-Theoretic Unions of Residue Classes</Heading>
 
+<Ignore Remark="set screen width to 75, for the example tester">
+<Example>
+<![CDATA[
+gap> SizeScreen([75,24]);;
+]]>
+</Example>
+</Ignore>
+
 <!-- #################################################################### -->
 
 <Section Label="sec:DefiningUnionsOfResidueClasses">
@@ -80,8 +88,8 @@ gap> ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
 Union of the residue classes 3(8) and 5(8) of Z_( 2, 3 )
-gap> ResidueClassUnion(R,x^2,[One(R),x],[Zero(R)],[One(R)]);
-<union of 2 residue classes (mod x^2) of GF(2)[x]> U [ 0*Z(2) ] \ [ Z(2)^0 ]
+gap> ResidueClassUnion(R,x^2,[One(R),x],[],[One(R)]);
+<union of 2 residue classes (mod x^2) of GF(2)[x]> \ [ Z(2)^0 ]
 ]]>
 </Example>
   </Description>
@@ -223,7 +231,7 @@ They also accept finite subsets of the base ring as arguments.
 
 <Example>
 <![CDATA[
-gap> S := Union(ResidueClass(0,2),ResidueClass(0,3));         
+gap> S := Union(ResidueClass(0,2),ResidueClass(0,3));
 Z \ Union of the residue classes 1(6) and 5(6) of Z
 gap> Intersection(S,ResidueClass(0,7));
 Union of the residue classes 0(14) and 21(42) of Z
@@ -233,10 +241,10 @@ gap> IsSubset(ResidueClass(0,2),ResidueClass(4,8));
 true
 gap> Union(S,[1..10]);
 (Union of the residue classes 0(2) and 3(6) of Z) U [ 1, 5, 7 ]
-gap> Intersection(S,[1..10]);
-[ 2, 3, 4, 6, 8, 9, 10 ]
-gap> Difference(S,[1..10]);
-(Union of the residue classes 0(2) and 3(6) of Z) \ [ 2, 3, 4, 6, 8, 9, 10 ]
+gap> Intersection(S,[1..6]);
+[ 2, 3, 4, 6 ]
+gap> Difference(S,[1..6]);
+(Union of the residue classes 0(2) and 3(6) of Z) \ [ 2, 3, 4, 6 ]
 gap> Difference(Integers,[1..10]);
 Z \ <set of cardinality 10>
 gap> IsSubset(S,[1..10]);
@@ -345,10 +353,10 @@ gap> PartitionsIntoResidueClasses(Integers,4);
 <Log>
 <![CDATA[
 gap> RandomPartitionIntoResidueClasses(Integers,30,[2,3,5,7]);
-[ 2(7), 3(7), 4(7), 5(7), 6(7), 1(35), 8(35), 14(35), 21(35), 22(35), 28(35), 
-  29(35), 7(105), 15(105), 42(105), 50(105), 77(105), 85(105), 70(175), 
-  105(175), 35(350), 210(350), 0(525), 140(525), 315(525), 350(525), 
-  490(525), 175(1575), 700(1575), 1225(1575) ]
+[ 0(7), 2(7), 5(7), 3(14), 10(14), 1(21), 8(21), 15(21), 18(21), 20(21), 
+  6(63), 13(63), 25(63), 27(63), 32(63), 34(63), 46(63), 48(63), 53(63), 
+  55(63), 4(126), 67(126), 137(189), 74(567), 200(567), 263(567), 
+  389(567), 452(567), 11(1134), 578(1134) ]
 gap> Union(last);
 Integers
 gap> Sum(List(last2,Density));
