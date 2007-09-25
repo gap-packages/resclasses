@@ -18,7 +18,7 @@ gap> SizeScreen([75,24]);;
 </Ignore>
 
 This package implements residue class unions of the semilocalizations
-<M>\Z_{(\pi)}</M> of the ring of integers. It also provides the underlying
+<M>\ZZ_{(\pi)}</M> of the ring of integers. It also provides the underlying
 &GAP; implementation of these rings themselves.
 
 <!-- #################################################################### -->
@@ -30,7 +30,7 @@ This package implements residue class unions of the semilocalizations
   <Func Name="Z_pi" Arg="pi" Label="by set of noninvertible primes"/>
   <Func Name="Z_pi" Arg="p" Label="by noninvertible prime"/>
   <Returns>
-    The ring <M>\Z_{(\pi)}</M> or the ring <M>\Z_{(p)}</M>, respectively.
+    The ring <M>\ZZ_{(\pi)}</M> or the ring <M>\ZZ_{(p)}</M>, respectively.
   </Returns>
   <Description>
     The returned ring has the property <C>IsZ&uscore;pi</C>. 
@@ -80,7 +80,7 @@ There are methods for the operations <C>in</C>, <C>Intersection</C>,
 <C>Factors</C> and <C>IsUnit</C> available for semilocalizations of the
 integers. For the documentation of these operations, see the &GAP;
 reference manual. The standard associate of an element of a ring
-<M>\Z_{(\pi)}</M> is defined by the product of the noninvertible prime
+<M>\ZZ_{(\pi)}</M> is defined by the product of the noninvertible prime
 factors of its numerator.
 
 <Example>
