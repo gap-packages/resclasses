@@ -3,7 +3,7 @@
 <!DOCTYPE Book SYSTEM "../../gapdoc/gapdoc.dtd"
  [ <!ENTITY ResClasses "<Package>ResClasses</Package>">
    <!ENTITY RCWA "<Package>RCWA</Package>"> ] >
-<?LaTeX ExtraPreamble="\newcommand{\ZZ}{\mathbb{Z}}"?>
+<?LaTeX ExtraPreamble=""?>
 
 <!-- #################################################################### -->
 <!-- ##                                                                ## -->

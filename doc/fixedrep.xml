@@ -378,7 +378,7 @@ E(12)^11
   </Returns>
   <Description>
     The <E>representative stabilizing refinement</E> of a residue class
-    <M>[r/m]</M> of <M>\ZZ</M> into <M>k</M> parts is defined by
+    <M>[r/m]</M> of <M>\mathbb{Z}</M> into <M>k</M> parts is defined by
     <M>[r/km] \cup [(r+m)/km] \cup \dots \cup [(r+(k-1)m)/km]</M>.
     This definition is extended in the obvious way to unions of residue
     classes. <P/>
