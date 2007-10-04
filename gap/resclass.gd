@@ -25,6 +25,8 @@ DeclareSynonym( "IsUnionOfResidueClasses", IsResidueClassUnion );
 ##
 #C  IsResidueClassUnionOfZ . . . . . . . . . . . .  residue class unions of Z
 #C  IsUnionOfResidueClassesOfZ                                           dito
+#C  IsResidueClassUnionOfZxZ                    "                      of Z^2
+#C  IsUnionOfResidueClassesOfZxZ                                         dito
 #C  IsResidueClassUnionOfZ_pi                   "                   of Z_(pi)
 #C  IsUnionOfResidueClassesOfZ_pi                                        dito
 #C  IsResidueClassUnionOfGFqx                   "                 of GF(q)[x]
@@ -32,14 +34,17 @@ DeclareSynonym( "IsUnionOfResidueClasses", IsResidueClassUnion );
 #C  IsResidueClassUnionOfZorZ_pi                "              of Z or Z_(pi)
 #C  IsUnionOfResidueClassesOfZorZ_pi                                     dito
 ##
-##  The category of the residue class unions of Z, of a (semi-)localization
-##  Z_(pi) of Z or of a polynomial ring GF(q)[x] over a finite field, respec-
-##  tively. The last-mentioned category is the union of the first-mentioned
-##  two categories.
+##  The category of the residue class unions of Z, of Z^2, of a (semi-)
+##  localization Z_(pi) of Z or of a polynomial ring GF(q)[x] over a finite
+##  field, respectively. The last-mentioned category is the union of the
+##  first-mentioned and the third-mentioned one.
 ##
 DeclareCategory( "IsResidueClassUnionOfZ",
                  IsDomain and IsListOrCollection );
 DeclareSynonym( "IsUnionOfResidueClassesOfZ", IsResidueClassUnionOfZ );
+DeclareCategory( "IsResidueClassUnionOfZxZ",
+                 IsDomain and IsListOrCollection );
+DeclareSynonym( "IsUnionOfResidueClassesOfZxZ", IsResidueClassUnionOfZxZ );
 DeclareCategory( "IsResidueClassUnionOfZ_pi",
                  IsDomain and IsListOrCollection );
 DeclareSynonym( "IsUnionOfResidueClassesOfZ_pi", IsResidueClassUnionOfZ_pi );
@@ -93,6 +98,9 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 ##
 DeclareConstructor( "ResidueClassUnionCons",
                     [ IsResidueClassUnion, IsRing, IsRingElement,
+                      IsList, IsList, IsList ] );
+DeclareConstructor( "ResidueClassUnionCons",
+                    [ IsResidueClassUnion, IsRowModule, IsRowVector,
                       IsList, IsList, IsList ] );
 DeclareGlobalFunction( "ResidueClassUnion" );
 
@@ -194,7 +202,9 @@ DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
 ##  modulo <m> in the ring <R>.
 ##
 DeclareOperation( "AllResidues", [ IsRing, IsRingElement ] );
+DeclareOperation( "AllResidues", [ IsRowModule, IsMatrix ] );
 DeclareOperation( "NumberOfResidues", [ IsRing, IsRingElement ] );
+DeclareOperation( "NumberOfResidues", [ IsRowModule, IsMatrix ] );
 DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
