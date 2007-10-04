@@ -23,6 +23,8 @@ InstallTrueMethod( IsResidueClassUnionOfZorZ_pi,
 InstallTrueMethod( IsResidueClassUnionOfZorZ_pi,
                    IsResidueClassUnionOfZ_pi );
 InstallTrueMethod( IsResidueClassUnion,
+                   IsResidueClassUnionOfZxZ );
+InstallTrueMethod( IsResidueClassUnion,
                    IsResidueClassUnionOfGFqx );
 
 # Shorthand for commonly used filter.
@@ -74,6 +76,17 @@ InstallGlobalFunction( ZResidueClassUnionsFamily,
     MakeReadOnlyGlobal( "Z_RESIDUE_CLASS_UNIONS_FAMILIES" );
     return fam;
   end );
+
+#############################################################################
+##
+#V  ZxZResidueClassUnionsFamily . . family of all residue class unions of Z^2
+##
+BindGlobal( "ZxZResidueClassUnionsFamily",
+            NewFamily( "ResidueClassUnionsFamily( Integers^2 )",
+                       IsResidueClassUnionOfZxZ,
+                       CanEasilySortElements, CanEasilySortElements ) );
+SetUnderlyingLeftModule( ZxZResidueClassUnionsFamily, Integers^2 );
+SetElementsFamily( ZxZResidueClassUnionsFamily, ZxZResidueClassUnionsFamily );
 
 #############################################################################
 ##
@@ -159,6 +172,7 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
     if Length(arg) = 2 then fixedreps := arg[2]; else fixedreps := false; fi;
     if   IsIntegers( R )
     then return ZResidueClassUnionsFamily( fixedreps );
+    elif IsZxZ( R ) then return ZxZResidueClassUnionsFamily;
     elif IsZ_pi( R )
     then return Z_piResidueClassUnionsFamily( R, fixedreps );
     elif IsUnivariatePolynomialRing( R ) and IsFiniteFieldPolynomialRing( R )
@@ -167,6 +181,13 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
                " are not yet implemented.\n");
     fi;
   end );
+
+#############################################################################
+##
+#M  IsZxZ . . . . . . . . . . . . . . . . . . . . .  Z^2 = Z x Z = Integers^2
+##
+InstallMethod( IsZxZ, "general method (ResClasses)", true,
+               [ IsObject ], 0, R -> R = Integers^2 );
 
 #############################################################################
 ##

@@ -191,6 +191,12 @@ DeclareAttribute( "UnderlyingIndeterminate", IsFamily );
 
 #############################################################################
 ##
+#P  IsZxZ . . . . . . . . . . . . . . . . . . . . .  Z^2 = Z x Z = Integers^2
+##
+DeclareProperty( "IsZxZ", IsObject );
+
+#############################################################################
+##
 #O  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
 #F  AllResidueClassesModulo( [ <R>, ] <m> ) . . the residue classes (mod <m>)
 #O  NumberOfResidues( <R>, <m> ) . . . . . . the number of residues (mod <m>)
