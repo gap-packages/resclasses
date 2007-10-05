@@ -100,7 +100,7 @@ DeclareConstructor( "ResidueClassUnionCons",
                     [ IsResidueClassUnion, IsRing, IsRingElement,
                       IsList, IsList, IsList ] );
 DeclareConstructor( "ResidueClassUnionCons",
-                    [ IsResidueClassUnion, IsRowModule, IsRowVector,
+                    [ IsResidueClassUnion, IsRowModule, IsMatrix,
                       IsList, IsList, IsList ] );
 DeclareGlobalFunction( "ResidueClassUnion" );
 

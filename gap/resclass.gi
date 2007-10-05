@@ -288,12 +288,12 @@ InstallMethod( NumberOfResidues,
 #M  NumberOfResidues( Integers^2, <L> ) . . . . . . . .  for lattice in Z x Z
 ##
 InstallOtherMethod( NumberOfResidues,
-                    "for lattice in Z x Z (ResClasses)", true,
+                    "for lattice in Z x Z (ResClasses)", ReturnTrue,
                     [ IsRowModule, IsMatrix ], 0,
 
   function ( ZxZ, L )
     if not IsZxZ(ZxZ) or not IsSubset(ZxZ,L) then TryNextMethod(); fi;
-    return DeterminantMat(L);
+    return AbsInt(DeterminantMat(L));
   end );
 
 #############################################################################
@@ -309,7 +309,7 @@ InstallGlobalFunction( AllResidueClassesModulo,
     if   Length(arg) = 2
     then R := arg[1]; m := arg[2];
     else m := arg[1]; R := DefaultRing(m); fi;
-    if IsZero(m) or not m in R then return fail; fi;
+    if IsRing(R) and IsZero(m) or not m in R then return fail; fi;
     return List(AllResidues(R,m),r->ResidueClass(R,m,r));
   end );
 
@@ -318,14 +318,24 @@ InstallGlobalFunction( AllResidueClassesModulo,
 #M  SizeOfSmallestResidueClassRing( <R> ) . . . . .  for Z, Z_pi and GF(q)[x]
 ##
 InstallMethod( SizeOfSmallestResidueClassRing,
-               "for Z, Z_pi and GF(q)[x] (ResClasses)", ReturnTrue,
-               [ IsRing ], 0,
+               "for Z, Z_pi and GF(q)[x] (ResClasses)", true, [ IsRing ], 0,
 
   function ( R )
     if   IsIntegers(R) then return 2;
     elif IsZ_pi(R) then return Minimum(NoninvertiblePrimes(R));
     elif IsFiniteFieldPolynomialRing(R) then return Characteristic(R);
     else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  SizeOfSmallestResidueClassRing( Integers^2 ) . . . . . . . . . .  for Z^2
+##
+InstallOtherMethod( SizeOfSmallestResidueClassRing,
+                    "for Z^2 (ResClasses)", true, [ IsRowModule ], 0,
+
+  function ( ZxZ )
+    if IsZxZ(ZxZ) then return 2; else TryNextMethod(); fi;
   end );
 
 #############################################################################
@@ -409,6 +419,82 @@ InstallMethod( ResidueClassUnionCons,
     if IsOne( Result!.m ) and Result!.r = [ Zero( R ) ]
       and [ Result!.included, Result!.excluded ] = [ [ ], [ ] ]
     then return R; else return Result; fi;
+  end );
+
+#############################################################################
+##
+#M  ResidueClassUnionCons( <filter>, Integers^2,
+##                         <L>, <r>, <included>, <excluded> )
+##
+InstallMethod( ResidueClassUnionCons,
+               "residue list rep., for Z^2 (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnion, IsRowModule, IsMatrix,
+                             IsList, IsList, IsList ], 0,
+
+  function ( filter, ZxZ, L, r, included, excluded )
+
+    local  ReduceResidueClassUnion, result, both, rep, pos;
+
+    ReduceResidueClassUnion := function ( U ) # !!! To be written !!!
+
+      local  R, m, r, mRed, mRedBuf, rRed, rRedBuf, valid, fact, p;
+
+      R := UnderlyingRing(FamilyObj(U));
+      m := StandardAssociate(R,U!.m);  mRed := m;
+      r := List( U!.r, n -> n mod m ); rRed := r;
+      fact := Set(Factors(R,m));
+      for p in fact do
+        repeat
+          mRedBuf := mRed; rRedBuf := ShallowCopy(rRed);
+          mRed := mRed/p;
+          rRed := Set(List( rRedBuf, n -> n mod mRed ));
+          if   IsIntegers(R) or IsZ_pi(R)
+          then valid := Length(rRed) = Length(rRedBuf)/p;
+          else valid := Length(rRed) = Length(rRedBuf)/
+                      Size(CoefficientsRing(R))^DegreeOfLaurentPolynomial(p);
+          fi;
+        until not valid or not IsZero(mRed mod p) or IsOne(mRed);
+        if not valid then mRed := mRedBuf; rRed := rRedBuf; fi;
+      od;
+      U!.m := mRed; U!.r := Immutable(rRed);
+      U!.included := Immutable(Set(Filtered(U!.included,
+                                            n -> not (n mod mRed in rRed))));
+      U!.excluded := Immutable(Set(Filtered(U!.excluded,
+                                            n -> n mod mRed in rRed)));
+      if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
+    end;
+
+    if not IsZxZ( ZxZ ) or DimensionsMat( L ) <> [ 2, 2 ]
+      or not ForAll( Flat( L ), IsInt ) or RankMat( L ) < 2
+      or not IsSubset( ZxZ,r )
+      or not IsSubset( ZxZ, included ) or not IsSubset( ZxZ, excluded )
+    then TryNextMethod( ); fi;
+    L := HermiteNormalFormIntegerMat( L );
+    r := Set( List( r, v -> VectorModLattice( v, L ) ) );
+    both := Intersection( included, excluded );
+    included := Set( Difference( included, both ) );
+    excluded := Set( Difference( excluded, both ) );
+    if r = [] then return Difference(included,excluded); fi;
+    result := Objectify( NewType( ResidueClassUnionsFamily( ZxZ ),
+                                  IsResidueClassUnionOfZxZ and
+                                  IsResidueClassUnionResidueListRep ),
+                         rec( m := L, r := r,
+                              included := included, excluded := excluded ) );
+    SetSize( result, infinity ); SetIsFinite( result, false );
+    SetIsEmpty( result, false );
+    if included <> [ ] then rep := included[ 1 ]; else
+      rep := r[1]; pos := 1;
+      while rep in excluded do
+        pos := pos + 1;
+        rep := r[pos mod Length(r) + 1] + Int(pos/Length(r)) * L[1];
+      od;
+    fi;
+    SetRepresentative( result, rep );
+    ReduceResidueClassUnion( result );
+    if AbsInt( DeterminantMat( result!.m ) ) = 1
+      and result!.r = [ [ 0, 0 ] ]
+      and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
+    then return ZxZ; else return result; fi;
   end );
 
 #############################################################################
