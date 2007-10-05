@@ -215,4 +215,7 @@ Changes between version 2.5.2 and version 2.5.3:
  - The line length used in the examples has been reduced to 75 in order to
    improve their appearance in the online help with standard settings.
 
+Changes between version 2.5.3 and version 2.5.4:
+
+ - Now, ResClasses needs GAPDoc 1.1.
 

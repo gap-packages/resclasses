@@ -17,7 +17,7 @@ ness of computing resources permit this.
 
 The  ResClasses Package  needs at least  version 4.4.7 of GAP,  is completely
 written  in the  GAP language  and does neither contain  nor require external
-binaries.  GAPDoc version 1.0  or higher is needed for displaying  the online
+binaries.  GAPDoc version 1.1  or higher is needed for displaying  the online
 help.
 
 
