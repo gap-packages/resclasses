@@ -250,6 +250,20 @@ InstallMethod( AllResidues,
 
 #############################################################################
 ##
+#M  AllResidues( Integers^2, <L> ) . . . . . . . . . . . for lattice in Z x Z
+##
+InstallOtherMethod( AllResidues,
+                    "for lattice in Z x Z (ResClasses)", true,
+                    [ IsRowModule, IsMatrix ], 0,
+
+  function ( ZxZ, L )
+    if not IsZxZ(ZxZ) or not IsSubset(ZxZ,L) then TryNextMethod(); fi;
+    L := HermiteNormalFormIntegerMat(L);
+    return Cartesian([0..L[1][1]-1],[0..L[2][2]-1]);
+  end );
+
+#############################################################################
+##
 #M  NumberOfResidues( <R>, <m> ) . . . . . . . . . . for Z, Z_pi and GF(q)[x]
 ##
 InstallMethod( NumberOfResidues,
@@ -267,6 +281,19 @@ InstallMethod( NumberOfResidues,
       return q^d;
     fi;
     TryNextMethod();
+  end );
+
+#############################################################################
+##
+#M  NumberOfResidues( Integers^2, <L> ) . . . . . . . .  for lattice in Z x Z
+##
+InstallOtherMethod( NumberOfResidues,
+                    "for lattice in Z x Z (ResClasses)", true,
+                    [ IsRowModule, IsMatrix ], 0,
+
+  function ( ZxZ, L )
+    if not IsZxZ(ZxZ) or not IsSubset(ZxZ,L) then TryNextMethod(); fi;
+    return DeterminantMat(L);
   end );
 
 #############################################################################
