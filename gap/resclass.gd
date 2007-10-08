@@ -60,13 +60,20 @@ DeclareSynonym( "IsUnionOfResidueClassesOfZorZ_pi",
 ##
 #R  IsResidueClassUnionResidueListRep . .  representation by list of residues
 ##
-##  The representation of unions of residue classes of the integers,
-##  of semilocalizations Z_(pi) of the integers and of univariate
-##  polynomial rings GF(q)[x] over finite fields, by list of residues.
+##  The representation of unions of residue classes of the ring Z of the
+##  integers, of Z^2, of semilocalizations Z_(pi) of the integers and of
+##  univariate polynomial rings GF(q)[x] over finite fields, by list of
+##  residues.
 ## 
 ##  The component <m> stores the modulus, <r> is the list of class
-##  representatives and <included> resp. <excluded> are lists of single
-##  elements added to resp. subtracted from the union of classes.
+##  representatives and <included> respectively <excluded> are lists of
+##  single elements added to respectively subtracted from the union of
+##  residue classes.
+##
+##  If the underlying ring is Z^2, the modulus <m> is a lattice, which is
+##  stored as an invertible 2x2 integer matrix in Hermite normal form whose
+##  rows are the spanning vectors, and <r>, <included> and <excluded> are
+##  lists of elements of Z^2, i.e. lists of pairs of integers.
 ##
 ##  The representation is unique, i.e. two residue class unions are equal
 ##  if and only if their stored representations are equal.
@@ -86,11 +93,13 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #O  ResidueClassUnionCons( <filter>, <R>, <m>, <r>, <included>, <excluded> )
-#F  ResidueClassUnion( <R>, <m>, <r> ) . . . . . . . union of residue classes
+#F  ResidueClassUnion( <R>, <m>, <r> )
 #F  ResidueClassUnion( <R>, <m>, <r>, <included>, <excluded> )
+#F  ResidueClassUnionNC( <R>, <m>, <r> )
+#F  ResidueClassUnionNC( <R>, <m>, <r>, <included>, <excluded> )
 ##
 ##  The constructor for *residue class unions*,
-##  i.e. unions of residue classes +/- finite sets of elements.
+##  i.e. set-theoretic unions of residue classes +/- finite sets of elements.
 ##
 ##  Returns the union of the residue classes <r>[i] ( mod <m> ) of
 ##  the ring <R>, plus a finite set <included> and minus a finite set
@@ -103,23 +112,30 @@ DeclareConstructor( "ResidueClassUnionCons",
                     [ IsResidueClassUnion, IsRowModule, IsMatrix,
                       IsList, IsList, IsList ] );
 DeclareGlobalFunction( "ResidueClassUnion" );
+DeclareGlobalFunction( "ResidueClassUnionNC" );
 
 #############################################################################
 ##
 #F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  residue class of <R>
 #F  ResidueClass( <m>, <r> )  . . . . . . . . . residue class of the integers
 #F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . .  ( dito )
+#F  ResidueClassNC( <R>, <m>, <r> ) . . . . . . . . . .  residue class of <R>
+#F  ResidueClassNC( <m>, <r> )  . . . . . . . . residue class of the integers
+#F  ResidueClassNC( <r>, <m> )  . . . . . . . . . . . . . . . . . .  ( dito )
 #P  IsResidueClass( <obj> ) . . . . . . . . . . <obj> is single residue class
 ##
 ##  Returns the residue class <r> ( mod <m> ) of the ring <R>, respectively
-##  the residue class <r> ( mod <m> ) of the integers.
+##  the residue class <r> ( mod <m> ) of the default ring of <m> and <r>.
 ##
-##  In the two-argument case, <r> and <m> must be nonnegative, and <r> must
-##  lie in the range [0..<m>-1].
+##  In the two-argument case, if <r> and <m> are integers, they must be
+##  nonnegative, and <r> must lie in the range [0..<m>-1]. This is used to
+##  decide which argument is <m> and which is <r>. For other rings, similar
+##  criteria are used.
 ##
 ##  Residue classes have the property `IsResidueClass'.
 ##
 DeclareGlobalFunction( "ResidueClass" );
+DeclareGlobalFunction( "ResidueClassNC" );
 DeclareProperty( "IsResidueClass", IsObject );
 
 #############################################################################
@@ -218,6 +234,15 @@ DeclareGlobalFunction( "AllResidueClassesModulo" );
 #A  SizeOfSmallestResidueClassRing( <R> )
 ##
 DeclareAttribute( "SizeOfSmallestResidueClassRing", IsRing );
+
+#############################################################################
+##
+#F  RingToString( <R> ) . . . how the ring <R> is printed by `View'/`Display'
+##
+##  The return value of this function determines the way the ring <R> is
+##  printed by the methods for `View'/`Display' for residue class unions.
+##
+DeclareGlobalFunction( "RingToString" );
 
 #############################################################################
 ##

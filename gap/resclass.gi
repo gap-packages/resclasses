@@ -250,10 +250,10 @@ InstallMethod( AllResidues,
 
 #############################################################################
 ##
-#M  AllResidues( Integers^2, <L> ) . . . . . . . . . . . for lattice in Z x Z
+#M  AllResidues( Integers^2, <L> ) . . . . . . . . . . . . for lattice in Z^2
 ##
 InstallOtherMethod( AllResidues,
-                    "for lattice in Z x Z (ResClasses)", true,
+                    "for lattice in Z^2 (ResClasses)", true,
                     [ IsRowModule, IsMatrix ], 0,
 
   function ( ZxZ, L )
@@ -285,10 +285,10 @@ InstallMethod( NumberOfResidues,
 
 #############################################################################
 ##
-#M  NumberOfResidues( Integers^2, <L> ) . . . . . . . .  for lattice in Z x Z
+#M  NumberOfResidues( Integers^2, <L> ) . . . . . . . . .  for lattice in Z^2
 ##
 InstallOtherMethod( NumberOfResidues,
-                    "for lattice in Z x Z (ResClasses)", ReturnTrue,
+                    "for lattice in Z^2 (ResClasses)", ReturnTrue,
                     [ IsRowModule, IsMatrix ], 0,
 
   function ( ZxZ, L )
@@ -337,6 +337,14 @@ InstallOtherMethod( SizeOfSmallestResidueClassRing,
   function ( ZxZ )
     if IsZxZ(ZxZ) then return 2; else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  \mod . . . . . . . . . . . . . . . . . . . . . . . for vector and lattice
+##
+InstallMethod( \mod, "for vector and lattice (ResClasses)", ReturnTrue,
+               [ IsRowVector, IsMatrix ], 0,
+               function ( v, L ) return VectorModLattice( v, L ); end );
 
 #############################################################################
 ##
@@ -391,7 +399,7 @@ InstallMethod( ResidueClassUnionCons,
                   and IsUnivariatePolynomialRing( R ) ) )
     then TryNextMethod( ); fi;
     m := StandardAssociate( R, m );
-    r := Set( List( r, n -> n mod m ) );
+    r := Set( r, n -> n mod m );
     both := Intersection( included, excluded );
     included := Set( Difference( included, both ) );
     excluded := Set( Difference( excluded, both ) );
@@ -435,42 +443,37 @@ InstallMethod( ResidueClassUnionCons,
 
     local  ReduceResidueClassUnion, result, both, rep, pos;
 
-    ReduceResidueClassUnion := function ( U ) # !!! To be written !!!
+    ReduceResidueClassUnion := function ( U )
 
-      local  R, m, r, mRed, mRedBuf, rRed, rRedBuf, valid, fact, p;
+      local  L, r, LRed, LRedBuf, rRed, rRedBuf, valid, factx, facty, p, q;
 
-      R := UnderlyingRing(FamilyObj(U));
-      m := StandardAssociate(R,U!.m);  mRed := m;
-      r := List( U!.r, n -> n mod m ); rRed := r;
-      fact := Set(Factors(R,m));
-      for p in fact do
-        repeat
-          mRedBuf := mRed; rRedBuf := ShallowCopy(rRed);
-          mRed := mRed/p;
-          rRed := Set(List( rRedBuf, n -> n mod mRed ));
-          if   IsIntegers(R) or IsZ_pi(R)
-          then valid := Length(rRed) = Length(rRedBuf)/p;
-          else valid := Length(rRed) = Length(rRedBuf)/
-                      Size(CoefficientsRing(R))^DegreeOfLaurentPolynomial(p);
-          fi;
-        until not valid or not IsZero(mRed mod p) or IsOne(mRed);
-        if not valid then mRed := mRedBuf; rRed := rRedBuf; fi;
+      L := HermiteNormalFormIntegerMat(U!.m);  LRed := L;
+      r := List(U!.r,v->v mod L); rRed := r;
+      factx := Set(Factors(L[2][2]));
+      facty := Set(Factors(Gcd(L[1])));
+      for p in factx do
+        for q in facty do
+          repeat
+            LRedBuf := LRed; rRedBuf := ShallowCopy(rRed);
+            LRed := [LRed[1]/q,LRed[2]/p];
+            rRed := Set(List(rRedBuf,v->v mod LRed));
+            valid := Length(rRed) = Length(rRedBuf)/(p*q);
+          until not valid or not IsZero([LRed[1] mod q, LRed[2] mod p])
+                or IsOne(LRed);
+          if not valid then LRed := LRedBuf; rRed := rRedBuf; fi;
+        od;
       od;
-      U!.m := mRed; U!.r := Immutable(rRed);
+      U!.m := LRed; U!.r := Immutable(rRed);
       U!.included := Immutable(Set(Filtered(U!.included,
-                                            n -> not (n mod mRed in rRed))));
+                                            v->not v mod LRed in rRed)));
       U!.excluded := Immutable(Set(Filtered(U!.excluded,
-                                            n -> n mod mRed in rRed)));
+                                            v->v mod LRed in rRed)));
       if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
     end;
 
-    if not IsZxZ( ZxZ ) or DimensionsMat( L ) <> [ 2, 2 ]
-      or not ForAll( Flat( L ), IsInt ) or RankMat( L ) < 2
-      or not IsSubset( ZxZ,r )
-      or not IsSubset( ZxZ, included ) or not IsSubset( ZxZ, excluded )
-    then TryNextMethod( ); fi;
+    if not IsZxZ( ZxZ ) then TryNextMethod( ); fi;
     L := HermiteNormalFormIntegerMat( L );
-    r := Set( List( r, v -> VectorModLattice( v, L ) ) );
+    r := Set( r, v -> v mod L );
     both := Intersection( included, excluded );
     included := Set( Difference( included, both ) );
     excluded := Set( Difference( excluded, both ) );
@@ -506,15 +509,31 @@ InstallGlobalFunction( ResidueClassUnion,
 
   function ( arg )
 
-    local  Result, R, m, r, included, excluded;
-
-    if not ( Length(arg) in [3,5] and IsRing(arg[1]) and arg[2] in arg[1]
+    if not (     Length(arg) in [3,5]
+             and (    IsRing(arg[1]) and arg[2] in arg[1]
+                   or     IsRowModule(arg[1]) and IsMatrix(arg[2])
+                      and IsSubset(arg[1],arg[2])
+                      and not IsZero(DeterminantMat(arg[2])) )
              and IsList(arg[3]) and IsSubset(arg[1],arg[3])
-             and (Length(arg) = 3 or (IsList(arg[4]) and IsList(arg[5])
-                  and IsSubset(arg[1],arg[4]) and IsSubset(arg[1],arg[5]))) )
+             and (    Length(arg) = 3 or IsList(arg[4]) and IsList(arg[5])
+                  and IsSubset(arg[1],arg[4]) and IsSubset(arg[1],arg[5])) )
     then Error("usage: ResidueClassUnion( <R>, <m>, <r> [, <included>",
                ", <excluded>] ),\nfor details see manual.\n"); return fail;
     fi;
+    return CallFuncList( ResidueClassUnionNC, arg );
+  end );
+
+#############################################################################
+##
+#F  ResidueClassUnionNC( <R>, <m>, <r> ) . . . . . . union of residue classes
+#F  ResidueClassUnionNC( <R>, <m>, <r>, <included>, <excluded> )
+##
+InstallGlobalFunction( ResidueClassUnionNC,
+
+  function ( arg )
+
+    local  R, m, r, included, excluded;
+
     R := arg[1]; m := arg[2]; r := Set(arg[3]);
     if   Length(arg) = 5
     then included := Set(arg[4]); excluded := Set(arg[5]);
@@ -526,32 +545,77 @@ InstallGlobalFunction( ResidueClassUnion,
 #############################################################################
 ##
 #F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  residue class of <R>
-#F  ResidueClass( <m>, <r> )  . . . . . . . . . residue class of the integers
+#F  ResidueClass( <m>, <r> )  . residue class of the default ring of <m>, <r>
 #F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . .  ( dito )
 ##
 InstallGlobalFunction( ResidueClass,
 
   function ( arg )
 
-    local  R, m, r, cl;
+    local  R, m, r, d, cl, usage;
+
+    usage := "usage: see ?ResidueClass\n";
+    if   Length( arg ) = 3 then
+      R := arg[1]; m := arg[2]; r := arg[3];
+      if   not (    IsRing(R) and m in R and r in R and not IsZero(m)
+                 or IsRowModule(R) and IsMatrix(m) and IsSubset(R,m)
+                    and not IsZero(DeterminantMat(m)) )
+      then Error( usage ); return fail; fi;
+    elif Length( arg ) = 2 then
+      if ForAll( arg, IsRingElement ) then
+        R := DefaultRing( arg ); 
+        m := Maximum( arg ); r := Minimum( arg );
+        if IsZero( m ) then Error( usage ); return fail; fi;
+      else
+        if IsMatrix( arg[1] ) then m := arg[1]; r := arg[2];
+                              else m := arg[2]; r := arg[1]; fi;
+        if   not ( IsMatrix(m) and IsVector(r) )
+        then Error( usage ); return fail; fi;
+        d := Length(r);
+        R := DefaultRing(r)^d;
+        if not (     DimensionsMat(m) = [d,d] and IsSubset(R,m)
+                 and RankMat(m) = d and r in R )
+        then Error( usage ); return fail; fi;
+      fi;
+    elif Length( arg ) = 1 then
+      if   IsList( arg[1] )
+      then return CallFuncList( ResidueClass, arg[1] );
+      else Error( usage ); return fail; fi;
+    else
+      Error( usage ); return fail;
+    fi;
+    cl := ResidueClassUnionNC( R, m, [ r ] );
+    SetIsResidueClass( cl, true );
+    return cl;
+  end );
+
+#############################################################################
+##
+#F  ResidueClassNC( <R>, <m>, <r> ) . . . . . . . . . .  residue class of <R>
+#F  ResidueClassNC( <m>, <r> )  residue class of the default ring of <m>, <r>
+#F  ResidueClassNC( <r>, <m> )  . . . . . . . . . . . . . . . . . .  ( dito )
+##
+InstallGlobalFunction( ResidueClassNC,
+
+  function ( arg )
+
+    local  R, m, r, d, cl;
 
     if   Length( arg ) = 3 then
       R := arg[1]; m := arg[2]; r := arg[3];
-      if   not ( IsRing(R) and m in R and r in R and not IsZero(m) )
-      then Error( "usage: see ?ResidueClass\n" ); fi;
     elif Length( arg ) = 2 then
-      R := DefaultRing( arg ); 
-      m := Maximum( arg ); r := Minimum( arg );
-      if   IsZero( m )
-      then Error( "usage: see ?ResidueClass\n" ); fi;
-    elif Length(arg) = 1 then
-      if   IsList( arg[1] )
-      then return CallFuncList( ResidueClass, arg[1] );
-      else Error( "usage: see ?ResidueClass\n" ); fi;
-    else
-      Error( "usage: see ?ResidueClass\n" );
-    fi;
-    cl := ResidueClassUnion( R, m, [ r ] );
+      if ForAll(arg,IsRingElement) then
+        R := DefaultRing( arg ); 
+        m := Maximum( arg ); r := Minimum( arg );
+      else
+        if IsMatrix(arg[1]) then m := arg[1]; r := arg[2];
+                            else m := arg[2]; r := arg[1]; fi;
+        d := Length(r);
+        R := DefaultRing(r)^d;
+      fi;
+    elif Length( arg ) = 1 then return CallFuncList(ResidueClassNC,arg[1]);
+    else return fail; fi;
+    cl := ResidueClassUnionNC( R, m, [ r ] );
     SetIsResidueClass( cl, true );
     return cl;
   end );
@@ -642,11 +706,12 @@ InstallOtherMethod( Modulus,
 
 #############################################################################
 ##
-#M  Modulus( <R> ) . . . . . . . . . . . . . . . . . . . .  for the base ring
+#M  Modulus( <R> ) . . . . . . . . . . . . . . .  for the base ring / -module
 ##
-InstallOtherMethod( Modulus,
-                    "for the base ring (ResClasses)", true,
-                    [ IsRing ], 0, R -> One( R ) );
+InstallOtherMethod( Modulus, "for the base ring (ResClasses)", true,
+                    [ IsRing ], 0, One );
+InstallOtherMethod( Modulus, "for the base module (ResClasses)", true,
+                    [ IsRowModule ], 0, R -> AsList( Basis( R ) ) );
 
 
 #############################################################################
@@ -659,11 +724,12 @@ InstallMethod( Residue,
 
 #############################################################################
 ##
-#M  Residue( <R> ) . . . . . . . . . . . . . . . . . . . .  for the base ring
+#M  Residue( <R> ) . . . . . . . . . . . . . . .  for the base ring / -module
 ##
-InstallOtherMethod( Residue,
-                    "for the base ring (ResClasses)", true,
-                    [ IsRing ], 0, R -> Zero( R ) );
+InstallOtherMethod( Residue, "for the base ring (ResClasses)", true,
+                    [ IsRing ], 0, Zero );
+InstallOtherMethod( Residue, "for the base module (ResClasses)", true,
+                    [ IsRowModule ], 0, Zero );
 
 #############################################################################
 ##
@@ -675,11 +741,12 @@ InstallMethod( Residues,
 
 #############################################################################
 ##
-#M  Residues( <R> ) . . . . . . . . . . . . . . . . . . . . for the base ring
+#M  Residues( <R> ) . . . . . . . . . . . . . . . for the base ring / -module
 ##
-InstallOtherMethod( Residues,
-                    "for the base ring (ResClasses)", true,
+InstallOtherMethod( Residues, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> [ Zero( R ) ] );
+InstallOtherMethod( Residues, "for the base module (ResClasses)", true,
+                    [ IsRowModule ], 0, R -> [ Zero( R ) ] );
 
 #############################################################################
 ##
@@ -695,15 +762,17 @@ InstallOtherMethod( Residues,
 ##
 InstallMethod( IncludedElements,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.included );
+               [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> U!.included );
 
 #############################################################################
 ##
-#M  IncludedElements( <R> ) . . . . . . . . . . . . . . . . for the base ring
+#M  IncludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
 ##
-InstallOtherMethod( IncludedElements,
-                    "for the base ring (ResClasses)", true, [ IsRing ], 0,
-                    R -> [ ] );
+InstallOtherMethod( IncludedElements, "for the base ring (ResClasses)",
+                    true, [ IsRing ], 0, R -> [ ] );
+InstallOtherMethod( IncludedElements, "for the base module (ResClasses)",
+                    true, [ IsRowModule ], 0, R -> [ ] );
 
 #############################################################################
 ##
@@ -719,15 +788,17 @@ InstallOtherMethod( IncludedElements,
 ##
 InstallMethod( ExcludedElements,
                "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.excluded );
+               [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> U!.excluded );
 
 #############################################################################
 ##
-#M  ExcludedElements( <R> ) . . . . . . . . . . . . . . . . for the base ring
+#M  ExcludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
 ##
-InstallOtherMethod( ExcludedElements,
-                    "for the base ring (ResClasses)", true, [ IsRing ], 0,
-                    R -> [ ] );
+InstallOtherMethod( ExcludedElements, "for the base ring (ResClasses)",
+                    true, [ IsRing ], 0, R -> [ ] );
+InstallOtherMethod( ExcludedElements, "for the base module (ResClasses)",
+                    true, [ IsRowModule ], 0, R -> [ ] );
 
 #############################################################################
 ##
@@ -759,15 +830,20 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \=( <R>, <l> ) . . . . . . . . . . . .  for a ring and a list of elements
-#M  \=( <l>, <R> ) . . . . . . . . . . . .  for a list of elements and a ring
+#M  \=( <D>, <l> ) . . . . . .  for an infinite domain and a list of elements
+#M  \=( <l>, <D> ) . . . . . .  for a list of elements and an infinite domain
 ##
 InstallMethod( \=,
-               "for a ring and a list of elements (ResClasses)", 
-               IsIdenticalObj, [ IsRing, IsList ], 0, ReturnFalse );
+               "for an infinite domain and a list of elements (ResClasses)", 
+               IsIdenticalObj, [ IsDomain, IsList and IsFinite ], 0,
+               function ( D, l )
+                 if   not IsFinite( D ) then return false;
+                 else TryNextMethod(  ); fi;
+               end );
 InstallMethod( \=,
-               "for a list of elements and a ring (ResClasses)", 
-               IsIdenticalObj, [ IsList, IsRing ], 0, ReturnFalse );
+               "for a list of elements and an infinite domain (ResClasses)", 
+               IsIdenticalObj, [ IsList and IsFinite, IsDomain ], 0,
+               function ( l, D ) return D = l; end );
 
 #############################################################################
 ##
@@ -790,30 +866,34 @@ InstallMethod( \<,
 
 #############################################################################
 ##
-#M  \<( <U>, <R> ) . . . . . . . . . . . for a residue class union and a ring
-#M  \<( <R>, <U> ) . . . . . . . . . . . for a ring and a residue class union
-#M  \<( <l>, <R> ) . . . . . . . . . for a finite list of elements and a ring
-#M  \<( <R>, <l> ) . . . . . . . . . for a ring and a finite list of elements
+#M  \<( <U>, <R> ) . . . . . .  for a residue class union and a ring / module
+#M  \<( <R>, <U> ) . . . . . .  for a ring / module and a residue class union
+#M  \<( <l>, <R> ) . . . .  for a finite list of elements and a ring / module
+#M  \<( <R>, <l> ) . . . .  for a ring / module and a finite list of elements
 #M  \<( <l>, <U> ) .  for a finite list of elements and a residue class union
 #M  \<( <U>, <l> ) .  for a residue class union and a finite list of elements
 ##
-InstallMethod( \<,
-               "for a residue class union and a ring (ResClasses)",
+InstallMethod( \<, "for a residue class union and a ring (ResClasses)",
                ReturnTrue, [ IsResidueClassUnion, IsRing ], 0, ReturnFalse );
-InstallMethod( \<,
-               "for a ring and a residue class union (ResClasses)",
+InstallMethod( \<, "for a residue class union and a module (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnion, IsRowModule ], 0,
+               ReturnFalse );
+InstallMethod( \<, "for a ring and a residue class union (ResClasses)",
                ReturnTrue, [ IsRing, IsResidueClassUnion ], 0, ReturnTrue );
-InstallMethod( \<,
-               "for a list of elements and a ring (ResClasses)",
+InstallMethod( \<, "for a module and a residue class union (ResClasses)",
+               ReturnTrue, [ IsRowModule, IsResidueClassUnion ], 0,
+               ReturnTrue );
+InstallMethod( \<, "for a list of elements and a ring (ResClasses)",
                IsIdenticalObj, [ IsList, IsRing ], 0, ReturnFalse );
-InstallMethod( \<,
-               "for a ring and a list of elements (ResClasses)",
+InstallMethod( \<, "for a list of elements and a module (ResClasses)",
+               IsIdenticalObj, [ IsList, IsRowModule ], 0, ReturnFalse );
+InstallMethod( \<, "for a ring and a list of elements (ResClasses)",
                IsIdenticalObj, [ IsRing, IsList ], 0, ReturnTrue );
-InstallMethod( \<,
-               "for an element list and a residue class union (ResClasses)",
+InstallMethod( \<, "for a module and a list of elements (ResClasses)",
+               IsIdenticalObj, [ IsRowModule, IsList ], 0, ReturnTrue );
+InstallMethod( \<, "for a list and a residue class union (ResClasses)",
                ReturnTrue, [ IsList, IsResidueClassUnion ], 0, ReturnFalse );
-InstallMethod( \<,
-               "for a residue class union and an element list (ResClasses)",
+InstallMethod( \<, "for a residue class union and a list (ResClasses)",
                ReturnTrue, [ IsResidueClassUnion, IsList ], 0, ReturnTrue );
 
 #############################################################################
@@ -829,7 +909,7 @@ InstallMethod( \<,
 InstallMethod( \in,
                "for a ring element and a residue class union (ResClasses)",
                ReturnTrue,
-               [ IsRingElement, IsResidueClassUnionInResidueListRep ], 0,
+               [ IsObject, IsResidueClassUnionInResidueListRep ], 0,
 
   function ( n, U )
     if not n in UnderlyingRing(FamilyObj(U)) then return false; fi;
@@ -867,11 +947,12 @@ InstallOtherMethod( Density,
 
 #############################################################################
 ##
-#M  Density( <R> ) . . . . . . . . . . . . . . . . .  for the whole base ring
+#M  Density( <R> ) . . . . . . . . . . . .  for the whole base ring / -module
 ##
-InstallOtherMethod( Density,
-                    "for the whole base ring (ResClasses)", true,
+InstallOtherMethod( Density, "for the whole base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> 1 );
+InstallOtherMethod( Density, "for the whole base module (ResClasses)", true,
+                    [ IsRowModule ], 0, R -> 1 );
 
 #############################################################################
 ##
@@ -882,8 +963,7 @@ InstallMethod( Density,
                [ IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U )
-    return Length(U!.r)/
-           Length(AllResidues(UnderlyingRing(FamilyObj(U)),U!.m));
+    return Length(U!.r)/NumberOfResidues(UnderlyingRing(FamilyObj(U)),U!.m);
   end );
 
 #############################################################################
@@ -914,7 +994,7 @@ InstallMethod( IsSubset,
     R := UnderlyingRing(FamilyObj(U1));
     m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
     r1 := U1!.r; r2 := U2!.r;
-    if not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
+    if   not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
     then return false; fi;
     allres  := AllResidues(R,m);
     allres1 := Filtered(allres,n->n mod m1 in r1);
@@ -1988,6 +2068,17 @@ InstallMethod( ViewObj,
 #S  Viewing, printing and displaying residue class unions. //////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  RingToString( <R> ) . . . how the ring <R> is printed by `View'/`Display'
+##
+InstallGlobalFunction( RingToString,
+  function ( R )
+    if   IsIntegers(R) then return "Z";
+    elif IsZxZ(R)      then return "Z^2";
+                       else return ViewString(R); fi;
+  end );
 
 #############################################################################
 ##

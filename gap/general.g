@@ -131,59 +131,39 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#F  RingToString( <R> ) . . . how the ring <R> is printed by `View'/`Display'
-##
-##  The return value of this function determines the way the ring <R> is
-##  printed by the methods for `View'/`Display' for residue class unions.
-##
-BindGlobal( "RingToString",
-  function ( R )
-    if IsIntegers(R) then return "Z"; else return ViewString(R); fi;
-  end );
-
-#############################################################################
-##
 #M  Intersection2( <C1>, <C2> ) . . . . . . . . . . . . .  GAP Library bugfix
 ##
 InstallMethod( Intersection2,
-    "for two collections in the same family, the second being a list",
-    IsIdenticalObj,
-    [ IsCollection, IsCollection and IsList ], 1,
-    function ( C1, C2 )
-    local   I, elm;
+               "for two coll's in the same family, the second being a list",
+               IsIdenticalObj, [ IsCollection, IsCollection and IsList ], 1,
+
+  function ( C1, C2 )
+
+    local  I, elm;
+
     if ( HasIsFinite( C1 ) or CanComputeSize( C1 ) ) and IsFinite( C1 ) then
-        I := ShallowCopy( AsSSortedList( C1 ) );
-        IntersectSet( I, C2 );
+      I := ShallowCopy( AsSSortedList( C1 ) ); IntersectSet( I, C2 );
     else
-        I := [];
-        for elm in C2 do
-            if elm in C1 then
-                AddSet( I, elm );
-            fi;
-        od;
+      I := []; for elm in C2 do if elm in C1 then AddSet( I, elm ); fi; od;
     fi;
     return I;
-    end );
+  end );
 
 InstallMethod( Intersection2,
-    "for two collections in the same family, the first being a list",
-    IsIdenticalObj,
-    [ IsCollection and IsList, IsCollection ], 1,
-    function ( C1, C2 )
-    local   I, elm;
+               "for two coll's in the same family, the first being a list",
+               IsIdenticalObj, [ IsCollection and IsList, IsCollection ], 1,
+
+  function ( C1, C2 )
+
+    local  I, elm;
+
     if ( HasIsFinite( C2 ) or CanComputeSize( C2 ) ) and IsFinite( C2 ) then
-        I := ShallowCopy( AsSSortedList( C2 ) );
-        IntersectSet( I, C1 );
+      I := ShallowCopy( AsSSortedList( C2 ) ); IntersectSet( I, C1 );
     else
-        I := [];
-        for elm in C1 do
-            if elm in C2 then
-                AddSet( I, elm );
-            fi;
-        od;
+      I := []; for elm in C1 do if elm in C2 then AddSet( I, elm ); fi; od;
     fi;
     return I;
-    end );
+  end );
 
 #############################################################################
 ##
