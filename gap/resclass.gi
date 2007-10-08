@@ -81,11 +81,16 @@ InstallGlobalFunction( ZResidueClassUnionsFamily,
 ##
 #V  ZxZResidueClassUnionsFamily . . family of all residue class unions of Z^2
 ##
+##  GAP does not view Z^2 as a ring, but rather as a row module.
+##  Anyway it is viewed as the underlying ring of the family, since it
+##  mathematically is a ring and since this avoids a case distinction
+##  in many places in the code.
+##
 BindGlobal( "ZxZResidueClassUnionsFamily",
             NewFamily( "ResidueClassUnionsFamily( Integers^2 )",
                        IsResidueClassUnionOfZxZ,
                        CanEasilySortElements, CanEasilySortElements ) );
-SetUnderlyingLeftModule( ZxZResidueClassUnionsFamily, Integers^2 );
+SetUnderlyingRing( ZxZResidueClassUnionsFamily, Integers^2 );
 SetElementsFamily( ZxZResidueClassUnionsFamily, ZxZResidueClassUnionsFamily );
 
 #############################################################################
@@ -992,10 +997,12 @@ InstallMethod( IsSubset,
     local  R, m1, m2, m, r1, r2, r, allres1, allres2, allres;
 
     R := UnderlyingRing(FamilyObj(U1));
-    m1 := U1!.m; m2 := U2!.m; m := Lcm(R,m1,m2);
+    m1 := U1!.m; m2 := U2!.m;
     r1 := U1!.r; r2 := U2!.r;
     if   not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
     then return false; fi;
+    if   IsRing(R)      then m := Lcm(R,m1,m2);
+    elif IsRowModule(R) then m := LatticeIntersection(m1,m2); fi;
     allres  := AllResidues(R,m);
     allres1 := Filtered(allres,n->n mod m1 in r1);
     allres2 := Filtered(allres,n->n mod m2 in r2);
@@ -1008,7 +1015,7 @@ InstallMethod( IsSubset,
 ##
 InstallMethod( IsSubset,
                "for the base ring and a residue class union (ResClasses)",
-               ReturnTrue, [ IsRing, IsResidueClassUnion ], 0,
+               ReturnTrue, [ IsDomain, IsResidueClassUnion ], 0,
 
   function ( R, U )
     if   R = UnderlyingRing(FamilyObj(U))
