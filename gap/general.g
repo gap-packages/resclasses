@@ -167,6 +167,19 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  IsRowModule .  return `false' for objects which are not free left modules 
+##
+InstallOtherMethod( IsRowModule,
+                    Concatenation("return `false' for objects which are ",
+                                  "not free left modules (ResClasses)"),
+                    true, [ IsObject ], 0,
+
+  function ( obj )
+    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #V  One-character global variables
 ##
 ##  For the convenience of the reader, the manual uses one-character global
