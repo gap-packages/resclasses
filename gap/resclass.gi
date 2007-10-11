@@ -189,10 +189,35 @@ InstallGlobalFunction( ResidueClassUnionsFamily,
 
 #############################################################################
 ##
-#M  IsZxZ . . . . . . . . . . . . . . . . . . . . .  Z^2 = Z x Z = Integers^2
+#M  IsZxZ( <R> ) . . . . . . . . . . . . . . . . . . Z^2 = Z x Z = Integers^2
 ##
 InstallMethod( IsZxZ, "general method (ResClasses)", true,
                [ IsObject ], 0, R -> R = Integers^2 );
+
+#############################################################################
+##
+#M  One( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . .  for Z^2
+#M  One( <v> ) . . . . . . . . . . . . . . . . . . . . . . for vectors in Z^2
+#M  IsOne( <v> ) . . . . . . . . . . . . . . . . . . . . . for vectors in Z^2
+##
+InstallOtherMethod( One, "for Z^2 (ResClasses)", true, [ IsRowModule ], 0,
+  function ( R )
+    if IsZxZ(R) then return [1,1]; else TryNextMethod(); fi;
+  end );
+
+InstallOtherMethod( One, "for [1,1] in Z^2 (ResClasses)",
+                    true, [ IsRowVector ], 0,
+  function ( v )
+    if   Length(v) = 2 and ForAll(v,IsInt)
+    then return [1,1]; else TryNextMethod(); fi;
+  end );
+
+InstallOtherMethod( IsOne, "for [1,1] in Z^2 (ResClasses)",
+                    true, [ IsRowVector ], 0,
+  function ( v )
+    if   Length(v) = 2 and ForAll(v,IsInt)
+    then return v = [1,1]; else TryNextMethod(); fi;
+  end );
 
 #############################################################################
 ##
@@ -499,9 +524,9 @@ InstallMethod( ResidueClassUnionCons,
 ##                         <L>, <r>, <included>, <excluded> )
 ##
 InstallMethod( ResidueClassUnionCons,
-               "residue list rep., for Z^2 (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnion, IsRowModule, IsMatrix,
-                             IsList, IsList, IsList ], 0,
+               "residue list representation, for Z^2 (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnion, IsRowModule,
+                             IsMatrix, IsList, IsList, IsList ], 0,
 
   function ( filter, ZxZ, L, r, included, excluded )
 
@@ -562,6 +587,21 @@ InstallMethod( ResidueClassUnionCons,
       and result!.r = [ [ 0, 0 ] ]
       and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
     then return ZxZ; else return result; fi;
+  end );
+
+#############################################################################
+##
+#M  ResidueClassUnionCons( <filter>, Integers^2,      ("modulus L as vector")
+##                         <L>, <r>, <included>, <excluded> )
+##
+InstallOtherMethod( ResidueClassUnionCons,
+                    "residue list rep, mod. as vector, for Z^2 (ResClasses)",
+                    ReturnTrue, [ IsResidueClassUnion, IsRowModule,
+                                  IsRowVector, IsList, IsList, IsList ], 0,
+
+  function ( filter, ZxZ, L, r, included, excluded )
+    return ResidueClassUnionCons( filter, ZxZ,
+                                  DiagonalMat(L), r, included, excluded );
   end );
 
 #############################################################################
