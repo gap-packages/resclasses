@@ -83,6 +83,10 @@ gap> 2*S;
 (0,0)+(4,0)Z+(0,4)Z U [ [ 2, 6 ], [ 2, 12 ] ] \ [ [ -8, 12 ], [ 4, 4 ] ]
 gap> -S;
 (0,0)+(2,0)Z+(0,2)Z U [ [ -1, -6 ], [ -1, -3 ] ] \ [ [ -2, -2 ], [ 4, -6 ] ]
+gap> Difference(S,R);
+[  ]
+gap> Difference(S,2*R);
+[ [ 1, 3 ], [ 1, 6 ] ]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "zxz.tst", 30000000 );
