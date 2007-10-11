@@ -231,6 +231,18 @@ DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
 ##
+#O  IsSublattice( <L1>, <L2> )
+##
+DeclareOperation( "IsSublattice", [ IsMatrix, IsMatrix ] );
+
+#############################################################################
+##
+#O  Superlattices( <L> )
+##
+DeclareOperation( "Superlattices", [ IsMatrix ] );
+
+#############################################################################
+##
 #A  SizeOfSmallestResidueClassRing( <R> )
 ##
 DeclareAttribute( "SizeOfSmallestResidueClassRing", IsRing );
@@ -260,7 +272,8 @@ DeclareOperation( "AsUnionOfFewClasses", [ IsResidueClassUnion ] );
 ##  Returns a partition of the residue class <cl> into <t> residue classes
 ##  with the same modulus.
 ##
-DeclareOperation( "SplittedClass", [ IsResidueClassUnion, IsPosInt ] );
+DeclareOperation( "SplittedClass", [ IsResidueClassUnion, IsRingElement ] );
+DeclareOperation( "SplittedClass", [ IsResidueClassUnion, IsRowVector ] );
 
 #############################################################################
 ##

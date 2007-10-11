@@ -345,11 +345,70 @@ InstallOtherMethod( SizeOfSmallestResidueClassRing,
 
 #############################################################################
 ##
-#M  \mod . . . . . . . . . . . . . . . . . . . . . . . for vector and lattice
+#M  \mod . . . . . . . . . . . . . . . . . . . . . for a vector and a lattice
 ##
-InstallMethod( \mod, "for vector and lattice (ResClasses)", ReturnTrue,
+if   not IsReadOnlyGlobal( "VectorModLattice" ) # not protected in polycyclic
+then MakeReadOnlyGlobal( "VectorModLattice" ); fi;
+
+InstallMethod( \mod, "for a vector and a lattice (ResClasses)", IsElmsColls,
                [ IsRowVector, IsMatrix ], 0,
                function ( v, L ) return VectorModLattice( v, L ); end );
+
+#############################################################################
+##
+#M  IsSublattice( <L1>, <L2> ) . . . . . . . . . . . . .  for lattices in Z^d
+##
+InstallMethod( IsSublattice,
+               "for lattices in Z^d (ResClasses)", IsIdenticalObj,
+               [ IsMatrix, IsMatrix ], 0,
+
+  function ( L1, L2 )
+    return LatticeIntersection( L1, L2 ) = L2;
+  end );
+
+#############################################################################
+##
+#M  Superlattices( <L> ) . . . . . . . . . . . . . . . . for a lattice in Z^2
+##
+SetupCache( "RCWA_SUPERLATTICES_CACHE", 100 );
+
+InstallMethod( Superlattices,
+               "for a lattice in Z^2 (ResClasses)", true, [ IsMatrix ], 0,
+
+  function ( L )
+
+    local  Word2Vector, F2, G, subgroups, gens, o, lattices, pos;
+
+    Word2Vector := function ( w )
+
+      local  l, v, i;
+
+      l := ExtRepOfObj(w); v := [0,0];
+      for i in [1,3..Length(l)-1] do
+        v := v + l[i+1] * o[l[i]];
+      od;
+      return v;
+    end;
+
+    if   Set(DimensionsMat(L)) <> [2] or not ForAll(Flat(L),IsInt)
+      or DeterminantMat(L) = 0
+    then TryNextMethod(); fi;
+
+    lattices := FetchFromCache( "RCWA_SUPERLATTICES_CACHE", L );
+    if lattices <> fail then return lattices; fi;
+
+    F2 := FreeGroup(2);
+    G := F2/[Comm(F2.1,F2.2),F2.1^L[1][1]*F2.2^L[1][2],F2.2^L[2][2]];
+    subgroups := List(ConjugacyClassesSubgroups(G),Representative);
+    gens      := List(subgroups,GeneratorsOfGroup);
+    o         := [[1,0],[0,1]];
+    lattices  := List(gens,l->HermiteNormalFormIntegerMat(
+                              Concatenation(L,List(l,Word2Vector))){[1..2]});
+
+    PutIntoCache( "RCWA_SUPERLATTICES_CACHE", L, lattices );
+
+    return lattices;
+  end );
 
 #############################################################################
 ##
@@ -854,7 +913,8 @@ InstallMethod( \=,
 ##
 #M  \<( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
-##  A total ordering of residue class unions (for technical purposes, only).
+##  A total ordering of residue class unions - we want to be able to form
+##  sorted lists and sets of these objects.
 ##
 InstallMethod( \<,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
@@ -1717,10 +1777,9 @@ InstallOtherMethod( SplittedClass,
 ##
 #M  SplittedClass( <cl>, <m2> ) .  for a residue class of GF(q)[x] and a pol.
 ##
-InstallOtherMethod( SplittedClass,
-                    Concatenation("for a residue class of GF(q)[x] and a ",
-                                  "polynomial (ResClasses)"), ReturnTrue,
-                    [ IsResidueClassUnionOfGFqx, IsPolynomial ], 0,
+InstallMethod( SplittedClass,
+               "for a res.-class of GF(q)[x] and a polynomial (ResClasses)",
+               IsCollsElms, [ IsResidueClassUnionOfGFqx, IsPolynomial ], 0,
 
   function ( cl, m2 )
 
@@ -1740,12 +1799,50 @@ InstallOtherMethod( SplittedClass,
 #M  SplittedClass( <R>, <m> ) . . . . . . . . . for GF(q)[x] and a polynomial
 ##
 InstallOtherMethod( SplittedClass,
-                    "for GF(q)[x] and a polynomial (ResClasses)", ReturnTrue,
+                    "for GF(q)[x] and a polynomial (ResClasses)",
+                    IsCollsElms,
                     [ IsFiniteFieldPolynomialRing, IsPolynomial ], 0,
 
   function ( R, m )
     if not m in R then return fail; fi;
     return AllResidueClassesModulo(R,m);
+  end );
+
+#############################################################################
+##
+#M  SplittedClass( <cl>, <t> ) . . . . . . . . . . for residue classes of Z^2
+##
+InstallMethod( SplittedClass,
+               "for residue classes of Z^2 (ResClasses)", ReturnTrue,
+               [ IsResidueClassUnionOfZxZ, IsRowVector ], 0,
+
+  function ( cl, t )
+
+    local  R, r, m;
+
+    R := UnderlyingRing(FamilyObj(cl));
+    if not t in R then TryNextMethod(); fi;
+    if   not IsResidueClass(cl) or not ForAll(t,IsPosInt)
+    then return fail; fi;
+    r := Residue(cl); m := Modulus(cl);
+    return List([0..t[1]-1],
+                i->List([0..t[2]-1],
+                        j->ResidueClass(R,[t[1]*m[1],t[2]*m[2]],
+                                          [r[1]+i*m[1],r[2]+j*m[2]])));
+  end );
+
+#############################################################################
+##
+#M  SplittedClass( <R>, <t> ) . . . . . . . . . . . . . . . . . . . . for Z^2
+##
+InstallOtherMethod( SplittedClass,
+                    "for Z^2 (ResClasses)", IsCollsElms,
+                    [ IsRowModule, IsRowVector ], 0,
+
+  function ( R, t )
+    if not t in R then TryNextMethod(); fi;
+    if not ForAll(t,IsPosInt) then return fail; fi;
+    return AllResidueClassesModulo(R,DiagonalMat(t));
   end );
 
 #############################################################################
@@ -1826,6 +1923,45 @@ InstallMethod( AsUnionOfFewClasses,
 
 #############################################################################
 ##
+#M  AsUnionOfFewClasses( <U> ) . . . . . for pure residue class unions of Z^2
+##
+InstallMethod( AsUnionOfFewClasses,
+               "for pure residue class unions of Z^2 (ResClasses)", true,
+               [ IsResidueClassUnionOfZxZ ], 0,
+
+  function ( U )
+
+    local  ZxZ, cls, cl, remaining, L, res, res_d, div, d, r;
+
+    ZxZ := UnderlyingRing(FamilyObj(U));
+    L   := Modulus(U);
+    res := Residues(U);
+    if Length(res) = 1 then return [ ResidueClass(ZxZ,L,res[1]) ]; fi;
+    div := Reversed(Superlattices(L)); # sorted by increasing determinant
+    cls := []; remaining := U;
+    for d in div do
+      if   not IsSublattice(d,L)
+        or DeterminantMat(L)/DeterminantMat(d) > Length(res)
+      then continue; fi;
+      res_d := Set(res,r->r mod d);
+      for r in res_d do
+        if IsSubset(res,Filtered(AllResidues(ZxZ,L),s->s mod d = r)) then
+          cl := ResidueClass(ZxZ,d,r);
+          Add(cls,cl); remaining := Difference(remaining,cl);
+          if IsList(remaining) then break; fi;
+          L := Modulus(remaining); res := Residues(remaining);
+          if   not IsSublattice(d,L)
+            or DeterminantMat(L)/DeterminantMat(d) > Length(res)
+          then break; fi;
+        fi;
+      od;
+      if IsList(remaining) then break; fi;
+    od;
+    return cls;
+  end );
+
+#############################################################################
+##
 #M  AsUnionOfFewClasses( <l> ) . . . . . . . . .  for finite sets of elements
 ##
 InstallOtherMethod( AsUnionOfFewClasses,
@@ -1836,9 +1972,10 @@ InstallOtherMethod( AsUnionOfFewClasses,
 ##
 #M  AsUnionOfFewClasses( <R> ) . . . . . . . . . . . . . . . . . . . for ring
 ##
-InstallOtherMethod( AsUnionOfFewClasses,
-                    "for a ring (ResClasses)", true, [ IsRing ], 0,
-                    R -> [ R ] );
+InstallOtherMethod( AsUnionOfFewClasses, "for a ring (ResClasses)",
+                    true, [ IsRing ], 0, R -> [ R ] );
+InstallOtherMethod( AsUnionOfFewClasses, "for a row module (ResClasses)",
+                    true, [ IsRowModule ], 0, R -> [ R ] );
 
 #############################################################################
 ##
@@ -2136,13 +2273,48 @@ InstallMethod( ViewObj,
 
   function ( U )
 
-    local  R, m, r, included, excluded, PrintFiniteSet, n, cl, endval,
-           short, bound, display;
+    local  PrintFiniteSet, ModString, RCString, str, pos, linelng,
+           R, m, r, included, excluded, n, cl, m_cl,
+           endval, short, bound, display;
 
     PrintFiniteSet := function ( S )
       if   Length(String(S)) <= 32 or display
       then Print(S);
       else Print("<set of cardinality ",Length(S),">"); fi;
+    end;
+
+    ModString := function ( m )
+
+      local  s;
+
+      if   IsRing(R) then return String(m);
+      elif IsZxZ(R) then
+        s := Concatenation(List([m[1],"Z+",m[2],"Z"],String));
+        RemoveCharacters(s," ");
+        s := ReplacedString(s,"[","(");
+        s := ReplacedString(s,"]",")");
+        return s;
+      else return fail; fi;
+    end;
+
+    RCString := function ( cl )
+
+      local  s, r, m;
+
+      r := Residue(cl); m := Modulus(cl);
+      if IsRing(R) then
+        s := String(r);
+        if   IsIntegers(R) or IsZ_pi(R)
+        then s := Concatenation(s,"(",String(m),")");
+        elif short then s := Concatenation(s,"(mod ",String(m),")");
+        else s := Concatenation(s," ( mod ",String(m)," )"); fi;
+      elif IsZxZ(R) then
+        s := Concatenation(List([r,"+",m[1],"Z+",m[2],"Z"],String));
+        RemoveCharacters(s," ");
+        s := ReplacedString(s,"[","(");
+        s := ReplacedString(s,"]",")");
+      else return fail; fi;
+      return s;
     end;
 
     short   := RESCLASSES_VIEWING_FORMAT = "short";
@@ -2164,55 +2336,26 @@ InstallMethod( ViewObj,
       if IsOne(m) then
         Print(RingToString(R)," \\ "); PrintFiniteSet(excluded);
       else
+        if   not short and (included <> [] or excluded <> [])
+        then Print("("); pos := 1; else pos := 0; fi;
+        linelng := SizeScreen()[1];
         if Length(r) > 1 then
-          if not short then
-            if included <> [] or excluded <> [] then Print("("); fi;
-            Print("Union of the residue classes ");
-          fi;
-          if IsBound(cl) then
-            endval := Length(cl) - 1;
-            for n in [1..endval] do
-              Print(Residue(cl[n]));
-              if   IsIntegers(R) or IsZ_pi(R)
-              then Print("(",Modulus(cl[n]),")");
-              elif short then Print("(mod ",Modulus(cl[n]),")");
-              else Print(" ( mod ",Modulus(cl[n])," )"); fi;
-              if n < endval then
-                if short then Print(" U "); else Print(", "); fi;
-              fi;
-            od;
-            if short then Print(" U "); else Print(" and "); fi;
-          else
-            for n in [1..Length(r)-1] do
-              Print(r[n],"(",m,")");
-              if n < Length(r) - 1 then
-                if short then Print(" U "); else Print(", "); fi;
-              fi;
-            od;
-            if short then Print(" U "); else Print(" and "); fi;
-          fi;
-        else
-          if not short then
-            if included <> [] or excluded <> [] then Print("("); fi;
-            Print("The residue class ");
-          fi;
-        fi;
-        if   IsIntegers(R) or IsZ_pi(R)
-        then if   IsBound(cl)
-             then Print(Residue(cl[Length(cl)]),"(",
-                        Modulus(cl[Length(cl)]),")");
-             else Print(r[Length(r)],"(",m,")"); fi;
-        else if   IsBound(cl)
-             then if   short
-                  then Print(Residue(cl[Length(cl)]),"(mod ",
-                             Modulus(cl[Length(cl)]),")");
-                  else Print(Residue(cl[Length(cl)])," ( mod ",
-                             Modulus(cl[Length(cl)])," )"); fi;
-             else if   short
-                  then Print(r[Length(r)],"(mod ",m,")");
-                  else Print(r[Length(r)]," ( mod ",m," )"); fi;
-             fi;
-        fi;
+          if   not short
+          then Print("Union of the residue classes "); pos := pos + 29; fi;
+          endval := Length(cl) - 1;
+          for n in [1..endval] do
+            str := RCString(cl[n]);
+            Print(str); pos := pos + Length(str);
+            if n < endval then
+              if short then Print(" U "); pos := pos + 3;
+                       else Print(", ");  pos := pos + 2; fi;
+            fi;
+            if   pos >= linelng - Length(str) - 4
+            then Print("\n"); pos := 0; fi;
+          od;
+          if short then Print(" U "); else Print(" and "); fi;
+        elif not short then Print("The residue class "); fi;
+        Print(RCString(cl[Length(cl)]));
         if not short then Print(" of ",RingToString(R)); fi;
         if included <> [] then
           if short then Print(" U "); else Print(") U "); fi;
@@ -2225,13 +2368,14 @@ InstallMethod( ViewObj,
         fi;
       fi;
     else
-      Print("<union of ",Length(r)," residue classes (mod ",m,")");
+      Print("<union of ",Length(r)," residue classes (mod ",
+            ModString(m),")");
       if not short then Print(" of ",RingToString(R)); fi;
       Print(">");
       if included <> [] then Print(" U ");  PrintFiniteSet(included); fi;
       if excluded <> [] then Print(" \\ "); PrintFiniteSet(excluded); fi;
     fi;
-  end ); 
+  end );
 
 #############################################################################
 ##

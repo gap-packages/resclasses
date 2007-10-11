@@ -13,6 +13,12 @@ Revision.general_g :=
 
 #############################################################################
 ##
+#S  SendEmail and EmailLogFile. /////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
 #F  SendEmail( <sendto>, <copyto>, <subject>, <text> ) . . . . send an e-mail
 ##
 ##  Sends an e-mail with subject <subject> and body <text> to the addresses
@@ -79,6 +85,82 @@ BindGlobal( "EmailLogFile",
 
 #############################################################################
 ##
+#S  A simple caching facility. //////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  SetupCache( <name>, <size> )
+##
+##  Creates an empty cache named <name> for at most <size> values.
+##
+BindGlobal( "SetupCache",
+  function ( name, size )
+    BindGlobal(name,[size]);
+  end );
+
+#############################################################################
+##
+#F  PutIntoCache( <name>, <key>, <value> )
+##
+##  Puts the entry <value> with key <key> into the cache named <name>.
+##
+BindGlobal( "PutIntoCache",
+
+  function ( name, key, value )
+
+    local  cache, pos, i;
+
+    cache := ValueGlobal(name);
+    MakeReadWriteGlobal(name);
+    pos := Position(List(cache,t->t[1]),key,1);
+    if pos = fail then Add(cache,[key,0,value]);
+                  else cache[pos][2] := 0; fi;
+    for i in [1..Length(cache)] do
+      cache[i][2] := cache[i][2] + 1;
+    od;
+    Sort(cache,function(t1,t2) return t1[2]<t2[2]; end);
+    if   Length(cache) > cache[1]+1
+    then cache := cache{[1..cache[1]+1]}; fi;
+    MakeReadOnlyGlobal(name);
+  end );
+
+#############################################################################
+##
+#F  FetchFromCache( <name>, <key> )
+##
+##  Picks the entry with key <key> from the cache named <name>.
+##  Returns fail if no such entry is present.
+##
+BindGlobal( "FetchFromCache",
+
+  function ( name, key )
+
+    local  cache, pos, i;
+
+    cache := ValueGlobal(name);
+    pos   := Position(List(cache,t->t[1]),key,1);
+    if IsInt(pos) then
+      MakeReadWriteGlobal(name);
+      cache[pos][2] := 0;
+      for i in [1..Length(cache)] do
+        cache[i][2] := cache[i][2] + 1;
+      od;
+      MakeReadOnlyGlobal(name);
+      return cache[pos][3];
+    fi;
+    return fail;
+  end );
+
+#############################################################################
+##
+#S  Some trivial methods which are missing in the GAP Library. //////////////
+##
+#############################################################################
+
+#############################################################################
+##
 #M  String( <obj> ) . . . . . . default method, returns the output by `Print'
 ##
 InstallMethod( String,
@@ -131,6 +213,25 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  IsRowModule .  return `false' for objects which are not free left modules 
+##
+InstallOtherMethod( IsRowModule,
+                    Concatenation("return `false' for objects which are ",
+                                  "not free left modules (ResClasses)"),
+                    true, [ IsObject ], 0,
+
+  function ( obj )
+    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#S  GAP Library bugfix(es). /////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
 #M  Intersection2( <C1>, <C2> ) . . . . . . . . . . . . .  GAP Library bugfix
 ##
 InstallMethod( Intersection2,
@@ -167,16 +268,9 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  IsRowModule .  return `false' for objects which are not free left modules 
+#S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
-InstallOtherMethod( IsRowModule,
-                    Concatenation("return `false' for objects which are ",
-                                  "not free left modules (ResClasses)"),
-                    true, [ IsObject ], 0,
-
-  function ( obj )
-    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
-  end );
+#############################################################################
 
 #############################################################################
 ##
