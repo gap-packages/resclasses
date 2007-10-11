@@ -1537,7 +1537,7 @@ InstallMethod( Difference,
 ##
 InstallOtherMethod( \+,
                     "for residue class union and ring element (ResClasses)",
-                    IsCollsElms, [ IsResidueClassUnion, IsObject ], 0,
+                    ReturnTrue, [ IsResidueClassUnion, IsObject ], 0,
 
   function ( U, x )
 
@@ -1557,7 +1557,7 @@ InstallOtherMethod( \+,
 ##
 InstallOtherMethod( \+,
                     "for ring element and residue class union (ResClasses)",
-                    IsElmsColls, [ IsObject, IsResidueClassUnion ], 0,
+                    ReturnTrue, [ IsObject, IsResidueClassUnion ], 0,
                     function ( x, U ) return U + x; end );
 
 #############################################################################
@@ -1602,7 +1602,7 @@ InstallOtherMethod( AdditiveInverseOp,
 ##
 InstallOtherMethod( \-,
                     "for residue class union and ring element (ResClasses)",
-                    IsCollsElms, [ IsListOrCollection, IsObject ], SUM_FLAGS,
+                    ReturnTrue, [ IsListOrCollection, IsObject ], SUM_FLAGS,
                     function ( U, x ) return U + (-x); end );
 
 #############################################################################
@@ -1611,7 +1611,7 @@ InstallOtherMethod( \-,
 ##
 InstallOtherMethod( \-,
                     "for ring element and residue class union (ResClasses)",
-                    IsElmsColls, [ IsObject, IsListOrCollection ], SUM_FLAGS,
+                    ReturnTrue, [ IsObject, IsListOrCollection ], SUM_FLAGS,
                     function ( x, U ) return (-U) + x; end );
 
 #############################################################################
@@ -1711,12 +1711,13 @@ InstallOtherMethod( \/,
 
   function ( U, x )
 
-    local  R, m;
+    local  R, S, m;
 
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U);
-    if not x in R or not m/x in R
-       or not ForAll(Residues(U),r->r/x in R)
-       or not ForAll(IncludedElements(U),el->el/x in R) 
+    if IsRing(R) then S := R; else S := LeftActingDomain(R); fi;
+    if not x in S or not m/x in S
+       or not ForAll(Residues(U),r->r/x in S)
+       or not ForAll(IncludedElements(U),el->el/x in S) 
     then TryNextMethod(); fi;
     return ResidueClassUnion(R,m/x,List(Residues(U),r->r/x),
                              List(IncludedElements(U),el->el/x),
