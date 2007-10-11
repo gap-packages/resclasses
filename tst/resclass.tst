@@ -53,8 +53,8 @@ ResidueClassUnion( Z_pi( [ 2, 3 ] ), 8, [ 3, 5 ] )
 gap> Display(U2);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> Display(U3);
-(Union of the residue classes Z(7)^0 ( mod x ), -Z(7)^0 ( mod x ) and Z(7)^5 (\
- mod x ) of GF(7)[x]) U [ 0*Z(7) ] \ [ Z(7)^0 ]
+(Union of the residue classes Z(7)^0 ( mod x ), -Z(7)^0 ( mod x )
+ and Z(7)^5 ( mod x ) of GF(7)[x]) U [ 0*Z(7) ] \ [ Z(7)^0 ]
 gap> Display(U4);
 Union of the residue classes 3(8) and 5(8) of Z_( 2, 3 )
 gap> 20 in cl1;
@@ -88,15 +88,15 @@ gap> Residues(K);
 gap> L := Intersection(I,J);
 <union of 8 residue classes (mod 30) of Z>
 gap> Display(L);
-Union of the residue classes 1(30), 7(30), 11(30), 13(30), 17(30), 19(30), 23(
-30) and 29(30) of Z
+Union of the residue classes 1(30), 7(30), 11(30), 13(30), 17(30), 19(30),
+23(30) and 29(30) of Z
 gap> M := Difference(I,J);
 Union of the residue classes 5(30) and 25(30) of Z
 gap> N := Difference(J,I);
 <union of 16 residue classes (mod 30) of Z>
 gap> Display(N);
-Union of the residue classes 2(10), 4(10), 6(10), 8(10), 3(30), 9(30), 21(
-30) and 27(30) of Z
+Union of the residue classes 2(10), 4(10), 6(10), 8(10), 3(30), 9(30),
+21(30) and 27(30) of Z
 gap> Difference(Integers,[1,2,3]);
 Z \ [ 1, 2, 3 ]
 gap> Display(last);
@@ -142,8 +142,8 @@ gap> Display(Difference(V,U));
 (The residue class 2(3) of Z) U [ 1 ]
 gap> cl := List([1..25],i->ResidueClass(Integers,Primes[i],i));;
 gap> cl_int := Intersection(cl);
-The residue class 941584379775558526136539054851975983(
-2305567963945518424753102147331756070) of Z
+The residue class 941584379775558526136539054851975983(23055679639455184247531\
+02147331756070) of Z
 gap> List(Primes{[1..25]},p->Representative(cl_int) mod p);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
   22, 23, 24, 25 ]
