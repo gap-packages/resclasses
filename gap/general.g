@@ -97,7 +97,7 @@ BindGlobal( "EmailLogFile",
 ##
 BindGlobal( "SetupCache",
   function ( name, size )
-    BindGlobal(name,[size]);
+    BindGlobal(name,[[size,-1,fail]]);
   end );
 
 #############################################################################
@@ -117,12 +117,12 @@ BindGlobal( "PutIntoCache",
     pos := Position(List(cache,t->t[1]),key,1);
     if pos = fail then Add(cache,[key,0,value]);
                   else cache[pos][2] := 0; fi;
-    for i in [1..Length(cache)] do
+    for i in [2..Length(cache)] do
       cache[i][2] := cache[i][2] + 1;
     od;
     Sort(cache,function(t1,t2) return t1[2]<t2[2]; end);
-    if   Length(cache) > cache[1]+1
-    then cache := cache{[1..cache[1]+1]}; fi;
+    if   Length(cache) > cache[1][1]+1
+    then cache := cache{[1..cache[1][1]+1]}; fi;
     MakeReadOnlyGlobal(name);
   end );
 
@@ -144,7 +144,7 @@ BindGlobal( "FetchFromCache",
     if IsInt(pos) then
       MakeReadWriteGlobal(name);
       cache[pos][2] := 0;
-      for i in [1..Length(cache)] do
+      for i in [2..Length(cache)] do
         cache[i][2] := cache[i][2] + 1;
       od;
       MakeReadOnlyGlobal(name);
@@ -222,6 +222,19 @@ InstallOtherMethod( IsRowModule,
 
   function ( obj )
     if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  \in( <g>, GL( <n>, Integers ) )
+##
+InstallMethod( \in,
+               "for matrix and GL(n,Z) (ResClasses)", IsElmsColls,
+               [ IsMatrix, IsNaturalGLnZ ],
+
+  function ( g, GLnZ )
+    return DimensionsMat(g) = DimensionsMat(One(GLnZ))
+       and ForAll(Flat(g),IsInt) and DeterminantMat(g) in [-1,1];
   end );
 
 #############################################################################

@@ -91,7 +91,7 @@ BindGlobal( "ZxZResidueClassUnionsFamily",
                        IsResidueClassUnionOfZxZ,
                        CanEasilySortElements, CanEasilySortElements ) );
 SetUnderlyingRing( ZxZResidueClassUnionsFamily, Integers^2 );
-SetElementsFamily( ZxZResidueClassUnionsFamily, ZxZResidueClassUnionsFamily );
+SetElementsFamily( ZxZResidueClassUnionsFamily, FamilyObj( [ 0, 0 ] ) );
 
 #############################################################################
 ##
@@ -1711,14 +1711,22 @@ InstallOtherMethod( \/,
 
   function ( U, x )
 
-    local  R, S, m;
+    local  R, S1, S2, m;
 
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U);
-    if IsRing(R) then S := R; else S := LeftActingDomain(R); fi;
-    if not x in S or not m/x in S
-       or not ForAll(Residues(U),r->r/x in S)
-       or not ForAll(IncludedElements(U),el->el/x in S) 
+
+    if   IsRing(R)
+    then S1 := R; S2 := R;
+    elif IsRowModule(R)
+    then S1 := LeftActingDomain(R);
+         S2 := FullMatrixModule(S1,Dimension(R),Dimension(R));
+    fi;
+
+    if not x in S1 or not m/x in S2
+       or not ForAll(Residues(U),r->r/x in R)
+       or not ForAll(IncludedElements(U),el->el/x in R) 
     then TryNextMethod(); fi;
+
     return ResidueClassUnion(R,m/x,List(Residues(U),r->r/x),
                              List(IncludedElements(U),el->el/x),
                              List(ExcludedElements(U),el->el/x));
