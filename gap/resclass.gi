@@ -339,7 +339,7 @@ InstallGlobalFunction( AllResidueClassesModulo,
     if   Length(arg) = 2
     then R := arg[1]; m := arg[2];
     else m := arg[1]; R := DefaultRing(m); fi;
-    if IsRing(R) and IsZero(m) or not m in R then return fail; fi;
+    if IsRing(R) and (IsZero(m) or not m in R) then return fail; fi;
     return List(AllResidues(R,m),r->ResidueClass(R,m,r));
   end );
 
