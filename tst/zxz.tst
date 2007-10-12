@@ -190,8 +190,8 @@ gap> AsUnionOfFewClasses(cl);
 [ (0,1)+(1,0)Z+(0,2)Z ]
 gap> cl = last[1];
 true
-gap> Residues(cl);
-[ [ 0, 1 ] ]
+gap> Residue(cl);
+[ 0, 1 ]
 gap> Modulus(cl);
 [ [ 1, 0 ], [ 0, 2 ] ]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
