@@ -217,5 +217,5 @@ Changes between version 2.5.2 and version 2.5.3:
 
 Changes between version 2.5.3 and version 2.5.4:
 
- - Now, ResClasses needs GAPDoc 1.1.
+ - Now, ResClasses needs GAPDoc 1.1 and Polycyclic 2.2.
 
