@@ -419,6 +419,8 @@ InstallMethod( Superlattices,
       or DeterminantMat(L) = 0
     then TryNextMethod(); fi;
 
+    if IsOne(L) then return [[[1,0],[0,1]]]; fi;
+
     lattices := FetchFromCache( "RCWA_SUPERLATTICES_CACHE", L );
     if lattices <> fail then return lattices; fi;
 
@@ -466,7 +468,7 @@ InstallMethod( ResidueClassUnionCons,
         repeat
           mRedBuf := mRed; rRedBuf := ShallowCopy(rRed);
           mRed := mRed/p;
-          rRed := Set(List( rRedBuf, n -> n mod mRed ));
+          rRed := Set(rRedBuf,n->n mod mRed);
           if   IsIntegers(R) or IsZ_pi(R)
           then valid := Length(rRed) = Length(rRedBuf)/p;
           else valid := Length(rRed) = Length(rRedBuf)/
@@ -534,23 +536,16 @@ InstallMethod( ResidueClassUnionCons,
 
     ReduceResidueClassUnion := function ( U )
 
-      local  L, r, LRed, LRedBuf, rRed, rRedBuf, valid, factx, facty, p, q;
+      local  L, r, LRed, rRed, divs, d;
 
       L := HermiteNormalFormIntegerMat(U!.m);  LRed := L;
       r := List(U!.r,v->v mod L); rRed := r;
-      factx := Set(Factors(L[2][2]));
-      facty := Set(Factors(Gcd(L[1])));
-      for p in factx do
-        for q in facty do
-          repeat
-            LRedBuf := LRed; rRedBuf := ShallowCopy(rRed);
-            LRed := [LRed[1]/q,LRed[2]/p];
-            rRed := Set(List(rRedBuf,v->v mod LRed));
-            valid := Length(rRed) = Length(rRedBuf)/(p*q);
-          until not valid or not IsZero([LRed[1] mod q, LRed[2] mod p])
-                or IsOne(LRed);
-          if not valid then LRed := LRedBuf; rRed := rRedBuf; fi;
-        od;
+      divs := Reversed(Superlattices(L));
+      for d in divs do
+        if DeterminantMat(L)/DeterminantMat(d) > Length(r) then continue; fi;
+        rRed := Set(r,v->v mod d);
+        if   Length(rRed) = Length(r)*DeterminantMat(d)/DeterminantMat(L)
+        then LRed := d; break; fi;
       od;
       U!.m := LRed; U!.r := Immutable(rRed);
       U!.included := Immutable(Set(Filtered(U!.included,
