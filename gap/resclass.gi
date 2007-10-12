@@ -395,7 +395,7 @@ InstallMethod( IsSublattice,
 ##
 #M  Superlattices( <L> ) . . . . . . . . . . . . . . . . for a lattice in Z^2
 ##
-SetupCache( "RCWA_SUPERLATTICES_CACHE", 100 );
+SetupCache( "RESCLASSES_SUPERLATTICES_CACHE", 100 );
 
 InstallMethod( Superlattices,
                "for a lattice in Z^2 (ResClasses)", true, [ IsMatrix ], 0,
@@ -421,7 +421,7 @@ InstallMethod( Superlattices,
 
     if IsOne(L) then return [[[1,0],[0,1]]]; fi;
 
-    lattices := FetchFromCache( "RCWA_SUPERLATTICES_CACHE", L );
+    lattices := FetchFromCache( "RESCLASSES_SUPERLATTICES_CACHE", L );
     if lattices <> fail then return lattices; fi;
 
     F2 := FreeGroup(2);
@@ -432,7 +432,7 @@ InstallMethod( Superlattices,
     lattices  := List(gens,l->HermiteNormalFormIntegerMat(
                               Concatenation(L,List(l,Word2Vector))){[1..2]});
 
-    PutIntoCache( "RCWA_SUPERLATTICES_CACHE", L, lattices );
+    PutIntoCache( "RESCLASSES_SUPERLATTICES_CACHE", L, lattices );
 
     return lattices;
   end );
@@ -454,7 +454,7 @@ InstallMethod( ResidueClassUnionCons,
 
   function ( filter, R, m, r, included, excluded )
 
-    local  ReduceResidueClassUnion, Result, both, fam, type, rep, pos;
+    local  ReduceResidueClassUnion, result, both, fam, type, rep, pos;
 
     ReduceResidueClassUnion := function ( U )
 
@@ -500,12 +500,12 @@ InstallMethod( ResidueClassUnionCons,
     elif IsZ_pi( R )           then type := IsResidueClassUnionOfZ_pi;
     elif IsPolynomialRing( R ) then type := IsResidueClassUnionOfGFqx;
     fi;
-    Result := Objectify( NewType( fam, type and
+    result := Objectify( NewType( fam, type and
                                   IsResidueClassUnionResidueListRep ),
                          rec( m := m, r := r,
                               included := included, excluded := excluded ) );
-    SetSize( Result, infinity ); SetIsFinite( Result, false );
-    SetIsEmpty( Result, false );
+    SetSize( result, infinity ); SetIsFinite( result, false );
+    SetIsEmpty( result, false );
     rep := r[1]; pos := 1;
     while rep in excluded do
       pos := pos + 1;
@@ -513,11 +513,12 @@ InstallMethod( ResidueClassUnionCons,
     od;
     if   included <> [ ] and rep > Minimum( included ) 
     then rep := Minimum( included ); fi;
-    SetRepresentative( Result, rep );
-    ReduceResidueClassUnion( Result );
-    if IsOne( Result!.m ) and Result!.r = [ Zero( R ) ]
-      and [ Result!.included, Result!.excluded ] = [ [ ], [ ] ]
-    then return R; else return Result; fi;
+    SetRepresentative( result, rep );
+    ReduceResidueClassUnion( result );
+    if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
+    if IsOne( result!.m ) and result!.r = [ Zero( R ) ]
+      and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
+    then return R; else return result; fi;
   end );
 
 #############################################################################
@@ -578,6 +579,7 @@ InstallMethod( ResidueClassUnionCons,
     fi;
     SetRepresentative( result, rep );
     ReduceResidueClassUnion( result );
+    if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
     if AbsInt( DeterminantMat( result!.m ) ) = 1
       and result!.r = [ [ 0, 0 ] ]
       and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
