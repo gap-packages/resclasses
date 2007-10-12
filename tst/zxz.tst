@@ -48,6 +48,20 @@ gap> 2*R;
 The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2
 gap> 3*last;
 The residue class (0,0)+(6,0)Z+(0,6)Z of Z^2
+gap> last/2;
+The residue class (0,0)+(3,0)Z+(0,3)Z of Z^2
+gap> 2*R+[1,-1];
+The residue class (1,1)+(2,0)Z+(0,2)Z of Z^2
+gap> last+[1,1];
+The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2
+gap> 3*R-[3,4];
+The residue class (0,2)+(3,0)Z+(0,3)Z of Z^2
+gap> 2*last;
+The residue class (0,4)+(6,0)Z+(0,6)Z of Z^2
+gap> last+[0,2];
+The residue class (0,0)+(6,0)Z+(0,6)Z of Z^2
+gap> Union(last2,[[8,10]]);
+(The residue class (0,4)+(6,0)Z+(0,6)Z of Z^2) U [ [ 8, 10 ] ]
 gap> S := Difference(Union(2*R,[[2,0],[1,6]]),[[-4,6]]);
 (The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2) U [ [ 1, 6 ] ] \ [ [ -4, 6 ] ]
 gap> 2*S;
@@ -56,6 +70,10 @@ gap> 2*S;
 gap> -S;
 (The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2) U [ [ -1, -6 ] ] \
 [ [ 4, -6 ] ]
+gap> Difference(S,[[1,6]]);
+(The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2) \ [ [ -4, 6 ] ]
+gap> last/2;
+Z^2 \ [ [ -2, 3 ] ]
 gap> ResidueClassUnionViewingFormat("short");;
 gap> 2*R;
 (0,0)+(2,0)Z+(0,2)Z
@@ -87,6 +105,63 @@ gap> Difference(S,R);
 [  ]
 gap> Difference(S,2*R);
 [ [ 1, 3 ], [ 1, 6 ] ]
+gap> ResidueClass(R,[[1,0],[0,1]],[7,8]);
+( Integers^2 )
+gap> ResidueClass(R,[[2,0],[0,2]],[7,8]);
+(1,0)+(2,0)Z+(0,2)Z
+gap> ResidueClass(R,[[2,0],[0,2]],[1,0]);
+(1,0)+(2,0)Z+(0,2)Z
+gap> last=last2;
+true
+gap> ResidueClass(R,[[2,0],[0,3]],[1,0]);
+(1,0)+(2,0)Z+(0,3)Z
+gap> ResidueClass(R,[[2,0],[0,3]],[1,2]);
+(1,2)+(2,0)Z+(0,3)Z
+gap> ResidueClass(R,[[2,1],[0,3]],[1,2]);
+(1,2)+(2,1)Z+(0,3)Z
+gap> L := [[2,1],[-1,2]];
+[ [ 2, 1 ], [ -1, 2 ] ]
+gap> ResidueClass(R,L,[0,0]);
+(0,0)+(1,3)Z+(0,5)Z
+gap> ResidueClass(R,L,[0,1]);
+(0,1)+(1,3)Z+(0,5)Z
+gap> ResidueClass(R,L,[1,0]);
+(0,2)+(1,3)Z+(0,5)Z
+gap> ResidueClass(R,L,[1,2]);
+(0,4)+(1,3)Z+(0,5)Z
+gap> ResidueClass(R,L,[3,2]);
+(0,3)+(1,3)Z+(0,5)Z
+gap> Intersection(ResidueClass(R,L,[0,0]),ResidueClass(R,L,[0,1]));
+[  ]
+gap> S := Union(ResidueClass(R,L,[0,0]),ResidueClass(R,L,[0,1]));
+(0,0)+(1,3)Z+(0,5)Z U (0,1)+(1,3)Z+(0,5)Z
+gap> S = ResidueClassUnion(R,L,[[0,0],[0,1]]);
+true
+gap> 5*S;
+(0,0)+(5,15)Z+(0,25)Z U (0,5)+(5,15)Z+(0,25)Z
+gap> Union(last,[[7,7]]);
+(0,0)+(5,15)Z+(0,25)Z U (0,5)+(5,15)Z+(0,25)Z U [ [ 7, 7 ] ]
+gap> Difference(last,[[0,0]]);
+(0,0)+(5,15)Z+(0,25)Z U (0,5)+(5,15)Z+(0,25)Z U [ [ 7, 7 ] ] \ [ [ 0, 0 ] ]
+gap> last = ResidueClassUnion(R,5*L,[[0,0],[0,5]],[[7,7]],[[0,0]]);
+true
+gap> [0,0] in S;
+true
+gap> [0,1] in S;
+true
+gap> [0,2] in S;
+false
+gap> Intersection(S,Cartesian([0..9],[0..9]));
+[ [ 0, 0 ], [ 0, 1 ], [ 0, 5 ], [ 0, 6 ], [ 1, 3 ], [ 1, 4 ], [ 1, 8 ],
+  [ 1, 9 ], [ 2, 1 ], [ 2, 2 ], [ 2, 6 ], [ 2, 7 ], [ 3, 0 ], [ 3, 4 ],
+  [ 3, 5 ], [ 3, 9 ], [ 4, 2 ], [ 4, 3 ], [ 4, 7 ], [ 4, 8 ], [ 5, 0 ],
+  [ 5, 1 ], [ 5, 5 ], [ 5, 6 ], [ 6, 3 ], [ 6, 4 ], [ 6, 8 ], [ 6, 9 ],
+  [ 7, 1 ], [ 7, 2 ], [ 7, 6 ], [ 7, 7 ], [ 8, 0 ], [ 8, 4 ], [ 8, 5 ],
+  [ 8, 9 ], [ 9, 2 ], [ 9, 3 ], [ 9, 7 ], [ 9, 8 ] ]
+gap> last = Intersection(Cartesian([0..9],[0..9]),S);
+true
+gap> Collected(List(last2,l->l mod HermiteNormalFormIntegerMat(L)));
+[ [ [ 0, 0 ], 20 ], [ [ 0, 1 ], 20 ] ]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "zxz.tst", 30000000 );
