@@ -184,6 +184,16 @@ gap> cls := AllResidueClassesModulo(R,L);
   (4,3)+(6,2)Z+(0,6)Z, (4,4)+(6,2)Z+(0,6)Z, (4,5)+(6,2)Z+(0,6)Z,
   (5,0)+(6,2)Z+(0,6)Z, (5,1)+(6,2)Z+(0,6)Z, (5,2)+(6,2)Z+(0,6)Z,
   (5,3)+(6,2)Z+(0,6)Z, (5,4)+(6,2)Z+(0,6)Z, (5,5)+(6,2)Z+(0,6)Z ]
+gap> cl := Union(cls{[2,4..36]});
+(0,1)+(1,0)Z+(0,2)Z
+gap> AsUnionOfFewClasses(cl);
+[ (0,1)+(1,0)Z+(0,2)Z ]
+gap> cl = last[1];
+true
+gap> Residues(cl);
+[ [ 0, 1 ] ]
+gap> Modulus(cl);
+[ [ 1, 0 ], [ 0, 2 ] ]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
 gap> STOP_TEST( "zxz.tst", 30000000 );
