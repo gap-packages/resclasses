@@ -1626,15 +1626,14 @@ InstallOtherMethod( \*,
     local  R;
 
     R := UnderlyingRing(FamilyObj(U));
-    if IsRing(R) and not x in R then TryNextMethod(); fi;
-    if   IsRowModule(R) and not x in LeftActingDomain(R)
-      and not x in GL(Dimension(R),LeftActingDomain(R))
+    if   IsRing(R) and not x in R
+      or IsRowModule(R) and not x in LeftActingDomain(R)
     then TryNextMethod(); fi;
     if IsZero(x) then return [Zero(R)]; fi;
-    return ResidueClassUnionNC(R,x*Modulus(U),
-                               List(Residues(U),r->x*r),
-                               List(IncludedElements(U),el->x*el),
-                               List(ExcludedElements(U),el->x*el));
+    return ResidueClassUnionNC(R,Modulus(U)*x,
+                               List(Residues(U),r->r*x),
+                               List(IncludedElements(U),el->el*x),
+                               List(ExcludedElements(U),el->el*x));
   end );
 
 #############################################################################
@@ -1644,7 +1643,33 @@ InstallOtherMethod( \*,
 InstallOtherMethod( \*,
                     "for ring element and residue class union (ResClasses)",
                     ReturnTrue, [ IsRingElement, IsResidueClassUnion ], 0,
-                    function ( x, U ) return U * x; end );
+
+  function ( x, U )
+    if    IsRing(UnderlyingRing(FamilyObj(U)))
+      and IsCommutative(UnderlyingRing(FamilyObj(U)))
+    then return U * x;
+    else TryNextMethod(); fi;
+  end );
+
+
+#############################################################################
+##
+#M  \*( <U>, <M> ) . . . . . .  for a residue class union of Z^2 and a matrix
+##
+InstallOtherMethod( \*,
+                    "for residue class union of Z^2 and matrix (ResClasses)",
+                    ReturnTrue, [ IsResidueClassUnionOfZxZ, IsMatrix ], 0,
+
+  function ( U, M )
+
+    if   not ForAll(Flat(M),IsInt) or DeterminantMat(M) = 0
+    then TryNextMethod(); fi;
+
+    return ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),Modulus(U)*M,
+                               List(Residues(U),r->r*M),
+                               List(IncludedElements(U),el->el*M),
+                               List(ExcludedElements(U),el->el*M));
+  end );
 
 #############################################################################
 ##
