@@ -192,7 +192,7 @@ gap> RepresentativeStabilizingRefinement(U,0);
 [23/4]
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "fixedrep.tst", 100000000 );
+gap> STOP_TEST( "fixedrep.tst", 5000000 );
 
 #############################################################################
 ##

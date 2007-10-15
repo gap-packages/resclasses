@@ -148,7 +148,7 @@ false
 gap> IsIrreducibleRingElement(T,-3);
 true
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
-gap> STOP_TEST( "z_pi.tst", 3000000 );
+gap> STOP_TEST( "z_pi.tst", 2000000 );
 
 #############################################################################
 ##

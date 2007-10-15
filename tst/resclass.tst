@@ -384,7 +384,7 @@ gap> UnderlyingRing(FamilyObj(last2));
 Z_( 2, 3 )
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "resclass.tst", 200000000 );
+gap> STOP_TEST( "resclass.tst", 60000000 );
 
 #############################################################################
 ##

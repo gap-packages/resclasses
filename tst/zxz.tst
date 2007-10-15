@@ -74,6 +74,45 @@ gap> Difference(S,[[1,6]]);
 (The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2) \ [ [ -4, 6 ] ]
 gap> last/2;
 Z^2 \ [ [ -2, 3 ] ]
+gap> S := Union(3*R,2*R+[1,1]);
+<union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2>
+gap> Display(S);
+Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
+ and (0,0)+(6,0)Z+(0,6)Z of Z^2
+gap> cls := AsUnionOfFewClasses(S);
+[ The residue class (1,1)+(2,0)Z+(0,2)Z of Z^2, 
+  The residue class (0,3)+(3,3)Z+(0,6)Z of Z^2, 
+  The residue class (0,0)+(6,0)Z+(0,6)Z of Z^2 ]
+gap> List(cls,Density);
+[ 1/4, 1/18, 1/36 ]
+gap> Union(cls) = S;
+true
+gap> I := Intersection(3*R,2*R+[1,1]);
+The residue class (3,3)+(6,0)Z+(0,6)Z of Z^2
+gap> Density(I);
+1/36
+gap> S1 := Difference(3*R,2*R+[1,1]);
+<union of 3 residue classes (mod (6,0)Z+(0,6)Z) of Z^2>
+gap> S2 := Difference(2*R+[1,1],3*R);
+<union of 8 residue classes (mod (6,0)Z+(0,6)Z) of Z^2>
+gap> S = Union(S1,S2,I);
+true
+gap> Union(S,[[4,0]]);
+<union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2> U [ [ 4, 0 ] ]
+gap> Difference(S,[[0,0]]);
+<union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2> \ [ [ 0, 0 ] ]
+gap> Display(last2);
+(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
+ and (0,0)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ]
+gap> Display(last);
+(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
+ and (0,0)+(6,0)Z+(0,6)Z of Z^2) \ [ [ 0, 0 ] ]
+gap> Difference(Union(S,[[4,0]]),[[0,0]]);
+<union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2> U [ [ 4, 0 ] ] \ 
+[ [ 0, 0 ] ]
+gap> Display(last);
+(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
+ and (0,0)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ] \ [ [ 0, 0 ] ]
 gap> ResidueClassUnionViewingFormat("short");;
 gap> 2*R;
 (0,0)+(2,0)Z+(0,2)Z
@@ -184,19 +223,36 @@ gap> cls := AllResidueClassesModulo(R,L);
   (4,3)+(6,2)Z+(0,6)Z, (4,4)+(6,2)Z+(0,6)Z, (4,5)+(6,2)Z+(0,6)Z,
   (5,0)+(6,2)Z+(0,6)Z, (5,1)+(6,2)Z+(0,6)Z, (5,2)+(6,2)Z+(0,6)Z,
   (5,3)+(6,2)Z+(0,6)Z, (5,4)+(6,2)Z+(0,6)Z, (5,5)+(6,2)Z+(0,6)Z ]
-gap> cl := Union(cls{[2,4..36]});
-(0,1)+(1,0)Z+(0,2)Z
-gap> AsUnionOfFewClasses(cl);
-[ (0,1)+(1,0)Z+(0,2)Z ]
-gap> cl = last[1];
+gap> SplittedClass(R,[1,2]);
+[ (0,0)+(1,0)Z+(0,2)Z, (0,1)+(1,0)Z+(0,2)Z ]
+gap> SplittedClass(R,[2,1]);
+[ (0,0)+(2,0)Z+(0,1)Z, (1,0)+(2,0)Z+(0,1)Z ]
+gap> SplittedClass(R,[2,2]);
+[ (0,0)+(2,0)Z+(0,2)Z, (0,1)+(2,0)Z+(0,2)Z, (1,0)+(2,0)Z+(0,2)Z, 
+  (1,1)+(2,0)Z+(0,2)Z ]
+gap> SplittedClass(R,[2,3]);
+[ (0,0)+(2,0)Z+(0,3)Z, (0,1)+(2,0)Z+(0,3)Z, (0,2)+(2,0)Z+(0,3)Z, 
+  (1,0)+(2,0)Z+(0,3)Z, (1,1)+(2,0)Z+(0,3)Z, (1,2)+(2,0)Z+(0,3)Z ]
+gap> Union(last);
+( Integers^2 )
+gap> cl := last2[5];
+(1,1)+(2,0)Z+(0,3)Z
+gap> SplittedClass(cl,[1,1]);
+[ (1,1)+(2,0)Z+(0,3)Z ]
+gap> SplittedClass(cl,[1,2]);
+[ (1,1)+(2,0)Z+(0,6)Z, (1,4)+(2,0)Z+(0,6)Z ]
+gap> SplittedClass(cl,[2,1]);
+[ (1,1)+(4,0)Z+(0,3)Z, (3,1)+(4,0)Z+(0,3)Z ]
+gap> Union(last) = cl;
 true
-gap> Residue(cl);
-[ 0, 1 ]
-gap> Modulus(cl);
-[ [ 1, 0 ], [ 0, 2 ] ]
+gap> SplittedClass(cl,[2,3]);
+[ (1,1)+(4,0)Z+(0,9)Z, (1,4)+(4,0)Z+(0,9)Z, (1,7)+(4,0)Z+(0,9)Z, 
+  (3,1)+(4,0)Z+(0,9)Z, (3,4)+(4,0)Z+(0,9)Z, (3,7)+(4,0)Z+(0,9)Z ]
+gap> Union(last) = cl;
+true
 gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
 gap> ResidueClassUnionViewingFormat(oldformat);
-gap> STOP_TEST( "zxz.tst", 30000000 );
+gap> STOP_TEST( "zxz.tst", 200000000 );
 
 #############################################################################
 ##
