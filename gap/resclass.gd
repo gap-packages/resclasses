@@ -61,26 +61,77 @@ DeclareSynonym( "IsUnionOfResidueClassesOfZorZ_pi",
 #R  IsResidueClassUnionResidueListRep . .  representation by list of residues
 ##
 ##  The representation of unions of residue classes of the ring Z of the
-##  integers, of Z^2, of semilocalizations Z_(pi) of the integers and of
-##  univariate polynomial rings GF(q)[x] over finite fields, by list of
-##  residues.
+##  integers, of semilocalizations Z_(pi) of the integers and of univariate
+##  polynomial rings GF(q)[x] over finite fields, by list of residues.
 ## 
-##  The component <m> stores the modulus, <r> is the list of class
-##  representatives and <included> respectively <excluded> are lists of
-##  single elements added to respectively subtracted from the union of
-##  residue classes.
+##  Components:
 ##
-##  If the underlying ring is Z^2, the modulus <m> is a lattice, which is
-##  stored as an invertible 2x2 integer matrix in Hermite normal form whose
-##  rows are the spanning vectors, and <r>, <included> and <excluded> are
-##  lists of elements of Z^2, i.e. lists of pairs of integers.
+##  - <m>:        the modulus
+##  - <r>:        the list of class representatives
+##  - <included>: set of elements added to the union of residue classes
+##  - <excluded>: set of elements subtracted from  "      "      "
 ##
 ##  The representation is unique, i.e. two residue class unions are equal
 ##  if and only if their stored representations are equal.
 ##
+##  This is achieved in the following way:
+##
+##  - The modulus <m> is chosen multiplicatively minimal, and to be
+##    its own standard associate in the underlying ring.
+##  - The set <included> contains only elements which are not congruent to
+##    one of the residues in <r> modulo <m>.
+##  - The set <excluded> contains only elements which are congruent to one
+##    of the residues in <r> modulo <m>.
+##
 DeclareRepresentation( "IsResidueClassUnionResidueListRep", 
                        IsComponentObjectRep and IsAttributeStoringRep, 
                        [ "m", "r", "included", "excluded" ] );
+
+#############################################################################
+##
+#R  IsResidueClassUnionOfZxZResidueListRep . . . . . . . .  dito, but for Z^2
+##
+##  The representation of unions of residue classes of Z^2, by list of
+##  residues.
+##
+##  Components:
+##
+##  - <m>:         the modulus (a lattice, stored as an invertible
+##                 2x2 integer matrix in Hermite normal form whose rows
+##                 are the spanning vectors)
+##  - <r>:         the list of class representatives
+##  - <inclines>:  set of lines added to the union of residue classes
+##                 (lines are stored as pairs (<point>,<vector>))
+##  - <exclines>:  set of lines subtracted from the union of residue classes
+##                 (lines are stored as pairs (<point>,<vector>))
+##  - <incpoints>: set of points added to the union of residue classes
+##  - <excpoints>: set of points subtracted from the union of residue classes
+##
+##  The representation is unique, i.e. two residue class unions are equal
+##  if and only if their stored representations are equal.
+##
+##  This is achieved in the following way:
+##
+##  - The modulus <m> is chosen to have the smallest possible determinant.
+##  - The set <inclines> contains only lines not all of whose points are
+##    congruent to one of the residues in <r> modulo <m>.
+##  - The set <exclines> contains only lines at least some of whose points
+##    are congruent to one of the residues in <r> modulo <m>.
+##  - The set <incpoints> contains only elements which are not congruent to
+##    one of the residues in <r> modulo <m> and which do not lie on one of
+##    the lines in <inclines>.
+##  - The set <excpoints> contains only elements which are congruent to one
+##    of the residues in <r> modulo <m> or which lie on one of the lines in
+##    <inclines>.
+##  - The stored point on a line in <inclines> or <exclines> is chosen to be
+##    closest to the origin, and the stored vector <v> is chosen to be the
+##    shortest possible, and to be larger than -<v> in the GAP ordering.
+##  - Lines are merged together whenever possible.
+##
+DeclareRepresentation( "IsResidueClassUnionOfZxZResidueListRep", 
+                       IsComponentObjectRep and IsAttributeStoringRep, 
+                       [ "m", "r", "inclines", "exclines",
+                                   "incpoints", "excpoints" ] );
 
 #############################################################################
 ##
@@ -156,14 +207,14 @@ DeclareOperation( "Residue", [ IsResidueClass ] );
 #############################################################################
 ##
 #O  IncludedElements( <U> ) . included single elements of residue class union
+#O  ExcludedElements( <U> ) . excluded single elements of residue class union
+#O  IncludedLines( <U> ) . . . . included lines of residue class union of Z^2
+#O  ExcludedLines( <U> ) . . . . excluded lines of residue class union of Z^2
 ##
 DeclareOperation( "IncludedElements", [ IsResidueClassUnion ] );
-
-#############################################################################
-##
-#O  ExcludedElements( <U> ) . excluded single elements of residue class union
-##
 DeclareOperation( "ExcludedElements", [ IsResidueClassUnion ] );
+DeclareOperation( "IncludedLines", [ IsResidueClassUnionOfZxZ ] );
+DeclareOperation( "ExcludedLines", [ IsResidueClassUnionOfZxZ ] );
 
 #############################################################################
 ##
@@ -231,15 +282,11 @@ DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
 ##
+#O  Superlattices( <L> )
 #O  IsSublattice( <L1>, <L2> )
 ##
-DeclareOperation( "IsSublattice", [ IsMatrix, IsMatrix ] );
-
-#############################################################################
-##
-#O  Superlattices( <L> )
-##
 DeclareOperation( "Superlattices", [ IsMatrix ] );
+DeclareOperation( "IsSublattice", [ IsMatrix, IsMatrix ] );
 
 #############################################################################
 ##
