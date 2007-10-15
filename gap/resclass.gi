@@ -388,7 +388,7 @@ InstallMethod( IsSublattice,
                [ IsMatrix, IsMatrix ], 0,
 
   function ( L1, L2 )
-    return LatticeIntersection( L1, L2 ) = L2;
+    return ForAll( Flat( L2 / L1 ), IsInt );
   end );
 
 #############################################################################
@@ -402,18 +402,7 @@ InstallMethod( Superlattices,
 
   function ( L )
 
-    local  Word2Vector, F2, G, subgroups, gens, o, lattices, pos;
-
-    Word2Vector := function ( w )
-
-      local  l, v, i;
-
-      l := ExtRepOfObj(w); v := [0,0];
-      for i in [1,3..Length(l)-1] do
-        v := v + l[i+1] * o[l[i]];
-      od;
-      return v;
-    end;
+    local  lattices, sup, divx, divy, x, y, dx;
 
     if   Set(DimensionsMat(L)) <> [2] or not ForAll(Flat(L),IsInt)
       or DeterminantMat(L) = 0
@@ -424,16 +413,18 @@ InstallMethod( Superlattices,
     lattices := FetchFromCache( "RESCLASSES_SUPERLATTICES_CACHE", L );
     if lattices <> fail then return lattices; fi;
 
-    F2 := FreeGroup(2);
-    G := F2/[Comm(F2.1,F2.2),F2.1^L[1][1]*F2.2^L[1][2],F2.2^L[2][2]];
-    subgroups := List(ConjugacyClassesSubgroups(G),Representative);
-    gens      := List(subgroups,GeneratorsOfGroup);
-    o         := [[1,0],[0,1]];
-    lattices  := List(gens,l->HermiteNormalFormIntegerMat(
-                              Concatenation(L,List(l,Word2Vector))){[1..2]});
-
+    divx := DivisorsInt(L[2][2]); divy := DivisorsInt(L[1][1]);
+    lattices := [];
+    for x in divx do for y in divy do for dx in [0..x-1] do
+      sup := [[y,dx],[0,x]];
+      if ForAll(Flat(L/sup),IsInt) then Add(lattices,sup); fi;
+    od; od; od;
+    lattices := Set(lattices,HermiteNormalFormIntegerMat);
+    Sort(lattices, function(L1,L2)
+                     return DeterminantMat(L1) < DeterminantMat(L2);
+                   end);
+    
     PutIntoCache( "RESCLASSES_SUPERLATTICES_CACHE", L, lattices );
-
     return lattices;
   end );
 
@@ -541,7 +532,7 @@ InstallMethod( ResidueClassUnionCons,
 
       L := HermiteNormalFormIntegerMat(U!.m);  LRed := L;
       r := List(U!.r,v->v mod L); rRed := r;
-      divs := Reversed(Superlattices(L));
+      divs := Superlattices(L);
       for d in divs do
         if DeterminantMat(L)/DeterminantMat(d) > Length(r) then continue; fi;
         rRed := Set(r,v->v mod d);
@@ -1860,7 +1851,8 @@ InstallOtherMethod( SplittedClass,
 ##
 InstallMethod( SplittedClass,
                "for residue classes of Z^2 (ResClasses)", ReturnTrue,
-               [ IsResidueClassUnionOfZxZ, IsRowVector ], 0,
+               [ IsResidueClassUnionOfZxZ and IsResidueClass,
+                 IsRowVector ], 0,
 
   function ( cl, t )
 
@@ -1868,13 +1860,12 @@ InstallMethod( SplittedClass,
 
     R := UnderlyingRing(FamilyObj(cl));
     if not t in R then TryNextMethod(); fi;
-    if   not IsResidueClass(cl) or not ForAll(t,IsPosInt)
-    then return fail; fi;
+    if not ForAll(t,IsPosInt) then return fail; fi;
     r := Residue(cl); m := Modulus(cl);
-    return List([0..t[1]-1],
-                i->List([0..t[2]-1],
-                        j->ResidueClass(R,[t[1]*m[1],t[2]*m[2]],
-                                          [r[1]+i*m[1],r[2]+j*m[2]])));
+    return Union(List([0..t[1]-1],
+                      i->List([0..t[2]-1],
+                              j->ResidueClass(R,[t[1]*m[1],t[2]*m[2]],
+                                                r+i*m[1]+j*m[2]))));
   end );
 
 #############################################################################
@@ -1983,7 +1974,7 @@ InstallMethod( AsUnionOfFewClasses,
     L   := Modulus(U);
     res := Residues(U);
     if Length(res) = 1 then return [ ResidueClass(ZxZ,L,res[1]) ]; fi;
-    div := Reversed(Superlattices(L)); # sorted by increasing determinant
+    div := Superlattices(L); # sorted by increasing determinant
     cls := []; remaining := U;
     for d in div do
       if   not IsSublattice(d,L)
@@ -2468,12 +2459,37 @@ InstallMethod( PrintObj,
 
 #############################################################################
 ##
-#M  Display( <U> ) . . . . . . . . . . . . . .  for residue class unions of Z
+#F  DisplayAsGrid( <U> ) .  display the residue class union <U> as ASCII grid
+##
+InstallGlobalFunction( DisplayAsGrid,
+
+  function ( U )
+
+    local  lines, cols, i, j;
+
+    if not IsSubset(Integers^2,U) then return fail; fi;
+    lines := SizeScreen()[2]; cols := SizeScreen()[1]-2;
+    for i in [lines-1,lines-2..0] do
+      for j in [0..cols-1] do
+        if [i,j] in U then Print("*"); else Print(" "); fi;
+      od;
+      Print("\n");
+    od;
+  end );
+
+#############################################################################
+##
+#M  Display( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( Display,
-               "for residue class unions of Z (ResClasses)", true,
+               "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnion ], 0,
-               function ( U ) ViewObj(U:RC_DISPLAY); Print("\n"); end );
+
+  function ( U )
+    if   IsResidueClassUnionOfZxZ(U) and ValueOption("AsGrid") <> fail
+    then DisplayAsGrid(U);
+    else ViewObj(U:RC_DISPLAY); Print("\n"); fi;
+  end );
 
 #############################################################################
 ##

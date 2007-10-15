@@ -302,4 +302,10 @@ DeclareAttribute( "Density", IsResidueClassUnion );
 
 #############################################################################
 ##
+#F  DisplayAsGrid( <U> ) .  display the residue class union <U> as ASCII grid
+##
+DeclareGlobalFunction( "DisplayAsGrid" );
+
+#############################################################################
+##
 #E  resclass.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
