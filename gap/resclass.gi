@@ -27,13 +27,10 @@ InstallTrueMethod( IsResidueClassUnion,
 InstallTrueMethod( IsResidueClassUnion,
                    IsResidueClassUnionOfGFqx );
 
-# Shorthands for commonly used filters.
+# Shorthand for commonly used filter.
 
 BindGlobal( "IsResidueClassUnionInResidueListRep",
             IsResidueClassUnion and IsResidueClassUnionResidueListRep );
-BindGlobal( "IsResidueClassUnionOfZxZInResidueListRep",
-                IsResidueClassUnionOfZxZ
-            and IsResidueClassUnionOfZxZResidueListRep );
 
 #############################################################################
 ##
@@ -517,37 +514,23 @@ InstallMethod( ResidueClassUnionCons,
 
 #############################################################################
 ##
-#M  ResidueClassUnionCons( <filter>, Integers^2, <L>, <r>,
-#M                         <inclines>, <exclines>, <incpoints>, <excpoints> )
+#M  ResidueClassUnionCons( <filter>, Integers^2,
+##                         <L>, <r>, <included>, <excluded> )
 ##
 InstallMethod( ResidueClassUnionCons,
                "residue list representation, for Z^2 (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnionOfZxZ, IsRowModule, IsMatrix,
-                             IsList, IsList, IsList, IsList, IsList ], 0,
+               ReturnTrue, [ IsResidueClassUnion, IsRowModule,
+                             IsMatrix, IsList, IsList, IsList ], 0,
 
-  function ( filter, ZxZ, L, r, inclines, exclines, incpoints, excpoints )
+  function ( filter, ZxZ, L, r, included, excluded )
 
     local  ReduceResidueClassUnion, result, both, rep, pos;
 
     ReduceResidueClassUnion := function ( U )
 
-      local  NormalizeLines,
-             L, r, LRed, rRed, divs, d;
+      local  L, r, LRed, rRed, divs, d;
 
-      NormalizeLines := function ( lines )
-
-        local  l, i, k;
-
-        for i in [1..Length(lines)] do
-          l := lines[i];
-          k := (l[1]*l[2])/l[2]^2;
-          if k < 0 then k := Int(k-1/2); else k := Int(k+1/2); fi;
-          l[1] := l[1] - k*l[2];
-          lines[i] := l;
-        od;
-      end;
-
-      L := HermiteNormalFormIntegerMat(U!.L);  LRed := L;
+      L := HermiteNormalFormIntegerMat(U!.m);  LRed := L;
       r := List(U!.r,v->v mod L); rRed := r;
       divs := Superlattices(L);
       for d in divs do
@@ -556,55 +539,31 @@ InstallMethod( ResidueClassUnionCons,
         if   Length(rRed) = Length(r)*DeterminantMat(d)/DeterminantMat(L)
         then LRed := d; break; fi;
       od;
-      U!.L := Immutable(LRed); U!.r := Immutable(rRed);
-      NormalizeLines(U!.inclines);
-      NormalizeLines(U!.exclines);
-      U!.inclines := Set(U!.inclines);
-      U!.exclines := Difference(U!.exclines,U!.inclines);
-
-      # Further line reduction code goes in here.
-
-      MakeImmutable(U!.inclines);
-      MakeImmutable(U!.exclines);
-      U!.incpoints := Set(Filtered(U!.incpoints,v->not v mod LRed in rRed
-                          and not ForAny(U!.inclines,
-                                         l->DeterminantMat([v-l[1],l[2]]) = 0
-                                        and IsInt((v[1]-l[1][1])/l[2][1]))));
-      MakeImmutable(U!.incpoints);
-      U!.excpoints := Set(Filtered(U!.excpoints,v->v mod LRed in rRed
-                          or ForAny(U!.inclines,
-                                    l->DeterminantMat([v-l[1],l[2]]) = 0
-                                   and IsInt((v[1]-l[1][1])/l[2][1]))));
-      MakeImmutable(U!.excpoints);
+      U!.m := LRed; U!.r := Immutable(rRed);
+      U!.included := Immutable(Set(Filtered(U!.included,
+                                            v->not v mod LRed in rRed)));
+      U!.excluded := Immutable(Set(Filtered(U!.excluded,
+                                            v->v mod LRed in rRed)));
+      if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
     end;
 
     if not IsZxZ( ZxZ ) then TryNextMethod( ); fi;
-    if r = [] then
-      L := [[0,0],[0,0]];
-    else
-      L := HermiteNormalFormIntegerMat( L );
-      r := Set( r, v -> v mod L );
-    fi;
-    both := Intersection( incpoints, excpoints );
-    incpoints := Set( Difference( incpoints, both ) );
-    excpoints := Set( Difference( excpoints, both ) );
-    if r = [] then return Difference(incpoints,excpoints); fi;
+    L := HermiteNormalFormIntegerMat( L );
+    r := Set( r, v -> v mod L );
+    both := Intersection( included, excluded );
+    included := Set( Difference( included, both ) );
+    excluded := Set( Difference( excluded, both ) );
+    if r = [] then return Difference(included,excluded); fi;
     result := Objectify( NewType( ResidueClassUnionsFamily( ZxZ ),
                                   IsResidueClassUnionOfZxZ and
                                   IsResidueClassUnionResidueListRep ),
-                         rec( L := L, r := r,
-                              inclines  := inclines,
-                              exclines  := exclines,
-                              incpoints := incpoints,
-                              excpoints := excpoints ) );
+                         rec( m := L, r := r,
+                              included := included, excluded := excluded ) );
     SetSize( result, infinity ); SetIsFinite( result, false );
     SetIsEmpty( result, false );
-    if incpoints <> [ ] then rep := incpoints[ 1 ]; else
+    if included <> [ ] then rep := included[ 1 ]; else
       rep := r[1]; pos := 1;
-      while rep in excpoints
-         or ForAny( exclines, l -> DeterminantMat([rep-l[1],l[2]]) = 0
-                               and IsInt((rep[1]-l[1][1])/l[2][1]) )
-      do
+      while rep in excluded do
         pos := pos + 1;
         rep := r[pos mod Length(r) + 1] + Int(pos/Length(r)) * L[1];
       od;
@@ -612,58 +571,46 @@ InstallMethod( ResidueClassUnionCons,
     SetRepresentative( result, rep );
     ReduceResidueClassUnion( result );
     if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
-    if IsOne( result!.L ) and result!.r = [ [ 0, 0 ] ]
-      and [ result!.inclines,  result!.exclines  ] = [ [ ], [ ] ]
-      and [ result!.incpoints, result!.excpoints ] = [ [ ], [ ] ]
+    if AbsInt( DeterminantMat( result!.m ) ) = 1
+      and result!.r = [ [ 0, 0 ] ]
+      and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
     then return ZxZ; else return result; fi;
   end );
 
 #############################################################################
 ##
-#M  ResidueClassUnionCons( <filter>, Integers^2, <L>, <r>,    ("L as vector")
-#M                         <inclines>, <exclines>, <incpoints>, <excpoints> )
+#M  ResidueClassUnionCons( <filter>, Integers^2,      ("modulus L as vector")
+##                         <L>, <r>, <included>, <excluded> )
 ##
 InstallOtherMethod( ResidueClassUnionCons,
-                    "residue list representation, for Z^2 (ResClasses)",
-                    ReturnTrue, [ IsResidueClassUnionOfZxZ,
-                                  IsRowModule, IsRowVector, IsList,
-                                  IsList, IsList, IsList, IsList ], 0,
+                    "residue list rep, mod. as vector, for Z^2 (ResClasses)",
+                    ReturnTrue, [ IsResidueClassUnion, IsRowModule,
+                                  IsRowVector, IsList, IsList, IsList ], 0,
 
-  function ( filter, ZxZ, L, r, inclines, exclines, incpoints, excpoints )
-    return ResidueClassUnionCons( filter, ZxZ, DiagonalMat(L), r,
-                                  inclines, exclines, incpoints, excpoints );
+  function ( filter, ZxZ, L, r, included, excluded )
+    return ResidueClassUnionCons( filter, ZxZ,
+                                  DiagonalMat(L), r, included, excluded );
   end );
 
 #############################################################################
 ##
 #F  ResidueClassUnion( <R>, <m>, <r> ) . . . . . . . union of residue classes
 #F  ResidueClassUnion( <R>, <m>, <r>, <included>, <excluded> )
-#F  ResidueClassUnion( <R>, <L>, <r> )
-#F  ResidueClassUnion( <R>, <L>, <r>, <inclines>, <exclines>,
-#F                                    <incpoints>, <excpoints> )
 ##
 InstallGlobalFunction( ResidueClassUnion,
 
   function ( arg )
 
-    if not (     Length(arg) in [3,5,7]
+    if not (     Length(arg) in [3,5]
              and (    IsRing(arg[1]) and arg[2] in arg[1]
                    or     IsRowModule(arg[1]) and IsMatrix(arg[2])
                       and IsSubset(arg[1],arg[2])
                       and not IsZero(DeterminantMat(arg[2])) )
              and IsList(arg[3]) and IsSubset(arg[1],arg[3])
-             and ForAll(arg{[4..Length(arg)]},IsList)
-             and (    Length(arg) <> 5
-                   or IsSubset(arg[1],arg[4]) and IsSubset(arg[1],arg[5]))
-             and (    Length(arg) < 7
-                   or IsZxZ(arg[1])
-                        and IsSubset([2],Set(arg[6],Length))
-                        and IsSubset([2],Set(arg[7],Length))
-                        and IsSubset(arg[1],Concatenation(arg[6]))
-                        and IsSubset(arg[1],Concatenation(arg[7])) ) )
+             and (    Length(arg) = 3 or IsList(arg[4]) and IsList(arg[5])
+                  and IsSubset(arg[1],arg[4]) and IsSubset(arg[1],arg[5])) )
     then Error("usage: ResidueClassUnion( <R>, <m>, <r> [, <included>",
-               ", <excluded>] ),\nfor details / alternatives see manual.\n");
-         return fail;
+               ", <excluded>] ),\nfor details see manual.\n"); return fail;
     fi;
     return CallFuncList( ResidueClassUnionNC, arg );
   end );
@@ -672,36 +619,19 @@ InstallGlobalFunction( ResidueClassUnion,
 ##
 #F  ResidueClassUnionNC( <R>, <m>, <r> ) . . . . . . union of residue classes
 #F  ResidueClassUnionNC( <R>, <m>, <r>, <included>, <excluded> )
-#F  ResidueClassUnionNC( <R>, <m>, <r>, <inclines>, <exclines>,
-#F                                      <incpoints>, <excpoints> )
 ##
 InstallGlobalFunction( ResidueClassUnionNC,
 
   function ( arg )
 
-    local  R, m, L, r,
-           included, excluded, inclines, exclines, incpoints, excpoints;
+    local  R, m, r, included, excluded;
 
-    R := arg[1];
-    if IsRing(R) then
-      m := arg[2]; r := Set(arg[3]);
-      if   Length(arg) = 5
-      then included := Set(arg[4]); excluded := Set(arg[5]);
-      else included := [];          excluded := []; fi;
-      return ResidueClassUnionCons( IsResidueClassUnion,
-                                    R, m, r, included, excluded );
-    else
-      L := arg[2]; r := Set(arg[3]);
-      if Length(arg) = 7 then
-        inclines  := Set(arg[4]); exclines  := Set(arg[5]);
-        incpoints := Set(arg[6]); excpoints := Set(arg[7]);
-      else
-        inclines := []; exclines := []; incpoints := []; excpoints := [];
-      fi;
-      return ResidueClassUnionCons( IsResidueClassUnionOfZxZ,
-                                    R, L, r, inclines, exclines,
-                                             incpoints, excpoints );
-    fi;
+    R := arg[1]; m := arg[2]; r := Set(arg[3]);
+    if   Length(arg) = 5
+    then included := Set(arg[4]); excluded := Set(arg[5]);
+    else included := [];          excluded := []; fi;
+    return ResidueClassUnionCons( IsResidueClassUnion, R, m, r,
+                                  included, excluded );
   end );
 
 #############################################################################
@@ -816,20 +746,6 @@ InstallMethod( ExtRepOfObj,
 
 #############################################################################
 ##
-#M  ExtRepOfObj( <U> ) . . . . . . . . . . .  for residue class unions of Z^2
-##
-InstallMethod( ExtRepOfObj,
-               "for residue class unions of Z^2(ResClasses)",
-               true, [ IsResidueClassUnionOfZxZ ], 0,
-               U -> [ ShallowCopy( Modulus( U ) ),
-                      ShallowCopy( Residues( U ) ),
-                      ShallowCopy( IncludedLines( U ) ),
-                      ShallowCopy( ExcludedLines( U ) ),
-                      ShallowCopy( IncludedPoints( U ) ),
-                      ShallowCopy( ExcludedPoints( U ) ) ] );
-
-#############################################################################
-##
 #M  ObjByExtRep( <fam>, <l> ) . . . . . . . reconstruct a residue class union
 ##
 InstallMethod( ObjByExtRep,
@@ -844,20 +760,6 @@ InstallMethod( ObjByExtRep,
     R := UnderlyingRing(fam);
     if fam <> ResidueClassUnionsFamily(R) then TryNextMethod(); fi;
     return ResidueClassUnion(R,l[1],l[2],l[3],l[4]);
-  end );
-
-#############################################################################
-##
-#M  ObjByExtRep( <fam>, <l> ) . . .  reconstruct a residue class union of Z^2
-##
-InstallMethod( ObjByExtRep,
-               "reconstruct a residue class union of Z^2 (ResClasses)",
-               ReturnTrue, [ IsFamily, IsList ], 0,
-
-  function ( fam, l )
-    if   fam <> ZxZResidueClassUnionsFamily or Length(l) <> 6
-    then TryNextMethod(); fi;
-    return ResidueClassUnion(Integers^2,l[1],l[2],l[3],l[4],l[5],l[6]);
   end );
 
 #############################################################################
@@ -878,31 +780,14 @@ InstallMethod( ObjByExtRep,
 ##
 InstallMethod( Modulus, "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.m );
-InstallMethod( Modulus, "for residue class unions of Z^2 (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0, Lattice );
 InstallOtherMethod( Modulus, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, One );
 InstallOtherMethod( Modulus, "for the base module (ResClasses)", true,
-                    [ IsRowModule ], 0, Lattice );
+                    [ IsRowModule ], 0, R -> AsList( Basis( R ) ) );
 InstallOtherMethod( Modulus, "for finite sets (ResClasses)", true,
                     [ IsList ], 0, l -> Zero( l[ 1 ] ) );
 InstallOtherMethod( Modulus, "for the empty set (ResClasses)", true,
                     [ IsList and IsEmpty ], 0, empty -> 0 );
-
-#############################################################################
-##
-#M  Lattice( <U> ) . . . . . . . . . . . . .  for residue class unions of Z^2
-#M  Lattice( <R> ) . . . . . . . . . . . . . . . . . . .  for the base module
-#M  Lattice( <l> ) . . . . . . . . . . . . . . . . . . . . .  for finite sets
-##
-InstallMethod( Lattice, "for residue class unions of Z^2 (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0, U -> U!.L );
-InstallOtherMethod( Lattice, "for the base module (ResClasses)", true,
-                    [ IsRowModule ], 0, R -> AsList( Basis( R ) ) );
-InstallOtherMethod( Lattice, "for finite sets (ResClasses)", true,
-                    [ IsList ], 0, l -> NullMat(2,2,DefaultField(l[1])) );
-InstallOtherMethod( Lattice, "for the empty set (ResClasses)", true,
-                    [ IsList and IsEmpty ], 0, empty -> [[0,0],[0,0]] );
 
 #############################################################################
 ##
@@ -924,8 +809,6 @@ InstallOtherMethod( Residue, "for the base module (ResClasses)", true,
 ##
 InstallMethod( Residues, "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.r );
-InstallMethod( Residues, "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0, U -> U!.r );
 InstallOtherMethod( Residues, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> [ Zero( R ) ] );
 InstallOtherMethod( Residues, "for the base module (ResClasses)", true,
@@ -936,7 +819,7 @@ InstallOtherMethod( Residues, "for finite sets (ResClasses)", true,
 #############################################################################
 ##
 #M  IncludedElements( <U> ) . . . . . . . . . . . .  for residue class unions
-#M  IncludedElements( <R> ) . . . . . . . . . . . . . . . . for the base ring
+#M  IncludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
 #M  IncludedElements( <l> ) . . . . . . . . . . . . . . . . . for finite sets
 ##
 InstallMethod( IncludedElements, "for residue class unions (ResClasses)",
@@ -944,13 +827,15 @@ InstallMethod( IncludedElements, "for residue class unions (ResClasses)",
                U -> U!.included );
 InstallOtherMethod( IncludedElements, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ ] );
+InstallOtherMethod( IncludedElements, "for the base module (ResClasses)",
+                    true, [ IsRowModule ], 0, R -> [ ] );
 InstallOtherMethod( IncludedElements, "for finite sets (ResClasses)",
                     true, [ IsList ], 0, l -> l );
 
 #############################################################################
 ##
 #M  ExcludedElements( <U> ) . . . . . . . . . . . .  for residue class unions
-#M  ExcludedElements( <R> ) . . . . . . . . . . . . . . . . for the base ring
+#M  ExcludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
 #M  ExcludedElements( <l> ) . . . . . . . . . . . . . . . . . for finite sets
 ##
 InstallMethod( ExcludedElements, "for residue class unions (ResClasses)",
@@ -958,61 +843,9 @@ InstallMethod( ExcludedElements, "for residue class unions (ResClasses)",
                U -> U!.excluded );
 InstallOtherMethod( ExcludedElements, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ ] );
+InstallOtherMethod( ExcludedElements, "for the base module (ResClasses)",
+                    true, [ IsRowModule ], 0, R -> [ ] );
 InstallOtherMethod( ExcludedElements, "for finite sets (ResClasses)",
-                    true, [ IsList ], 0, l -> [ ] );
-
-#############################################################################
-##
-#M  IncludedPoints( <U> ) . . . . . . . . . . for residue class unions of Z^2
-#M  IncludedPoints( <R> ) . . . . . . . . . . . . . . . . for the base module
-##
-InstallMethod( IncludedPoints,
-               "for residue class unions of Z^2 (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0,
-               U -> U!.incpoints );
-InstallOtherMethod( IncludedPoints, "for the base module (ResClasses)",
-                    true, [ IsRowModule ], 0, R -> [ ] );
-
-#############################################################################
-##
-#M  ExcludedPoints( <U> ) . . . . . . . . . . for residue class unions of Z^2
-#M  ExcludedPoints( <R> ) . . . . . . . . . . . . . . . . for the base module
-##
-InstallMethod( ExcludedPoints,
-               "for residue class unions of Z^2 (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0,
-               U -> U!.excpoints );
-InstallOtherMethod( ExcludedPoints, "for the base module (ResClasses)",
-                    true, [ IsRowModule ], 0, R -> [ ] );
-
-#############################################################################
-##
-#M  IncludedLines( <U> ) . . . . . . . . . .  for residue class unions of Z^2
-#M  IncludedLines( <R> ) . . . . . . . . . . . . . . . .  for the base module
-#M  IncludedLines( <l> ) . . . . . . . . . . . . . . . . . .  for finite sets
-##
-InstallMethod( IncludedLines,
-               "for residue class unions of Z^2 (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0,
-               U -> U!.inclines );
-InstallOtherMethod( IncludedLines, "for the base module (ResClasses)",
-                    true, [ IsRowModule ], 0, R -> [ ] );
-InstallOtherMethod( IncludedLines, "for finite sets (ResClasses)",
-                    true, [ IsList ], 0, l -> [ ] );
-
-#############################################################################
-##
-#M  ExcludedLines( <U> ) . . . . . . . . . .  for residue class unions of Z^2
-#M  ExcludedLines( <R> ) . . . . . . . . . . . . . . . .  for the base module
-#M  ExcludedLines( <l> ) . . . . . . . . . . . . . . . . . .  for finite sets
-##
-InstallMethod( ExcludedLines,
-               "for residue class unions of Z^2 (ResClasses)", true,
-               [ IsResidueClassUnionOfZxZInResidueListRep ], 0,
-               U -> U!.exclines );
-InstallOtherMethod( ExcludedLines, "for the base module (ResClasses)",
-                    true, [ IsRowModule ], 0, R -> [ ] );
-InstallOtherMethod( ExcludedLines, "for finite sets (ResClasses)",
                     true, [ IsList ], 0, l -> [ ] );
 
 #############################################################################
@@ -1037,22 +870,6 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#M  \=( <U1>, <U2> ) . . . . . . . . . . . .  for residue class unions of Z^2
-##
-InstallMethod( \=,
-               "for two residue class unions of Z^2 (ResClasses)",
-               IsIdenticalObj,
-               [ IsResidueClassUnionOfZxZInResidueListRep,
-                 IsResidueClassUnionOfZxZInResidueListRep ], 0,
-
-  function ( U1, U2 )
-    return U1!.L = U2!.L and U1!.r = U2!.r and
-           U1!.inclines  = U2!.inclines  and U1!.exclines  = U2!.exclines and
-           U1!.incpoints = U2!.incpoints and U1!.excpoints = U2!.excpoints;
-  end );
-
-#############################################################################
-##
 #M  \=( <D>, <l> ) . . . . . .  for an infinite domain and a list of elements
 #M  \=( <l>, <D> ) . . . . . .  for a list of elements and an infinite domain
 ##
@@ -1070,13 +887,10 @@ InstallMethod( \=,
 
 #############################################################################
 ##
-#S  A total ordering of residue class unions (needed for forming sets). /////
-##
-#############################################################################
-
-#############################################################################
-##
 #M  \<( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
+##
+##  A total ordering of residue class unions - we want to be able to form
+##  sorted lists and sets of these objects.
 ##
 InstallMethod( \<,
                "for two residue class unions (ResClasses)", IsIdenticalObj,
@@ -1089,30 +903,6 @@ InstallMethod( \<,
     elif U1!.included <> U2!.included
     then return U1!.included < U2!.included;
     else return U1!.excluded < U2!.excluded; fi;
-  end );
-
-#############################################################################
-##
-#M  \<( <U1>, <U2> ) . . . . . . . . . . . .  for residue class unions of Z^2
-##
-InstallMethod( \<,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
-               [ IsResidueClassUnionOfZxZInResidueListRep,
-                 IsResidueClassUnionOfZxZInResidueListRep ], 0,
-
-  function ( U1, U2 )
-    if   U1!.L <> U2!.L then
-      if   DeterminantMat(U1!.L) <> DeterminantMat(U2!.L)
-      then return DeterminantMat(U1!.L) < DeterminantMat(U2!.L)
-      else return U1!.L < U2!.L; fi;
-    elif U1!.r <> U2!.r then return U1!.r < U2!.r;
-    elif U1!.inclines <> U2!.inclines
-    then return U1!.inclines < U2!.inclines;
-    elif U1!.exclines <> U2!.exclines
-    then return U1!.exclines < U2!.exclines;
-    elif U1!.incpoints <> U2!.incpoints
-    then return U1!.incpoints < U2!.incpoints;
-    else return U1!.excpoints < U2!.excpoints; fi;
   end );
 
 #############################################################################
@@ -1171,28 +961,6 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  \in( <v>, <U> ) . . . . . .  for a point and a residue class union of Z^2
-##
-InstallMethod( \in,
-               "for a point and a residue class union of Z^2 (ResClasses)",
-               ReturnTrue,
-               [ IsRowVector, IsResidueClassUnionOfZxZInResidueListRep ], 0,
-
-  function ( v, U )
-    if Length(v) <> 2 or not ForAll(v,IsInt) then return false; fi;
-    if   v in U!.incpoints then return true;
-    elif n in U!.excpoints then return false;
-    elif ForAny( U!.inclines, l -> DeterminantMat([v-l[1],l[2]) = 0
-                               and IsInt((v[1]-l[1][1])/l[2][1]))
-    then return true;
-    elif ForAny( U!.exclines, l -> DeterminantMat([v-l[1],l[2]) = 0
-                               and IsInt((v[1]-l[1][1])/l[2][1]))
-    then return false;
-    else return n mod U!.L in U!.r; fi;
-  end );
-
-#############################################################################
-##
 #S  Density and subset relations. ///////////////////////////////////////////
 ##
 #############################################################################
@@ -1223,6 +991,18 @@ InstallOtherMethod( Density, "for the empty set (ResClasses)", true,
 
 #############################################################################
 ##
+#M  IsSubset( <U>, <l> ) . . .  for a residue class union and an element list
+##
+InstallMethod( IsSubset,
+               "for residue class union and element list (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnion, IsList ], 0,
+
+  function ( U, l )
+    return ForAll( Set( l ), n -> n in U );
+  end );
+
+#############################################################################
+##
 #M  IsSubset( <U1>, <U2> ) . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( IsSubset,
@@ -1235,66 +1015,16 @@ InstallMethod( IsSubset,
     local  R, m1, m2, m, r1, r2, r, allres1, allres2, allres;
 
     R := UnderlyingRing(FamilyObj(U1));
-    if not IsRing(R) then TryNextMethod(); fi;
     m1 := U1!.m; m2 := U2!.m;
     r1 := U1!.r; r2 := U2!.r;
-    m := Lcm(R,m1,m2);
     if   not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
     then return false; fi;
+    if   IsRing(R)      then m := Lcm(R,m1,m2);
+    elif IsRowModule(R) then m := LatticeIntersection(m1,m2); fi;
     allres  := AllResidues(R,m);
     allres1 := Filtered(allres,n->n mod m1 in r1);
     allres2 := Filtered(allres,n->n mod m2 in r2);
     return IsSubset(allres1,allres2);
-  end );
-
-#############################################################################
-##
-#M  IsSubset( <U1>, <U2> ) . . . . . . . . .  for residue class unions of Z^2
-##
-InstallMethod( IsSubset,
-               "for two residue class unions of Z^2 (ResClasses)",
-               IsIdenticalObj,
-               [ IsResidueClassUnionOfZxZInResidueListRep,
-                 IsResidueClassUnionOfZxZInResidueListRep ], 0,
-
-  function ( U1, U2 )
-
-    local  R, L1, L2, L, r1, r2, r, allres1, allres2, allres, l1, l2;
-
-    R := UnderlyingRing(FamilyObj(U1));
-    L1 := U1!.L; L2 := U2!.L;
-    r1 := U1!.r; r2 := U2!.r;
-    if   not IsSubset(U1,U2!.incpoints)
-      or Intersection(U1!.excpoints,U2) <> []
-    then return false; fi;
-    for l1 in U1!.exclines do
-      if   ForAny(U2!.incpoints,p->DeterminantMat([p-l1[1],l1[2]])=0)
-      then return false; fi;
-
-    od;
-    for l2 in U2!.inclines do
-      if   ForAny(U1!.excpoints,p->DeterminantMat([p-l2[1],l2[2]])=0)
-      then return false; fi;
-
-    od;
-# $$$ lines!
-    L := LatticeIntersection(L1,L2); fi;
-    allres  := AllResidues(R,L);
-    allres1 := Filtered(allres,n->n mod L1 in r1);
-    allres2 := Filtered(allres,n->n mod L2 in r2);
-    return IsSubset(allres1,allres2);
-  end );
-
-#############################################################################
-##
-#M  IsSubset( <U>, <l> ) . . . . . for a residue class union and a finite set
-##
-InstallMethod( IsSubset,
-               "for residue class union and finite set (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnion, IsList ], 0,
-
-  function ( U, l )
-    return ForAll( Set( l ), n -> n in U );
   end );
 
 #############################################################################
