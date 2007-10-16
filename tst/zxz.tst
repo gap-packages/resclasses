@@ -113,6 +113,14 @@ gap> Difference(Union(S,[[4,0]]),[[0,0]]);
 gap> Display(last);
 (Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
  and (0,0)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ] \ [ [ 0, 0 ] ]
+gap> S := 2*R;
+The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2
+gap> Union(S,S+[1,0]);
+The residue class (0,0)+(1,0)Z+(0,2)Z of Z^2
+gap> Union(S,S+[1,0],S+[0,1]);
+Z^2 \ The residue class (1,1)+(2,0)Z+(0,2)Z of Z^2
+gap> Union(S,S+[1,0],S+[0,1],S+[1,1]);
+( Integers^2 )
 gap> ResidueClassUnionViewingFormat("short");;
 gap> 2*R;
 (0,0)+(2,0)Z+(0,2)Z
