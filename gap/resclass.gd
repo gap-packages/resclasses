@@ -89,6 +89,54 @@ DeclareRepresentation( "IsResidueClassUnionResidueListRep",
 
 #############################################################################
 ##
+#R  IsResidueClassUnionOfZxZResidueListRep . . . . . . . .  dito, but for Z^2
+##
+##  The representation of unions of residue classes of Z^2, by list of
+##  residues.
+##
+##  Components:
+##
+##  - <L>:         the modulus (a lattice, stored as an invertible
+##                 2x2 integer matrix in Hermite normal form whose rows
+##                 are the spanning vectors)
+##  - <r>:         the list of class representatives
+##  - <inclines>:  set of lines added to the union of residue classes
+##                 (lines are stored as pairs (<point>,<vector>))
+##  - <exclines>:  set of lines subtracted from the union of residue classes
+##                 (lines are stored as pairs (<point>,<vector>))
+##  - <incpoints>: set of points added to the union of residue classes
+##  - <excpoints>: set of points subtracted from the union of residue classes
+##
+##  If <inclines> and <exclines> are empty, the representation is unique,
+##  i.e. two residue class unions are equal if and only if their stored
+##  representations are equal.
+##
+##  It could be made unique in all cases in the following way:
+##
+##  - The lattice <L> is chosen to have the smallest possible determinant
+##    (implemented).
+##  - The set <inclines> contains only lines not all of whose points are
+##    congruent to one of the residues in <r> modulo <m>.
+##  - The set <exclines> contains only lines at least some of whose points
+##    are congruent to one of the residues in <r> modulo <m>.
+##  - The set <incpoints> contains only elements which are not congruent to
+##    one of the residues in <r> modulo <m> and which do not lie on one of
+##    the lines in <inclines> (implemented).
+##  - The set <excpoints> contains only elements which are congruent to one
+##    of the residues in <r> modulo <m> or which lie on one of the lines in
+##    <inclines> (implemented).
+##  - The stored point on a line in <inclines> or <exclines> is chosen to be
+##    closest to the origin, and the stored vector <v> is chosen to be larger
+##    than -<v> in the GAP ordering (implemented).
+##  - Lines are merged together whenever possible.
+##
+DeclareRepresentation( "IsResidueClassUnionOfZxZResidueListRep", 
+                       IsComponentObjectRep and IsAttributeStoringRep, 
+                       [ "L", "r", "inclines", "exclines",
+                                   "incpoints", "excpoints" ] );
+
+#############################################################################
+##
 #R  IsResidueClassUnionsIteratorRep . . . . . . . . . iterator representation
 ##
 DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
@@ -113,11 +161,26 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 DeclareConstructor( "ResidueClassUnionCons",
                     [ IsResidueClassUnion, IsRing, IsRingElement,
                       IsList, IsList, IsList ] );
-DeclareConstructor( "ResidueClassUnionCons",
-                    [ IsResidueClassUnion, IsRowModule, IsMatrix,
-                      IsList, IsList, IsList ] );
 DeclareGlobalFunction( "ResidueClassUnion" );
 DeclareGlobalFunction( "ResidueClassUnionNC" );
+
+#############################################################################
+##
+#O  ResidueClassUnionCons( <filter>, <R>, <L>, <r>,
+##                         <inclines>, <exclines>, <incpoints>, <excpoints> )
+##
+##  The constructor for *residue class unions* of Z^2,
+##  i.e. set-theoretic unions of residue classes (modulo a lattice)
+##  +/- finitely many lines +/- finite sets of elements.
+##
+##  Returns the union of the residue classes <r>[i] ( mod <L> ) of Z^2,
+##  plus a finite set <inclines> of lines and a finite set <incpoints> of
+##  points, and minus a finite set <exclines> of lines and a finite set
+##  <excpoints> of points.
+##
+DeclareConstructor( "ResidueClassUnionCons",
+                    [ IsResidueClassUnion, IsRowModule, IsMatrix,
+                      IsList, IsList, IsList, IsList, IsList ] );
 
 #############################################################################
 ##
@@ -146,9 +209,11 @@ DeclareProperty( "IsResidueClass", IsObject );
 #############################################################################
 ##
 #O  Modulus( <U> ) . . . . . . . . . . . . . modulus of a residue class union
+#O  Lattice( <U> ) . . . . . . . . .  lattice of a residue class union of Z^2
 ##
 DeclareOperation( "Modulus", [ IsResidueClassUnion ] );
 DeclareSynonym( "Mod", Modulus );
+DeclareOperation( "Lattice", [ IsResidueClassUnionOfZxZ ] );
 
 #############################################################################
 ##
@@ -161,12 +226,16 @@ DeclareOperation( "Residue", [ IsResidueClass ] );
 #############################################################################
 ##
 #O  IncludedElements( <U> ) . included single elements of residue class union
+#O  IncludedPoints( <U> ) . . . . . . . . . . . . . . . . . . . . . . .  dito
 #O  ExcludedElements( <U> ) . excluded single elements of residue class union
-#O  IncludedLines( <U> ) . . . . included lines of residue class union of Z^2
-#O  ExcludedLines( <U> ) . . . . excluded lines of residue class union of Z^2
+#O  ExcludedPoints( <U> ) . . . . . . . . . . . . . . . . . . . . . . .  dito
+#O  IncludedLines( <U> )  . . .  included lines of residue class union of Z^2
+#O  ExcludedLines( <U> )  . . .  excluded lines of residue class union of Z^2
 ##
 DeclareOperation( "IncludedElements", [ IsResidueClassUnion ] );
+DeclareSynonym( "IncludedPoints", IncludedElements );
 DeclareOperation( "ExcludedElements", [ IsResidueClassUnion ] );
+DeclareSynonym( "ExcludedPoints", ExcludedElements );
 DeclareOperation( "IncludedLines", [ IsResidueClassUnionOfZxZ ] );
 DeclareOperation( "ExcludedLines", [ IsResidueClassUnionOfZxZ ] );
 
