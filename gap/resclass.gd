@@ -89,52 +89,6 @@ DeclareRepresentation( "IsResidueClassUnionResidueListRep",
 
 #############################################################################
 ##
-#R  IsResidueClassUnionOfZxZResidueListRep . . . . . . . .  dito, but for Z^2
-##
-##  The representation of unions of residue classes of Z^2, by list of
-##  residues.
-##
-##  Components:
-##
-##  - <m>:         the modulus (a lattice, stored as an invertible
-##                 2x2 integer matrix in Hermite normal form whose rows
-##                 are the spanning vectors)
-##  - <r>:         the list of class representatives
-##  - <inclines>:  set of lines added to the union of residue classes
-##                 (lines are stored as pairs (<point>,<vector>))
-##  - <exclines>:  set of lines subtracted from the union of residue classes
-##                 (lines are stored as pairs (<point>,<vector>))
-##  - <incpoints>: set of points added to the union of residue classes
-##  - <excpoints>: set of points subtracted from the union of residue classes
-##
-##  The representation is unique, i.e. two residue class unions are equal
-##  if and only if their stored representations are equal.
-##
-##  This is achieved in the following way:
-##
-##  - The modulus <m> is chosen to have the smallest possible determinant.
-##  - The set <inclines> contains only lines not all of whose points are
-##    congruent to one of the residues in <r> modulo <m>.
-##  - The set <exclines> contains only lines at least some of whose points
-##    are congruent to one of the residues in <r> modulo <m>.
-##  - The set <incpoints> contains only elements which are not congruent to
-##    one of the residues in <r> modulo <m> and which do not lie on one of
-##    the lines in <inclines>.
-##  - The set <excpoints> contains only elements which are congruent to one
-##    of the residues in <r> modulo <m> or which lie on one of the lines in
-##    <inclines>.
-##  - The stored point on a line in <inclines> or <exclines> is chosen to be
-##    closest to the origin, and the stored vector <v> is chosen to be the
-##    shortest possible, and to be larger than -<v> in the GAP ordering.
-##  - Lines are merged together whenever possible.
-##
-DeclareRepresentation( "IsResidueClassUnionOfZxZResidueListRep", 
-                       IsComponentObjectRep and IsAttributeStoringRep, 
-                       [ "m", "r", "inclines", "exclines",
-                                   "incpoints", "excpoints" ] );
-
-#############################################################################
-##
 #R  IsResidueClassUnionsIteratorRep . . . . . . . . . iterator representation
 ##
 DeclareRepresentation( "IsResidueClassUnionsIteratorRep",

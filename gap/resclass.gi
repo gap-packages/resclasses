@@ -771,53 +771,31 @@ InstallMethod( ObjByExtRep,
 #############################################################################
 ##
 #M  Modulus( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
-##
-InstallMethod( Modulus,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.m );
-
-#############################################################################
-##
-#M  Modulus( [  ] ) . . . . . . . . . . . . . . . . . . . . for the empty set
-##
-##  Since the empty list carries no information about the objects it does not
-##  contain, this method silently assumes that these are supposed to be
-##  integers, and returns 0.
-##
-InstallOtherMethod( Modulus,
-                    "for the empty set (ResClasses)", true,
-                    [ IsList and IsEmpty ], 0, empty -> 0 );
-
-#############################################################################
-##
+#M  Modulus( <R> ) . . . . . . . . . . . . . . .  for the base ring / -module
 #M  Modulus( <l> ) . . . . . . . . . . . . . . . . . . . . .  for finite sets
 ##
-InstallOtherMethod( Modulus,
-                    "for finite sets (ResClasses)", true,
-                    [ IsList ], 0, l -> Zero( l[ 1 ] ) );
-
-#############################################################################
+##  Since the empty list carries no information about the objects it does
+##  not contain, the method for that case silently assumes that these are
+##  supposed to be integers, and returns 0.
 ##
-#M  Modulus( <R> ) . . . . . . . . . . . . . . .  for the base ring / -module
-##
+InstallMethod( Modulus, "for residue class unions (ResClasses)", true,
+               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.m );
 InstallOtherMethod( Modulus, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, One );
 InstallOtherMethod( Modulus, "for the base module (ResClasses)", true,
                     [ IsRowModule ], 0, R -> AsList( Basis( R ) ) );
-
-
-#############################################################################
-##
-#M  Residue( <cl> ) . . . . . . . . . . . . . . . . . . . . .  default method
-##
-InstallMethod( Residue,
-               "default method for residue classes (ResClasses)", true,
-               [ IsResidueClass ], 0, cl -> Residues(cl)[1] );
+InstallOtherMethod( Modulus, "for finite sets (ResClasses)", true,
+                    [ IsList ], 0, l -> Zero( l[ 1 ] ) );
+InstallOtherMethod( Modulus, "for the empty set (ResClasses)", true,
+                    [ IsList and IsEmpty ], 0, empty -> 0 );
 
 #############################################################################
 ##
+#M  Residue( <cl> ) . . . . . . . . . . . . . . . . . . . for residue classes
 #M  Residue( <R> ) . . . . . . . . . . . . . . .  for the base ring / -module
 ##
+InstallMethod( Residue, "for residue classes (ResClasses)", true,
+               [ IsResidueClass ], 0, cl -> Residues(cl)[1] );
 InstallOtherMethod( Residue, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, Zero );
 InstallOtherMethod( Residue, "for the base module (ResClasses)", true,
@@ -826,79 +804,49 @@ InstallOtherMethod( Residue, "for the base module (ResClasses)", true,
 #############################################################################
 ##
 #M  Residues( <U> ) . . . . . . . . . . . . . . . .  for residue class unions
-##
-InstallMethod( Residues,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.r );
-
-#############################################################################
-##
 #M  Residues( <R> ) . . . . . . . . . . . . . . . for the base ring / -module
+#M  Residues( <l> ) . . . . . . . . . . . . . . . . . . . . . for finite sets
 ##
+InstallMethod( Residues, "for residue class unions (ResClasses)", true,
+               [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.r );
 InstallOtherMethod( Residues, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> [ Zero( R ) ] );
 InstallOtherMethod( Residues, "for the base module (ResClasses)", true,
                     [ IsRowModule ], 0, R -> [ Zero( R ) ] );
-
-#############################################################################
-##
-#M  Residues( <l> ) . . . . . . . . . . . . . .  for finite lists of elements
-##
-InstallOtherMethod( Residues,
-                    "for finite lists of elements (ResClasses)", true,
+InstallOtherMethod( Residues, "for finite sets (ResClasses)", true,
                     [ IsList ], 0, l -> [  ] );
 
 #############################################################################
 ##
 #M  IncludedElements( <U> ) . . . . . . . . . . . .  for residue class unions
-##
-InstallMethod( IncludedElements,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0,
-               U -> U!.included );
-
-#############################################################################
-##
 #M  IncludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
+#M  IncludedElements( <l> ) . . . . . . . . . . . . . . . . . for finite sets
 ##
+InstallMethod( IncludedElements, "for residue class unions (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> U!.included );
 InstallOtherMethod( IncludedElements, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ ] );
 InstallOtherMethod( IncludedElements, "for the base module (ResClasses)",
                     true, [ IsRowModule ], 0, R -> [ ] );
-
-#############################################################################
-##
-#M  IncludedElements( <l> ) . . . . . . . . . .  for finite lists of elements
-##
-InstallOtherMethod( IncludedElements,
-                    "for finite lists of elements (ResClasses)", true,
-                    [ IsList ], 0, l -> l );
+InstallOtherMethod( IncludedElements, "for finite sets (ResClasses)",
+                    true, [ IsList ], 0, l -> l );
 
 #############################################################################
 ##
 #M  ExcludedElements( <U> ) . . . . . . . . . . . .  for residue class unions
-##
-InstallMethod( ExcludedElements,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0,
-               U -> U!.excluded );
-
-#############################################################################
-##
 #M  ExcludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
+#M  ExcludedElements( <l> ) . . . . . . . . . . . . . . . . . for finite sets
 ##
+InstallMethod( ExcludedElements, "for residue class unions (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> U!.excluded );
 InstallOtherMethod( ExcludedElements, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ ] );
 InstallOtherMethod( ExcludedElements, "for the base module (ResClasses)",
                     true, [ IsRowModule ], 0, R -> [ ] );
-
-#############################################################################
-##
-#M  ExcludedElements( <l> ) . . . . . . . . . .  for finite lists of elements
-##
-InstallOtherMethod( ExcludedElements,
-                    "for finite list of elements (ResClasses)", true,
-                    [ IsList ], 0, l -> [ ] );
+InstallOtherMethod( ExcludedElements, "for finite sets (ResClasses)",
+                    true, [ IsList ], 0, l -> [ ] );
 
 #############################################################################
 ##
@@ -1019,45 +967,27 @@ InstallMethod( \in,
 
 #############################################################################
 ##
-#M  Density( <l> ) . . . . . . . . . . . . . . . . . . . .  for the empty set
-##
-InstallOtherMethod( Density,
-                    "for the empty set (ResClasses)", true,
-                    [ IsList and IsEmpty ], 0, l -> 0 );
-
-#############################################################################
-##
-#M  Density( <l> ) . . . . . . . . . . . . . . . for a finite set of elements
-##
-InstallOtherMethod( Density,
-                   "for a finite set of elements (ResClasses)", true,
-                   [ IsList and IsCollection ], 0,
-
-  function ( l )
-    if   not IsFinite(DefaultRing(l[1]))
-    then return 0; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
+#M  Density( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 #M  Density( <R> ) . . . . . . . . . . . .  for the whole base ring / -module
+#M  Density( <l> ) . . . . . . . . . . . . . . . . . . . . .  for finite sets
 ##
+InstallMethod( Density, "for residue class unions (ResClasses)", true,
+               [ IsResidueClassUnion ], 0,
+               U -> Length(Residues(U))/
+                    NumberOfResidues(UnderlyingRing(FamilyObj(U)),
+                                     Modulus(U)) );
 InstallOtherMethod( Density, "for the whole base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> 1 );
 InstallOtherMethod( Density, "for the whole base module (ResClasses)", true,
                     [ IsRowModule ], 0, R -> 1 );
-
-#############################################################################
-##
-#M  Density( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
-##
-InstallMethod( Density,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnionInResidueListRep ], 0,
-
-  function ( U )
-    return Length(U!.r)/NumberOfResidues(UnderlyingRing(FamilyObj(U)),U!.m);
-  end );
+InstallOtherMethod( Density, "for finite sets (ResClasses)", true,
+                    [ IsList and IsCollection ], 0,
+                    function ( l )
+                      if   not IsFinite(DefaultRing(l[1]))
+                      then return 0; else TryNextMethod(); fi;
+                    end );
+InstallOtherMethod( Density, "for the empty set (ResClasses)", true,
+                    [ IsList and IsEmpty ], 0, l -> 0 );
 
 #############################################################################
 ##
@@ -1100,28 +1030,23 @@ InstallMethod( IsSubset,
 #############################################################################
 ##
 #M  IsSubset( <R>, <U> ) . . . .  for the base ring and a residue class union
+#M  IsSubset( <U>, <R> ) . . . .  for a residue class union and the base ring
 ##
 InstallMethod( IsSubset,
                "for the base ring and a residue class union (ResClasses)",
                ReturnTrue, [ IsDomain, IsResidueClassUnion ], 0,
+               function ( R, U )
+                 if   R = UnderlyingRing(FamilyObj(U))
+                 then return true; else TryNextMethod(); fi;
+               end );
 
-  function ( R, U )
-    if   R = UnderlyingRing(FamilyObj(U))
-    then return true; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  IsSubset( <U>, <R> ) . . . .  for a residue class union and the base ring
-##
 InstallMethod( IsSubset,
-               "for residue class union and base ring (ResClasses)",
+               "for a residue class union and the base ring (ResClasses)",
                ReturnTrue, [ IsResidueClassUnion, IsDomain ], 0,
-
-  function ( U, R )
-    if   R = UnderlyingRing(FamilyObj(U))
-    then return U = R; else TryNextMethod(); fi;
-  end );
+               function ( U, R )
+                 if   R = UnderlyingRing(FamilyObj(U))
+                 then return U = R; else TryNextMethod(); fi;
+               end );
 
 #############################################################################
 ##
