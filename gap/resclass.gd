@@ -61,8 +61,9 @@ DeclareSynonym( "IsUnionOfResidueClassesOfZorZ_pi",
 #R  IsResidueClassUnionResidueListRep . .  representation by list of residues
 ##
 ##  The representation of unions of residue classes of the ring Z of the
-##  integers, of semilocalizations Z_(pi) of the integers and of univariate
-##  polynomial rings GF(q)[x] over finite fields, by list of residues.
+##  integers, of Z^2, of semilocalizations Z_(pi) of the integers and of
+##  univariate polynomial rings GF(q)[x] over finite fields, by list of
+##  residues.
 ## 
 ##  Components:
 ##
@@ -76,8 +77,12 @@ DeclareSynonym( "IsUnionOfResidueClassesOfZorZ_pi",
 ##
 ##  This is achieved in the following way:
 ##
-##  - The modulus <m> is chosen multiplicatively minimal, and to be
-##    its own standard associate in the underlying ring.
+##  - If the underlying ring R is Z, Z_(pi) or GF(q)[x], the modulus <m> is
+##    chosen to be multiplicatively minimal, and to be its own standard
+##    associate in R. If R is Z^2, the modulus <m> is a lattice, which is
+##    stored as an invertible 2x2 matrix whose rows are the spanning vectors.
+##    That matrix is chosen to be in Hermite normal form and to have the
+##    smallest possible determinant.
 ##  - The set <included> contains only elements which are not congruent to
 ##    one of the residues in <r> modulo <m>.
 ##  - The set <excluded> contains only elements which are congruent to one
