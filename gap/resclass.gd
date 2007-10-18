@@ -241,13 +241,13 @@ DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
 ##
-#F  LatticesIntersection( <lattices> )
+#O  LatticesIntersection( <lattices> )
 #O  IsSublattice( <L1>, <L2> )
 #O  Superlattices( <L> )
 ##
 ##  Lattices are represented by integer matrices in Hermite normal form.
 ##
-DeclareGlobalFunction( "LatticesIntersection" );
+DeclareOperation( "LatticesIntersection", [ IsList ] );
 DeclareOperation( "IsSublattice", [ IsMatrix, IsMatrix ] );
 DeclareOperation( "Superlattices", [ IsMatrix ] );
 

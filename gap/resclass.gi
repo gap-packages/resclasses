@@ -381,18 +381,15 @@ InstallMethod( \mod, "for a vector and a lattice (ResClasses)", IsElmsColls,
 
 #############################################################################
 ##
-#F  LatticesIntersection( <lattices> ) . . .  intersection of lattices in Z^d
+#O  LatticesIntersection( <lattices> ) . . .  intersection of lattices in Z^d
 ##
-##  The argument <lattices> must be a list of invertible integer matrices in
-##  Hermite normal form.
-##
-InstallGlobalFunction( LatticesIntersection,
+InstallMethod( LatticesIntersection,
+               "for lattices in Z^d (ResClasses)", true, [ IsList ], 0,
 
-  function ( arg )
+  function ( lattices )
 
-    local lattices, I, i;
+    local  I, i;
 
-    if IsList(arg[1]) then lattices := arg[1]; else lattices := arg; fi;
     I := lattices[1];
     for i in [2..Length(lattices)] do
       I := LatticeIntersection(I,lattices[i]);
