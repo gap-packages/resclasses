@@ -1536,6 +1536,10 @@ InstallOtherMethod( \+,
                              List(ExcludedElements(U),el->el+x));
   end );
 
+InstallOtherMethod(\+,"for empty list and row vector", ReturnTrue,
+                   [ IsList and IsEmpty, IsRowVector ], 0,
+                   function ( empty, v ) return []; end );
+
 #############################################################################
 ##
 #M  \+( <x>, <U> ) . . . . . . . for a ring element and a residue class union
@@ -1648,7 +1652,6 @@ InstallOtherMethod( \*,
     else TryNextMethod(); fi;
   end );
 
-
 #############################################################################
 ##
 #M  \*( <U>, <M> ) . . . . . .  for a residue class union of Z^2 and a matrix
@@ -1667,6 +1670,10 @@ InstallOtherMethod( \*,
                                List(IncludedElements(U),el->el*M),
                                List(ExcludedElements(U),el->el*M));
   end );
+
+InstallOtherMethod( \*, "for empty list and matrix (ResClasses)",
+                    ReturnTrue, [ IsList and IsEmpty, IsMatrix ], 0,
+                    function ( empty, M ) return [  ]; end );
 
 #############################################################################
 ##
