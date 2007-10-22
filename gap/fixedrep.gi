@@ -732,7 +732,7 @@ InstallMethod( ViewObj,
 
     local  R, classes, l, i, short;
 
-    short := RESCLASSES_VIEWING_FORMAT = "short";
+    short := RESCLASSES_VIEWINGFORMAT = "short";
     R := UnderlyingRing(FamilyObj(U));
     classes := Classes(U); l := Length(classes);
     if l = 0 or l > 8 or IsPolynomialRing(R) and l > 3 then

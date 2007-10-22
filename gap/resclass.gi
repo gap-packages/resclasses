@@ -2376,7 +2376,7 @@ InstallMethod( ViewObj,
       return s;
     end;
 
-    short   := RESCLASSES_VIEWING_FORMAT = "short";
+    short   := RESCLASSES_VIEWINGFORMAT = "short";
     display := ValueOption("RC_DISPLAY") = true;
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
