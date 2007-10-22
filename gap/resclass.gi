@@ -1704,7 +1704,7 @@ InstallOtherMethod( \*,
     if   x in LeftActingDomain(R)
     then return ResidueClassNC(R,x*One(GL(Dimension(R),
                                           LeftActingDomain(R))),[0,0]);
-    elif x in GL(Dimension(R),LeftActingDomain(R))
+    elif x in FullMatrixAlgebra(LeftActingDomain(R),Dimension(R))
     then return ResidueClassNC(R,x,Zero(R));
     else TryNextMethod(); fi;
   end );
