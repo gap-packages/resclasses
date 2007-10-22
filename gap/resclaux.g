@@ -9,8 +9,10 @@
 Revision.resclaux_g :=
   "@(#)$Id$";
 
-RESCLASSES_VIEWING_FORMAT := "long";
-MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
+BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
+
+RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;
+RESCLASSES_WARNINGLEVEL_BUFFER   := InfoLevel( InfoWarning );
 
 #############################################################################
 ##
@@ -24,9 +26,9 @@ BindGlobal( "ResidueClassUnionViewingFormat",
     then Error( "viewing formats other than \"short\" and \"long\" ",
                 "are not supported.\n");
     fi;
-    MakeReadWriteGlobal( "RESCLASSES_VIEWING_FORMAT" );
-    RESCLASSES_VIEWING_FORMAT := format;
-    MakeReadOnlyGlobal( "RESCLASSES_VIEWING_FORMAT" );
+    MakeReadWriteGlobal( "RESCLASSES_VIEWINGFORMAT" );
+    RESCLASSES_VIEWINGFORMAT := format;
+    MakeReadOnlyGlobal( "RESCLASSES_VIEWINGFORMAT" );
   end );
 
 #############################################################################
@@ -70,6 +72,29 @@ BindGlobal( "ResClassesTest",
     ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
     dir := Concatenation( ResClassesDir, "/tst/" );
     Read( Concatenation( dir, "testall.g" ) );
+  end );
+
+#############################################################################
+##
+#F  ResClassesDoThingsToBeDoneBeforeTest(  )
+#F  ResClassesDoThingsToBeDoneAfterTest(  )
+##
+BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
+
+  function (  )
+    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
+    SetInfoLevel(InfoWarning,0);
+    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
+    ResidueClassUnionViewingFormat("long");
+    CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+  end );
+
+BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
+
+  function (  )
+    CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
+    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
   end );
 
 #############################################################################
