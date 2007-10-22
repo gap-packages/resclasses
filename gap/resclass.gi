@@ -370,6 +370,43 @@ InstallOtherMethod( SizeOfSmallestResidueClassRing,
 
 #############################################################################
 ##
+#S  Basic functionality for lattices in Z^n. ////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  DefaultRingByGenerators( <mats> ) .  for a list of n x n integer matrices
+##
+InstallMethod( DefaultRingByGenerators,
+               "for lists of n x n integer matrices (ResClasses)", true,
+               [ IsList and IsCollection ], SUM_FLAGS,
+
+  function ( mats )
+    if   IsEmpty(mats) or not ForAll(mats,IsMatrix)
+      or Length(Set(Flat(Set(mats,mat->DimensionsMat(mat))))) <> 1
+      or not ForAll(Flat(mats),IsInt)
+    then TryNextMethod(); fi;
+    return FullMatrixAlgebra(Integers,DimensionsMat(mats[1])[1]);
+  end );
+
+#############################################################################
+##
+#M  StandardAssociate( <R>, <mat> ) . . . . . . . HNF of n x n integer matrix
+##
+InstallOtherMethod( StandardAssociate,
+                    "HNF of n x n integer matrix (ResClasses)", IsCollsElms,
+                    [ IsRing and IsFullMatrixModule, IsMatrix ], 0,
+
+  function ( R, mat )
+    if   not IsIntegers(LeftActingDomain(R))
+      or Length(Set(DimensionOfVectors(R))) <> 1 or not mat in R
+    then TryNextMethod(); fi;
+    return HermiteNormalFormIntegerMat(mat);
+  end );
+
+#############################################################################
+##
 #M  \mod . . . . . . . . . . . . . . . . . . . . . for a vector and a lattice
 ##
 if   not IsReadOnlyGlobal( "VectorModLattice" ) # not protected in polycyclic
@@ -381,28 +418,45 @@ InstallMethod( \mod, "for a vector and a lattice (ResClasses)", IsElmsColls,
 
 #############################################################################
 ##
-#O  LatticesIntersection( <lattices> ) . . .  intersection of lattices in Z^d
+#M  LcmOp( <R>, <mat1>, <mat2> ) . . . . . . . .  lattice intersection in Z^n
 ##
-InstallMethod( LatticesIntersection,
-               "for lattices in Z^d (ResClasses)", true, [ IsList ], 0,
+InstallOtherMethod( LcmOp, "lattice intersection in Z^n (ResClasses)",
+                    IsCollsElmsElms,
+                    [ IsRing and IsFullMatrixModule, IsMatrix, IsMatrix ], 0,
 
-  function ( lattices )
+  function ( R, mat1, mat2 )
 
-    local  I, i;
+    local  n;
 
-    I := lattices[1];
-    for i in [2..Length(lattices)] do
-      I := LatticeIntersection(I,lattices[i]);
-    od;
-    return I;
+    if   not IsIntegers(LeftActingDomain(R)) 
+      or Length(Set(DimensionOfVectors(R))) <> 1
+      or not mat1 in R or not mat2 in R 
+    then TryNextMethod(); fi;
+
+    n := DimensionOfVectors(R)[1];
+
+    if n = 2 then # Check whether matrices are already in HNF.
+      if   mat1[2][1] <> 0 or ForAny(Flat(mat1),n->n<0)
+        or mat1[1][2] >= mat1[2][2]
+      then mat1 := HermiteNormalFormIntegerMat(mat1); fi;
+      if   mat2[2][1] <> 0 or ForAny(Flat(mat2),n->n<0)
+        or mat2[1][2] >= mat2[2][2]
+      then mat2 := HermiteNormalFormIntegerMat(mat2); fi;
+    else
+      mat1 := HermiteNormalFormIntegerMat(mat1);
+      mat2 := HermiteNormalFormIntegerMat(mat2);
+    fi;
+
+    return LatticeIntersection( mat1, mat2 );
+
   end );
 
 #############################################################################
 ##
-#M  IsSublattice( <L1>, <L2> ) . . . . . . . . . . . . .  for lattices in Z^d
+#M  IsSublattice( <L1>, <L2> ) . . . . . . . . . . . . .  for lattices in Z^n
 ##
 InstallMethod( IsSublattice,
-               "for lattices in Z^d (ResClasses)", IsIdenticalObj,
+               "for lattices in Z^n (ResClasses)", IsIdenticalObj,
                [ IsMatrix, IsMatrix ], 0,
 
   function ( L1, L2 )
