@@ -8,9 +8,7 @@
 ##  computing with residue class unions of Z^2.
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> ResidueClassUnionViewingFormat("short");;
-gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> R := Integers^2;
 ( Integers^2 )
 gap> One(R);
@@ -262,8 +260,7 @@ gap> SplittedClass(cl,[2,3]);
   (3,1)+(4,0)Z+(0,9)Z, (3,4)+(4,0)Z+(0,9)Z, (3,7)+(4,0)Z+(0,9)Z ]
 gap> Union(last) = cl;
 true
-gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 200000000 );
 
 #############################################################################

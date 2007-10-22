@@ -8,7 +8,7 @@
 ##  computing with semilocalizations Z_(pi) of the ring of integers.
 ##
 gap> START_TEST("$Id$");
-gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> R := Z_pi([2]);
 Z_( 2 )
 gap> R = Z_pi(2);
@@ -147,7 +147,7 @@ gap> IsIrreducibleRingElement(R,-4);
 false
 gap> IsIrreducibleRingElement(T,-3);
 true
-gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "z_pi.tst", 2000000 );
 
 #############################################################################

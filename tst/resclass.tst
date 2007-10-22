@@ -8,9 +8,7 @@
 ##  computing with residue class unions.
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> ResidueClassUnionViewingFormat("long");;
-gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> cl1 := ResidueClass(Integers,3,2);
 The residue class 2(3) of Z
 gap> cl2 := ResidueClass(Z_pi([2,5]),2,1);
@@ -382,8 +380,7 @@ gap> last = S;
 true
 gap> UnderlyingRing(FamilyObj(last2));
 Z_( 2, 3 )
-gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "resclass.tst", 60000000 );
 
 #############################################################################

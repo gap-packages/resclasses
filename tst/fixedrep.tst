@@ -9,9 +9,7 @@
 ##  representatives.
 ##
 gap> START_TEST("$Id$");
-gap> oldformat := RESCLASSES_VIEWING_FORMAT;;
-gap> ResidueClassUnionViewingFormat("long");;
-gap> CallFuncList(HideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
+gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
 [2/3]
 gap> cl2 := ResidueClassWithFixedRepresentative(Integers,2,1);
@@ -190,8 +188,7 @@ gap> Rho(U);
 -E(8)
 gap> RepresentativeStabilizingRefinement(U,0);
 [23/4]
-gap> CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
-gap> ResidueClassUnionViewingFormat(oldformat);
+gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "fixedrep.tst", 5000000 );
 
 #############################################################################
