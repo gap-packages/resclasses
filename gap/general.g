@@ -180,6 +180,21 @@ InstallMethod( String,
 
 #############################################################################
 ##
+#F  BlankFreeString( <obj> ) . . . . . . . . . . . . . .string without blanks
+##
+BindGlobal( "BlankFreeString",
+
+  function ( obj )
+
+    local  str;
+
+    str := String(obj);
+    RemoveCharacters(str," ");
+    return str;
+  end );
+
+#############################################################################
+##
 #M  ViewString( <obj> ) . default method - use `Name' or dispatch to `String'
 ##
 InstallMethod( ViewString,
