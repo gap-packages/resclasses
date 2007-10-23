@@ -215,10 +215,13 @@ Changes between version 2.5.2 and version 2.5.3:
  - The line length used in the examples has been reduced to 75 in order to
    improve their appearance in the online help with standard settings.
 
-Changes between version 2.5.3 and version 2.5.4:
+Changes between version 2.5.3 and version 3.0.0 (??? ??, 200?):
 
- - Now, ResClasses can deal also with unions of residue classes of Z^2.
+The main change is that now ResClasses can deal also with unions of
+residue classes of Z^2.
 
- - The required versions of GAPDoc and Polycyclic have been incremented
-   to 1.1 and 2.2, respectively.
+Further changes are:
+
+ - The required versions of GAP, GAPDoc and Polycyclic have been incremented
+   to 4.4.10, 1.1 and 2.2, respectively.
 

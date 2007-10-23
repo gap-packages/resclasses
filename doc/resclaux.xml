@@ -14,7 +14,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-The &ResClasses; package needs at least &GAP;&nbsp;4.4.7,
+The &ResClasses; package needs at least &GAP;&nbsp;4.4.10,
 <Package>Polycyclic</Package>&nbsp;2.2&nbsp;<Cite Key="Polycyclic"/>
 and &GAPDoc;&nbsp;1.1&nbsp;<Cite Key="GAPDoc"/>.
 It can be used under UNIX, under Windows and on the MacIntosh.

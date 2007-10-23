@@ -16,7 +16,7 @@
     <name><first>Frank</first><last>Lübeck</last></name>
     <name><first>Max</first><last>Neunhöffer</last></name>
   </author>
-  <title><C>GAPDoc (Version 1.0)</C></title>
+  <title><C>GAPDoc (Version 1.1)</C></title>
   <organization>RWTH Aachen</organization>
   <year>2007</year>
   <other type="note">
@@ -42,7 +42,7 @@
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
-  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 2.5)</C></title>
+  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 3.0)</C></title>
   <year>2007</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>
