@@ -502,6 +502,18 @@ InstallMethod( Superlattices,
 
 #############################################################################
 ##
+#F  ModulusAsFormattedString( <m> ) . format lattice etc. for output purposes
+##
+BindGlobal( "ModulusAsFormattedString",
+  function ( m )
+    if not IsMatrix(m) then return BlankFreeString(m); fi;
+    return Concatenation(List(["(",m[1][1],",",m[1][2],")Z+(",
+                                   m[2][1],",",m[2][2],")Z"],
+                              BlankFreeString));
+  end );
+
+#############################################################################
+##
 #S  Construction of residue class unions. ///////////////////////////////////
 ##
 #############################################################################
@@ -2339,7 +2351,7 @@ InstallMethod( ViewObj,
 
   function ( U )
 
-    local  PrintFiniteSet, ModString, RCString, str, pos, linelng,
+    local  PrintFiniteSet, RCString, str, pos, linelng,
            R, m, r, included, excluded, n, cl, m_cl,
            endval, short, bound, display;
 
@@ -2347,20 +2359,6 @@ InstallMethod( ViewObj,
       if   Length(String(S)) <= 32 or display
       then Print(S);
       else Print("<set of cardinality ",Length(S),">"); fi;
-    end;
-
-    ModString := function ( m )
-
-      local  s;
-
-      if   IsRing(R) then return String(m);
-      elif IsZxZ(R) then
-        s := Concatenation(List([m[1],"Z+",m[2],"Z"],String));
-        RemoveCharacters(s," ");
-        s := ReplacedString(s,"[","(");
-        s := ReplacedString(s,"]",")");
-        return s;
-      else return fail; fi;
     end;
 
     RCString := function ( cl )
@@ -2435,7 +2433,7 @@ InstallMethod( ViewObj,
       fi;
     else
       Print("<union of ",Length(r)," residue classes (mod ",
-            ModString(m),")");
+            ModulusAsFormattedString(m),")");
       if not short then Print(" of ",RingToString(R)); fi;
       Print(">");
       if included <> [] then Print(" U ");  PrintFiniteSet(included); fi;
