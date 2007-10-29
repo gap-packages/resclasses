@@ -12,7 +12,8 @@ Revision.resclass_gi :=
 
 #############################################################################
 ##
-#S  Implications between the categories of residue class unions. ////////////
+#S  Implications between the categories of residue class unions /////////////
+#S  and shorthands for commonly used filters. ///////////////////////////////
 ##
 #############################################################################
 
@@ -27,10 +28,19 @@ InstallTrueMethod( IsResidueClassUnion,
 InstallTrueMethod( IsResidueClassUnion,
                    IsResidueClassUnionOfGFqx );
 
-# Shorthand for commonly used filter.
+BindGlobal( "IsResidueClassOfZ",
+             IsResidueClassUnionOfZ and IsResidueClass );
+BindGlobal( "IsResidueClassOfZxZ",
+             IsResidueClassUnionOfZxZ and IsResidueClass );
+BindGlobal( "IsResidueClassOfZ_pi",
+             IsResidueClassUnionOfZ_pi and IsResidueClass );
+BindGlobal( "IsResidueClassOfZorZ_pi",
+             IsResidueClassUnionOfZorZ_pi and IsResidueClass );
+BindGlobal( "IsResidueClassOfGFqx",
+             IsResidueClassUnionOfGFqx and IsResidueClass );
 
 BindGlobal( "IsResidueClassUnionInResidueListRep",
-            IsResidueClassUnion and IsResidueClassUnionResidueListRep );
+             IsResidueClassUnion and IsResidueClassUnionResidueListRep );
 
 #############################################################################
 ##
@@ -2343,6 +2353,25 @@ InstallGlobalFunction( RingToString,
 
 #############################################################################
 ##
+#M  ViewString( <cl> ) . . . . . . . . . . . . . . for residue classes of Z^2
+##
+InstallMethod( ViewString,
+               "for residue classes of Z^2 (ResClasses)", true,
+               [ IsResidueClassUnionOfZxZ and IsResidueClass ], 0,
+
+  function ( cl )
+
+    local  str;
+
+    str := Concatenation(BlankFreeString(Residue(cl)),"+",
+                         ModulusAsFormattedString(Modulus(cl)));
+    str := ReplacedString(str,"[","(");
+    str := ReplacedString(str,"]",")");
+    return str;
+  end );
+
+#############################################################################
+##
 #M  ViewObj( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( ViewObj,
@@ -2365,18 +2394,13 @@ InstallMethod( ViewObj,
 
       local  s, r, m;
 
-      r := Residue(cl); m := Modulus(cl);
       if IsRing(R) then
-        s := String(r);
+        m := Modulus(cl); r := Residue(cl); s := String(r);
         if   IsIntegers(R) or IsZ_pi(R)
         then s := Concatenation(s,"(",String(m),")");
         elif short then s := Concatenation(s,"(mod ",String(m),")");
         else s := Concatenation(s," ( mod ",String(m)," )"); fi;
-      elif IsZxZ(R) then
-        s := Concatenation(List([r,"+",m[1],"Z+",m[2],"Z"],String));
-        RemoveCharacters(s," ");
-        s := ReplacedString(s,"[","(");
-        s := ReplacedString(s,"]",")");
+      elif IsZxZ(R) then s := ViewString(cl);
       else return fail; fi;
       return s;
     end;
