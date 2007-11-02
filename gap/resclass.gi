@@ -1559,7 +1559,7 @@ InstallOtherMethod( \+,
   end );
 
 InstallOtherMethod(\+,"for empty list and row vector", ReturnTrue,
-                   [ IsList and IsEmpty, IsRowVector ], 0,
+                   [ IsList and IsEmpty, IsRowVector ], SUM_FLAGS,
                    function ( empty, v ) return []; end );
 
 #############################################################################
