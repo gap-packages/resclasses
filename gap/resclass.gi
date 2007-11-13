@@ -650,6 +650,7 @@ InstallMethod( ResidueClassUnionCons,
                           SUM_FLAGS,
       function ( empty, v )
         if   not RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED
+          or Length(v) <> 2 or not ForAll(v,IsInt)
         then TryNextMethod(); fi;
         return [];
       end );
