@@ -317,6 +317,8 @@ for ch in FREE_ONE_LETTER_GLOBALS do
   if IsReadOnlyGlobal(ch) then MakeReadWriteGlobal(ch); fi;
 od;
 
+BindGlobal( "RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED", false );
+
 #############################################################################
 ##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

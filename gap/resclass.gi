@@ -641,6 +641,20 @@ InstallMethod( ResidueClassUnionCons,
       if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
     end;
 
+    if not RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED then
+      MakeReadWriteGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
+      RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED := true;
+      MakeReadOnlyGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
+      InstallOtherMethod( \+, "for empty list and row vector (ResClasses)",
+                          ReturnTrue, [ IsList and IsEmpty, IsRowVector ],
+                          SUM_FLAGS,
+      function ( empty, v )
+        if   not RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED
+        then TryNextMethod(); fi;
+        return [];
+      end );
+    fi;
+
     if not IsZxZ( ZxZ ) then TryNextMethod( ); fi;
     L := HermiteNormalFormIntegerMat( L );
     r := Set( r, v -> v mod L );
@@ -1557,10 +1571,6 @@ InstallOtherMethod( \+,
                              List(IncludedElements(U),el->el+x),
                              List(ExcludedElements(U),el->el+x));
   end );
-
-InstallOtherMethod( \+, "for empty list and row vector (ResClasses)",
-                    ReturnTrue, [ IsList and IsEmpty, IsRowVector ],
-                    SUM_FLAGS, function ( empty, v ) return []; end );
 
 #############################################################################
 ##
