@@ -1558,9 +1558,9 @@ InstallOtherMethod( \+,
                              List(ExcludedElements(U),el->el+x));
   end );
 
-InstallOtherMethod(\+, "for empty list and row vector", ReturnTrue,
-                   [ IsList and IsEmpty, IsRowVector ], SUM_FLAGS,
-                   function ( empty, v ) return []; end );
+InstallOtherMethod( \+, "for empty list and row vector (ResClasses)",
+                    ReturnTrue, [ IsList and IsEmpty, IsRowVector ],
+                    SUM_FLAGS, function ( empty, v ) return []; end );
 
 #############################################################################
 ##
