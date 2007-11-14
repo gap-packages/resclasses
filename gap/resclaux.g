@@ -10,9 +10,9 @@ Revision.resclaux_g :=
   "@(#)$Id$";
 
 BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
-
 RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;
-RESCLASSES_WARNINGLEVEL_BUFFER   := InfoLevel( InfoWarning );
+RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel( InfoWarning );
+BindGlobal( "RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED", false );
 
 #############################################################################
 ##
