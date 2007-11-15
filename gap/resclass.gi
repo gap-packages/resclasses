@@ -577,8 +577,8 @@ InstallMethod( ResidueClassUnionCons,
     m := StandardAssociate( R, m );
     r := Set( r, n -> n mod m );
     both := Intersection( included, excluded );
-    included := Set( Difference( included, both ) );
-    excluded := Set( Difference( excluded, both ) );
+    included := Difference( included, both );
+    excluded := Difference( excluded, both );
     if r = [] then return Difference(included,excluded); fi;
     fam := ResidueClassUnionsFamily( R );
     if   IsIntegers( R )       then type := IsResidueClassUnionOfZ;
@@ -638,47 +638,40 @@ InstallMethod( ResidueClassUnionCons,
                                             v->not v mod LRed in rRed)));
       U!.excluded := Immutable(Set(Filtered(U!.excluded,
                                             v->v mod LRed in rRed)));
-      if rRed = [] then U := Difference(U!.included,U!.excluded); fi;
     end;
-
-    if not RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED then
-      MakeReadWriteGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
-      RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED := true;
-      MakeReadOnlyGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
-      InstallOtherMethod( \+, "for empty list and row vector (ResClasses)",
-                          ReturnTrue, [ IsList and IsEmpty, IsRowVector ],
-                          SUM_FLAGS,
-      function ( empty, v )
-        if   not RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED
-          or Length(v) <> 2 or not ForAll(v,IsInt)
-        then TryNextMethod(); fi;
-        return [];
-      end );
-    fi;
 
     if not IsZxZ( ZxZ ) then TryNextMethod( ); fi;
     L := HermiteNormalFormIntegerMat( L );
     r := Set( r, v -> v mod L );
     both := Intersection( included, excluded );
-    included := Set( Difference( included, both ) );
-    excluded := Set( Difference( excluded, both ) );
-    if r = [] then return Difference(included,excluded); fi;
+    included := Difference( included, both );
+    excluded := Difference( excluded, both );
+    if r = [] then L := [[1,0],[0,1]]; excluded := []; fi;
     result := Objectify( NewType( ResidueClassUnionsFamily( ZxZ ),
                                   IsResidueClassUnionOfZxZ and
                                   IsResidueClassUnionResidueListRep ),
                          rec( m := L, r := r,
                               included := included, excluded := excluded ) );
-    SetSize( result, infinity ); SetIsFinite( result, false );
-    SetIsEmpty( result, false );
-    if included <> [ ] then rep := included[ 1 ]; else
-      rep := r[1]; pos := 1;
-      while rep in excluded do
-        pos := pos + 1;
-        rep := r[pos mod Length(r) + 1] + Int(pos/Length(r)) * L[1];
-      od;
+    if r <> [] then
+      SetSize( result, infinity ); SetIsFinite( result, false );
+      SetIsEmpty( result, false );
+    else
+      SetSize( result, Length( included ) );
+      SetIsEmpty( result, IsEmpty( included ) );
     fi;
-    SetRepresentative( result, rep );
-    ReduceResidueClassUnion( result );
+    if not IsEmpty( result ) then
+      if included <> [ ] then rep := included[ 1 ]; else
+        rep := r[1]; pos := 1;
+        while rep in excluded do
+          pos := pos + 1;
+          rep := r[pos mod Length(r) + 1] + Int(pos/Length(r)) * L[1];
+        od;
+      fi;
+      SetRepresentative( result, rep );
+    fi;
+    if r <> [] then ReduceResidueClassUnion( result ); else
+      MakeImmutable( result!.included ); MakeImmutable( result!.excluded );
+    fi;
     if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
     if AbsInt( DeterminantMat( result!.m ) ) = 1
       and result!.r = [ [ 0, 0 ] ]
@@ -979,6 +972,22 @@ InstallMethod( \=,
 
 #############################################################################
 ##
+#M  \=( <U>, <l> ) . . . . . . . . . . . for a residue class union and a list
+#M  \=( <l>, <U> ) . . . . . . . . . . . for a list and a residue class union
+##
+InstallMethod( \=, "for a residue class union and a list (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInResidueListRep, IsList ],
+               SUM_FLAGS,
+               function ( U, l )
+                 return IsOne(U!.m) and U!.r = [] and U!.included = l;
+               end );
+
+InstallMethod( \=, "for a list and a residue class union (ResClasses)",
+               ReturnTrue, [ IsList, IsResidueClassUnionInResidueListRep ],
+               SUM_FLAGS, function ( l, U ) return U = l; end );
+
+#############################################################################
+##
 #M  \=( <D>, <l> ) . . . . . .  for an infinite domain and a list of elements
 #M  \=( <l>, <D> ) . . . . . .  for a list of elements and an infinite domain
 ##
@@ -1007,7 +1016,9 @@ InstallMethod( \<,
                  IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
-    if   U1!.m <> U2!.m then return U1!.m < U2!.m;
+    if   U1!.r = []  and U2!.r <> [] then return false;
+    elif U1!.r <> [] and U2!.r = []  then return true;
+    elif U1!.m <> U2!.m then return U1!.m < U2!.m;
     elif U1!.r <> U2!.r then return U1!.r < U2!.r;
     elif U1!.included <> U2!.included
     then return U1!.included < U2!.included;
@@ -1345,9 +1356,16 @@ InstallMethod( Intersection2,
                0,
 
   function ( U, S )
+
+    local  result;
+
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
-    return Filtered( Set(S), n -> n in U!.included
+    result := Filtered( Set(S), n -> n in U!.included
                         or ( n mod U!.m in U!.r and not n in U!.excluded ) );
+    if   IsResidueClassUnionOfZxZ(U)
+    then return ResidueClassUnion(UnderlyingRing(FamilyObj(U)),
+                                  [[1,0],[0,1]],[],result,[]);
+    else return result; fi;
   end );
 
 #############################################################################
@@ -1806,16 +1824,15 @@ InstallOtherMethod( \/,
 ##
 InstallMethod( SplittedClass,
                "for residue classes of Z or Z_pi (ResClasses)", ReturnTrue,
-               [ IsResidueClassUnionOfZorZ_pi, IsPosInt ], 0,
+               [ IsResidueClassOfZorZ_pi, IsPosInt ], 0,
 
   function ( cl, t )
 
     local  R, r, m;
 
     R := UnderlyingRing(FamilyObj(cl));
-    if not IsResidueClass(cl)
-       or (IsZ_pi(R) and not IsSubset(Union(NoninvertiblePrimes(R),[1]),
-                                      Set(Factors(t))))
+    if IsZ_pi(R) and not IsSubset(Union(NoninvertiblePrimes(R),[1]),
+                                  Set(Factors(t)))
     then return fail; fi;
     r := Residue(cl); m := Modulus(cl);
     return List([0..t-1],k->ResidueClass(R,t*m,k*m+r));
@@ -1827,7 +1844,7 @@ InstallMethod( SplittedClass,
 ##
 InstallMethod( SplittedClass,
                "for residue classes of GF(q)[x] (ResClasses)", ReturnTrue,
-               [ IsResidueClassUnionOfGFqx, IsPosInt ], 0,
+               [ IsResidueClassOfGFqx, IsPosInt ], 0,
 
   function ( cl, t )
 
@@ -1835,8 +1852,7 @@ InstallMethod( SplittedClass,
 
     if t = 1 then return [cl]; fi;
     R := UnderlyingRing(FamilyObj(cl));
-    if   not IsResidueClass(cl) or SmallestRootInt(t) <> Characteristic(R)
-    then return fail; fi;
+    if SmallestRootInt(t) <> Characteristic(R) then return fail; fi;
     r  := Residue(cl);
     m1 := Modulus(cl);
     m2 := IndeterminatesOfPolynomialRing(R)[1]^LogInt(t,Characteristic(R));
@@ -1878,14 +1894,14 @@ InstallOtherMethod( SplittedClass,
 ##
 InstallMethod( SplittedClass,
                "for a res.-class of GF(q)[x] and a polynomial (ResClasses)",
-               IsCollsElms, [ IsResidueClassUnionOfGFqx, IsPolynomial ], 0,
+               IsCollsElms, [ IsResidueClassOfGFqx, IsPolynomial ], 0,
 
   function ( cl, m2 )
 
     local  R, r, m1, m;
 
     R := UnderlyingRing(FamilyObj(cl));
-    if not IsResidueClass(cl) or not m2 in R then return fail; fi;
+    if not m2 in R then return fail; fi;
     if IsOne(m2) then return [cl]; fi;
     r  := Residue(cl);
     m1 := Modulus(cl);
@@ -1913,8 +1929,7 @@ InstallOtherMethod( SplittedClass,
 ##
 InstallMethod( SplittedClass,
                "for residue classes of Z^2 (ResClasses)", ReturnTrue,
-               [ IsResidueClassUnionOfZxZ and IsResidueClass,
-                 IsRowVector ], 0,
+               [ IsResidueClassOfZxZ, IsRowVector ], 0,
 
   function ( cl, t )
 
@@ -2035,6 +2050,7 @@ InstallMethod( AsUnionOfFewClasses,
     ZxZ := UnderlyingRing(FamilyObj(U));
     L   := Modulus(U);
     res := Residues(U);
+    if res = [] then return []; fi;
     if Length(res) = 1 then return [ ResidueClass(ZxZ,L,res[1]) ]; fi;
     div := Superlattices(L); # sorted by increasing determinant
     cls := []; remaining := U;
@@ -2420,6 +2436,7 @@ InstallMethod( ViewObj,
     display := ValueOption("RC_DISPLAY") = true;
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
+    if r = [] then View(included); return; fi;
     if display or Length(r) <= 20 then cl := AsUnionOfFewClasses(U); fi;
     if   (display or Length(r) > NumberOfResidues(R,m) - 20)
       and Length(r) > NumberOfResidues(R,m)/2

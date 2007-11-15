@@ -12,7 +12,6 @@ Revision.resclaux_g :=
 BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
 RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;
 RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel( InfoWarning );
-BindGlobal( "RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED", false );
 
 #############################################################################
 ##
@@ -95,9 +94,6 @@ BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
     CallFuncList(UnhideGlobalVariables,FREE_ONE_LETTER_GLOBALS);
     ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
     SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
-    MakeReadWriteGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
-    RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED := false;
-    MakeReadOnlyGlobal("RESCLASSES_RESIDUE_CLASS_UNIONS_OF_ZXZ_USED");
   end );
 
 #############################################################################
