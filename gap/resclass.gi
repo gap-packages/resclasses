@@ -1831,6 +1831,25 @@ InstallOtherMethod( \/,
 
 #############################################################################
 ##
+#M  Enumerator( <U> ) . . . . . . for degenerated residue class unions of Z^2
+##
+InstallMethod( Enumerator,
+               "for degenerated residue class unions of Z^2 (ResClasses)",
+               true, [ IsResidueClassUnionOfZxZ and IsFinite ], 0,
+               IncludedElements );
+
+#############################################################################
+##
+#M  \[\]( <U>, <pos> ) . . . . .  for degenerated residue class unions of Z^2
+##
+InstallOtherMethod( \[\],
+                  "for degenerated residue class unions of Z^2 (ResClasses)",
+                  ReturnTrue,
+                  [ IsResidueClassUnionOfZxZ and IsFinite, IsPosInt ], 0,
+                  function ( U, pos ) return IncludedElements(U)[pos]; end );
+
+#############################################################################
+##
 #M  ListOp( <U>, <f> ) . . . . .  for degenerated residue class unions of Z^2
 ##
 InstallMethod( ListOp,
