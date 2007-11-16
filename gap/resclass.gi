@@ -1401,6 +1401,22 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  Intersection2( <l>, <R> ) . . . . . . . . . . . . . .  for a list and Z^2
+#M  Intersection2( <R>, <l> ) . . . . . . . . . . . . . .  for Z^2 and a list
+##
+InstallMethod( Intersection2, "for a list and Z^2 (ResClasses)",
+               ReturnTrue, [ IsList, IsRowModule ], 0,
+  function ( l, R )
+    if not IsZxZ(R) then TryNextMethod(); fi;
+    return ResidueClassUnion(R,[[1,0],[0,1]],[],Filtered(l,p->p in R),[]);
+  end );
+
+InstallMethod( Intersection2, "for Z^2 and a list (ResClasses)",
+               ReturnTrue, [ IsRowModule, IsList ], 0,
+               function ( R, l ) return Intersection(l,R); end );
+
+#############################################################################
+##
 #M  Intersection2( <R>, <R_> ) . . . . . . . . .  for two times the same ring
 ##
 InstallMethod( Intersection2,
@@ -1556,18 +1572,6 @@ InstallMethod( Difference,
       else TryNextMethod(); fi;
     else TryNextMethod(); fi;
   end );
-
-#############################################################################
-##
-#M  Difference( <S>, <S_> ) . . . . . . . . . . .  for two times the same set
-##
-#InstallMethod( Difference,
-#               "for two times the same set (ResClasses)", ReturnTrue,
-#               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
-#
-# function ( S, S_ )
-#    if IsIdenticalObj(S,S_) then return []; else TryNextMethod(); fi;
-#  end );
 
 #############################################################################
 ##
