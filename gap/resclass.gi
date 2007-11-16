@@ -1546,24 +1546,28 @@ InstallMethod( Difference, "for a domain and the empty set (ResClasses)",
 #M  Difference( <R>, <R_> ) . . . . . . . . . . . for two times the same ring
 ##
 InstallMethod( Difference,
-               "for two times the same ring (ResClasses)", ReturnTrue,
+               "for two times the same ring (ResClasses)", IsIdenticalObj,
                [ IsDomain, IsDomain ], SUM_FLAGS,
 
   function ( R, R_ )
-    if R = R_ then return []; else TryNextMethod(); fi;
+    if R = R_ then
+      if   IsRing(R) then return [];
+      elif IsZxZ(R)  then return ResidueClassUnion(R,[[1,0],[0,1]],[],[],[]);
+      else TryNextMethod(); fi;
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
 ##
 #M  Difference( <S>, <S_> ) . . . . . . . . . . .  for two times the same set
 ##
-InstallMethod( Difference,
-               "for two times the same set (ResClasses)", ReturnTrue,
-               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
-
-  function ( S, S_ )
-    if IsIdenticalObj(S,S_) then return []; else TryNextMethod(); fi;
-  end );
+#InstallMethod( Difference,
+#               "for two times the same set (ResClasses)", ReturnTrue,
+#               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
+#
+# function ( S, S_ )
+#    if IsIdenticalObj(S,S_) then return []; else TryNextMethod(); fi;
+#  end );
 
 #############################################################################
 ##
@@ -1779,14 +1783,20 @@ InstallOtherMethod( \/,
 
   function ( U, x )
 
-    local  R, S1, S2, m;
+    local  R, S1, S2, m, quot;
 
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U);
 
     if   IsRing(R)
     then S1 := R; S2 := R;
     elif IsRowModule(R)
-    then S1 := LeftActingDomain(R);
+    then if Residues(U) = [] then
+           quot := IncludedElements(U)/x;
+           if   IsSubset(R,quot)
+           then return ResidueClassUnion(R,m,[],quot,[]);
+           else TryNextMethod(); fi;
+         fi;
+         S1 := LeftActingDomain(R);
          S2 := FullMatrixModule(S1,Dimension(R),Dimension(R));
     fi;
 
@@ -1811,6 +1821,61 @@ InstallOtherMethod( \/,
   function ( empty, x )
     return [ ];
   end );
+
+#############################################################################
+##
+#S  Some methods for residue class unions of Z^2 ////////////////////////////
+#S  which are degenerated to finite sets. ///////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  ListOp( <U>, <f> ) . . . . .  for degenerated residue class unions of Z^2
+##
+InstallMethod( ListOp,
+               "for degenerated residue class unions of Z^2 (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionOfZxZ and IsFinite,
+                             IsFunction ], 0,
+               function ( U, f ) return List(IncludedElements(U),f); end );
+
+#############################################################################
+##
+#M  FilteredOp( <U>, <f> ) . . .  for degenerated residue class unions of Z^2
+##
+InstallMethod( FilteredOp,
+               "for degenerated residue class unions of Z^2 (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionOfZxZ and IsFinite,
+                             IsFunction ], 0,
+  function ( U, f )
+    return ResidueClassUnion(UnderlyingRing(FamilyObj(U)),[[1,0],[0,1]],[],
+                             Filtered(IncludedElements(U),f),[]);
+  end );
+
+#############################################################################
+##
+#M  ForAllOp( <U>, <f> ) . . . .  for degenerated residue class unions of Z^2
+#M  ForAnyOp( <U>, <f> ) . . . .  for degenerated residue class unions of Z^2
+##
+InstallMethod( ForAllOp,
+               "for degenerated residue class unions of Z^2 (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionOfZxZ and IsFinite,
+                             IsFunction ], 0,
+               function ( U, f ) return ForAll(IncludedElements(U),f); end );
+
+InstallMethod( ForAnyOp,
+               "for degenerated residue class unions of Z^2 (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionOfZxZ and IsFinite,
+                             IsFunction ], 0,
+               function ( U, f ) return ForAny(IncludedElements(U),f); end );
+
+#############################################################################
+##
+#M  Length( <U> ) . . . . . . . . for degenerated residue class unions of Z^2
+##
+InstallOtherMethod( Length,
+                  "for degenerated residue class unions of Z^2 (ResClasses)",
+                  true, [ IsResidueClassUnionOfZxZ and IsFinite ], 0, Size );
 
 #############################################################################
 ##
