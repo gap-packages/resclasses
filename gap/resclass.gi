@@ -1055,7 +1055,11 @@ InstallMethod( \<, "for a module and a list of elements (ResClasses)",
 InstallMethod( \<, "for a list and a residue class union (ResClasses)",
                ReturnTrue, [ IsList, IsResidueClassUnion ], 0, ReturnFalse );
 InstallMethod( \<, "for a residue class union and a list (ResClasses)",
-               ReturnTrue, [ IsResidueClassUnion, IsList ], 0, ReturnTrue );
+               ReturnTrue, [ IsResidueClassUnion, IsList ], 0,
+               function ( U, l )
+                 if   IsFinite(U) then return AsList(U) < l;
+                 else return true; fi;
+               end );
 
 #############################################################################
 ##
