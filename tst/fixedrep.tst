@@ -81,7 +81,7 @@ gap> Difference(U,cl1);
 gap> Difference(U,cl2);
 [4/7]
 gap> Difference(U,U);
-[  ]
+Empty union of residue classes of Z with fixed representatives
 gap> cl1 + 1;
 [3/3]
 gap> U+23;
