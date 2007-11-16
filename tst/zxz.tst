@@ -41,6 +41,59 @@ gap> Difference(last,[[5,-5],[4,9]]);
 Z^2 \ <set of cardinality 4>
 gap> Difference(last,R);
 [  ]
+gap> empty := Intersection(R,[]);
+[  ]
+gap> Print(empty,"\n");
+ResidueClassUnion( ( Integers^2 ), [ [ 1, 0 ], [ 0, 1 ] ], [  ] )
+gap> IsEmpty(empty);
+true
+gap> Length(empty);
+0
+gap> IsSubset(R,empty);
+true
+gap> IsSubset(empty,R);
+false
+gap> empty = [];
+true
+gap> []+[1,1];
+[ 1, 1 ]
+gap> empty+[1,1];
+[  ]
+gap> 2*empty;
+[  ]
+gap> empty*[[2,0],[0,3]];
+[  ]
+gap> l := Intersection(R,[[1,0],[7,-3]]);
+[ [ 1, 0 ], [ 7, -3 ] ]
+gap> IsSubset(R,l);
+true
+gap> IsSubset(l,R);
+false
+gap> IsSubset(empty,l);
+false
+gap> IsSubset(l,empty);
+true
+gap> Length(l);
+2
+gap> Print(l,"\n");
+ResidueClassUnion( ( Integers^2 ), [ [ 1, 0 ], [ 0, 1 ] ], [  ],
+[ [ 1, 0 ], [ 7, -3 ] ], [  ] )
+gap> Display(l);
+[ [ 1, 0 ], [ 7, -3 ] ]
+gap> l[2];
+[ 7, -3 ]
+gap> l+[1,1];
+[ [ 2, 1 ], [ 8, -2 ] ]
+gap> l*[[2,0],[0,3]];
+[ [ 2, 0 ], [ 14, -9 ] ]
+gap> AsList(l);
+[ [ 1, 0 ], [ 7, -3 ] ]
+gap> IsList(last);
+true
+gap> [7,-3] in l;
+true
+gap> [7,-3] in empty;
+false
 gap> ResidueClassUnionViewingFormat("long");;
 gap> 2*R;
 The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2
