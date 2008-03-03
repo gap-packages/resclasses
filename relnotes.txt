@@ -217,8 +217,8 @@ Changes between version 2.5.2 and version 2.5.3:
 
 Changes between version 2.5.3 and version 3.0.0 (??? ??, 200?):
 
-The main change is that now ResClasses can deal also with unions of
-residue classes of Z^2.
+The main change is that ResClasses now supports computations with
+unions of residue classes of Z^2.
 
 Further changes are:
 
