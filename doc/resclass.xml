@@ -405,20 +405,20 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 <Section Label="sec:ResidueClassUnionsOfZxZ">
 <Heading>On residue class unions of <M>&ZZ;^2</M></Heading>
 
-Basically, residue class unions of <M>&ZZ;^2</M> are treated just as
-residue class unions of any other ring, and there is also roughly the
-same functionality available for them. However, there are some differences
-and a few additional features anyway. These are described in this section.
-<P/>
+Essentially, residue class unions of <M>&ZZ;^2</M> are treated like
+residue class unions of any other ring, and there is roughly the
+same functionality available for them. However there are some differences
+and a few additional features, which are described in this section. <P/>
 
-The elements of&nbsp;<M>&ZZ;^2</M> are lists of length&nbsp;2 with integer
-entries. The modulus of a residue class union of <M>&ZZ;^2</M> is a lattice.
-This lattice is stored as an invertible <M>2 \times 2</M> matrix with
-integer entries, whose rows are the spanning vectors.
-The matrix is normalized to Hermite normal form. <P/>
+The elements of&nbsp;<M>&ZZ;^2</M> are represented as lists of length&nbsp;2
+with integer entries. The modulus of a residue class union of <M>&ZZ;^2</M>
+is a lattice. This lattice is stored as a <M>2 \times 2</M> integer matrix of
+full rank in Hermite normal form, whose rows are the spanning vectors.
+Residue classes of&nbsp;<M>&ZZ;^2</M> modulo principal ideals are presently
+not implemented. <P/>
 
-Residue class unions of&nbsp;<M>&ZZ;^2</M> can be multiplied by
-invertible matrices from the right. A snippet of a residue class union
+Residue class unions of&nbsp;<M>&ZZ;^2</M> can be multiplied by matrices
+of full rank from the right. A snippet of a residue class union
 of&nbsp;<M>&ZZ;^2</M> is shown in <Q>ASCII art</Q> when one <C>Display</C>'s
 it with option <C>AsGrid</C>. <P/>
 
