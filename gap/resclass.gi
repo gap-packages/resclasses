@@ -2664,4 +2664,37 @@ InstallMethod( Display,
 
 #############################################################################
 ##
+#M  Display( <U> ) . . . . .  for partitions of Z^2 into residue class unions
+##
+InstallMethod( Display,
+               Concatenation("for partitions of Z^2 into ",
+                             "residue class unions (ResClasses)"),
+               true, [ IsList ], SUM_FLAGS,
+
+  function ( P )
+
+    local  lines, cols, i, j, l, pos, color, colors;
+
+    if   IsEmpty(P) or not ForAll(P,IsResidueClassUnionOfZxZ)
+      or ValueOption("AsGrid") = fail
+    then TryNextMethod(); fi;
+    
+    colors := ["*","+","-","#",".","&","/","~","%","<","$",":","!","^","'"];
+
+    l := Length(P);
+    lines := SizeScreen()[2]; cols := SizeScreen()[1]-2;
+    for i in [lines-1,lines-2..0] do
+      for j in [0..cols-1] do
+        pos := First([1..Length(P)],k->[i,j] in P[k]);
+        if   pos = fail then color := " ";
+        elif pos > Length(colors) then color := "?";
+        else color := colors[pos]; fi;
+        Print(color);
+      od;
+      Print("\n");
+    od;
+  end );
+
+#############################################################################
+##
 #E  resclass.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
