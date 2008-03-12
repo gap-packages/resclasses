@@ -302,6 +302,26 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  View( <l> ) . . . . . . . . . . . . . . . . . . . . . . .  for long lists
+##
+InstallMethod( ViewObj,
+               "for long lists (ResClasses)", true, [ IsList ], SUM_FLAGS,
+
+  function ( l )
+
+    local  pos;
+
+    if   Length(l) < 1000 and Length(String(l)) < 5000
+    then TryNextMethod(); fi;
+
+    Print("<list of type ",TNUM_OBJ(l)," of length ",Length(l),
+          ", starting [ ");
+    for pos in [1..10] do Print(l[pos],", "); od;
+    Print("... ]>");
+  end );
+
+#############################################################################
+##
 #V  One-character global variables
 ##
 ##  For the convenience of the reader, the manual uses one-character global
