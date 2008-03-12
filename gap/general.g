@@ -311,12 +311,11 @@ InstallMethod( ViewObj,
 
     local  pos;
 
-    if   Length(l) < 1000 and Length(String(l)) < 5000
-    then TryNextMethod(); fi;
+    if Length(l) < 1000 then TryNextMethod(); fi;
 
     Print("<list of type ",TNUM_OBJ(l)," of length ",Length(l),
           ", starting [ ");
-    for pos in [1..10] do Print(l[pos],", "); od;
+    for pos in [1..10] do View(l[pos]); Print(", "); od;
     Print("... ]>");
   end );
 
