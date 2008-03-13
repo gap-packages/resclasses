@@ -327,6 +327,24 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#M  View( <rec> ) . . . . . . . . . . . . .  for records with many components
+##
+InstallMethod( ViewObj,
+               "for records with many components (ResClasses)", true,
+               [ IsRecord ], SUM_FLAGS,
+
+  function ( record )
+
+    local  names;
+
+    names := RecNames(record);
+    if Length(names) < 10 then TryNextMethod(); fi;
+    Print("<record with components ");
+    View(names); Print(">");
+  end );
+
+#############################################################################
+##
 #V  One-character global variables
 ##
 ##  For the convenience of the reader, the manual uses one-character global
