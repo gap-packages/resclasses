@@ -302,21 +302,27 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  View( <l> ) . . . . . . . . . . . . . . . . . . . . . . .  for long lists
+#M  View( <list> ) . . . . . . . . . . . . . . . . . . . . . . for long lists
 ##
 InstallMethod( ViewObj,
                "for long lists (ResClasses)", true, [ IsList ], SUM_FLAGS,
 
-  function ( l )
+  function ( list )
 
     local  pos;
 
-    if Length(l) < 1000 then TryNextMethod(); fi;
-
-    Print("<list of type ",TNUM_OBJ(l)," of length ",Length(l),
-          ", starting [ ");
-    for pos in [1..10] do View(l[pos]); Print(", "); od;
-    Print("... ]>");
+    if not TNUM_OBJ_INT(list) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
+      or Length(list) < 1000 or IsRangeRep(list)
+    then TryNextMethod(); fi;
+    if not IsString(list) then
+      Print("<list of type ",TNUM_OBJ(list)," of length ",Length(list),
+            ", starting [ ");
+      for pos in [1..10] do View(list[pos]); Print(", "); od;
+      Print("... ]>");
+    else
+      Print("<string of length ",Length(list),", starting ");
+      View(list{[1..20]}); Print(">");
+    fi;
   end );
 
 #############################################################################
