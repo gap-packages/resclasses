@@ -302,6 +302,22 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#V  ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
+#F  SetEntireListOrRecordViewingThreshold( <threshold )
+##
+BindGlobal( "ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD", 10000 );
+BindGlobal( "SetEntireListOrRecordViewingThreshold",
+  function ( threshold )
+    if   not IsPosInt(threshold) and not IsInfinity(threshold)
+    then return fail; fi;
+    MakeReadWriteGlobal("ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD");
+    ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD := threshold;
+    MakeReadOnlyGlobal("ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD");
+    return threshold;
+  end );
+
+#############################################################################
+##
 #M  View( <list> ) . . . . . . . . . . . . . . . . . . . . . . for long lists
 ##
 InstallMethod( ViewObj,
@@ -312,13 +328,13 @@ InstallMethod( ViewObj,
     local  pos;
 
     if not TNUM_OBJ_INT(list) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
-      or Length(list) < 1000 or IsRangeRep(list)
+      or Length(list) < 1000
+      or MemoryUsage(list) < ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
     then TryNextMethod(); fi;
     if not IsString(list) then
-      Print("<list of type ",TNUM_OBJ(list)," of length ",Length(list),
-            ", starting [ ");
+      Print("<",TNUM_OBJ(list)[2]," [ ");
       for pos in [1..10] do View(list[pos]); Print(", "); od;
-      Print("... ]>");
+      Print("... ], of length ",Length(list),">");
     else
       Print("<string of length ",Length(list),", starting ");
       View(list{[1..20]}); Print(">");
@@ -338,7 +354,9 @@ InstallMethod( ViewObj,
     local  names;
 
     names := RecNames(record);
-    if Length(names) < 10 then TryNextMethod(); fi;
+    if   MemoryUsage(record) < ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
+      or Length(names) < 10
+    then TryNextMethod(); fi;
     Print("<record with components ");
     View(names); Print(">");
   end );
