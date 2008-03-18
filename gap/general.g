@@ -303,7 +303,7 @@ InstallMethod( Intersection2,
 #############################################################################
 ##
 #V  ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
-#F  SetEntireListOrRecordViewingThreshold( <threshold )
+#F  SetEntireListOrRecordViewingThreshold( <threshold> )
 ##
 BindGlobal( "ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD", 10000 );
 BindGlobal( "SetEntireListOrRecordViewingThreshold",
