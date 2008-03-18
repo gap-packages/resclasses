@@ -302,17 +302,17 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#V  ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
-#F  SetEntireListOrRecordViewingThreshold( <threshold> )
+#V  TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
+#F  SetTruncatedListOrRecordViewingThreshold( <threshold> )
 ##
-BindGlobal( "ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD", 10000 );
-BindGlobal( "SetEntireListOrRecordViewingThreshold",
+BindGlobal( "TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD", 10000 );
+BindGlobal( "SetTruncatedListOrRecordViewingThreshold",
   function ( threshold )
     if   not IsPosInt(threshold) and not IsInfinity(threshold)
     then return fail; fi;
-    MakeReadWriteGlobal("ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD");
-    ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD := threshold;
-    MakeReadOnlyGlobal("ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD");
+    MakeReadWriteGlobal("TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD");
+    TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD := threshold;
+    MakeReadOnlyGlobal("TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD");
     return threshold;
   end );
 
@@ -329,7 +329,7 @@ InstallMethod( ViewObj,
 
     if not TNUM_OBJ_INT(list) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
       or Length(list) < 1000
-      or MemoryUsage(list) < ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
+      or MemoryUsage(list) < TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
     then TryNextMethod(); fi;
     if not IsString(list) then
       Print("<",TNUM_OBJ(list)[2]," [ ");
@@ -354,7 +354,7 @@ InstallMethod( ViewObj,
     local  names;
 
     names := RecNames(record);
-    if   MemoryUsage(record) < ENTIRE_LIST_OR_RECORD_VIEWING_THRESHOLD
+    if   MemoryUsage(record) < TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
       or Length(names) < 10
     then TryNextMethod(); fi;
     Print("<record with components ");
