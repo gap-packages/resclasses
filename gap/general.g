@@ -305,7 +305,7 @@ InstallMethod( Intersection2,
 #V  TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
 #F  SetTruncatedListOrRecordViewingThreshold( <threshold> )
 ##
-BindGlobal( "TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD", 10000 );
+BindGlobal( "TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD", 5000 );
 BindGlobal( "SetTruncatedListOrRecordViewingThreshold",
   function ( threshold )
     if   not IsPosInt(threshold) and not IsInfinity(threshold)
@@ -315,6 +315,19 @@ BindGlobal( "SetTruncatedListOrRecordViewingThreshold",
     MakeReadOnlyGlobal("TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD");
     return threshold;
   end );
+
+#############################################################################
+##
+#F  ListRecordRecursiveLength( <obj> )
+##
+ListRecordRecursiveLength := function ( obj )
+  if   IsList(obj) and not IsRangeRep(obj)
+   and TNUM_OBJ_INT(obj) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
+  then return Sum(obj,ListRecordRecursiveLength);
+  elif IsRecord(obj)
+  then return Sum(RecNames(obj),name->ListRecordRecursiveLength(obj.(name)));
+  else return 1; fi;
+end;
 
 #############################################################################
 ##
@@ -328,8 +341,9 @@ InstallMethod( ViewObj,
     local  pos;
 
     if not TNUM_OBJ_INT(list) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
-      or Length(list) < 1000
-      or MemoryUsage(list) < TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
+      or Length(list) <= 10
+      or ListRecordRecursiveLength(list)
+       < TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
     then TryNextMethod(); fi;
     if not IsString(list) then
       Print("<",TNUM_OBJ(list)[2]," [ ");
@@ -350,15 +364,11 @@ InstallMethod( ViewObj,
                [ IsRecord ], SUM_FLAGS,
 
   function ( record )
-
-    local  names;
-
-    names := RecNames(record);
-    if   MemoryUsage(record) < TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
-      or Length(names) < 10
+    if   ListRecordRecursiveLength(record)
+       < TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
     then TryNextMethod(); fi;
     Print("<record with components ");
-    View(names); Print(">");
+    View(RecNames(record)); Print(">");
   end );
 
 #############################################################################
