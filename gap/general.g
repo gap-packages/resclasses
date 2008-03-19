@@ -305,7 +305,7 @@ InstallMethod( Intersection2,
 #V  TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD
 #F  SetTruncatedListOrRecordViewingThreshold( <threshold> )
 ##
-BindGlobal( "TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD", 5000 );
+BindGlobal( "TRUNCATED_LIST_OR_RECORD_VIEWING_THRESHOLD", 10000 );
 BindGlobal( "SetTruncatedListOrRecordViewingThreshold",
   function ( threshold )
     if   not IsPosInt(threshold) and not IsInfinity(threshold)
@@ -320,14 +320,21 @@ BindGlobal( "SetTruncatedListOrRecordViewingThreshold",
 ##
 #F  ListRecordRecursiveLength( <obj> )
 ##
-ListRecordRecursiveLength := function ( obj )
-  if   IsList(obj) and not IsRangeRep(obj)
-   and TNUM_OBJ_INT(obj) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
-  then return Sum(obj,ListRecordRecursiveLength);
-  elif IsRecord(obj)
-  then return Sum(RecNames(obj),name->ListRecordRecursiveLength(obj.(name)));
-  else return 1; fi;
-end;
+DeclareGlobalFunction( "ListRecordRecursiveLength" );
+InstallGlobalFunction( ListRecordRecursiveLength,
+  function ( obj )
+    if   IsStringRep(obj) then return Length(obj);
+    elif IsHomogeneousList(obj) and (not IsBound(obj[1])
+      or (not IsList(obj[1]) and not IsRecord(obj[1])))
+    then return 10 * Length(obj);
+    elif IsList(obj) and not IsRangeRep(obj)
+     and TNUM_OBJ_INT(obj) in [FIRST_LIST_TNUM..LAST_LIST_TNUM]
+    then return Sum(obj,ListRecordRecursiveLength);
+    elif IsRecord(obj)
+    then return Sum(RecNames(obj),
+                    name->ListRecordRecursiveLength(obj.(name)));
+    else return 10; fi;
+  end );
 
 #############################################################################
 ##
