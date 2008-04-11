@@ -180,21 +180,6 @@ InstallMethod( String,
 
 #############################################################################
 ##
-#F  BlankFreeString( <obj> ) . . . . . . . . . . . . . .string without blanks
-##
-BindGlobal( "BlankFreeString",
-
-  function ( obj )
-
-    local  str;
-
-    str := String(obj);
-    RemoveCharacters(str," ");
-    return str;
-  end );
-
-#############################################################################
-##
 #M  ViewString( <obj> ) . default method - use `Name' or dispatch to `String'
 ##
 InstallMethod( ViewString,
@@ -204,27 +189,6 @@ InstallMethod( ViewString,
   function ( obj )
     if HasName(obj) then return Name(obj); else return String(obj); fi;
   end );
-
-#############################################################################
-##
-#M  ViewString( <R> ) . . . . . . . . . . . . . . . . . for a polynomial ring
-##
-InstallMethod( ViewString,
-               "for polynomial rings (ResClasses)", true, 
-               [ IsPolynomialRing ], 0,
-
-  R -> Concatenation(String(LeftActingDomain(R)),
-                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
-                              ch -> ch <> ' ')) );
-
-#############################################################################
-##
-#M  ViewObj( <R> ) . . . . . . . . . . . . . . . . . .  for a polynomial ring
-##
-InstallMethod( ViewObj,
-               "for polynomial rings (ResClasses)", true,
-               [ IsPolynomialRing ], 100,
-               function( R ) Print( ViewString(R) ); end );
 
 #############################################################################
 ##
@@ -257,6 +221,21 @@ InstallMethod( \in,
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  BlankFreeString( <obj> ) . . . . . . . . . . . . . .string without blanks
+##
+BindGlobal( "BlankFreeString",
+
+  function ( obj )
+
+    local  str;
+
+    str := String(obj);
+    RemoveCharacters(str," ");
+    return str;
+  end );
 
 #############################################################################
 ##
