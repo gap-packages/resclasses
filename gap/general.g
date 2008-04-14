@@ -161,7 +161,18 @@ BindGlobal( "FetchFromCache",
 
 #############################################################################
 ##
+#M  ViewString( <obj> ) . . . . . . . . . . . . . . . for an object with name
+##
+##  Added to lib/object.gi.
+##
+InstallMethod( ViewString, "for an object with name", true,
+               [ HasName ], 0 , Name );
+
+#############################################################################
+##
 #M  IsRowModule .  return `false' for objects which are not free left modules 
+##
+##  Added to lib/modulrow.gi.
 ##
 InstallOtherMethod( IsRowModule,
                     Concatenation("return `false' for objects which are ",
@@ -174,19 +185,23 @@ InstallOtherMethod( IsRowModule,
 
 #############################################################################
 ##
-#M  String( <M> ) . . . . . . . . . . . . . . . . . . . . . . for row modules
+#M  String( <M> ) . . . . . . . . . . . . . . . . . . .  for full row modules
 ##
-InstallMethod( String,
-               "for row modules", true, [ IsRowModule ], 0,
+##  Added to lib/modulrow.gi.
+##
+InstallMethod( String, "for full row modules", true,
+               [ IsFreeLeftModule and IsFullRowModule ], 0,
   M -> Concatenation(List(["( ",LeftActingDomain(M),"^",
-                                DimensionOfVectors(M)," )"],String)) );
+                                DimensionOfVectors(M)," )"], String)) );
 
 #############################################################################
 ##
-#M  ViewString( <M> ) . . . . . . . . . . . . . . . . . . . . for row modules
+#M  ViewString( <M> ) . . . . . . . . . . . . . . . . .  for full row modules
 ##
-InstallMethod( ViewString, "for row modules", true, [ IsRowModule ], 0,
-               String );
+##  Added to lib/modulrow.gi.
+##
+InstallMethod( ViewString, "for full row modules", true,
+               [ IsFreeLeftModule and IsFullRowModule ], 0, String );
 
 #############################################################################
 ##
@@ -238,14 +253,9 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
-#M  ViewString( <obj> ) . . . . . . . . . . . . . . . . for objects with name
-##
-InstallMethod( ViewString, "for objects with name", true,
-               [ IsObject and HasName ], 0, Name );
-
-#############################################################################
-##
 #M  \in( <g>, GL( <n>, Integers ) )
+##
+##  Added to lib/grpramat.gi.
 ##
 InstallMethod( \in,
                "for matrix and GL(n,Z) (ResClasses)", IsElmsColls,
@@ -259,6 +269,8 @@ InstallMethod( \in,
 #############################################################################
 ##
 #M  \in( <g>, SL( <n>, Integers ) )
+##
+##  Added to lib/grpramat.gi.
 ##
 InstallMethod( \in,
                "for matrix and SL(n,Z) (ResClasses)", IsElmsColls,
