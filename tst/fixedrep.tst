@@ -150,8 +150,8 @@ gap> cl+x;
 gap> -cl;
 [Z(2)^0/x^2+Z(2)^0]
 gap> Print(cl,"\n");
-ResidueClassWithFixedRepresentative( PolynomialRing( GF(2), ["x"] ), x^2+Z(2)^\
-0, Z(2)^0 )
+ResidueClassWithFixedRepresentative( PolynomialRing( GF(
+2), ["x"] ), x^2+Z(2)^0, Z(2)^0 )
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> 0 in U;
