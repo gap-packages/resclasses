@@ -161,37 +161,6 @@ BindGlobal( "FetchFromCache",
 
 #############################################################################
 ##
-#M  String( <obj> ) . . . . . . default method, returns the output by `Print'
-##
-InstallMethod( String,
-               "default method, returns the output by `Print' (ResClasses)",
-               true, [ IsObject ], 0,
-
-  function( obj )
-
-    local  str, out;
-
-    str := "";
-    out := OutputTextString( str, true );
-    PrintTo( out, obj );
-    CloseStream(out);
-    return str;
-  end );
-
-#############################################################################
-##
-#M  ViewString( <obj> ) . default method - use `Name' or dispatch to `String'
-##
-InstallMethod( ViewString,
-               Concatenation("default method - use `Name' or dispatch to ",
-                             "`String' (ResClasses)"), true, [ IsObject ], 0,
-
-  function ( obj )
-    if HasName(obj) then return Name(obj); else return String(obj); fi;
-  end );
-
-#############################################################################
-##
 #M  IsRowModule .  return `false' for objects which are not free left modules 
 ##
 InstallOtherMethod( IsRowModule,
@@ -202,6 +171,77 @@ InstallOtherMethod( IsRowModule,
   function ( obj )
     if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  String( <M> ) . . . . . . . . . . . . . . . . . . . . . . for row modules
+##
+InstallMethod( String,
+               "for row modules", true, [ IsRowModule ], 0,
+  M -> Concatenation(List(["( ",LeftActingDomain(M),"^",
+                                DimensionOfVectors(M)," )"],String)) );
+
+#############################################################################
+##
+#M  ViewString( <M> ) . . . . . . . . . . . . . . . . . . . . for row modules
+##
+InstallMethod( ViewString, "for row modules", true, [ IsRowModule ], 0,
+               String );
+
+#############################################################################
+##
+#F  BlankFreeString( <obj> ) . . . . . . . . . . . . . .string without blanks
+##
+BindGlobal( "BlankFreeString",
+
+  function ( obj )
+
+    local  str;
+
+    str := String(obj);
+    RemoveCharacters(str," ");
+    return str;
+  end );
+
+#############################################################################
+##
+#M  String( <R> ) . . . . . . . . . . . . . . . . . . . for a polynomial ring
+##
+InstallMethod( String,
+               "for a polynomial ring", true, [ IsPolynomialRing ],
+               RankFilter(IsFLMLOR),
+
+  function ( R )
+
+    local  s, i, f;
+
+    s := Concatenation("PolynomialRing( ",String(LeftActingDomain(R)),", [");
+    f:=false;
+    for i in IndeterminatesOfPolynomialRing(R) do
+      if f then Append(s,", ");fi;
+      s := Concatenation(s,"\"",String(i),"\"");
+      f:=true;
+    od;
+    Append(s,"] )");
+    return s;
+  end );
+
+#############################################################################
+##
+#M  ViewString( <R> ) . . . . . . . . . . . . . . . . . for a polynomial ring
+##
+InstallMethod( ViewString,
+               "for a polynomial ring", true, [ IsPolynomialRing ],
+               RankFilter(IsFLMLOR),
+  R -> Concatenation(String(LeftActingDomain(R)),
+                     BlankFreeString(IndeterminatesOfPolynomialRing(R))) );
+
+#############################################################################
+##
+#M  ViewString( <obj> ) . . . . . . . . . . . . . . . . for objects with name
+##
+InstallMethod( ViewString, "for objects with name", true,
+               [ IsObject and HasName ], 0, Name );
 
 #############################################################################
 ##
@@ -234,21 +274,6 @@ InstallMethod( \in,
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  BlankFreeString( <obj> ) . . . . . . . . . . . . . .string without blanks
-##
-BindGlobal( "BlankFreeString",
-
-  function ( obj )
-
-    local  str;
-
-    str := String(obj);
-    RemoveCharacters(str," ");
-    return str;
-  end );
 
 #############################################################################
 ##

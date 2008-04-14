@@ -36,7 +36,6 @@ InstallMethod( Z_piCons, "natural Z_pi (ResClasses)", true,
     SetElementsFamily( R, FamilyObj( 1 ) );
     SetNoninvertiblePrimes( R, R!.primes );
     piStr := String(pi);
-    SetName( R, Concatenation( "Z_(", piStr{[2..Length(piStr)-1]}, ")" ) );
     return R;
   end );
 
@@ -67,12 +66,25 @@ InstallOtherMethod( IsZ_pi, "for non-Z_(pi) (ResClasses)", true,
 
 #############################################################################
 ##
-#M  String( <R> ) . . . . . . . . . . . . . . . . . . . . . . . .  for Z_(pi)
+#M  ViewString( <R> ) . . . . . . . . . . . . . . . . . . . . . .  for Z_(pi)
 ##
-InstallMethod( String,
+InstallMethod( ViewString,
                "for Z_(pi) (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
 
-  R -> Concatenation( "Z_pi( ", String( NoninvertiblePrimes( R ) ), " )" ) );
+ function ( R )
+
+   local  pistr;
+
+   pistr := String(NoninvertiblePrimes(R));
+   return Concatenation( "Z_(", pistr{[2..Length(pistr)-1]}, ")" );
+ end );
+
+#############################################################################
+##
+#M  ViewObj( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . for Z_(pi)
+##
+InstallMethod( ViewObj, "for Z_(pi) (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
+               function ( R ) Print(ViewString(R)); end );
 
 #############################################################################
 ##
@@ -81,6 +93,15 @@ InstallMethod( String,
 InstallMethod( PrintObj,
                "for Z_(pi) (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
                function ( R ) Print( String( R ) ); end );
+
+#############################################################################
+##
+#M  String( <R> ) . . . . . . . . . . . . . . . . . . . . . . . .  for Z_(pi)
+##
+InstallMethod( String,
+               "for Z_(pi) (ResClasses)", ReturnTrue, [ IsZ_pi ], 0,
+
+  R -> Concatenation( "Z_pi( ", String( NoninvertiblePrimes( R ) ), " )" ) );
 
 #############################################################################
 ##

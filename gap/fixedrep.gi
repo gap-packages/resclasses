@@ -770,12 +770,13 @@ InstallMethod( String,
     local  R, classes;
 
     R := UnderlyingRing(FamilyObj(U)); classes := Classes(U);
-    if   Length(classes) = 1
-    then return Concatenation("ResidueClassWithFixedRepresentative( ",
-                              String(R),", ",String(classes[1][1]),", ",
-                              String(classes[1][2])," )");
-    else return Concatenation("UnionOfResidueClassesWithFixedRepresentative",
-                              "s( ",String(R),", ",String(classes)," )");
+    if Length(classes) = 1 then
+      return Concatenation("ResidueClassWithFixedRepresentative( ",
+                           String(R),", ",String(classes[1][1]),", ",
+                           String(classes[1][2])," )");
+    else
+      return Concatenation("UnionOfResidueClassesWithFixedRepresentative",
+                           "s( ",String(R),", ",String(classes)," )");
     fi;
   end );
 
@@ -793,10 +794,10 @@ InstallMethod( PrintObj,
 
     R := UnderlyingRing(FamilyObj(U)); classes := Classes(U);
     if Length(classes) = 1 then
-      Print("ResidueClassWithFixedRepresentative( ",String(R),", ",
+      Print("ResidueClassWithFixedRepresentative( ",R,", ",
             classes[1][1],", ",classes[1][2]," )");
     else
-      Print("UnionOfResidueClassesWithFixedRepresentatives( ",String(R),", ",
+      Print("UnionOfResidueClassesWithFixedRepresentatives( ",R,", ",
             classes," )");
     fi;
   end );

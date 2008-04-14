@@ -2472,6 +2472,16 @@ InstallGlobalFunction( RingToString,
 
 #############################################################################
 ##
+#M  ViewString( <cl> ) . . . . . . . . . . . . . . . . .  for residue classes
+##
+InstallMethod( ViewString,
+               "for residue classes (ResClasses)", true,
+               [ IsResidueClass ], 0,
+               cl -> Concatenation(String(Residue(cl)),"(",
+                                   String(Modulus(cl)),")") );
+
+#############################################################################
+##
 #M  ViewString( <cl> ) . . . . . . . . . . . . . . for residue classes of Z^2
 ##
 InstallMethod( ViewString,
@@ -2622,7 +2632,7 @@ InstallMethod( PrintObj,
 
     R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
     included := IncludedElements(U); excluded := ExcludedElements(U);
-    Print("ResidueClassUnion( ",String(R),", ",Modulus(U),", ",Residues(U));
+    Print("ResidueClassUnion( ",R,", ",Modulus(U),", ",Residues(U));
     if   included <> [] or excluded <> []
     then Print(", ",included,", ",excluded); fi;
     Print(" )");
