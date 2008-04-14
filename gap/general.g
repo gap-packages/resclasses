@@ -190,7 +190,7 @@ InstallMethod( ViewString, "for row modules", true, [ IsRowModule ], 0,
 
 #############################################################################
 ##
-#F  BlankFreeString( <obj> ) . . . . . . . . . . . . . .string without blanks
+#F  BlankFreeString( <obj> ) . . . . . . . . . . . . .  string without blanks
 ##
 BindGlobal( "BlankFreeString",
 
