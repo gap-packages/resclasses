@@ -218,6 +218,19 @@ InstallMethod( \in,
 
 #############################################################################
 ##
+#M  \in( <g>, SL( <n>, Integers ) )
+##
+InstallMethod( \in,
+               "for matrix and SL(n,Z) (ResClasses)", IsElmsColls,
+               [ IsMatrix, IsNaturalSLnZ ],
+
+  function ( g, SLnZ )
+    return DimensionsMat(g) = DimensionsMat(One(SLnZ))
+       and ForAll(Flat(g),IsInt) and DeterminantMat(g) = 1;
+  end );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
