@@ -222,34 +222,28 @@ BindGlobal( "BlankFreeString",
 ##
 #M  String( <R> ) . . . . . . . . . . . . . . . . . . . for a polynomial ring
 ##
+##  Added to lib/ringpoly.gi.
+##
 InstallMethod( String,
                "for a polynomial ring", true, [ IsPolynomialRing ],
                RankFilter(IsFLMLOR),
-
-  function ( R )
-
-    local  s, i, f;
-
-    s := Concatenation("PolynomialRing( ",String(LeftActingDomain(R)),", [");
-    f:=false;
-    for i in IndeterminatesOfPolynomialRing(R) do
-      if f then Append(s,", ");fi;
-      s := Concatenation(s,"\"",String(i),"\"");
-      f:=true;
-    od;
-    Append(s,"] )");
-    return s;
-  end );
+               R -> Concatenation("PolynomialRing( ",
+                                   String(LeftActingDomain(R)),", ",
+                                   String(IndeterminatesOfPolynomialRing(R)),
+                                  " )") );
 
 #############################################################################
 ##
 #M  ViewString( <R> ) . . . . . . . . . . . . . . . . . for a polynomial ring
 ##
+##  Added to lib/ringpoly.gi.
+##
 InstallMethod( ViewString,
                "for a polynomial ring", true, [ IsPolynomialRing ],
                RankFilter(IsFLMLOR),
   R -> Concatenation(String(LeftActingDomain(R)),
-                     BlankFreeString(IndeterminatesOfPolynomialRing(R))) );
+                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
+                              ch->ch<>' ')) );
 
 #############################################################################
 ##
