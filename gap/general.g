@@ -283,20 +283,17 @@ BindGlobal( "BlankFreeString",
 
 #############################################################################
 ##
-#V  One-character global variables
+#V  One-character global variables ...
 ##
-##  For the convenience of the reader, the manual uses one-character global
-##  variables such as `R' for a ring and `U' for a union of residue classes.
-##  Further, for the convenience of the user these variables should remain
-##  available for redefinition in an interactive session. Therefore these
-##  variables must not be readonly -- of course with the natural exception
-##  of the `traditional' identifiers `E', `X' and `Z'.
+##  ... should not be overwritten when reading test files, e.g., although
+##  one-letter variable names are used in test files frequently.
+##  This is just the list of their names.
 ##
-BindGlobal( "FREE_ONE_LETTER_GLOBALS",
+##  The actual caching is done by `ResClassesDoThingsToBeDoneBeforeTest' and
+##  `ResClassesDoThingsToBeDoneAfterTest'.
+##
+BindGlobal( "ONE_LETTER_GLOBALS",
   List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
-for ch in FREE_ONE_LETTER_GLOBALS do
-  if IsReadOnlyGlobal(ch) then MakeReadWriteGlobal(ch); fi;
-od;
 
 #############################################################################
 ##
