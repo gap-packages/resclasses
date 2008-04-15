@@ -205,21 +205,6 @@ InstallMethod( ViewString, "for full row modules", true,
 
 #############################################################################
 ##
-#F  BlankFreeString( <obj> ) . . . . . . . . . . . . .  string without blanks
-##
-BindGlobal( "BlankFreeString",
-
-  function ( obj )
-
-    local  str;
-
-    str := String(obj);
-    RemoveCharacters(str," ");
-    return str;
-  end );
-
-#############################################################################
-##
 #M  String( <R> ) . . . . . . . . . . . . . . . . . . . for a polynomial ring
 ##
 ##  Added to lib/ringpoly.gi.
@@ -280,6 +265,21 @@ InstallMethod( \in,
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
+
+#############################################################################
+##
+#F  BlankFreeString( <obj> ) . . . . . . . . . . . . .  string without blanks
+##
+BindGlobal( "BlankFreeString",
+
+  function ( obj )
+
+    local  str;
+
+    str := String(obj);
+    RemoveCharacters(str," ");
+    return str;
+  end );
 
 #############################################################################
 ##
