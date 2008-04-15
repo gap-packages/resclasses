@@ -37,7 +37,7 @@ gap> List([U1,U2,U3,U4],IncludedElements);
 gap> List([U1,U2,U3,U4],ExcludedElements);
 [ [  ], [ -4, 1 ], [ Z(7)^0 ], [  ] ]
 gap> String(cl3);
-"ResidueClassUnion( PolynomialRing( GF(7), [\"x\"] ), x+Z(7)^0, [ Z(7) ] )"
+"ResidueClassUnion( PolynomialRing( GF(7), [ x ] ), x+Z(7)^0, [ Z(7) ] )"
 gap> String(U2);
 "ResidueClassUnion( Integers, 5, [ 1, 2 ], [ 3, 8 ], [ -4, 1 ] )"
 gap> String(U4);
