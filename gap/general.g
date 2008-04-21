@@ -297,4 +297,17 @@ BindGlobal( "ONE_LETTER_GLOBALS",
 
 #############################################################################
 ##
+#O  Make `Float', `IsFloat' etc. available again if changed to `MacFloat'
+##
+if IsBound(MacFloat) then
+  if IsBound(Float) then
+    MakeReadWriteGlobal( "Float" ); Unbind( Float );
+    MakeReadWriteGlobal( "IsFloat" ); Unbind( IsFloat );
+  fi;
+  DeclareSynonym( "Float", MacFloat );
+  DeclareSynonym( "IsFloat", IsMacFloat );
+fi;
+
+#############################################################################
+##
 #E  general.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
