@@ -1632,7 +1632,7 @@ InstallOtherMethod( \+,
 ##
 InstallOtherMethod( \+,
                     "for a ring element and the base ring (ResClasses)",
-                    IsElmsColls, [ IsObject, IsDomain ], SUM_FLAGS,
+                    IsElmsColls, [ IsObject, IsDomain ],
                     function ( x, R ) return R + x; end );
 
 #############################################################################
@@ -1779,7 +1779,7 @@ InstallOtherMethod( \*,
 InstallOtherMethod( \*,
                     "for a ring element and the base ring (ResClasses)",
                     ReturnTrue, [ IsRingElement, IsDomain ],
-                    SUM_FLAGS, function ( x, R ) return R * x; end );
+                    function ( x, R ) return R * x; end );
 
 #############################################################################
 ##
