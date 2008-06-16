@@ -1629,10 +1629,15 @@ InstallOtherMethod( \+,
 #############################################################################
 ##
 #M  \+( <x>, <R> ) . . . . . . . . . . . for a ring element and the base ring
+#M  \+( <x>, <R> ) . . . . . . . . . . . . . for a scalar and the base module
 ##
 InstallOtherMethod( \+,
                     "for a ring element and the base ring (ResClasses)",
-                    IsElmsColls, [ IsObject, IsDomain ],
+                    IsElmsColls, [ IsObject, IsRing ], SUM_FLAGS,
+                    function ( x, R ) return R + x; end );
+InstallOtherMethod( \+,
+                    "for a scalar and the base module (ResClasses)",
+                    IsElmsColls, [ IsObject, IsRowModule ], SUM_FLAGS,
                     function ( x, R ) return R + x; end );
 
 #############################################################################
@@ -1740,6 +1745,15 @@ InstallOtherMethod( \*, "for empty list and matrix (ResClasses)",
 
 #############################################################################
 ##
+#M  \*( <n>, <U> ) . . . . .  for an integer and a residue class union of Z^2
+##
+InstallOtherMethod( \*,
+            "for an integer and a residue class union of Z^2 (ResClasses)",
+            ReturnTrue, [ IsInt, IsResidueClassUnionOfZxZ ], 0,
+            function ( n, U ) return U * n; end );
+
+#############################################################################
+##
 #M  \*( <R>, <x> ) . . . . . . . . . . . for the base ring and a ring element
 ##
 InstallOtherMethod( \*,
@@ -1775,10 +1789,15 @@ InstallOtherMethod( \*,
 #############################################################################
 ##
 #M  \*( <x>, <R> ) . . . . . . . . . . . for a ring element and the base ring
+#M  \*( <x>, <R> ) . . . . . . . .  for a scalar / matrix and the base module
 ##
 InstallOtherMethod( \*,
                     "for a ring element and the base ring (ResClasses)",
-                    ReturnTrue, [ IsRingElement, IsDomain ],
+                    ReturnTrue, [ IsRingElement, IsRing ], SUM_FLAGS,
+                    function ( x, R ) return R * x; end );
+InstallOtherMethod( \*,
+                    "for a scalar / matrix and the base module (ResClasses)",
+                    ReturnTrue, [ IsRingElement, IsRowModule ], SUM_FLAGS,
                     function ( x, R ) return R * x; end );
 
 #############################################################################
