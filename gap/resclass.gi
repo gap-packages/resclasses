@@ -1730,13 +1730,21 @@ InstallOtherMethod( \*,
 
   function ( U, M )
 
-    if   not ForAll(Flat(M),IsInt) or DeterminantMat(M) = 0
+    local  R, m, r, inc, exc;
+
+    if   not ForAll(Flat(M),IsRat) or DeterminantMat(M) = 0
     then TryNextMethod(); fi;
 
-    return ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),Modulus(U)*M,
-                               List(Residues(U),r->r*M),
-                               List(IncludedElements(U),el->el*M),
-                               List(ExcludedElements(U),el->el*M));
+    R := UnderlyingRing(FamilyObj(U));
+
+    m   := Modulus(U) * M;
+    r   := Residues(U) * M;
+    inc := IncludedElements(U) * M;
+    exc := ExcludedElements(U) * M;
+
+    if not ForAll([m,r,inc,exc],S->IsSubset(R,S)) then TryNextMethod(); fi;
+
+    return ResidueClassUnionNC(R,m,r,inc,exc);
   end );
 
 InstallOtherMethod( \*, "for empty list and matrix (ResClasses)",
