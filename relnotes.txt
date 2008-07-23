@@ -222,6 +222,9 @@ unions of residue classes of Z^2.
 
 Further changes are:
 
+ - A function `ResidueClassesIntersectionType' has been added.
+
  - The required versions of GAP, GAPDoc and Polycyclic have been incremented
    to 4.4.10, 1.1 and 2.2, respectively.
+
 

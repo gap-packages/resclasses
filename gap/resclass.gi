@@ -1579,6 +1579,30 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
+#F  ResidueClassesIntersectionType( <classes> )
+##
+InstallGlobalFunction( ResidueClassesIntersectionType,
+
+  function ( classes )
+
+    local  subsets, internonempty, diffnonempty, n, Sn, Sn2, cls, combs;
+
+    n     := Length(classes);
+    combs := Filtered(Combinations([1..n]),l->l<>[]);
+    Sn  := Action(SymmetricGroup(n),combs,OnSets);
+    Sn2 := Action(SymmetricGroup(n),Tuples(combs,2),OnTuplesSets);
+    subsets := Filtered(Combinations(classes),cl->cl<>[]);
+    internonempty := List(subsets,S->not IsEmpty(Intersection(S)));
+    internonempty := Minimum(List(AsList(Sn),g->Permuted(internonempty,g)));
+    diffnonempty  := List(Tuples(subsets,2),
+                          t->not IsEmpty(Difference(Union(t[1]),
+                                                    Union(t[2]))));
+    diffnonempty  := Minimum(List(AsList(Sn2),g->Permuted(diffnonempty,g)));
+    return [internonempty,diffnonempty];
+  end );
+
+#############################################################################
+##
 #S  Applying arithmetic operations to the elements of a residue class union.
 ##
 #############################################################################
