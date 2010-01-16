@@ -27,19 +27,19 @@
   </Version>
   <Author>
     Stefan Kohl
-    <Email>kohl@mathematik.uni-stuttgart.de</Email>
-    <Homepage>http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/</Homepage>
+    <Email>kohl@univlora.edu.al</Email>
+    <Homepage>http://www.univlora.edu.al/personel/kohl/<Homepage>
     <Address>
-      Institut für Geometrie und Topologie <Br/>
-      Pfaffenwaldring 57 <Br/>
-      Universität Stuttgart <Br/>
-      70550 Stuttgart <Br/>
-      Germany
+      Department of Mathematics <Br/>
+      University of Vlora <Br/>
+      Lagjja: Pavaresia <Br/>
+      Vlora <Br/>
+      Albania
     </Address>
   </Author>
-  <Date>September 26, 2007</Date>
+  <Date>January 16, 2010</Date>
   <Copyright>
-    &copyright; 2003 - 2007 by Stefan Kohl <P/>
+    &copyright; 2003 - 2010 by Stefan Kohl <P/>
     This package is distributed under the GNU General Public License.
   </Copyright>
   <#Include SYSTEM "abstract.xml">
