@@ -262,6 +262,39 @@ InstallMethod( \in,
 
 #############################################################################
 ##
+#S  A tool for telling GAP about linear order relations (inclusions, etc.) //
+##  between certain objects (particularly domains). /////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  LinearOrder( <rel>, <domains> )
+##
+DeclareGlobalFunction( "LinearOrder" );
+InstallGlobalFunction( LinearOrder,
+
+  function ( rel, domains )
+
+    local  pairs, pair;
+
+    pairs := Combinations([1..Length(domains)],2);
+    for pair in pairs do
+      InstallMethod( rel,
+                     Concatenation( "for ",NameFunction(domains[pair[2]]),
+                                    " and ",NameFunction(domains[pair[1]]) ),
+                     ReturnTrue, [domains[pair[1]],domains[pair[2]]], 0,
+                     ReturnFalse );
+      InstallMethod( rel,
+                     Concatenation( "for ",NameFunction(domains[pair[1]]),
+                                    " and ",NameFunction(domains[pair[2]]) ),
+                     ReturnTrue, [domains[pair[2]],domains[pair[1]]], 0,
+                     ReturnTrue );
+    od;
+  end );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
