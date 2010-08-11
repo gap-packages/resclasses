@@ -316,6 +316,17 @@ BindGlobal( "BlankFreeString",
 
 #############################################################################
 ##
+#F  IntOrInfinityToLaTeX( n )
+##
+BindGlobal( "IntOrInfinityToLaTeX",
+  function( n )
+    if   IsInt(n)      then return String(n);
+    elif IsInfinity(n) then return "\\infty";
+    else return fail; fi;
+  end );
+
+#############################################################################
+##
 #V  One-character global variables ...
 ##
 ##  ... should not be overwritten when reading test files, e.g., although
