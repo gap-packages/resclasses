@@ -15,7 +15,7 @@ ness of computing resources permit this.
 
                                 Requirements
 
-The  ResClasses Package  needs at least version 4.4.10 of GAP and version 2.2
+The  ResClasses Package  needs at least version 4.4.12 of GAP and version 2.4
 of Polycyclic,  is completely written  in the  GAP language  and does neither
 contain nor require external binaries. GAPDoc version 1.1 or higher is needed
 for displaying the online help.
@@ -36,5 +36,5 @@ For further advice  on questions of technical nature  please see the  chapter
 If you have problems with this package, wish to make comments or suggestions,
 or if you find bugs, please send e-mail to
 
-Stefan Kohl, kohl@mathematik.uni-stuttgart.de
+Stefan Kohl, stefan@mcs.st-and.ac.uk
 
