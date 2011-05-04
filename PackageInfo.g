@@ -13,7 +13,7 @@ Version          := "3.0.0",
 Date             := "03/05/2011",
 ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
                                   "resclasses/resclasses-3.0.0"),
-ArchiveFormats   := ".tar.gz",
+ArchiveFormats   := "-win.zip", # ".tar.gz" when providing text files with UNIX-style line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
