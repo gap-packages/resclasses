@@ -225,6 +225,6 @@ Further changes are:
  - A function `ResidueClassesIntersectionType' has been added.
 
  - The required versions of GAP, GAPDoc and Polycyclic have been incremented
-   to 4.4.12, 1.1 and 2.4, respectively.
+   to 4.4.12, 1.1 and 2.6, respectively.
 
 
