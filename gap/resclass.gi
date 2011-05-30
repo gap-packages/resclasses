@@ -2,13 +2,10 @@
 ##
 #W  resclass.gi             GAP4 Package `ResClasses'             Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains implementations of methods and functions for computing
 ##  with unions of residue classes +/- finite sets ('residue class unions').
 ##
-Revision.resclass_gi :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

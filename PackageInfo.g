@@ -1,18 +1,17 @@
 ####################################################################################################
 ##
 ##  PackageInfo.g                      GAP4 Package `ResClasses'                         Stefan Kohl
-##  
-#H  @(#)$Id$
 ##
+####################################################################################################
 
 SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "3.0.0",
+Version          := "3.0.1",
 Date             := "08/05/2011",
 ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/resclasses-3.0.0"),
+                                  "resclasses/resclasses-3.0.1"),
 ArchiveFormats   := "-win.zip", # ".tar.gz" when providing text files with UNIX-style line breaks
 Persons          := [
                       rec( LastName      := "Kohl",

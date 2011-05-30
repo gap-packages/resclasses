@@ -2,13 +2,10 @@
 ##
 #W  fixedrep.gd             GAP4 Package `ResClasses'             Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains declarations needed for computing with unions of
 ##  residue classes with distinguished ("fixed") representatives.
 ##
-Revision.fixedrep_gd :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

@@ -227,4 +227,8 @@ Further changes are:
  - The required versions of GAP, GAPDoc and Polycyclic have been incremented
    to 4.4.12, 1.1 and 2.6, respectively.
 
+Changes between version 3.0.0 and version 3.0.1:
+
+ - The CVS revision entries have been removed from the source files.
+
 

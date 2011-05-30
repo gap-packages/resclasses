@@ -2,13 +2,13 @@
 ##
 #W  fixedrep.tst            GAP4 Package `ResClasses'             Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains automated tests of ResClasses' functionality for
 ##  computing with unions of residue classes with distinguished ("fixed")
 ##  representatives.
 ##
-gap> START_TEST("$Id$");
+#############################################################################
+
+gap> START_TEST( "fixedrep.tst" );
 gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> cl1 := ResidueClassWithFixedRepresentative(Integers,3,2);
 [2/3]

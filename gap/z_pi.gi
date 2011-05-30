@@ -2,13 +2,10 @@
 ##
 #W  z_pi.gi               GAP4 Package `Resclasses'               Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains implementations of methods for computing with the
 ##  semilocalizations Z_(pi) of the ring of integers.
 ##
-Revision.z_pi_gi :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

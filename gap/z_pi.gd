@@ -2,13 +2,10 @@
 ##
 #W  z_pi.gd               GAP4 Package `ResClasses'               Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains the declaration part for the semilocalizations Z_(pi)
 ##  of the ring of integers.
 ##
-Revision.z_pi_gd :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##

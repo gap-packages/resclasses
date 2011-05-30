@@ -2,10 +2,9 @@
 ##
 #W  read.g               GAP4 Package `ResClasses'                Stefan Kohl
 ##
-#H  @(#)$Id$
+##  Read the implementation part of the package.
 ##
-
-# Read the implementation part of the package.
+#############################################################################
 
 ReadPackage( "resclasses", "gap/general.g" );
 ReadPackage( "resclasses", "gap/resclaux.g" );

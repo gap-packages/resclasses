@@ -2,14 +2,11 @@
 ##
 #W  general.g              GAP4 Package `ResClasses'              Stefan Kohl
 ##
-#H  @(#)$Id$
-##
 ##  This file contains a couple of functions and methods which are not
 ##  directly related to computations with residue classes, and which might
 ##  perhaps later be moved into the GAP Library.
 ##
-Revision.general_g :=
-  "@(#)$Id$";
+#############################################################################
 
 #############################################################################
 ##
