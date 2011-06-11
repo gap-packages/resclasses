@@ -2,11 +2,14 @@
 ##
 #W  general.g              GAP4 Package `ResClasses'              Stefan Kohl
 ##
+#H  @(#)$Id$
+##
 ##  This file contains a couple of functions and methods which are not
 ##  directly related to computations with residue classes, and which might
 ##  perhaps later be moved into the GAP Library.
 ##
-#############################################################################
+Revision.general_g :=
+  "@(#)$Id$";
 
 #############################################################################
 ##
@@ -255,6 +258,30 @@ InstallMethod( \in,
   function ( g, SLnZ )
     return DimensionsMat(g) = DimensionsMat(One(SLnZ))
        and ForAll(Flat(g),IsInt) and DeterminantMat(g) = 1;
+  end );
+
+#############################################################################
+##
+#M  \^( <p>, <G> ) . . . . . . . orbit of a point under the action of a group
+##
+##  Returns the orbit of the point <p> under the action of the group <G>,
+##  with respect to the action OnPoints.
+##
+##  The following cases are handled specially:
+##
+##    - if <p> is an element of <G>, then the method returns the
+##      conjugacy class of <G> which contains <p>, and
+##    - if <p> is a subgroup of <G>, then the method returns the
+##      conjugacy class of subgroups of <G>  which contains <p>.
+##
+InstallOtherMethod( \^, "orbit of a point under the action of a group",
+                    ReturnTrue, [ IsObject, IsGroup ], 0,
+
+  function ( p, G )
+    if   p in G then return ConjugacyClass(G,p);
+    elif IsGroup(p) and IsSubgroup(G,p)
+    then return ConjugacyClassSubgroups(G,p);
+    else return Orbit(G,p,OnPoints); fi;
   end );
 
 #############################################################################
