@@ -161,6 +161,42 @@ BindGlobal( "FetchFromCache",
 
 #############################################################################
 ##
+#F  InstallLinearOrder( <domains> )
+##
+DeclareGlobalFunction( "InstallLinearOrder" );
+InstallGlobalFunction( InstallLinearOrder,
+
+  function ( domains )
+
+    local  pairs, pair, names, desc, descrev;
+
+    pairs := Combinations([1..Length(domains)],2);
+    for pair in pairs do
+      names := List([1..2],i->NameFunction(domains[pair[i]]));
+      desc    := Concatenation("for ",names[1]," and ",names[2]);
+      descrev := Concatenation("for ",names[2]," and ",names[1]);
+      InstallMethod( IsSubset, desc, ReturnTrue,
+                     [domains[pair[2]],domains[pair[1]]], 0, ReturnTrue );
+      InstallMethod( IsSubset, descrev, ReturnTrue,
+                     [domains[pair[1]],domains[pair[2]]], 0, ReturnFalse );
+      InstallMethod( \=, desc, ReturnTrue,
+                     [domains[pair[2]],domains[pair[1]]], 0, ReturnFalse );
+      InstallMethod( \=, descrev, ReturnTrue,
+                     [domains[pair[1]],domains[pair[2]]], 0, ReturnFalse );
+    od;
+  end );
+
+#############################################################################
+##
+##  Some orderings.
+##
+InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
+                      IsRationals, IsGaussianRationals ] );
+InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
+                      IsGaussianIntegers, IsGaussianRationals ] );
+
+#############################################################################
+##
 #M  ViewString( <obj> ) . . . . . . . . . . . . . . . for an object with name
 ##
 ##  Added to lib/object.gi.
