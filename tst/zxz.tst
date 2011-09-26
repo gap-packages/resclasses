@@ -11,12 +11,6 @@ gap> START_TEST( "zxz.tst" );
 gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> R := Integers^2;
 ( Integers^2 )
-gap> One(R);
-[ 1, 1 ]
-gap> IsOne(last);
-true
-gap> One([-5,0]);
-[ 1, 1 ]
 gap> Difference(R,R);
 [  ]
 gap> Union(R,R);
