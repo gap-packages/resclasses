@@ -203,31 +203,6 @@ InstallMethod( IsZxZ, "general method (ResClasses)", true,
 
 #############################################################################
 ##
-#M  One( <R> ) . . . . . . . . . . . . . . . . . . . . . . . . . . .  for Z^2
-#M  One( <v> ) . . . . . . . . . . . . . . . . . . . . . . for vectors in Z^2
-#M  IsOne( <v> ) . . . . . . . . . . . . . . . . . . . . . for vectors in Z^2
-##
-InstallOtherMethod( One, "for Z^2 (ResClasses)", true, [ IsRowModule ], 0,
-  function ( R )
-    if IsZxZ(R) then return [1,1]; else TryNextMethod(); fi;
-  end );
-
-InstallOtherMethod( One, "for [1,1] in Z^2 (ResClasses)",
-                    true, [ IsRowVector ], 0,
-  function ( v )
-    if   Length(v) = 2 and ForAll(v,IsInt)
-    then return [1,1]; else TryNextMethod(); fi;
-  end );
-
-InstallOtherMethod( IsOne, "for [1,1] in Z^2 (ResClasses)",
-                    true, [ IsRowVector ], 0,
-  function ( v )
-    if   Length(v) = 2 and ForAll(v,IsInt)
-    then return v = [1,1]; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
 #S  Residues / residue classes (mod m). /////////////////////////////////////
 ##
 #############################################################################
@@ -1542,12 +1517,24 @@ InstallMethod( Difference,
 ##
 InstallMethod( Difference,
                "for a ring and a finite set (ResClasses)", ReturnTrue,
-               [ IsDomain, IsList ], 0,
+               [ IsRing, IsList ], 0,
 
   function ( R, S )
-    if   not IsSubset(R,S) or not (IsRing(R) or IsRowModule(R))
-    then TryNextMethod(); fi;
+    if not IsSubset(R,S) then TryNextMethod(); fi;
     return ResidueClassUnionNC(R,One(R),[Zero(R)],[],Set(S));
+  end );
+
+#############################################################################
+##
+#M  Difference( <ZxZ>, <S> ) . . . . . . . . . . . . for Z^2 and a finite set
+##
+InstallOtherMethod( Difference,
+                    "for Z^2 and a finite set (ResClasses)", ReturnTrue,
+                    [ IsRowModule, IsList ], 0,
+
+  function ( ZxZ, S )
+    if not IsZxZ(ZxZ) or not IsSubset(ZxZ,S) then TryNextMethod(); fi;
+    return ResidueClassUnionNC(ZxZ,[[1,0],[0,1]],[[0,0]],[],Set(S));
   end );
 
 #############################################################################
