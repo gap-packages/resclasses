@@ -28,7 +28,7 @@ gap> SizeScreen([75,24]);;
   <Func Name="ResidueClass"
         Arg="r, m" Label="by residue and modulus"/>
   <Returns>
-    In the three-argument form the residue class
+    in the three-argument form the residue class
     <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the ring&nbsp;<A>R</A>,
     and in the two-argument form the residue class
     <A>r</A>&nbsp;mod&nbsp;<A>m</A> of the <Q>default ring</Q>
@@ -73,7 +73,7 @@ The residue class 0*Z(2) ( mod x+Z(2)^0 ) of GF(2)[x]
         Arg="R, m, r, included, excluded"
         Label="dito, plus included / excluded elements"/>
   <Returns>
-    The union of the residue classes
+    the union of the residue classes
     <A>r</A>[<M>i</M>]&nbsp;mod&nbsp;<A>m</A>
     of the ring&nbsp;<A>R</A>, plus / minus finite sets <A>included</A>
     and <A>excluded</A> of elements of&nbsp;<A>R</A>.
@@ -144,7 +144,7 @@ Union of the residue classes 0(4) and 1(6) of Z
   <Func Name="AllResidueClassesModulo"
         Arg="m" Label="by modulus, of the default ring of that modulus"/>
   <Returns>
-    A sorted list of all residue classes (mod&nbsp;<A>m</A>)
+    a sorted list of all residue classes (mod&nbsp;<A>m</A>)
     of the ring&nbsp;<A>R</A>.
   </Returns>
   <Description>
@@ -258,7 +258,7 @@ a disjoint union of <M>t</M> residue classes with equal moduli:
   <Oper Name="SplittedClass"
         Arg="cl, t" Label="for a residue class and a number of parts"/>
   <Returns>
-    A partition of the residue class <A>cl</A> into <A>t</A> residue
+    a partition of the residue class <A>cl</A> into <A>t</A> residue
     classes with equal moduli, provided that such a partition exists.
     Otherwise <C>fail</C>.
   </Returns>
@@ -281,7 +281,7 @@ Often one needs a partition of a given residue class union into
   <Oper Name="AsUnionOfFewClasses"
         Arg="U" Label="for a residue class union"/>
   <Returns>
-    A set of disjoint residue classes whose union is equal to&nbsp;<A>U</A>,
+    a set of disjoint residue classes whose union is equal to&nbsp;<A>U</A>,
     up to the finite sets <C>IncludedElements(<A>U</A>)</C> and
     <C>ExcludedElements(<A>U</A>)</C>.
   </Returns>
@@ -321,7 +321,7 @@ Integers
   <Oper Name="PartitionsIntoResidueClasses"
         Arg="R, length" Label="of a given ring, of given length"/>
   <Returns>
-    A sorted list of all partitions of the ring <A>R</A> into <A>length</A>
+    a sorted list of all partitions of the ring <A>R</A> into <A>length</A>
     residue classes.
   </Returns>
   <Description>
@@ -343,7 +343,7 @@ gap> PartitionsIntoResidueClasses(Integers,4);
         Arg="R, length, primes"
         Label="of a given ring, of given length"/>
   <Returns>
-    A <Q>random</Q> partition of the ring&nbsp;<A>R</A> into <A>length</A>
+    a <Q>random</Q> partition of the ring&nbsp;<A>R</A> into <A>length</A>
     residue classes whose moduli have only prime factors in <A>primes</A>,
     respectively <C>fail</C> if no such partition exists.
   </Returns>
@@ -367,7 +367,7 @@ gap> Sum(List(last2,Density));
 <ManSection>
   <Oper Name="Density" Arg="U" Label="of a residue class union"/>
   <Returns>
-    The natural density of&nbsp;<A>U</A> as a subset of the underlying ring.
+    the natural density of&nbsp;<A>U</A> as a subset of the underlying ring.
   </Returns>
   <Description>
     The <E>natural density</E> of a residue class <M>r(m)</M>
@@ -536,7 +536,7 @@ gap> Display(S1:AsGrid);
   <Func Name="ResidueClassUnionsFamily"
         Arg="R, fixedreps" Label="of a ring, with fixed representatives"/>
   <Returns>
-    The family of residue class unions or the family of unions of
+    the family of residue class unions or the family of unions of
     residue classes with fixed representatives of the ring&nbsp;<A>R</A>,
     depending on whether <A>fixedreps</A> is present and <C>true</C> or not.
   </Returns>

@@ -42,7 +42,7 @@ of packages off, you can load &ResClasses; via
 
 <ManSection>
   <Func Name="ResClassesTest" Arg=""/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     Performs tests of the &ResClasses; package.
     Errors, i.e. differences to the correct results of the test computations,
@@ -60,7 +60,7 @@ of packages off, you can load &ResClasses; via
 
 <ManSection>
   <Func Name="ResClassesBuildManual" Arg=""/>
-  <Returns> Nothing. </Returns>
+  <Returns> nothing. </Returns>
   <Description>
     This function is a development tool which builds the manual of the
     &ResClasses; package in the file formats &LaTeX;, PDF, HTML and
@@ -83,7 +83,7 @@ of packages off, you can load &ResClasses; via
 <ManSection>
   <Func Name="SendEmail" Arg="sendto, copyto, subject, text"/>
   <Returns>
-    Zero if everything worked correctly, and a system error number otherwise.
+    zero if everything worked correctly, and a system error number otherwise.
   </Returns>
   <Description>
     Sends an e-mail with subject <A>subject</A> and body <A>text</A> to the
@@ -99,7 +99,7 @@ of packages off, you can load &ResClasses; via
 <ManSection>
   <Func Name="EmailLogFile" Arg="addresses"/>
   <Returns>
-    Zero if everything worked correctly, and a system error number otherwise.
+    zero if everything worked correctly, and a system error number otherwise.
   </Returns>
   <Description>
     Sends the current log file by e-mail to <A>addresses</A>, if &GAP; is in
