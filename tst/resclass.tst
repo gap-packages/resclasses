@@ -307,6 +307,36 @@ gap> SplittedClass(cl,x^2+x+1);
   The residue class x^2+x ( mod x^3+x^2+x ) of GF(2)[x] ]
 gap> Union(last);
 The residue class 0*Z(2) ( mod x ) of GF(2)[x]
+gap> cl := ResidueClass(1,x);
+The residue class Z(2)^0 ( mod x ) of GF(2)[x]
+gap> cl = ResidueClass(Z(2),x);
+true
+gap> cl = ResidueClass(x,1); 
+true
+gap> ViewString(cl);
+"1(x)"
+gap> 2*cl;
+[ 0*Z(2) ]
+gap> 3*cl;
+The residue class Z(2)^0 ( mod x ) of GF(2)[x]
+gap> Z(2)*cl;
+The residue class Z(2)^0 ( mod x ) of GF(2)[x]
+gap> 0*Z(2)*cl;   
+[ 0*Z(2) ]
+gap> cl*3;
+The residue class Z(2)^0 ( mod x ) of GF(2)[x]
+gap> cl*Z(2);
+The residue class Z(2)^0 ( mod x ) of GF(2)[x]
+gap> cl*Z(2)*0;
+[ 0*Z(2) ]
+gap> 2*R;
+[ 0*Z(2) ]
+gap> 3*R;
+GF(2)[x]
+gap> Z(2)*R;
+GF(2)[x]
+gap> R*Z(2);
+GF(2)[x]
 gap> ResidueClassUnionViewingFormat("short");;
 gap> PartitionsIntoResidueClasses(Integers,1);
 [ [ Integers ] ]
