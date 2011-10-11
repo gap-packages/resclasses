@@ -2536,6 +2536,34 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
+#M  ViewString( <cl> ) . . . . . . . . . . .  for residue classes of GF(p)[x]
+##
+InstallMethod( ViewString,
+               "for residue classes of GF(p)[x] (ResClasses)",
+               true, [ IsResidueClassOfGFqx ], 0,
+
+  function ( cl )
+
+    local  str, R, F, F_el, F_elints, i;
+
+    R := UnderlyingRing(FamilyObj(cl));
+    F := LeftActingDomain(R);
+    if not IsPrimeField(F) then TryNextMethod(); fi;
+
+    F_el     := List(AsList(F),String);
+    F_elints := List(List(AsList(F),Int),String);
+
+    str := Concatenation(List([Residue(cl),"(",Modulus(cl),")"],String));
+
+    for i in [1..Length(F_el)] do
+      str := ReplacedString(str,F_el[i],F_elints[i]);
+    od;
+
+    return str;
+  end );
+
+#############################################################################
+##
 #M  ViewObj( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( ViewObj,
