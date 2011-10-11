@@ -729,7 +729,11 @@ InstallGlobalFunction( ResidueClass,
       then Error( usage ); return fail; fi;
     elif Length( arg ) = 2 then
       if ForAll( arg, IsRingElement ) then
-        R := DefaultRing( arg ); 
+        if   IsPolynomial(arg[1])
+        then R := DefaultRing(arg[1]); arg[2] := arg[2] * One(R);
+        elif IsPolynomial(arg[2])
+        then R := DefaultRing(arg[2]); arg[1] := arg[1] * One(R);
+        else R := DefaultRing(arg); fi;
         m := Maximum( arg ); r := Minimum( arg );
         if IsZero( m ) then Error( usage ); return fail; fi;
       else
@@ -1604,6 +1608,10 @@ InstallOtherMethod( \+,
     local  R;
 
     R := UnderlyingRing(FamilyObj(U));
+    if IsRing(R) and not x in R then
+      if   IsInt(x) or Characteristic(x) = Characteristic(R)
+      then x := x * One(R); else TryNextMethod(); fi;
+    fi;
     if not x in R then TryNextMethod(); fi;
     return ResidueClassUnion(R,Modulus(U),
                              List(Residues(U),r -> (r + x) mod Modulus(U)),
@@ -1630,6 +1638,10 @@ InstallOtherMethod( \+,
                     
   function ( R, x )
     if not IsRing(R) and not IsRowModule(R) then TryNextMethod(); fi;
+    if IsRing(R) and not x in R then
+      if   IsInt(x) or Characteristic(x) = Characteristic(R)
+      then x := x * One(R); fi;
+    fi;
     if not x in R then TryNextMethod(); fi;
     return R;
   end );
@@ -1703,8 +1715,10 @@ InstallOtherMethod( \*,
     local  R;
 
     R := UnderlyingRing(FamilyObj(U));
-    if   IsRing(R) and not x in R
-      or IsRowModule(R) and not x in LeftActingDomain(R)
+    if IsRing(R) and not x in R then
+      if   IsInt(x) or Characteristic(x) = Characteristic(R)
+      then x := x * One(R); else TryNextMethod(); fi;
+    elif IsRowModule(R) and not x in LeftActingDomain(R)
     then TryNextMethod(); fi;
     if IsZero(x) then return [Zero(R)]; fi;
     return ResidueClassUnionNC(R,Modulus(U)*x,
@@ -1774,13 +1788,20 @@ InstallOtherMethod( \*,
 ##
 InstallOtherMethod( \*,
                     "for the base ring and a ring element (ResClasses)",
-                    IsCollsElms, [ IsRing, IsRingElement ], 0,
+                    ReturnTrue, [ IsRing, IsRingElement ], 0,
                     
   function ( R, x )
+
     if not IsIntegers(R) and not IsZ_pi(R)
        and not (     IsUnivariatePolynomialRing(R)
-                 and IsFiniteFieldPolynomialRing(R)) or not x in R
+                 and IsFiniteFieldPolynomialRing(R))
     then TryNextMethod(); fi;
+
+    if not x in R then
+      if   IsInt(x) or Characteristic(x) = Characteristic(R)
+      then x := x * One(R); else TryNextMethod(); fi;
+    fi;
+
     if IsZero(x) then return [Zero(R)]; 
                  else return ResidueClass(R,x,Zero(x)); fi;
   end );
@@ -1855,15 +1876,24 @@ InstallOtherMethod( \/,
 
 #############################################################################
 ##
+#M  \/( <U>, <x> ) . . . . . . . . . . . for a residue class union and a unit
+##
+InstallOtherMethod( \/,
+                    "for residue class union and unit (ResClasses)",
+                    ReturnTrue, [ IsResidueClassUnion, IsRingElement ], 5,
+
+  function ( U, x )
+    if IsUnit(x) then return U * Inverse(x); else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #M  \/( [ ], <x> ) . . . . . . . . . . . for the empty set and a ring element
 ##
 InstallOtherMethod( \/,
                     "for the empty set and a ring element (ResClasses)",
                     ReturnTrue, [ IsList and IsEmpty, IsRingElement ], 0,
-
-  function ( empty, x )
-    return [ ];
-  end );
+                    function ( empty, x ) return [ ]; end );
 
 #############################################################################
 ##
