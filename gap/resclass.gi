@@ -488,7 +488,7 @@ InstallMethod( Superlattices,
 ##
 BindGlobal( "ModulusAsFormattedString",
   function ( m )
-    if not IsMatrix(m) then return BlankFreeString(m); fi;
+    if not IsMatrix(m) then return ViewString(m); fi;
     return Concatenation(List(["(",m[1][1],",",m[1][2],")Z+(",
                                    m[2][1],",",m[2][2],")Z"],
                               BlankFreeString));
@@ -2542,8 +2542,8 @@ InstallGlobalFunction( RingToString,
 InstallMethod( ViewString,
                "for residue classes (ResClasses)", true,
                [ IsResidueClass ], 0,
-               cl -> Concatenation(String(Residue(cl)),"(",
-                                   String(Modulus(cl)),")") );
+               cl -> Concatenation(ViewString(Residue(cl)),"(",
+                                   ViewString(Modulus(cl)),")") );
 
 #############################################################################
 ##
@@ -2566,34 +2566,6 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
-#M  ViewString( <cl> ) . . . . . . . . . . .  for residue classes of GF(p)[x]
-##
-InstallMethod( ViewString,
-               "for residue classes of GF(p)[x] (ResClasses)",
-               true, [ IsResidueClassOfGFqx ], 0,
-
-  function ( cl )
-
-    local  str, R, F, F_el, F_elints, i;
-
-    R := UnderlyingRing(FamilyObj(cl));
-    F := LeftActingDomain(R);
-    if not IsPrimeField(F) then TryNextMethod(); fi;
-
-    F_el     := List(AsList(F),String);
-    F_elints := List(List(AsList(F),Int),String);
-
-    str := Concatenation(List([Residue(cl),"(",Modulus(cl),")"],String));
-
-    for i in [1..Length(F_el)] do
-      str := ReplacedString(str,F_el[i],F_elints[i]);
-    od;
-
-    return str;
-  end );
-
-#############################################################################
-##
 #M  ViewObj( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( ViewObj,
@@ -2607,8 +2579,18 @@ InstallMethod( ViewObj,
            endval, short, bound, display;
 
     PrintFiniteSet := function ( S )
-      if   Length(String(S)) <= 32 or display
-      then Print(S);
+
+      local  i;
+
+      if Length(String(S)) <= 32 or display then
+        if not IsPolynomialRing(R) then Print(S); else
+          Print("[ ");
+          for i in [1..Length(S)] do
+            Print(ViewString(S[i]));
+            if i < Length(S) then Print(", "); fi;
+          od;
+          Print(" ]");
+        fi;
       else Print("<set of cardinality ",Length(S),">"); fi;
     end;
 
@@ -2617,11 +2599,13 @@ InstallMethod( ViewObj,
       local  s, r, m;
 
       if IsRing(R) then
-        m := Modulus(cl); r := Residue(cl); s := String(r);
+        m := Modulus(cl); r := Residue(cl);
+        if   IsIntegers(R) or IsZ_pi(R)
+        then s := String(r); else s := ViewString(r); fi;
         if   IsIntegers(R) or IsZ_pi(R)
         then s := Concatenation(s,"(",String(m),")");
-        elif short then s := Concatenation(s,"(mod ",String(m),")");
-        else s := Concatenation(s," ( mod ",String(m)," )"); fi;
+        elif short then s := Concatenation(s,"(",ViewString(m),")");
+        else s := Concatenation(s," ( mod ",ViewString(m)," )"); fi;
       elif IsZxZ(R) then s := ViewString(cl);
       else return fail; fi;
       return s;

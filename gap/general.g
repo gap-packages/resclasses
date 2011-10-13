@@ -197,26 +197,54 @@ InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
 
 #############################################################################
 ##
-#M  ViewString( <obj> ) . . . . . . . . . . . . . . . for an object with name
+#M  ViewString( <obj> ) . . . . . . . . . . . .  fallback method, call String
+#M  ViewString( <obj> ) . .  for an object with name (added to lib/object.gi)
+#M  ViewString( <M> ) . . . . for full row modules (added to lib/modulrow.gi)
+#M  ViewString( <R> ) . . .  for a polynomial ring (added to lib/ringpoly.gi)
 ##
-##  Added to lib/object.gi.
-##
+InstallMethod( ViewString, "fallback method, call String (ResClasses)", true,
+               [ IsObject ], 1, String );
 InstallMethod( ViewString, "for an object with name", true,
                [ HasName ], 0 , Name );
+InstallMethod( ViewString, "for full row modules", true,
+               [ IsFreeLeftModule and IsFullRowModule ], 0, String );
+InstallMethod( ViewString,
+               "for a polynomial ring", true, [ IsPolynomialRing ],
+               RankFilter(IsFLMLOR),
+  R -> Concatenation(String(LeftActingDomain(R)),
+                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
+                              ch->ch<>' ')) );
 
 #############################################################################
 ##
-#M  IsRowModule .  return `false' for objects which are not free left modules 
+#M  ViewString( <P> ) . . . . for a univariate polynomial over a finite field
 ##
-##  Added to lib/modulrow.gi.
-##
-InstallOtherMethod( IsRowModule,
-                    Concatenation("return `false' for objects which are ",
-                                  "not free left modules (ResClasses)"),
-                    true, [ IsObject ], 0,
+InstallMethod( ViewString,
+               "for univariate polynomial over finite field (ResClasses)",
+               true, [ IsUnivariatePolynomial ], 0,
 
-  function ( obj )
-    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
+  function ( P )
+
+    local  str, R, F, F_el, F_elints, lngs1, lngs2, i;
+
+    R := DefaultRing(P);
+    F := LeftActingDomain(R);
+    if not IsPrimeField(F) then TryNextMethod(); fi;
+
+    F_el     := List(AsList(F),String);
+    F_elints := List(List(AsList(F),Int),String);
+    lngs1    := -List(F_el,Length);
+    lngs2    := ShallowCopy(lngs1);
+    SortParallel(lngs1,F_el);
+    SortParallel(lngs2,F_elints);
+
+    str := String(P);
+
+    for i in [1..Length(F_el)] do
+      str := ReplacedString(str,F_el[i],F_elints[i]);
+    od;
+
+    return str;
   end );
 
 #############################################################################
@@ -229,15 +257,6 @@ InstallMethod( String, "for full row modules", true,
                [ IsFreeLeftModule and IsFullRowModule ], 0,
   M -> Concatenation(List(["( ",LeftActingDomain(M),"^",
                                 DimensionOfVectors(M)," )"], String)) );
-
-#############################################################################
-##
-#M  ViewString( <M> ) . . . . . . . . . . . . . . . . .  for full row modules
-##
-##  Added to lib/modulrow.gi.
-##
-InstallMethod( ViewString, "for full row modules", true,
-               [ IsFreeLeftModule and IsFullRowModule ], 0, String );
 
 #############################################################################
 ##
@@ -255,16 +274,18 @@ InstallMethod( String,
 
 #############################################################################
 ##
-#M  ViewString( <R> ) . . . . . . . . . . . . . . . . . for a polynomial ring
+#M  IsRowModule .  return `false' for objects which are not free left modules 
 ##
-##  Added to lib/ringpoly.gi.
+##  Added to lib/modulrow.gi.
 ##
-InstallMethod( ViewString,
-               "for a polynomial ring", true, [ IsPolynomialRing ],
-               RankFilter(IsFLMLOR),
-  R -> Concatenation(String(LeftActingDomain(R)),
-                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
-                              ch->ch<>' ')) );
+InstallOtherMethod( IsRowModule,
+                    Concatenation("return `false' for objects which are ",
+                                  "not free left modules (ResClasses)"),
+                    true, [ IsObject ], 0,
+
+  function ( obj )
+    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
+  end );
 
 #############################################################################
 ##
