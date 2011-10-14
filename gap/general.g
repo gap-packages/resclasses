@@ -202,7 +202,7 @@ InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
 #M  ViewString( <M> ) . . .  for a full row module (added to lib/modulrow.gi)
 #M  ViewString( <R> ) . . .  for a polynomial ring (added to lib/ringpoly.gi)
 ##
-InstallMethod( ViewString, "for a rational" (ResClasses)", true,
+InstallMethod( ViewString, "for a rational (ResClasses)", true,
                [ IsRat ], 0, String );
 InstallMethod( ViewString, "for an object with name", true,
                [ HasName ], 0 , Name );
