@@ -197,16 +197,16 @@ InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
 
 #############################################################################
 ##
-#M  ViewString( <obj> ) . . . . . . . . . . . .  fallback method, call String
+#M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
 #M  ViewString( <obj> ) . .  for an object with name (added to lib/object.gi)
-#M  ViewString( <M> ) . . . . for full row modules (added to lib/modulrow.gi)
+#M  ViewString( <M> ) . . .  for a full row module (added to lib/modulrow.gi)
 #M  ViewString( <R> ) . . .  for a polynomial ring (added to lib/ringpoly.gi)
 ##
-#InstallMethod( ViewString, "fallback method, call String (ResClasses)", true,
-#               [ IsObject ], 1, String );
+InstallMethod( ViewString, "for a rational" (ResClasses)", true,
+               [ IsRat ], 0, String );
 InstallMethod( ViewString, "for an object with name", true,
                [ HasName ], 0 , Name );
-InstallMethod( ViewString, "for full row modules", true,
+InstallMethod( ViewString, "for a full row module", true,
                [ IsFreeLeftModule and IsFullRowModule ], 0, String );
 InstallMethod( ViewString,
                "for a polynomial ring", true, [ IsPolynomialRing ],
