@@ -229,6 +229,9 @@ Further changes are:
 
 Changes between version 3.0.0 and version 3.0.1:
 
+ - Residue class unions of GF(p)[x] and polynomials with coefficients in
+   GF(p)[x] are `View'ed in a nicer way.
+ - A number of smaller improvements has been made.
  - The CVS revision entries have been removed from the source files.
 
 
