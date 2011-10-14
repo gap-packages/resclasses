@@ -206,7 +206,7 @@ InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
 InstallMethod( ViewString, "for a rational (ResClasses)", true,
                [ IsRat ], 0, String );
 InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
-               [ IsFFE ], 0, String );
+               [ IsFFE and IsInternalRep ], 0, String );
 InstallMethod( ViewString, "for a string (ResClasses)", true,
                [ IsString ], 0, String );
 InstallMethod( ViewString, "for an object with name", true,
