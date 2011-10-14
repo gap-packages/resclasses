@@ -198,19 +198,26 @@ InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
 #############################################################################
 ##
 #M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
+#M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
 #M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string
 #M  ViewString( <obj> ) . .  for an object with name (added to lib/object.gi)
 #M  ViewString( <M> ) . . .  for a full row module (added to lib/modulrow.gi)
-#M  ViewString( <R> ) . . .  for a polynomial ring (added to lib/ringpoly.gi)
 ##
 InstallMethod( ViewString, "for a rational (ResClasses)", true,
                [ IsRat ], 0, String );
+InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
+               [ IsFFE ], 0, String );
 InstallMethod( ViewString, "for a string (ResClasses)", true,
                [ IsString ], 0, String );
 InstallMethod( ViewString, "for an object with name", true,
                [ HasName ], 0 , Name );
 InstallMethod( ViewString, "for a full row module", true,
                [ IsFreeLeftModule and IsFullRowModule ], 0, String );
+
+#############################################################################
+##
+#M  ViewString( <R> ) . . .  for a polynomial ring (added to lib/ringpoly.gi)
+##
 InstallMethod( ViewString,
                "for a polynomial ring", true, [ IsPolynomialRing ],
                RankFilter(IsFLMLOR),
