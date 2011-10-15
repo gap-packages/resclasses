@@ -43,15 +43,16 @@ ter `Installation and Auxiliary Functions' in the manual.
 
                           Distribution and Updates
 
-New releases  of this package  are announced  together with releases of  RCWA
-on the GAP Forum,  and the manual is put online on the package web page
+New releases of this package are announced on the  GAP Forum,  and put online
+on the package web page
 
     http://www.gap-system.org/DevelopersPages/StefanKohl/resclasses.html
 
-If you are interested  in ResClasses,  then please  send me an e-mail,  and I
-will send you the package archive file. I will also keep users informed about
-bugfixes  and other issues  related to  the package.  Recent versions of this
-package are not redistributed with GAP.
+                                     ---
+
+If you install ResClasses or if you use it in some of your work,  then please
+let me know.  Also please let me know if you have problems with this package,
+or if you find a bug.
 
 Stefan Kohl,  October 2011
 
