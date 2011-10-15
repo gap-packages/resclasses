@@ -19,7 +19,8 @@ classes as a basis,  as far as the usual restrictions  imposed by the finite-
 ness of computing resources permit this.
     For details on how to use the  ResClasses package,  see the package docu-
 mentation  in  the  `doc'  subdirectory  --  either  view  its  HTML  version
-chap0.html with a browser, or its PDF version `manual.pdf' via a PDF viewer).
+(chap0.html)  with  a browser,  or its  PDF version  (manual.pdf)  with a PDF
+viewer.
 
 
                                 Requirements
@@ -34,7 +35,7 @@ ded for displaying the online help.
 
 Like any other  GAP package,  ResClasses must  be installed in the  pkg/ sub-
 directory of the  GAP distribution.   This is accomplished  by extracting the
-distribution file in this directory.   By default,  ResClasses is autoloaded.
+package archive file in this directory. By default, ResClasses is autoloaded.
 This means that it is loaded automatically when you start GAP.
   For further advice  on questions of technical nature  please see the  chap-
 ter `Installation and Auxiliary Functions' in the manual.
@@ -42,20 +43,15 @@ ter `Installation and Auxiliary Functions' in the manual.
 
                           Distribution and Updates
 
-This package is distributed  with the main  GAP archive.  For updates between
-releases of GAP itself check the package web page
+New releases  of this package  are announced  together with releases of  RCWA
+on the GAP Forum,  and the manual is put online on the package web page
 
     http://www.gap-system.org/DevelopersPages/StefanKohl/resclasses.html
 
-or the packages' redistribution on the GAP website
-
-    http://www.gap-system.org/Packages/resclasses.html
-
-                                    ---
-
-If you have problems with this package, wish to make comments or suggestions,
-or if you find bugs, please send me an e-mail (stefan@mcs.st-and.ac.uk). Also
-please let me know if you use ResClasses in some of your work.
+If you are interested  in ResClasses,  then please  send me an e-mail,  and I
+will send you the package archive file. I will also keep users informed about
+bugfixes  and other issues  related to  the package.  Recent versions of this
+package are not redistributed with GAP.
 
 Stefan Kohl,  October 2011
 
