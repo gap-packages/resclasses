@@ -403,10 +403,10 @@ methods for the operations <C>Iterator</C> and <C>NextIterator</C>.
 <Section Label="sec:ResidueClassUnionsOfZxZ">
 <Heading>On residue class unions of <M>&ZZ;^2</M></Heading>
 
-Essentially, residue class unions of <M>&ZZ;^2</M> are treated like
-residue class unions of any other ring, and there is roughly the
-same functionality available for them. However there are some differences
-and a few additional features, which are described in this section. <P/>
+Residue class unions of <M>&ZZ;^2</M> are treated similar as those of any
+other ring. Also there is roughly the same functionality available for them.
+However there are some differences and a few additional features, which are
+described in this section. <P/>
 
 The elements of&nbsp;<M>&ZZ;^2</M> are represented as lists of length&nbsp;2
 with integer entries. The modulus of a residue class union of <M>&ZZ;^2</M>
@@ -485,7 +485,7 @@ gap> Display(S1:AsGrid);
 ]]>
 </Example>
 
-Note that in &GAP;, multiplying lists of integers means computing their
+Note that in &GAP; multiplying lists of integers means computing their
 scalar product as vectors. The consequence is that technically the free
 module <M>&ZZ;^2</M> is not a ring in &GAP;.
 
