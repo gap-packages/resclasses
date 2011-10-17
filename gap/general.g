@@ -239,7 +239,7 @@ InstallMethod( ViewString,
 
     R := DefaultRing(P);
     F := LeftActingDomain(R);
-    if not IsPrimeField(F) then return String(P); fi;
+    if not IsPrimeField(F) or not IsFinite(F) then TryNextMethod(); fi;
 
     F_el     := List(AsList(F),String);
     F_elints := List(List(AsList(F),Int),String);
