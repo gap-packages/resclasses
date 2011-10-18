@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "3.0.1",
-Date             := "15/10/2011",
+Version          := "3.0.2",
+Date             := "18/10/2011",
 ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/resclasses-3.0.1"),
+                                  "resclasses/resclasses-3.0.2"),
 ArchiveFormats   := "-win.zip", # ".tar.gz" when providing text files with UNIX-style line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -58,7 +58,7 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
                                    "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk\n\n" ),
-Autoload         := true,
+Autoload         := false,
 TestFile         := "tst/testall.g",
 Keywords         := [ "residue classes", "integers", "number theory" ]
 
