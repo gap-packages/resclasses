@@ -35,16 +35,15 @@ help.
 
 Like any other  GAP package,  ResClasses must  be installed in the  pkg/ sub-
 directory of the  GAP distribution.   This is accomplished  by extracting the
-package archive file in this directory. By default, ResClasses is autoloaded.
-This means that it is loaded automatically when you start GAP.
+package archive file in this directory.  After this  you can load the package
+as usual via LoadPackage( "resclasses" );.
   For further advice  on questions of technical nature  please see the  chap-
 ter `Installation and Auxiliary Functions' in the manual.
 
 
                           Distribution and Updates
 
-New releases of this package are announced on the  GAP Forum,  and put online
-on the package web page
+New releases of this package are put online on the package web page
 
     http://www.gap-system.org/DevelopersPages/StefanKohl/resclasses.html
 
