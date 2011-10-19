@@ -237,10 +237,13 @@ InstallMethod( ViewString,
 
     local  str, R, F, F_el, F_elints, lngs1, lngs2, i;
 
+    str := String(P);
+    if PositionSublist(str,"x_") <> fail then TryNextMethod(); fi;
+
     R := DefaultRing(P);
     F := LeftActingDomain(R);
     if not IsFinite(F) then TryNextMethod(); fi;
-    if not IsPrimeField(F) then return String(P); fi;
+    if not IsPrimeField(F) then return str; fi;
 
     F_el     := List(AsList(F),String);
     F_elints := List(List(AsList(F),Int),String);
@@ -248,8 +251,6 @@ InstallMethod( ViewString,
     lngs2    := ShallowCopy(lngs1);
     SortParallel(lngs1,F_el);
     SortParallel(lngs2,F_elints);
-
-    str := String(P);
 
     for i in [1..Length(F_el)] do
       str := ReplacedString(str,F_el[i],F_elints[i]);
