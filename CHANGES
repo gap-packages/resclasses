@@ -235,3 +235,8 @@ Changes between version 3.0.0 and version 3.0.2:
  - The CVS revision entries have been removed from the source files.
  - ResClasses needs now GAP 4.5.2 and GAPDoc 1.4.
 
+Changes between version 3.0.2 and version 3.0.3:
+
+ - Fixed a `ViewString' method which changed line breaks in printing of
+   rationals with large numerators / denominators.
+
