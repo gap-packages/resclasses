@@ -37,8 +37,8 @@ gap> Difference(last,R);
 [  ]
 gap> empty := Intersection(R,[]);
 [  ]
-gap> Print(empty,"\n");
-ResidueClassUnion( ( Integers^2 ), [ [ 1, 0 ], [ 0, 1 ] ], [  ] )
+gap> empty = [];
+true
 gap> IsEmpty(empty);
 true
 gap> Length(empty);
@@ -51,14 +51,13 @@ gap> empty = [];
 true
 gap> []+[1,1];
 [ 1, 1 ]
-gap> empty+[1,1];
-[  ]
 gap> 2*empty;
 [  ]
 gap> empty*[[2,0],[0,3]];
 [  ]
-gap> l := Intersection(R,[[1,0],[7,-3]]);
-[ [ 1, 0 ], [ 7, -3 ] ]
+gap> l := Intersection(R,[[1,0],[7,-3]]);;
+gap> l = [ [ 1, 0 ], [ 7, -3 ] ];
+true
 gap> IsSubset(R,l);
 true
 gap> IsSubset(l,R);
@@ -69,11 +68,6 @@ gap> IsSubset(l,empty);
 true
 gap> Length(l);
 2
-gap> Print(l,"\n");
-ResidueClassUnion( ( Integers^2 ), [ [ 1, 0 ], [ 0, 1 ] ], [  ],
-[ [ 1, 0 ], [ 7, -3 ] ], [  ] )
-gap> Display(l);
-[ [ 1, 0 ], [ 7, -3 ] ]
 gap> l[2];
 [ 7, -3 ]
 gap> l+[1,1];
