@@ -1336,16 +1336,9 @@ InstallMethod( Intersection2,
                0,
 
   function ( U, S )
-
-    local  result;
-
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
-    result := Filtered( Set(S), n -> n in U!.included
-                        or ( n mod U!.m in U!.r and not n in U!.excluded ) );
-    if   IsResidueClassUnionOfZxZ(U)
-    then return ResidueClassUnion(UnderlyingRing(FamilyObj(U)),
-                                  [[1,0],[0,1]],[],result,[]);
-    else return result; fi;
+    return Filtered( Set(S), n -> n in U!.included
+                     or ( n mod U!.m in U!.r and not n in U!.excluded ) );
   end );
 
 #############################################################################
@@ -1378,22 +1371,6 @@ InstallMethod( Intersection2,
                "for the base ring and a residue class union (ResClasses)",
                ReturnTrue, [ IsDomain, IsResidueClassUnion ], 0,
                function ( R, U ) return Intersection2( U, R ); end );
-
-#############################################################################
-##
-#M  Intersection2( <l>, <R> ) . . . . . . . . . . . . . .  for a list and Z^2
-#M  Intersection2( <R>, <l> ) . . . . . . . . . . . . . .  for Z^2 and a list
-##
-InstallMethod( Intersection2, "for a list and Z^2 (ResClasses)",
-               ReturnTrue, [ IsList, IsRowModule ], 0,
-  function ( l, R )
-    if not IsZxZ(R) then TryNextMethod(); fi;
-    return ResidueClassUnion(R,[[1,0],[0,1]],[],Filtered(l,p->p in R),[]);
-  end );
-
-InstallMethod( Intersection2, "for Z^2 and a list (ResClasses)",
-               ReturnTrue, [ IsRowModule, IsList ], 0,
-               function ( R, l ) return Intersection(l,R); end );
 
 #############################################################################
 ##
