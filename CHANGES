@@ -240,3 +240,10 @@ Changes between version 3.0.2 and version 3.0.3:
  - Fixed a `ViewString' method which changed line breaks in printing of
    rationals with large numerators / denominators.
 
+Changes between version 3.0.3 and version 3.0.4:
+
+ - Removed an `Intersection2' method for Integers^2 and a list of
+   pairs of integers which returned a residue class union object,
+   to get rid of a possible source of imcompatibilities with other
+   packages.
+

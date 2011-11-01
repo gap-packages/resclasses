@@ -4,7 +4,7 @@
 
                            -- A GAP 4 Package --
 
-                               Version 3.0.3
+                               Version 3.0.4
 
         Author and Maintainer:  Stefan Kohl, stefan@mcs.st-and.ac.uk
 
@@ -53,5 +53,5 @@ If you install ResClasses or if you use it in some of your work,  then please
 let me know.  Also please let me know if you have problems with this package,
 or if you find a bug.
 
-Stefan Kohl,  October 2011
+Stefan Kohl,  November 2011
 
