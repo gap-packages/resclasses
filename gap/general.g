@@ -200,8 +200,6 @@ InstallLinearOrder( [ IsPositiveIntegers, IsNonnegativeIntegers, IsIntegers,
 #M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
 #M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
 #M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string
-#M  ViewString( <obj> ) . .  for an object with name (added to lib/object.gi)
-#M  ViewString( <M> ) . . .  for a full row module (added to lib/modulrow.gi)
 ##
 InstallMethod( ViewString, "for a rational (ResClasses)", true, [ IsRat ], 0,
                function ( rat )
@@ -214,21 +212,6 @@ InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
                [ IsFFE and IsInternalRep ], 0, String );
 InstallMethod( ViewString, "for a string (ResClasses)", true,
                [ IsString ], 0, String );
-InstallMethod( ViewString, "for an object with name", true,
-               [ HasName ], 0 , Name );
-InstallMethod( ViewString, "for a full row module", true,
-               [ IsFreeLeftModule and IsFullRowModule ], 0, String );
-
-#############################################################################
-##
-#M  ViewString( <R> ) . . .  for a polynomial ring (added to lib/ringpoly.gi)
-##
-InstallMethod( ViewString,
-               "for a polynomial ring", true, [ IsPolynomialRing ],
-               RankFilter(IsFLMLOR),
-  R -> Concatenation(String(LeftActingDomain(R)),
-                     Filtered(String(IndeterminatesOfPolynomialRing(R)),
-                              ch->ch<>' ')) );
 
 #############################################################################
 ##
@@ -262,133 +245,6 @@ InstallMethod( ViewString,
     od;
 
     return str;
-  end );
-
-#############################################################################
-##
-#M  String( <M> ) . . . . . . . . . . . . . . . . . . .  for full row modules
-##
-##  Added to lib/modulrow.gi.
-##
-InstallMethod( String, "for full row modules", true,
-               [ IsFreeLeftModule and IsFullRowModule ], 0,
-  M -> Concatenation(List(["( ",LeftActingDomain(M),"^",
-                                DimensionOfVectors(M)," )"], String)) );
-
-#############################################################################
-##
-#M  String( <R> ) . . . . . . . . . . . . . . . . . . . for a polynomial ring
-##
-##  Added to lib/ringpoly.gi.
-##
-InstallMethod( String,
-               "for a polynomial ring", true, [ IsPolynomialRing ],
-               RankFilter(IsFLMLOR),
-               R -> Concatenation("PolynomialRing( ",
-                                   String(LeftActingDomain(R)),", ",
-                                   String(IndeterminatesOfPolynomialRing(R)),
-                                  " )") );
-
-#############################################################################
-##
-#M  IsRowModule .  return `false' for objects which are not free left modules 
-##
-##  Added to lib/modulrow.gi.
-##
-InstallOtherMethod( IsRowModule,
-                    Concatenation("return `false' for objects which are ",
-                                  "not free left modules (ResClasses)"),
-                    true, [ IsObject ], 0,
-
-  function ( obj )
-    if not IsFreeLeftModule(obj) then return false; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  \in( <g>, GL( <n>, Integers ) )
-##
-##  Added to lib/grpramat.gi.
-##
-InstallMethod( \in,
-               "for matrix and GL(n,Z) (ResClasses)", IsElmsColls,
-               [ IsMatrix, IsNaturalGLnZ ],
-
-  function ( g, GLnZ )
-    return DimensionsMat(g) = DimensionsMat(One(GLnZ))
-       and ForAll(Flat(g),IsInt) and DeterminantMat(g) in [-1,1];
-  end );
-
-#############################################################################
-##
-#M  \in( <g>, SL( <n>, Integers ) )
-##
-##  Added to lib/grpramat.gi.
-##
-InstallMethod( \in,
-               "for matrix and SL(n,Z) (ResClasses)", IsElmsColls,
-               [ IsMatrix, IsNaturalSLnZ ],
-
-  function ( g, SLnZ )
-    return DimensionsMat(g) = DimensionsMat(One(SLnZ))
-       and ForAll(Flat(g),IsInt) and DeterminantMat(g) = 1;
-  end );
-
-#############################################################################
-##
-#M  \^( <p>, <G> ) . . . . . . . orbit of a point under the action of a group
-##
-##  Returns the orbit of the point <p> under the action of the group <G>,
-##  with respect to the action OnPoints.
-##
-##  The following cases are handled specially:
-##
-##    - if <p> is an element of <G>, then the method returns the
-##      conjugacy class of <G> which contains <p>, and
-##    - if <p> is a subgroup of <G>, then the method returns the
-##      conjugacy class of subgroups of <G>  which contains <p>.
-##
-InstallOtherMethod( \^, "orbit of a point under the action of a group",
-                    ReturnTrue, [ IsObject, IsGroup ], 0,
-
-  function ( p, G )
-    if   p in G then return ConjugacyClass(G,p);
-    elif IsGroup(p) and IsSubgroup(G,p)
-    then return ConjugacyClassSubgroups(G,p);
-    else return Orbit(G,p,OnPoints); fi;
-  end );
-
-#############################################################################
-##
-#S  A tool for telling GAP about linear order relations (inclusions, etc.) //
-##  between certain objects (particularly domains). /////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  LinearOrder( <rel>, <domains> )
-##
-DeclareGlobalFunction( "LinearOrder" );
-InstallGlobalFunction( LinearOrder,
-
-  function ( rel, domains )
-
-    local  pairs, pair;
-
-    pairs := Combinations([1..Length(domains)],2);
-    for pair in pairs do
-      InstallMethod( rel,
-                     Concatenation( "for ",NameFunction(domains[pair[2]]),
-                                    " and ",NameFunction(domains[pair[1]]) ),
-                     ReturnTrue, [domains[pair[1]],domains[pair[2]]], 0,
-                     ReturnFalse );
-      InstallMethod( rel,
-                     Concatenation( "for ",NameFunction(domains[pair[1]]),
-                                    " and ",NameFunction(domains[pair[2]]) ),
-                     ReturnTrue, [domains[pair[2]],domains[pair[1]]], 0,
-                     ReturnTrue );
-    od;
   end );
 
 #############################################################################
@@ -436,15 +292,6 @@ BindGlobal( "IntOrInfinityToLaTeX",
 ##
 BindGlobal( "ONE_LETTER_GLOBALS",
   List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
-
-#############################################################################
-##
-#O  Make `Float', `IsFloat' etc. available again if changed to `MacFloat'
-##
-if not IsBound(Float) then
-  DeclareSynonym( "Float", MacFloat );
-  DeclareSynonym( "IsFloat", IsMacFloat );
-fi;
 
 #############################################################################
 ##
