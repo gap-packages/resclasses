@@ -86,14 +86,14 @@ gap> Residues(K);
 gap> L := Intersection(I,J);
 <union of 8 residue classes (mod 30) of Z>
 gap> Display(L);
-Union of the residue classes 1(30), 7(30), 11(30), 13(30), 17(30), 19(30),
+Union of the residue classes 1(30), 7(30), 11(30), 13(30), 17(30), 19(30), 
 23(30) and 29(30) of Z
 gap> M := Difference(I,J);
 Union of the residue classes 5(30) and 25(30) of Z
 gap> N := Difference(J,I);
 <union of 16 residue classes (mod 30) of Z>
 gap> Display(N);
-Union of the residue classes 2(10), 4(10), 6(10), 8(10), 3(30), 9(30),
+Union of the residue classes 2(10), 4(10), 6(10), 8(10), 3(30), 9(30), 
 21(30) and 27(30) of Z
 gap> Difference(Integers,[1,2,3]);
 Z \ [ 1, 2, 3 ]
@@ -238,10 +238,10 @@ gap> Difference(ResidueClass(Integers,2,1),[1..100]);
 gap> Difference(Union(ResidueClass(Integers,2,1),[1..100]),[-5..-1]);
 (The residue class 1(2) of Z) U <set of cardinality 50> \ [ -5, -3, -1 ]
 gap> AllResidueClassesModulo(3);
-[ The residue class 0(3) of Z, The residue class 1(3) of Z,
+[ The residue class 0(3) of Z, The residue class 1(3) of Z, 
   The residue class 2(3) of Z ]
 gap> AllResidueClassesModulo(Z_pi(2),4);
-[ The residue class 0(4) of Z_( 2 ), The residue class 1(4) of Z_( 2 ),
+[ The residue class 0(4) of Z_( 2 ), The residue class 1(4) of Z_( 2 ), 
   The residue class 2(4) of Z_( 2 ), The residue class 3(4) of Z_( 2 ) ]
 gap> AllResidueClassesModulo(Z_pi(2),3);
 [ Z_( 2 ) ]
@@ -258,8 +258,8 @@ gap> AllResidueClassesModulo(R,x);
 gap> AllResidueClassesModulo(R,One(R));
 [ GF(7)[x] ]
 gap> SplittedClass(ResidueClass(2,3),5);
-[ The residue class 2(15) of Z, The residue class 5(15) of Z,
-  The residue class 8(15) of Z, The residue class 11(15) of Z,
+[ The residue class 2(15) of Z, The residue class 5(15) of Z, 
+  The residue class 8(15) of Z, The residue class 11(15) of Z, 
   The residue class 14(15) of Z ]
 gap> SplittedClass(ResidueClass(Z_pi([2,3]),3,2),2);
 [ The residue class 2(6) of Z_( 2, 3 ), The residue class 5(6) of Z_( 2, 3 ) ]
@@ -283,7 +283,7 @@ gap> AsUnionOfFewClasses(U);
 gap> SplittedClass(R,1);
 [ GF(2)[x] ]
 gap> SplittedClass(R,2);
-[ The residue class 0 ( mod x ) of GF(2)[x],
+[ The residue class 0 ( mod x ) of GF(2)[x], 
   The residue class 1 ( mod x ) of GF(2)[x] ]
 gap> SplittedClass(R,3);
 fail
@@ -296,7 +296,7 @@ gap> cl := ResidueClass(R,x,Zero(R));;
 gap> SplittedClass(cl,1);
 [ The residue class 0 ( mod x ) of GF(2)[x] ]
 gap> SplittedClass(cl,2);
-[ The residue class 0 ( mod x^2 ) of GF(2)[x],
+[ The residue class 0 ( mod x^2 ) of GF(2)[x], 
   The residue class x ( mod x^2 ) of GF(2)[x] ]
 gap> SplittedClass(cl,3);
 fail
