@@ -226,7 +226,8 @@ InstallMethod( ViewString,
     local  str, R, F, F_el, F_elints, lngs1, lngs2, i;
 
     str := String(P);
-    if PositionSublist(str,"x_") <> fail then TryNextMethod(); fi;
+    if   ValueGlobal("GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES") = []
+    then TryNextMethod(); fi;
 
     R := DefaultRing(P);
     F := LeftActingDomain(R);
