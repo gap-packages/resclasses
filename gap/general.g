@@ -250,6 +250,19 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
+#M  Comm( [ <elm1>, <elm2> ] ) . . .  for arguments enclosed in list brackets
+##
+InstallOtherMethod( Comm,
+                    "for arguments enclosed in list brackets (ResClasses)",
+                    true, [ IsList ], 0,
+
+  function ( l )
+    if Length(l) <> 2 then TryNextMethod(); fi;
+    return Comm(l[1],l[2]);
+  end );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
