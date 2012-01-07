@@ -254,12 +254,20 @@ InstallMethod( ViewString,
 ##
 InstallOtherMethod( Comm,
                     "for arguments enclosed in list brackets (ResClasses)",
-                    true, [ IsList ], 0,
+                    true, [ IsList ], 0, LeftNormedComm );
 
-  function ( l )
-    if Length(l) <> 2 then TryNextMethod(); fi;
-    return Comm(l[1],l[2]);
-  end );
+#############################################################################
+##
+#S  Declarations of operations etc. /////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#O  IsCommuting( <a>, <b> ) .  checks whether two group elements etc. commute
+##
+DeclareOperation( "IsCommuting", [ IsMultiplicativeElement,
+                                   IsMultiplicativeElement ] );
 
 #############################################################################
 ##
