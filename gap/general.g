@@ -271,6 +271,15 @@ DeclareOperation( "IsCommuting", [ IsMultiplicativeElement,
 
 #############################################################################
 ##
+#M  IsCommuting( <a>, <b> ) . . . . . . . . . . . . . . . . . fallback method
+##
+InstallMethod( IsCommuting,
+               "fallback method (ResClasses)", IsIdenticalObj,
+               [ IsMultiplicativeElement, IsMultiplicativeElement ], 0,
+               function ( a, b ) return a*b = b*a; end );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################
