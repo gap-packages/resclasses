@@ -572,7 +572,9 @@ InstallMethod( ResidueClassUnionCons,
     then rep := Minimum( included ); fi;
     SetRepresentative( result, rep );
     ReduceResidueClassUnion( result );
-    if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
+    if Length( result!.r ) = 1
+      and result!.included = [ ] and result!.excluded = [ ]
+    then SetIsResidueClass( result, true ); fi;
     if IsOne( result!.m ) and result!.r = [ Zero( R ) ]
       and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
     then return R; else return result; fi;
@@ -644,7 +646,9 @@ InstallMethod( ResidueClassUnionCons,
     if r <> [] then ReduceResidueClassUnion( result ); else
       MakeImmutable( result!.included ); MakeImmutable( result!.excluded );
     fi;
-    if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
+    if Length( result!.r ) = 1
+      and result!.included = [ ] and result!.excluded = [ ]
+    then SetIsResidueClass( result, true ); fi;
     if AbsInt( DeterminantMat( result!.m ) ) = 1
       and result!.r = [ [ 0, 0 ] ]
       and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
@@ -2739,19 +2743,19 @@ InstallMethod( DisplayString,
       fi;
     end;
 
-    if IsResidueClass(U) then return ViewString(U); fi;
-
     R := UnderlyingRing(FamilyObj(U));
     m := Mod(U); r := Residues(U);
     inc := IncludedElements(U); exc := ExcludedElements(U);
     cls := AsUnionOfFewClasses(U);
-    if not IsZxZ(R) then
+    if not IsZxZ(R) and not IsResidueClass(U) then
       m_red := Gcd(R,m,Gcd(R,DifferencesList(r)));
       r_red := r[1] mod m_red;
       cl := ResidueClass(R,m_red,r_red);
       cls_complement := AsUnionOfFewClasses(Difference(cl,U));
     fi;
-    if IsZxZ(R) or Length(cls) <= Length(cls_complement) + 1 then
+    if IsZxZ(R) or IsResidueClass(U)
+      or Length(cls) <= Length(cls_complement) + 1
+    then
       str := ShallowCopy(ViewString(cls[1]));
       for i in [2..Length(cls)] do
         Append(str," U ");
@@ -2819,20 +2823,20 @@ InstallMethod( Display,
     then DisplayAsGrid(U); return; fi;
     if   RESCLASSES_VIEWINGFORMAT = "long"
     then View(U:RC_DISPLAY); Print("\n"); return; fi;
-    if   IsResidueClass(U)
-    then Print(ViewString(U),"\n"); return; fi;
 
     R := UnderlyingRing(FamilyObj(U));
     m := Mod(U); r := Residues(U);
     inc := IncludedElements(U); exc := ExcludedElements(U);
     cls := AsUnionOfFewClasses(U);
-    if not IsZxZ(R) then
+    if not IsZxZ(R) and not IsResidueClass(U) then
       m_red := Gcd(R,m,Gcd(R,DifferencesList(r)));
       r_red := r[1] mod m_red;
       cl := ResidueClass(R,m_red,r_red);
       cls_complement := AsUnionOfFewClasses(Difference(cl,U));
     fi;
-    if IsZxZ(R) or Length(cls) <= Length(cls_complement) + 1 then
+    if IsZxZ(R) or IsResidueClass(U)
+      or Length(cls) <= Length(cls_complement) + 1
+    then
       Print(ViewString(cls[1]));
       for i in [2..Length(cls)] do
         Print(" U ",ViewString(cls[i]));
