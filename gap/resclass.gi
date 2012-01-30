@@ -2849,6 +2849,7 @@ InstallMethod( Display,
       if exc <> [] then Print(" U "); PrintFiniteSet(exc); fi;
       if inc <> [] then Print(") U "); PrintFiniteSet(inc); fi;
     fi;
+    Print("\n");
   end );
 
 #############################################################################
