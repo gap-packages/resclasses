@@ -2749,7 +2749,7 @@ InstallMethod( DisplayString,
     r_red := r[1] mod m_red;
     cl := ResidueClass(R,m_red,r_red);
     cls_complement := AsUnionOfFewClasses(Difference(cl,U));
-    if Length(cls) <= Length(cls_complement) then
+    if Length(cls) <= Length(cls_complement) + 1 then
       str := ShallowCopy(ViewString(cls[1]));
       for i in [2..Length(cls)] do
         Append(str," U ");
@@ -2828,7 +2828,7 @@ InstallMethod( Display,
     r_red := r[1] mod m_red;
     cl := ResidueClass(R,m_red,r_red);
     cls_complement := AsUnionOfFewClasses(Difference(cl,U));
-    if Length(cls) <= Length(cls_complement) then
+    if Length(cls) <= Length(cls_complement) + 1 then
       Print(ViewString(cls[1]));
       for i in [2..Length(cls)] do
         Print(" U ",ViewString(cls[i]));
