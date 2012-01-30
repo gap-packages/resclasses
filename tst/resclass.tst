@@ -19,10 +19,14 @@ gap> R := PolynomialRing(GF(7),1);;
 gap> x := Indeterminate(GF(7),1);; SetName(x,"x");
 gap> cl3 := ResidueClass(R,x+One(R),3*One(R));
 The residue class 3 ( mod x+1 ) of GF(7)[x]
+gap> DisplayString(cl3);
+"3(x+1)"
 gap> U1 := ResidueClassUnion(Integers,6,[2,4]);
 Union of the residue classes 2(6) and 4(6) of Z
 gap> U2 := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
+gap> DisplayString(U2);
+"1(5) U 2(5) U [ 3, 8 ] \\ [ -4, 1 ]"
 gap> U3 := ResidueClassUnion(R,x,[One(R),5*One(R),6*One(R)],
 >                               [Zero(R)],[One(R)]);
 <union of 3 residue classes (mod x) of GF(7)[x]> U [ 0 ] \ [ 1 ]
