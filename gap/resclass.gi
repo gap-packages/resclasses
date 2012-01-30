@@ -2722,7 +2722,22 @@ InstallMethod( DisplayString,
 
   function ( U )
 
-    local  str, R, m, r, inc, exc, m_red, r_red, cl, cls, cls_complement, i;
+    local  str, R, m, r, inc, exc, m_red, r_red, cl, cls, cls_complement, i,
+           StringFiniteSet;
+
+    StringFiniteSet := function ( S )
+
+      local  str, i;
+
+      if not IsPolynomialRing(R) then return String(S); else
+        str := "[ ";
+        for i in [1..Length(S)] do
+          Append(str,ViewString(S[i]));
+          if i < Length(S) then Append(str,", "); fi;
+        od;
+        Append(str," ]");
+      fi;
+    end;
 
     if IsResidueClass(U) then return ViewString(U); fi;
 
@@ -2742,11 +2757,11 @@ InstallMethod( DisplayString,
       od;
       if inc <> [] then
         Append(str," U ");
-        Append(str,String(inc));
+        Append(str,StringFiniteSet(inc));
       fi;
       if exc <> [] then
         Append(str," \\ ");
-        Append(str,String(exc));
+        Append(str,StringFiniteSet(exc));
       fi;
     else
       if inc <> [] then str := "("; else str := ""; fi;
@@ -2761,11 +2776,11 @@ InstallMethod( DisplayString,
       fi;
       if exc <> [] then
         Append(str," U ");
-        Append(str,String(exc));
+        Append(str,StringFiniteSet(exc));
       fi;
       if inc <> [] then
         Append(str,") U ");
-        Append(str,String(inc));
+        Append(str,StringFiniteSet(inc));
       fi;
     fi;
     return str;
@@ -2781,10 +2796,27 @@ InstallMethod( Display,
 
   function ( U )
 
-    local  str, R, m, r, inc, exc, m_red, r_red, cl, cls, cls_complement, i;
+    local  str, R, m, r, inc, exc, m_red, r_red, cl, cls, cls_complement, i,
+           PrintFiniteSet;
+
+    PrintFiniteSet := function ( S )
+
+      local  i;
+
+      if not IsPolynomialRing(R) then Print(S); else
+        Print("[ ");
+        for i in [1..Length(S)] do
+          Print(ViewString(S[i]));
+          if i < Length(S) then Print(", "); fi;
+        od;
+        Print(" ]");
+      fi;
+    end;
 
     if   IsResidueClassUnionOfZxZ(U) and ValueOption("AsGrid") <> fail
     then DisplayAsGrid(U); return; fi;
+    if   RESCLASSES_VIEWINGFORMAT = "long"
+    then View(U:RC_DISPLAY); return; fi;
     if   IsResidueClass(U)
     then Print(ViewString(U),"\n"); return; fi;
 
@@ -2801,8 +2833,8 @@ InstallMethod( Display,
       for i in [2..Length(cls)] do
         Print(" U ",ViewString(cls[i]));
       od;
-      if inc <> [] then Print(" U ",String(inc)); fi;
-      if exc <> [] then Print(" \\ ",String(exc)); fi;
+      if inc <> [] then Print(" U "); PrintFiniteSet(inc); fi;
+      if exc <> [] then Print(" \\ "); PrintFiniteSet(exc); fi;
     else
       if inc <> [] then Print("("); fi;
       if IsRing(cl) then Print(RingToString(R));
@@ -2814,8 +2846,8 @@ InstallMethod( Display,
           if i < Length(cls_complement) then Print(" U "); fi;
         od;
       fi;
-      if exc <> [] then Print(" U ",String(exc)); fi;
-      if inc <> [] then Print(") U ",String(inc)); fi;
+      if exc <> [] then Print(" U "); PrintFiniteSet(exc); fi;
+      if inc <> [] then Print(") U "); PrintFiniteSet(inc); fi;
     fi;
   end );
 
