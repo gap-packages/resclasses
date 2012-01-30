@@ -74,6 +74,20 @@ BindGlobal( "ResClassesTest",
 
 #############################################################################
 ##
+#V  One-character global variables ...
+##
+##  ... should not be overwritten when reading test files, e.g., although
+##  one-letter variable names are used in test files frequently.
+##  This is just the list of their names.
+##
+##  The actual caching is done by `ResClassesDoThingsToBeDoneBeforeTest' and
+##  `ResClassesDoThingsToBeDoneAfterTest'.
+##
+BindGlobal( "ONE_LETTER_GLOBALS",
+  List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
+
+#############################################################################
+##
 #F  ResClassesDoThingsToBeDoneBeforeTest(  )
 #F  ResClassesDoThingsToBeDoneAfterTest(  )
 ##
