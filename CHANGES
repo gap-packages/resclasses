@@ -250,7 +250,7 @@ Changes between version 3.0.3 and version 3.0.4:
    to get rid of a possible source of incompatibilities with other
    packages.
 
-Changes between version 3.0.4 and version 3.0.5:
+Changes between version 3.0.4 and version 3.1.0:
 
  - Added a `DisplayString' method for residue class unions.
 
