@@ -2816,7 +2816,7 @@ InstallMethod( Display,
     if   IsResidueClassUnionOfZxZ(U) and ValueOption("AsGrid") <> fail
     then DisplayAsGrid(U); return; fi;
     if   RESCLASSES_VIEWINGFORMAT = "long"
-    then View(U:RC_DISPLAY); return; fi;
+    then View(U:RC_DISPLAY); Print("\n"); return; fi;
     if   IsResidueClass(U)
     then Print(ViewString(U),"\n"); return; fi;
 
