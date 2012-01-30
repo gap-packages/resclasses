@@ -572,9 +572,7 @@ InstallMethod( ResidueClassUnionCons,
     then rep := Minimum( included ); fi;
     SetRepresentative( result, rep );
     ReduceResidueClassUnion( result );
-    if Length( result!.r ) = 1
-      and result!.included = [ ] and result!.excluded = [ ]
-    then SetIsResidueClass( result, true ); fi;
+    if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
     if IsOne( result!.m ) and result!.r = [ Zero( R ) ]
       and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
     then return R; else return result; fi;
@@ -646,9 +644,7 @@ InstallMethod( ResidueClassUnionCons,
     if r <> [] then ReduceResidueClassUnion( result ); else
       MakeImmutable( result!.included ); MakeImmutable( result!.excluded );
     fi;
-    if Length( result!.r ) = 1
-      and result!.included = [ ] and result!.excluded = [ ]
-    then SetIsResidueClass( result, true ); fi;
+    if Length( result!.r ) = 1 then SetIsResidueClass( result, true ); fi;
     if AbsInt( DeterminantMat( result!.m ) ) = 1
       and result!.r = [ [ 0, 0 ] ]
       and [ result!.included, result!.excluded ] = [ [ ], [ ] ]
