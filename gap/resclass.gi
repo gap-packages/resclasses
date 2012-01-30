@@ -2714,6 +2714,65 @@ InstallGlobalFunction( DisplayAsGrid,
 
 #############################################################################
 ##
+#M  DisplayString( <U> ) . . . . . . . . . . . . . . for residue class unions
+##
+InstallMethod( DisplayString,
+               "for residue class unions (ResClasses)", true,
+               [ IsResidueClassUnion ], 0,
+
+  function ( U )
+
+    local  str, R, m, r, inc, exc, m_red, r_red, cl, cls, cls_complement, i;
+
+    if IsResidueClass(U) then return ViewString(U); fi;
+
+    R := UnderlyingRing(FamilyObj(U));
+    m := Mod(U); r := Residues(U);
+    inc := IncludedElements(U); exc := ExcludedElements(U);
+    cls := AsUnionOfFewClasses(U);
+    m_red := Gcd(R,m,Gcd(R,DifferencesList(r)));
+    r_red := r[1] mod m_red;
+    cl := ResidueClass(R,m_red,r_red);
+    cls_complement := AsUnionOfFewClasses(Difference(cl,U));
+    if Length(cls) <= Length(cls_complement) then
+      str := ShallowCopy(ViewString(cls[1]));
+      for i in [2..Length(cls)] do
+        Append(str," U ");
+        Append(str,ViewString(cls[i]));
+      od;
+      if inc <> [] then
+        Append(str," U ");
+        Append(str,String(inc));
+      fi;
+      if exc <> [] then
+        Append(str," \\ ");
+        Append(str,String(exc));
+      fi;
+    else
+      if inc <> [] then str := "("; else str := ""; fi;
+      if IsRing(cl) then Append(str,RingToString(R));
+                    else Append(str,ViewString(cl)); fi;
+      if U <> cl then
+        Append(str," \\ ");
+        for i in [1..Length(cls_complement)] do
+          Append(str,ViewString(cls_complement[i]));
+          if i < Length(cls_complement) then Append(str," U "); fi;
+        od;
+      fi;
+      if exc <> [] then
+        Append(str," U ");
+        Append(str,String(exc));
+      fi;
+      if inc <> [] then
+        Append(str,") U ");
+        Append(str,String(inc));
+      fi;
+    fi;
+    return str;
+  end );
+
+#############################################################################
+##
 #M  Display( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( Display,
@@ -2721,9 +2780,43 @@ InstallMethod( Display,
                [ IsResidueClassUnion ], 0,
 
   function ( U )
+
+    local  str, R, m, r, inc, exc, m_red, r_red, cl, cls, cls_complement, i;
+
     if   IsResidueClassUnionOfZxZ(U) and ValueOption("AsGrid") <> fail
-    then DisplayAsGrid(U);
-    else ViewObj(U:RC_DISPLAY); Print("\n"); fi;
+    then DisplayAsGrid(U); return; fi;
+    if   IsResidueClass(U)
+    then Print(ViewString(U),"\n"); return; fi;
+
+    R := UnderlyingRing(FamilyObj(U));
+    m := Mod(U); r := Residues(U);
+    inc := IncludedElements(U); exc := ExcludedElements(U);
+    cls := AsUnionOfFewClasses(U);
+    m_red := Gcd(R,m,Gcd(R,DifferencesList(r)));
+    r_red := r[1] mod m_red;
+    cl := ResidueClass(R,m_red,r_red);
+    cls_complement := AsUnionOfFewClasses(Difference(cl,U));
+    if Length(cls) <= Length(cls_complement) then
+      Print(ViewString(cls[1]));
+      for i in [2..Length(cls)] do
+        Print(" U ",ViewString(cls[i]));
+      od;
+      if inc <> [] then Print(" U ",String(inc)); fi;
+      if exc <> [] then Print(" \\ ",String(exc)); fi;
+    else
+      if inc <> [] then Print("("); fi;
+      if IsRing(cl) then Print(RingToString(R));
+                    else Print(ViewString(cl)); fi;
+      if U <> cl then
+        Print(" \\ ");
+        for i in [1..Length(cls_complement)] do
+          Print(ViewString(cls_complement[i]));
+          if i < Length(cls_complement) then Print(" U "); fi;
+        od;
+      fi;
+      if exc <> [] then Print(" U ",String(exc)); fi;
+      if inc <> [] then Print(") U ",String(inc)); fi;
+    fi;
   end );
 
 #############################################################################
