@@ -2817,7 +2817,7 @@ InstallMethod( Display,
 
     if   IsResidueClassUnionOfZxZ(U) and ValueOption("AsGrid") <> fail
     then DisplayAsGrid(U); return; fi;
-    if   RESCLASSES_VIEWINGFORMAT = "long" or IsZxZ(R)
+    if   RESCLASSES_VIEWINGFORMAT = "long" or IsResidueClassUnionOfZxZ(U)
     then View(U:RC_DISPLAY); Print("\n"); return; fi;
 
     R := UnderlyingRing(FamilyObj(U));
