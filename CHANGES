@@ -252,6 +252,8 @@ Changes between version 3.0.3 and version 3.0.4:
 
 Changes between version 3.0.4 and version 3.0.5:
 
+ - Added a `DisplayString' method for residue class unions.
+
  - Removed a number of trivial methods from general.g which are
    now in the GAP Library, to avoid unnecessary code duplication.
 
@@ -259,4 +261,5 @@ Changes between version 3.0.4 and version 3.0.5:
 
  - Added a convenience method which allows enclosing the arguments of `Comm'
    into list brackets.
+
 
