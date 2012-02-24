@@ -265,6 +265,33 @@ InstallGlobalFunction( EmailLogFile,
 
 #############################################################################
 ##
+#F  DownloadFile( <url> )
+##
+InstallGlobalFunction( DownloadFile,
+
+  function ( url )
+
+    local  Download, host, path, slashpos, r;
+
+    if   IsBoundGlobal("SingleHTTPRequest")
+    then Download := ValueGlobal("SingleHTTPRequest");
+    else Info(InfoWarning,1,"DownloadFile: the IO package is not loaded.");
+         return fail;
+    fi;
+    url := ReplacedString(LowercaseString(url),"http://","");
+    slashpos := Position(url,'/');
+    host := url{[1..slashpos-1]};
+    path := url{[slashpos..Length(url)]};
+    r := Download(host,80,"GET",path,rec(),false,false);
+    if r.statuscode = 0 then
+      Info(InfoWarning,1,"Downloading ",url," failed: ",r.status);
+      return fail;
+    fi;
+    return r.body;
+  end );
+
+#############################################################################
+##
 #S  Miscellanea. ////////////////////////////////////////////////////////////
 ##
 #############################################################################

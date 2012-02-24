@@ -76,6 +76,16 @@ DeclareGlobalFunction( "EmailLogFile" );
 
 #############################################################################
 ##
+#F  DownloadFile( <url> )
+##
+##  Downloads the file <url> and returns its contents as a string.
+##  If an error occurs, the function prints a warning and returns `fail'.
+##  The IO package is needed for using this function.
+##
+DeclareGlobalFunction( "DownloadFile" );
+
+#############################################################################
+##
 #F  BlankFreeString( <obj> )  . . . . . . . . . . . . . string without blanks
 #F  IntOrInfinityToLaTeX( n ) . LaTeX string representing integer or infinity
 ##
