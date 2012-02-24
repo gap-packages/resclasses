@@ -278,7 +278,7 @@ InstallGlobalFunction( DownloadFile,
     else Info(InfoWarning,1,"DownloadFile: the IO package is not loaded.");
          return fail;
     fi;
-    url := ReplacedString(LowercaseString(url),"http://","");
+    url := ReplacedString(url,"http://","");
     slashpos := Position(url,'/');
     host := url{[1..slashpos-1]};
     path := url{[slashpos..Length(url)]};
