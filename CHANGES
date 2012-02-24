@@ -262,4 +262,6 @@ Changes between version 3.0.4 and version 3.1.0:
  - Added a convenience method which allows enclosing the arguments of `Comm'
    into list brackets.
 
+ - Added a helper function `DownloadFile' (needs the IO package).
+
 
