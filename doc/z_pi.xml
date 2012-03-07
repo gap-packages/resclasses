@@ -25,15 +25,15 @@ underlying &GAP; implementation of these rings themselves.
 <Heading>Entering semilocalizations of the integers</Heading>
 
 <ManSection>
-  <Func Name="Z_pi" Arg="pi" Label="by set of noninvertible primes"/>
-  <Func Name="Z_pi" Arg="p" Label="by noninvertible prime"/>
+  <Func Name="Z_pi" Arg="pi" Label="by set of non-invertible primes"/>
+  <Func Name="Z_pi" Arg="p" Label="by non-invertible prime"/>
   <Returns>
     the ring <M>&ZZ;_{(\pi)}</M> or the ring <M>&ZZ;_{(p)}</M>,
     respectively.
   </Returns>
   <Description>
     The returned ring has the property <C>IsZ&uscore;pi</C>. 
-    The set <A>pi</A> of noninvertible primes can be retrieved
+    The set <A>pi</A> of non-invertible primes can be retrieved
     by the operation <C>NoninvertiblePrimes</C>.
     <Index Key="IsZ_pi"><C>IsZ&uscore;pi</C></Index>
     <Index Key="NoninvertiblePrimes" Subkey="of a semilocalization of Z">
@@ -79,7 +79,7 @@ There are methods for the operations <C>in</C>, <C>Intersection</C>,
 <C>Factors</C> and <C>IsUnit</C> available for semilocalizations of the
 integers. For the documentation of these operations, see the &GAP;
 reference manual. The standard associate of an element of a ring
-<M>&ZZ;_{(\pi)}</M> is defined by the product of the noninvertible
+<M>&ZZ;_{(\pi)}</M> is defined by the product of the non-invertible
 prime factors of its numerator.
 
 <Example>
