@@ -1814,16 +1814,17 @@ InstallOtherMethod( \*,
 #############################################################################
 ##
 #M  \*( <x>, <R> ) . . . . . . . . . . . for a ring element and the base ring
-#M  \*( <x>, <R> ) . . . . . . . .  for a scalar / matrix and the base module
+#M  \*( <x>, <R> ) . . . . . . . . . . . . . . . . . . for an integer and Z^2
 ##
 InstallOtherMethod( \*,
                     "for a ring element and the base ring (ResClasses)",
-                    ReturnTrue, [ IsRingElement, IsRing ], SUM_FLAGS,
+                    ReturnTrue, [ IsRingElement, 
+                                  IsRing and IsCommutative ], 0,
                     function ( x, R ) return R * x; end );
 InstallOtherMethod( \*,
-                    "for a scalar / matrix and the base module (ResClasses)",
-                    ReturnTrue, [ IsRingElement, IsRowModule ], SUM_FLAGS,
-                    function ( x, R ) return R * x; end );
+                    "for a scalar and Z^2 (ResClasses)",
+                    ReturnTrue, [ IsInt, IsZxZ ], 0,
+                    function ( n, ZxZ ) return ZxZ * n; end );
 
 #############################################################################
 ##
