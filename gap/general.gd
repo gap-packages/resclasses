@@ -27,12 +27,6 @@ DeclareOperation( "IsCommuting", [ IsMultiplicativeElement,
 
 #############################################################################
 ##
-#F  InstallLinearOrder( <domains> )
-##
-DeclareGlobalFunction( "InstallLinearOrder" );
-
-#############################################################################
-##
 #F  SetupCache( <name>, <size> )
 #F  PutIntoCache( <name>, <key>, <value> )
 #F  FetchFromCache( <name>, <key> )
