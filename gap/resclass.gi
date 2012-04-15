@@ -1271,14 +1271,25 @@ InstallMethod( Union2,
 #M  Union2( <R>, <R_> ) . . . . . . . . . . . . . for two times the same ring
 ##
 InstallMethod( Union2,
-               "for two times the same ring (ResClasses)", ReturnTrue,
-               [ IsDomain, IsDomain ], SUM_FLAGS,
+               "for two times the same ring (ResClasses)",
+               IsIdenticalObj, [ IsRing, IsRing ], 0,
 
   function ( R, R_ )
-    if   not ForAll([R,R_],IsRing) and not ForAll([R,R_],IsRowModule)
-    then TryNextMethod(); fi;
     if   IsIdenticalObj(R,R_) or R = R_
     then return R; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  Union2( <M>, <M_> ) . . . . . . . . . . for two times the same row module
+##
+InstallMethod( Union2,
+               "for two times the same row module (ResClasses)",
+               IsIdenticalObj, [ IsRowModule, IsRowModule ], 0,
+
+  function ( M, M_ )
+    if   IsIdenticalObj(M,M_) or M = M_
+    then return M; else TryNextMethod(); fi;
   end );
 
 #############################################################################
