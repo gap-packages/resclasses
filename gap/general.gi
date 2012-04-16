@@ -16,16 +16,36 @@
 
 #############################################################################
 ##
-#M  Intersection2( <C>, <C_> ) . . . . . .  for two times the same collection
+#M  Intersection2( <D>, <D_> ) . . . . . . . .  for two times the same domain
 ##
 InstallMethod( Intersection2,
-               "for two times the same collection (ResClasses)",
-               IsIdenticalObj,
-               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
+               "for two times the same domain (ResClasses)",
+               IsIdenticalObj, [ IsDomain, IsDomain ], SUM_FLAGS,
 
-  function ( C, C_ )
-    if IsIdenticalObj(C,C_) then return C; else TryNextMethod(); fi;
+  function ( D, D_ )
+    if IsIdenticalObj(D,D_) then return D; else TryNextMethod(); fi;
   end );
+
+#############################################################################
+##
+#M  Difference( <D>, <D_> ) . . . . . . . . . . for two times the same domain
+##
+InstallMethod( Difference,
+               "for two times the same domain (ResClasses)",
+               IsIdenticalObj, [ IsDomain, IsDomain ], SUM_FLAGS,
+
+  function ( D, D_ )
+    if IsIdenticalObj(D,D_) then return []; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
+#M  Difference( <D>, <E> ) . . . . . . . . . . for a domain and the empty set
+##
+InstallMethod( Difference,
+               "for a domain and the empty set (ResClasses)",
+               ReturnTrue, [ IsDomain, IsList and IsEmpty ], SUM_FLAGS,
+               function ( D, E ) return D; end );
 
 #############################################################################
 ##

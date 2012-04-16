@@ -1515,30 +1515,6 @@ InstallOtherMethod( Difference,
 
 #############################################################################
 ##
-#M  Difference( <D>, <S> ) . . . . . . . . . . . for a ring and the empty set
-##
-InstallMethod( Difference, "for a domain and the empty set (ResClasses)",
-               ReturnTrue, [ IsDomain, IsList and IsEmpty ], SUM_FLAGS,
-               function ( D, S ) return D; end );
-
-#############################################################################
-##
-#M  Difference( <R>, <R_> ) . . . . . . . . . . . for two times the same ring
-##
-InstallMethod( Difference,
-               "for two times the same ring (ResClasses)", IsIdenticalObj,
-               [ IsDomain, IsDomain ], SUM_FLAGS,
-
-  function ( R, R_ )
-    if R = R_ then
-      if   IsRing(R) then return [];
-      elif IsZxZ(R)  then return ResidueClassUnion(R,[[1,0],[0,1]],[],[],[]);
-      else TryNextMethod(); fi;
-    else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
 #F  ResidueClassesIntersectionType( <classes> )
 ##
 InstallGlobalFunction( ResidueClassesIntersectionType,
