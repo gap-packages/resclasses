@@ -10,27 +10,6 @@
 
 #############################################################################
 ##
-#S  Some utility functions for lists. ///////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
-#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
-#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
-##
-InstallGlobalFunction( DifferencesList,
-                       list -> List( [ 2..Length(list) ],
-                                     pos -> list[ pos ] - list[ pos-1 ] ) );
-InstallGlobalFunction( QuotientsList,
-                       list -> List( [ 2 .. Length( list ) ],
-                                     pos -> list[ pos ] / list[ pos-1 ] ) );
-InstallGlobalFunction( FloatQuotientsList,
-                       list -> List( QuotientsList( list ), Float ) );
-
-#############################################################################
-##
 #S  Some trivial methods which are missing in the GAP Library. //////////////
 ##
 #############################################################################
@@ -117,6 +96,27 @@ InstallMethod( IsCommuting,
                "fallback method (ResClasses)", IsIdenticalObj,
                [ IsMultiplicativeElement, IsMultiplicativeElement ], 0,
                function ( a, b ) return a*b = b*a; end );
+
+#############################################################################
+##
+#S  Some utility functions for lists. ///////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
+#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
+#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
+##
+InstallGlobalFunction( DifferencesList,
+                       list -> List( [ 2..Length(list) ],
+                                     pos -> list[ pos ] - list[ pos-1 ] ) );
+InstallGlobalFunction( QuotientsList,
+                       list -> List( [ 2 .. Length( list ) ],
+                                     pos -> list[ pos ] / list[ pos-1 ] ) );
+InstallGlobalFunction( FloatQuotientsList,
+                       list -> List( QuotientsList( list ), Float ) );
 
 #############################################################################
 ##
