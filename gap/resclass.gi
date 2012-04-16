@@ -1385,22 +1385,6 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  Intersection2( <R>, <R_> ) . . . . . . . . .  for two times the same ring
-##
-InstallMethod( Intersection2,
-               "for two times the same ring (ResClasses)", ReturnTrue,
-               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
-
-  function ( R, R_ )
-    if IsIdenticalObj(R,R_) then return R; else
-      if   ForAll([R,R_],IsZ_pi) or ForAll([R,R_],IsRowModule)
-      then if R = R_ then return R; fi; fi; 
-      TryNextMethod();
-    fi;
-  end );
-
-#############################################################################
-##
 #M  Intersection2( <set>, [ ] ) . . . . . . . . . for a set and the empty set
 #M  Intersection2( [ ], <set> ) . . . . . . . . . for the empty set and a set
 ##

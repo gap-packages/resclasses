@@ -37,6 +37,19 @@ InstallGlobalFunction( FloatQuotientsList,
 
 #############################################################################
 ##
+#M  Intersection2( <C>, <C_> ) . . . . . .  for two times the same collection
+##
+InstallMethod( Intersection2,
+               "for two times the same collection (ResClasses)",
+               IsIdenticalObj,
+               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
+
+  function ( C, C_ )
+    if IsIdenticalObj(C,C_) then return C; else TryNextMethod(); fi;
+  end );
+
+#############################################################################
+##
 #M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
 #M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
 #M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string
