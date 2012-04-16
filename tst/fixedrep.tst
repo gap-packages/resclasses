@@ -68,8 +68,6 @@ gap> Union(U,cl1);
 [1/2] U [2/3] U [4/7]
 gap> Union(cl1,cl1);
 [2/3] U [2/3]
-gap> Intersection(cl1,cl2);
-Empty union of residue classes of Z with fixed representatives
 gap> Intersection(List([cl1,cl2],AsOrdinaryUnionOfResidueClasses));
 The residue class 5(6) of Z
 gap> Intersection(cl2,U);
@@ -150,8 +148,8 @@ gap> cl+x;
 gap> -cl;
 [Z(2)^0/x^2+Z(2)^0]
 gap> Print(cl,"\n");
-ResidueClassWithFixedRepresentative( PolynomialRing( GF(2), ["x"] ), x^2+Z(2)^\
-0, Z(2)^0 )
+ResidueClassWithFixedRepresentative( PolynomialRing( GF(
+2), ["x"] ), x^2+Z(2)^0, Z(2)^0 )
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> 0 in U;
