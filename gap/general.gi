@@ -16,39 +16,6 @@
 
 #############################################################################
 ##
-#M  Intersection2( <D>, <D_> ) . . . . . . . .  for two times the same domain
-##
-InstallMethod( Intersection2,
-               "for two times the same domain (ResClasses)",
-               IsIdenticalObj, [ IsDomain, IsDomain ], SUM_FLAGS,
-
-  function ( D, D_ )
-    if IsIdenticalObj(D,D_) then return D; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  Difference( <D>, <D_> ) . . . . . . . . . . for two times the same domain
-##
-InstallMethod( Difference,
-               "for two times the same domain (ResClasses)",
-               IsIdenticalObj, [ IsDomain, IsDomain ], SUM_FLAGS,
-
-  function ( D, D_ )
-    if IsIdenticalObj(D,D_) then return []; else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#M  Difference( <D>, <E> ) . . . . . . . . . . for a domain and the empty set
-##
-InstallMethod( Difference,
-               "for a domain and the empty set (ResClasses)",
-               ReturnTrue, [ IsDomain, IsList and IsEmpty ], SUM_FLAGS,
-               function ( D, E ) return D; end );
-
-#############################################################################
-##
 #M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
 #M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
 #M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string

@@ -1385,6 +1385,22 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  Intersection2( <R>, <R_> ) . . . . . . . . .  for two times the same ring
+##
+InstallMethod( Intersection2,
+               "for two times the same ring (ResClasses)", ReturnTrue,
+               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
+
+  function ( R, R_ )
+    if IsIdenticalObj(R,R_) then return R; else
+      if   ForAll([R,R_],IsZ_pi) or ForAll([R,R_],IsRowModule)
+      then if R = R_ then return R; fi; fi; 
+      TryNextMethod();
+    fi;
+  end );
+
+#############################################################################
+##
 #M  Intersection2( <set>, [ ] ) . . . . . . . . . for a set and the empty set
 #M  Intersection2( [ ], <set> ) . . . . . . . . . for the empty set and a set
 ##
@@ -1511,6 +1527,30 @@ InstallOtherMethod( Difference,
   function ( ZxZ, S )
     if not IsZxZ(ZxZ) or not IsSubset(ZxZ,S) then TryNextMethod(); fi;
     return ResidueClassUnionNC(ZxZ,[[1,0],[0,1]],[[0,0]],[],Set(S));
+  end );
+
+#############################################################################
+##
+#M  Difference( <D>, <S> ) . . . . . . . . . . . for a ring and the empty set
+##
+InstallMethod( Difference, "for a domain and the empty set (ResClasses)",
+               ReturnTrue, [ IsDomain, IsList and IsEmpty ], SUM_FLAGS,
+               function ( D, S ) return D; end );
+
+#############################################################################
+##
+#M  Difference( <R>, <R_> ) . . . . . . . . . . . for two times the same ring
+##
+InstallMethod( Difference,
+               "for two times the same ring (ResClasses)", IsIdenticalObj,
+               [ IsDomain, IsDomain ], SUM_FLAGS,
+
+  function ( R, R_ )
+    if R = R_ then
+      if   IsRing(R) then return [];
+      elif IsZxZ(R)  then return ResidueClassUnion(R,[[1,0],[0,1]],[],[],[]);
+      else TryNextMethod(); fi;
+    else TryNextMethod(); fi;
   end );
 
 #############################################################################
