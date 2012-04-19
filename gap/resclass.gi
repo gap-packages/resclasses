@@ -1823,8 +1823,11 @@ InstallOtherMethod( \*,
                     function ( x, R ) return R * x; end );
 InstallOtherMethod( \*,
                     "for a scalar and Z^2 (ResClasses)",
-                    ReturnTrue, [ IsInt, IsZxZ ], 0,
-                    function ( n, ZxZ ) return ZxZ * n; end );
+                    ReturnTrue, [ IsInt, IsRowModule ], 0,
+                    function ( n, ZxZ )
+                      if IsZxZ(ZxZ) then return ZxZ * n;
+                                    else TryNextMethod(); fi;
+                    end );
 
 #############################################################################
 ##
