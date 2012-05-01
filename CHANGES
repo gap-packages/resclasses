@@ -256,6 +256,7 @@ Changes between version 3.0.4 and version 3.1.0:
 
  - Removed a number of trivial methods from general.g which are
    now in the GAP Library, to avoid unnecessary code duplication.
+   Also split general.g into general.gd and general.gi.
 
  - Declared an operation `IsCommuting'.
 
