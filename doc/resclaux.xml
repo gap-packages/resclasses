@@ -89,7 +89,7 @@ of packages off, you can load &ResClasses; via
   </Returns>
   <Description>
     This function needs the <Package>IO</Package> package, and
-    as most system-related functions, it works only under UNIX.
+    as most system-related functions it works only under UNIX.
     Also the computer must of course be connected to the Internet.
   </Description>
 </ManSection>
