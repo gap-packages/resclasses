@@ -1885,7 +1885,7 @@ InstallOtherMethod( \/,
 InstallOtherMethod( \/,
                     "for the empty set and a ring element (ResClasses)",
                     ReturnTrue, [ IsList and IsEmpty, IsRingElement ], 0,
-                    function ( empty, x ) return [ ]; end );
+                    function ( empty, x ) return empty; end );
 
 #############################################################################
 ##
