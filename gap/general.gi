@@ -69,22 +69,6 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
-#M  DefaultRingByGenerators( <mats> ) .  for a list of n x n integer matrices
-##
-InstallMethod( DefaultRingByGenerators,
-               "for lists of n x n integer matrices (ResClasses)", true,
-               [ IsList and IsCollection ], SUM_FLAGS,
-
-  function ( mats )
-    if   IsEmpty(mats) or not ForAll(mats,IsMatrix)
-      or Length(Set(Flat(Set(mats,mat->DimensionsMat(mat))))) <> 1
-      or not ForAll(Flat(mats),IsInt)
-    then TryNextMethod(); fi;
-    return FullMatrixAlgebra(Integers,DimensionsMat(mats[1])[1]);
-  end );
-
-#############################################################################
-##
 #M  Comm( [ <elm1>, <elm2> ] ) . . .  for arguments enclosed in list brackets
 ##
 InstallOtherMethod( Comm,
