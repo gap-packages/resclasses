@@ -2,11 +2,6 @@
                     Version history of the ResClasses package
                     =========================================
 
-Changes between version 3.1.1 and version 3.1.2:
-
- - This list has been changed from chronological to reverse chronological
-   ordering.
-
 Changes between version 3.1.0 and version 3.1.1:
 
  - The `DefaultRingByGenerators' method for lists of integer matrices
