@@ -1,0 +1,114 @@
+#############################################################################
+##
+#W  resclaux.g             GAP4 Package `ResClasses'              Stefan Kohl
+##
+##  This file contains some auxiliary functions for the ResClasses package.
+##
+#############################################################################
+
+BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
+RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;
+RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel( InfoWarning );
+
+#############################################################################
+##
+#F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
+##
+BindGlobal( "ResidueClassUnionViewingFormat",
+
+  function ( format )
+
+    if   not format in [ "short", "long" ]
+    then Error( "viewing formats other than \"short\" and \"long\" ",
+                "are not supported.\n");
+    fi;
+    MakeReadWriteGlobal( "RESCLASSES_VIEWINGFORMAT" );
+    RESCLASSES_VIEWINGFORMAT := format;
+    MakeReadOnlyGlobal( "RESCLASSES_VIEWINGFORMAT" );
+  end );
+
+#############################################################################
+##
+#F  ResClassesBuildManual( ) . . . . . . . . . . . . . . . . build the manual
+##
+##  This function builds the manual of the ResClasses package in the file
+##  formats &LaTeX;, DVI, Postscript, PDF and HTML.
+##
+##  This is done using the GAPDoc package by Frank L\"ubeck and
+##  Max Neunh\"offer.
+##
+BindGlobal( "ResClassesBuildManual",
+
+  function ( )
+
+    local  ResClassesDir;
+
+    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "main.xml",
+                   [ "../lib/resclaux.g", "../lib/general.g",
+                     "../lib/z_pi.gd", "../lib/z_pi.gi",
+                     "../lib/resclass.gd", "../lib/resclass.gi",
+                     "../lib/fixedrep.gd", "../lib/fixedrep.gi" ],
+                     "ResClasses", "../../../" );
+  end );
+
+#############################################################################
+##
+#F  ResClassesTest(  ) . . . . . . . . . . . . . . . . . . .  read test files
+##
+##  Performs tests of the ResClasses package.
+##
+##  This function makes use of an adaptation of the test file `tst/testall.g'
+##  of the {\GAP}-library to this package. 
+##
+BindGlobal( "ResClassesTest",
+
+  function (  )
+
+    local  ResClassesDir, dir;
+
+    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    dir := Concatenation( ResClassesDir, "/tst/" );
+    Read( Concatenation( dir, "testall.g" ) );
+  end );
+
+#############################################################################
+##
+#V  One-character global variables ...
+##
+##  ... should not be overwritten when reading test files, e.g., although
+##  one-letter variable names are used in test files frequently.
+##  This is just the list of their names.
+##
+##  The actual caching is done by `ResClassesDoThingsToBeDoneBeforeTest' and
+##  `ResClassesDoThingsToBeDoneAfterTest'.
+##
+BindGlobal( "ONE_LETTER_GLOBALS",
+  List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
+
+#############################################################################
+##
+#F  ResClassesDoThingsToBeDoneBeforeTest(  )
+#F  ResClassesDoThingsToBeDoneAfterTest(  )
+##
+BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
+
+  function (  )
+    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
+    SetInfoLevel(InfoWarning,0);
+    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
+    ResidueClassUnionViewingFormat("long");
+    CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
+  end );
+
+BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
+
+  function (  )
+    CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
+    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
+    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
+  end );
+
+#############################################################################
+##
+#E  resclaux.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

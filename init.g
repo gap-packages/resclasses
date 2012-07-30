@@ -6,10 +6,10 @@
 ##
 #############################################################################
 
-ReadPackage( "resclasses", "gap/general.gd" );
-ReadPackage( "resclasses", "gap/z_pi.gd" );
-ReadPackage( "resclasses", "gap/resclass.gd" );
-ReadPackage( "resclasses", "gap/fixedrep.gd" );
+ReadPackage( "resclasses", "lib/general.gd" );
+ReadPackage( "resclasses", "lib/z_pi.gd" );
+ReadPackage( "resclasses", "lib/resclass.gd" );
+ReadPackage( "resclasses", "lib/fixedrep.gd" );
 
 #############################################################################
 ##

@@ -6,11 +6,11 @@
 ##
 #############################################################################
 
-ReadPackage( "resclasses", "gap/general.gi" );
-ReadPackage( "resclasses", "gap/resclaux.g" );
-ReadPackage( "resclasses", "gap/z_pi.gi" );
-ReadPackage( "resclasses", "gap/resclass.gi" );
-ReadPackage( "resclasses", "gap/fixedrep.gi" );
+ReadPackage( "resclasses", "lib/general.gi" );
+ReadPackage( "resclasses", "lib/resclaux.g" );
+ReadPackage( "resclasses", "lib/z_pi.gi" );
+ReadPackage( "resclasses", "lib/resclass.gi" );
+ReadPackage( "resclasses", "lib/fixedrep.gi" );
 
 #############################################################################
 ##

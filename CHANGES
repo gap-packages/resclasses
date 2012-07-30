@@ -2,6 +2,12 @@
                     Version history of the ResClasses package
                     =========================================
 
+Changes between version 3.1.1 and version 3.1.2:
+
+ - The directory resclasses/gap/ has been renamed to resclasses/lib/,
+   in order to follow the same naming convention as for the subdirectories
+   of the GAP root directory.
+
 Changes between version 3.1.0 and version 3.1.1:
 
  - The `DefaultRingByGenerators' method for lists of integer matrices
