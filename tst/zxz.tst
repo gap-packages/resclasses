@@ -301,6 +301,19 @@ gap> SplittedClass(cl,[2,3]);
   (3,1)+(4,0)Z+(0,9)Z, (3,4)+(4,0)Z+(0,9)Z, (3,7)+(4,0)Z+(0,9)Z ]
 gap> Union(last) = cl;
 true
+gap> All2x2IntegerMatricesInHNFWithDeterminantUpTo(2);
+[ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 2 ] ], [ [ 1, 1 ], [ 0, 2 ] ], 
+  [ [ 2, 0 ], [ 0, 1 ] ] ]
+gap> All2x2IntegerMatricesInHNFWithDeterminantUpTo(3);
+[ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 2 ] ], [ [ 1, 1 ], [ 0, 2 ] ], 
+  [ [ 2, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 3 ] ], [ [ 1, 1 ], [ 0, 3 ] ], 
+  [ [ 1, 2 ], [ 0, 3 ] ], [ [ 3, 0 ], [ 0, 1 ] ] ]
+gap> All2x2IntegerMatricesInHNFWithDeterminantUpTo(4);
+[ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 2 ] ], [ [ 1, 1 ], [ 0, 2 ] ], 
+  [ [ 2, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 3 ] ], [ [ 1, 1 ], [ 0, 3 ] ], 
+  [ [ 1, 2 ], [ 0, 3 ] ], [ [ 3, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 4 ] ], 
+  [ [ 1, 1 ], [ 0, 4 ] ], [ [ 1, 2 ], [ 0, 4 ] ], [ [ 1, 3 ], [ 0, 4 ] ], 
+  [ [ 2, 0 ], [ 0, 2 ] ], [ [ 2, 1 ], [ 0, 2 ] ], [ [ 4, 0 ], [ 0, 1 ] ] ]
 gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "zxz.tst", 200000000 );
 

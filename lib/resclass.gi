@@ -327,6 +327,26 @@ InstallGlobalFunction( AllResidueClassesModulo,
 
 #############################################################################
 ##
+#F  All2x2IntegerMatricesInHNFWithDeterminantUpTo( <maxdet> )
+##
+InstallGlobalFunction( All2x2IntegerMatricesInHNFWithDeterminantUpTo,
+
+  function ( maxdet )
+
+    local  mods, det, diags, diag;
+
+    mods := [];
+    for det in [1..maxdet] do 
+      diags := List(DivisorsInt(det),d->[d,det/d]);
+      for diag in diags do
+        Append(mods,List([0..diag[2]-1],k->[[diag[1],k],[0,diag[2]]]));
+      od;
+    od;
+    return mods;
+  end );
+
+#############################################################################
+##
 #M  SizeOfSmallestResidueClassRing( <R> ) . . . . .  for Z, Z_pi and GF(q)[x]
 ##
 InstallMethod( SizeOfSmallestResidueClassRing,

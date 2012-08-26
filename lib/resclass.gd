@@ -238,6 +238,15 @@ DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################
 ##
+#F  All2x2IntegerMatricesInHNFWithDeterminantUpTo( <maxdet> )
+##
+##  Returns a list of all 2 x 2 integer matrices in Hermite normal form
+##  whose determinant is less than or equal to <maxdet>.
+##
+DeclareGlobalFunction( "All2x2IntegerMatricesInHNFWithDeterminantUpTo" );
+
+#############################################################################
+##
 #O  IsSublattice( <L1>, <L2> )
 #O  Superlattices( <L> )
 ##
