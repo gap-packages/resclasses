@@ -2,7 +2,11 @@
                     Version history of the ResClasses package
                     =========================================
 
-Changes between version 3.1.1 and version 3.1.2:
+Changes between version 3.1.1 and version 3.2.0:
+
+ - A function `All2x2IntegerMatricesInHNFWithDeterminantUpTo' has been added.
+   This function returns a list of all 2 x 2 integer matrices in Hermite
+   normal form whose determinant is less than or equal to a specified value.
 
  - The directory resclasses/gap/ has been renamed to resclasses/lib/,
    in order to follow the same naming convention as for the subdirectories
