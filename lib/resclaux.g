@@ -74,6 +74,24 @@ BindGlobal( "ResClassesTest",
 
 #############################################################################
 ##
+#F  ResClassesTestExamples( ) . . . .  test examples in the ResClasses manual
+##
+##  Tests the examples in the manual of the ResClasses package.
+##
+BindGlobal( "ResClassesTestExamples",
+
+  function ( )
+
+    local  path;
+
+    path := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    RunExamples(ExtractExamples(Concatenation(path,"/doc"),
+                                "main.xml",[],"Chapter"),
+                rec( width := 75, compareFunction := "uptowhitespace" ) );
+  end );
+
+#############################################################################
+##
 #V  One-character global variables ...
 ##
 ##  ... should not be overwritten when reading test files, e.g., although
@@ -107,6 +125,81 @@ BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
     CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
     ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
     SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
+  end );
+
+#############################################################################
+##
+#F  ConvertPackageFilesToUNIXLineBreaks( <package> )
+##
+##  Converts the text files of package <package> from Windows- to
+##  UNIX line breaks. Here <package> is assumed to be either "resclasses"
+##  or "rcwa".
+##
+BindGlobal( "ConvertPackageFilesToUNIXLineBreaks",
+
+  function ( package )
+
+    local  packagedir, RecodeFile, ProcessDirectory;
+
+    RecodeFile := function ( file )
+
+      local  str;
+
+      str := StringFile(file);
+      str := ReplacedString(str,"\r\n","\n");
+      FileString(file,str);
+    end;
+
+    ProcessDirectory := function ( dir )
+
+      local  files, file;
+
+      files := DirectoryContents(dir);
+      for file in files do
+        if file in [".",".."] then continue; fi;
+        if  ForAny([".txt",".g",".gd",".gi",".xml",".tst"],
+                   ext->PositionSublist(file,ext) <> fail)
+          or file in ["README","CHANGES","version"]
+        then RecodeFile(Concatenation(dir,"/",file));
+        elif file in ["data","doc","examples","lib","paper","tst","timings"]
+        then ProcessDirectory(Concatenation(dir,"/",file)); fi;
+      od;
+    end;
+
+    packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
+    ProcessDirectory(packagedir);
+  end );
+
+#############################################################################
+##
+#F  RemoveTemporaryPackageFiles( <package> )
+##
+##  Cleans up temporary files and repository data of package <package>.
+##  Here <package> is assumed to be either "resclasses" or "rcwa".
+##
+BindGlobal( "RemoveTemporaryPackageFiles",
+
+  function ( package )
+
+    local  packagedir, docdir, timingsdir, file;
+
+    packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
+    if   ".hg" in DirectoryContents(packagedir)
+    then RemoveDirectoryRecursively(Concatenation(packagedir,"/.hg")); fi;
+    docdir := Concatenation(packagedir,"/doc");
+    for file in DirectoryContents(docdir) do
+      if   ForAny([".aux",".bbl",".bib",".blg",".brf",".idx",".ilg",
+                   ".log",".out",".pnr",".tex"],
+                  ext->PositionSublist(file,ext) <> fail)
+      then RemoveFile(Concatenation(docdir,"/",file)); fi; 
+    od;
+    if "timings" in DirectoryContents(Concatenation(packagedir,"/tst")) then
+      timingsdir := Concatenation(packagedir,"/tst/timings");
+      for file in DirectoryContents(timingsdir) do
+        if   PositionSublist(file,".runtimes") <> fail
+        then RemoveFile(Concatenation(timingsdir,"/",file)); fi;
+      od;
+    fi;
   end );
 
 #############################################################################

@@ -12,6 +12,9 @@ Changes between version 3.1.1 and version 3.2.0:
    in order to follow the same naming convention as for the subdirectories
    of the GAP root directory.
 
+ - Utility functions `ConvertPackageFilesToUNIXLineBreaks'
+   and `RemoveTemporaryPackageFiles' have been added.
+
 Changes between version 3.1.0 and version 3.1.1:
 
  - The `DefaultRingByGenerators' method for lists of integer matrices
