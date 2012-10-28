@@ -719,6 +719,16 @@ InstallMethod( RepresentativeStabilizingRefinement,
 
 #############################################################################
 ##
+#M  ViewString( <cl> ) . . . . . . . . . for residue classes with fixed rep's
+##
+InstallMethod( ViewString,
+               "for residue classes with fixed rep's (ResClasses)", true,
+               [ IsResidueClassWithFixedRep ], 0,
+               cl -> Concatenation("[",ViewString(Residue(cl)),"/",
+                                       ViewString(Modulus(cl)),"]") );
+
+#############################################################################
+##
 #M  ViewObj( <U> ) . . . . . . for unions of residue classes with fixed rep's
 ##
 InstallMethod( ViewObj,
