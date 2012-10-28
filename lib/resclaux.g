@@ -146,8 +146,10 @@ BindGlobal( "ConvertPackageFilesToUNIXLineBreaks",
       local  str;
 
       str := StringFile(file);
-      str := ReplacedString(str,"\r\n","\n");
-      FileString(file,str);
+      if PositionSublist(str,"\r\n") <> fail then
+        str := ReplacedString(str,"\r\n","\n");
+        FileString(file,str);
+      fi;
     end;
 
     ProcessDirectory := function ( dir )
