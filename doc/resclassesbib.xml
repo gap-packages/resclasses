@@ -40,8 +40,8 @@
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
-  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 3.1.2)</C></title>
-  <year>2011</year>
+  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 3.4.0)</C></title>
+  <year>2012</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>
   </other>
