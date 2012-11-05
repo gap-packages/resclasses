@@ -2,6 +2,11 @@
                     Version history of the ResClasses package
                     =========================================
 
+Changes between version 3.2.0 and version 3.3.0:
+
+ - The operation `PartitionsIntoResidueClasses' interprets now an option
+   `Primes' if the first argument is `Integers'.
+
 Changes between version 3.1.1 and version 3.2.0 (November 1, 2012):
 
  - A function `All2x2IntegerMatricesInHNFWithDeterminantUpTo' has been added.
