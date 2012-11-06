@@ -320,9 +320,15 @@ Integers
 <ManSection>
   <Oper Name="PartitionsIntoResidueClasses"
         Arg="R, length" Label="of a given ring, of given length"/>
+  <Oper Name="PartitionsIntoResidueClasses"
+        Arg="R, length, primes"
+        Label="of a given ring, of given length, with moduli with given factors"/>
   <Returns>
+    in the 2-argument version a sorted list of all partitions of the ring
+    <A>R</A> into <A>length</A> residue classes. In the 3-argument version
     a sorted list of all partitions of the ring <A>R</A> into <A>length</A>
-    residue classes.
+    residue classes whose moduli have only prime factors in the list
+    <A>primes</A>.
   </Returns>
   <Description>
 <Example>

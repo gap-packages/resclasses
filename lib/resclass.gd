@@ -292,11 +292,14 @@ DeclareOperation( "SplittedClass", [ IsResidueClassUnion, IsRowVector ] );
 #############################################################################
 ##
 #O  PartitionsIntoResidueClasses( <R>, <length> )
+#O  PartitionsIntoResidueClasses( <R>, <length>, <primes> )
 ##
 ##  Returns a list of all partitions of the ring <R> into <length> residue
 ##  classes.
 ##
 DeclareOperation( "PartitionsIntoResidueClasses", [ IsRing, IsPosInt ] );
+DeclareOperation( "PartitionsIntoResidueClasses", [ IsRing, IsPosInt,
+                                                    IsList ] );
 
 #############################################################################
 ##

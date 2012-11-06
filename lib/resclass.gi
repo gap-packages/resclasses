@@ -2306,6 +2306,19 @@ InstallMethod( PartitionsIntoResidueClasses,
 
 #############################################################################
 ##
+#M  PartitionsIntoResidueClasses( <R>, <length>, <primes> ) . . . . . . for Z
+##
+InstallMethod( PartitionsIntoResidueClasses,
+               "method for Z (ResClasses)",
+               ReturnTrue, [ IsIntegers, IsPosInt, IsList ], 0,
+
+  function ( R, length, primes )
+    if primes = [] or not ForAll(primes,IsPrimeInt) then TryNextMethod(); fi;
+    return PartitionsIntoResidueClasses(R,length:Primes:=primes);
+  end );
+
+#############################################################################
+##
 #M  RandomPartitionIntoResidueClasses( <R>, <length>, <primes> )  for Z, Z_pi
 ##
 InstallMethod( RandomPartitionIntoResidueClasses,
