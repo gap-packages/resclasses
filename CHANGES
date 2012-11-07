@@ -5,7 +5,9 @@
 Changes between version 3.2.0 and version 3.3.0:
 
  - The operation `PartitionsIntoResidueClasses' has now an optional
-   third argument `Primes'.
+   third argument `Primes'. Also it interprets now an option "distinct"
+   to restrict the output to partitions which differ by the moduli
+   of the involved residue classes.
 
 Changes between version 3.1.1 and version 3.2.0 (November 1, 2012):
 

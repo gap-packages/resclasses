@@ -2255,7 +2255,8 @@ InstallMethod( PartitionsIntoResidueClasses,
 
   function ( R, length )
 
-    local  Recurse, partitions, primes, desiredprimes, p, q, x;
+    local  Recurse, partitions, primes, desiredprimes, distinct,
+           p, q, x, i, j;
 
     Recurse := function ( P, pos, p )
 
@@ -2275,12 +2276,16 @@ InstallMethod( PartitionsIntoResidueClasses,
 
       for p in remaining_primes do
         for pos in [1..Length(P)] do
-          Recurse(ShallowCopy(P),pos,p);
+          if not distinct or pos = Length(P)
+            or Mod(P[pos+1]) <> Mod(P[pos])
+          then Recurse(ShallowCopy(P),pos,p); fi;
         od;
       od;
     end;
 
     if length = 1 then return [[R]]; fi;
+
+    distinct := ValueOption("distinct") = true;
 
     partitions := [];
 
@@ -2301,7 +2306,17 @@ InstallMethod( PartitionsIntoResidueClasses,
 
     for p in primes do Recurse([R],1,p); od;
 
-    return Set(partitions);
+    partitions := Set(partitions);
+    if distinct then
+      SortParallel(List(partitions,P->List(P,Density)),partitions);
+      for i in [2..Length(partitions)] do
+        j := i; repeat j := j-1; until IsBound(partitions[j]);
+        if   List(partitions[i],Density) = List(partitions[j],Density)
+        then Unbind(partitions[i]); fi;
+      od;
+      partitions := Set(partitions);
+    fi;
+    return partitions;
   end );
 
 #############################################################################
