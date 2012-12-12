@@ -29,28 +29,39 @@ BindGlobal( "ResidueClassUnionViewingFormat",
 
 #############################################################################
 ##
-#F  ResClassesBuildManual( ) . . . . . . . . . . . . . . . . build the manual
+#V  One-character global variables ...
 ##
-##  This function builds the manual of the ResClasses package in the file
-##  formats &LaTeX;, DVI, Postscript, PDF and HTML.
+##  ... should not be overwritten when reading test files, e.g., although
+##  one-letter variable names are used in test files frequently.
+##  This is just the list of their names.
 ##
-##  This is done using the GAPDoc package by Frank L\"ubeck and
-##  Max Neunh\"offer.
+##  The actual caching is done by `ResClassesDoThingsToBeDoneBeforeTest' and
+##  `ResClassesDoThingsToBeDoneAfterTest'.
 ##
-BindGlobal( "ResClassesBuildManual",
+BindGlobal( "ONE_LETTER_GLOBALS",
+  List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
 
-  function ( )
+#############################################################################
+##
+#F  ResClassesDoThingsToBeDoneBeforeTest(  )
+#F  ResClassesDoThingsToBeDoneAfterTest(  )
+##
+BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
 
-    local  ResClassesDir;
+  function (  )
+    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
+    SetInfoLevel(InfoWarning,0);
+    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
+    ResidueClassUnionViewingFormat("long");
+    CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
+  end );
 
-    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-    MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "main.xml",
-                   [ "../lib/resclaux.g",
-                     "../lib/general.gd", "../lib/general.gi",
-                     "../lib/z_pi.gd", "../lib/z_pi.gi",
-                     "../lib/resclass.gd", "../lib/resclass.gi",
-                     "../lib/fixedrep.gd", "../lib/fixedrep.gi" ],
-                     "ResClasses", "../../../" );
+BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
+
+  function (  )
+    CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
+    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
+    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
   end );
 
 #############################################################################
@@ -85,47 +96,38 @@ BindGlobal( "ResClassesTestExamples",
 
     local  path;
 
+    ResClassesDoThingsToBeDoneBeforeTest();
     path := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
     RunExamples(ExtractExamples(Concatenation(path,"/doc"),
                                 "main.xml",[],"Chapter"),
                 rec( width := 75, compareFunction := "uptowhitespace" ) );
+    ResClassesDoThingsToBeDoneAfterTest();
   end );
 
 #############################################################################
 ##
-#V  One-character global variables ...
+#F  ResClassesBuildManual( ) . . . . . . . . . . . . . . . . build the manual
 ##
-##  ... should not be overwritten when reading test files, e.g., although
-##  one-letter variable names are used in test files frequently.
-##  This is just the list of their names.
+##  This function builds the manual of the ResClasses package in the file
+##  formats &LaTeX;, DVI, Postscript, PDF and HTML.
 ##
-##  The actual caching is done by `ResClassesDoThingsToBeDoneBeforeTest' and
-##  `ResClassesDoThingsToBeDoneAfterTest'.
+##  This is done using the GAPDoc package by Frank L\"ubeck and
+##  Max Neunh\"offer.
 ##
-BindGlobal( "ONE_LETTER_GLOBALS",
-  List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
+BindGlobal( "ResClassesBuildManual",
 
-#############################################################################
-##
-#F  ResClassesDoThingsToBeDoneBeforeTest(  )
-#F  ResClassesDoThingsToBeDoneAfterTest(  )
-##
-BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
+  function ( )
 
-  function (  )
-    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
-    SetInfoLevel(InfoWarning,0);
-    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
-    ResidueClassUnionViewingFormat("long");
-    CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
-  end );
+    local  ResClassesDir;
 
-BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
-
-  function (  )
-    CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
-    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
-    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
+    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "main.xml",
+                   [ "../lib/resclaux.g",
+                     "../lib/general.gd", "../lib/general.gi",
+                     "../lib/z_pi.gd", "../lib/z_pi.gi",
+                     "../lib/resclass.gd", "../lib/resclass.gi",
+                     "../lib/fixedrep.gd", "../lib/fixedrep.gi" ],
+                     "ResClasses", "../../../" );
   end );
 
 #############################################################################
