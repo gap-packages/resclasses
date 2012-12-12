@@ -2,7 +2,7 @@
                     Version history of the ResClasses package
                     =========================================
 
-Changes between version 3.2.0 and version 3.3.0:
+Changes between version 3.2.0 and version 3.3.0 (December 12, 2012):
 
  - The operation `PartitionsIntoResidueClasses' has now an optional
    third argument `Primes'. Also it interprets now an option "distinct"
