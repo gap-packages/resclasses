@@ -100,7 +100,7 @@ Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 ##
 Print("You should start GAP4 using:  `gap -N -A -x 80 -r -m 100m'.\n");
 Print("\n");
-Print("Architecture: ", GAP_ARCHITECTURE, "\n");
+Print("Architecture: ", GAPInfo.Architecture, "\n");
 Print("\n");
 Print("test file         GAP4stones     time(msec)\n");
 Print("-------------------------------------------\n");
