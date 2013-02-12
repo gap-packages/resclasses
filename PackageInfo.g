@@ -58,7 +58,6 @@ AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
                                    "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk\n\n" ),
-Autoload         := false,
 TestFile         := "tst/testall.g",
 Keywords         := [ "residue classes", "integers", "number theory" ]
 
