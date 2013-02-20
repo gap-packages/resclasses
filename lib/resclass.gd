@@ -21,15 +21,15 @@ DeclareSynonym( "IsUnionOfResidueClasses", IsResidueClassUnion );
 #############################################################################
 ##
 #C  IsResidueClassUnionOfZ . . . . . . . . . . . .  residue class unions of Z
-#C  IsUnionOfResidueClassesOfZ                                           dito
+#C  IsUnionOfResidueClassesOfZ                                          ditto
 #C  IsResidueClassUnionOfZxZ                    "                      of Z^2
-#C  IsUnionOfResidueClassesOfZxZ                                         dito
+#C  IsUnionOfResidueClassesOfZxZ                                        ditto
 #C  IsResidueClassUnionOfZ_pi                   "                   of Z_(pi)
-#C  IsUnionOfResidueClassesOfZ_pi                                        dito
+#C  IsUnionOfResidueClassesOfZ_pi                                       ditto
 #C  IsResidueClassUnionOfGFqx                   "                 of GF(q)[x]
-#C  IsUnionOfResidueClassesOfGFqx                                        dito
+#C  IsUnionOfResidueClassesOfGFqx                                       ditto
 #C  IsResidueClassUnionOfZorZ_pi                "              of Z or Z_(pi)
-#C  IsUnionOfResidueClassesOfZorZ_pi                                     dito
+#C  IsUnionOfResidueClassesOfZorZ_pi                                    ditto
 ##
 ##  The category of the residue class unions of Z, of Z^2, of a (semi-)
 ##  localization Z_(pi) of Z or of a polynomial ring GF(q)[x] over a finite
@@ -125,10 +125,10 @@ DeclareGlobalFunction( "ResidueClassUnionNC" );
 ##
 #F  ResidueClass( <R>, <m>, <r> ) . . . . . . . . . . .  residue class of <R>
 #F  ResidueClass( <m>, <r> )  . . . . . . . . . residue class of the integers
-#F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . .  ( dito )
+#F  ResidueClass( <r>, <m> )  . . . . . . . . . . . . . . . . . . . ( ditto )
 #F  ResidueClassNC( <R>, <m>, <r> ) . . . . . . . . . .  residue class of <R>
 #F  ResidueClassNC( <m>, <r> )  . . . . . . . . residue class of the integers
-#F  ResidueClassNC( <r>, <m> )  . . . . . . . . . . . . . . . . . .  ( dito )
+#F  ResidueClassNC( <r>, <m> )  . . . . . . . . . . . . . . . . . . ( ditto )
 #P  IsResidueClass( <obj> ) . . . . . . . . . . <obj> is single residue class
 ##
 ##  Returns the residue class <r> ( mod <m> ) of the ring <R>, respectively
@@ -223,6 +223,7 @@ DeclareProperty( "IsZxZ", IsObject );
 #O  AllResidues( <R>, <m> ) . . . . the residues (mod <m>) in canonical order
 #F  AllResidueClassesModulo( [ <R>, ] <m> ) . . the residue classes (mod <m>)
 #O  NumberOfResidues( <R>, <m> ) . . . . . . the number of residues (mod <m>)
+#O  NrResidues( <R>, <m> ) . . . . . . . . . . . . . . . . . . . . - ditto - 
 ##
 ##  Returns
 ##   - a sorted list of all residues, resp.
@@ -234,6 +235,7 @@ DeclareOperation( "AllResidues", [ IsRing, IsRingElement ] );
 DeclareOperation( "AllResidues", [ IsRowModule, IsMatrix ] );
 DeclareOperation( "NumberOfResidues", [ IsRing, IsRingElement ] );
 DeclareOperation( "NumberOfResidues", [ IsRowModule, IsMatrix ] );
+DeclareSynonym( "NrResidues", NumberOfResidues );
 DeclareGlobalFunction( "AllResidueClassesModulo" );
 
 #############################################################################

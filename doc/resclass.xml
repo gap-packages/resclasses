@@ -151,11 +151,14 @@ Union of the residue classes 0(4) and 1(6) of Z
     If the argument <A>R</A> is omitted it defaults to the default ring of
     <A>m</A> -- cf. the documentation of <C>DefaultRing</C> in the &GAP;
     reference manual.
-    <Index Key="AllResidues" Subkey="by ring and modulus">
+    <Index Key="AllResidues" Subkey="for ring and modulus">
       <C>AllResidues</C>
     </Index>
-    <Index Key="NumberOfResidues" Subkey="by ring and modulus">
+    <Index Key="NumberOfResidues" Subkey="for ring and modulus">
       <C>NumberOfResidues</C>
+    </Index>
+    <Index Key="NrResidues" Subkey="for ring and modulus">
+      <C>NrResidues</C>
     </Index>
     A transversal for the residue classes (mod&nbsp;<A>m</A>) can be
     obtained by the operation <C>AllResidues(<A>R</A>,<A>m</A>)</C>,
