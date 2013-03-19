@@ -16,17 +16,9 @@
 
 #############################################################################
 ##
-#M  ViewString( <rat> ) . . . . . . . . . . . . . . . . . . .  for a rational
 #M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
 #M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string
 ##
-InstallMethod( ViewString, "for a rational (ResClasses)", true, [ IsRat ], 0,
-               function ( rat )
-                 if IsInt(rat) or (IsBoundGlobal("Z_PI_RCWAMAPPING_FAMILIES")
-                   and Length(ValueGlobal("Z_PI_RCWAMAPPING_FAMILIES")) >= 1)
-                 then return String(rat);
-                 else TryNextMethod(); fi;
-               end );
 InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
                [ IsFFE and IsInternalRep ], 0, String );
 InstallMethod( ViewString, "for a string (ResClasses)", true,
