@@ -22,7 +22,7 @@
 InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
                [ IsFFE and IsInternalRep ], 0, String );
 InstallMethod( ViewString, "for a string (ResClasses)", true,
-               [ IsString ], 0, String );
+               [ IsString ], 5, String );
 
 #############################################################################
 ##
