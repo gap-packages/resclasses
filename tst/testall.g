@@ -98,7 +98,7 @@ Sort( TEST_FILES, function(a,b) return a[2] < b[2]; end );
 ##
 #X  read all test files
 ##
-Print("You should start GAP4 using:  `gap -N -A -x 80 -r -m 100m'.\n");
+Print("You should start GAP4 using:  `gap -A -x 80 -r -m 100m'.\n");
 Print("\n");
 Print("Architecture: ", GAPInfo.Architecture, "\n");
 Print("\n");
