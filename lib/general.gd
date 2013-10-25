@@ -81,9 +81,11 @@ DeclareGlobalFunction( "DownloadFile" );
 #############################################################################
 ##
 #F  BlankFreeString( <obj> )  . . . . . . . . . . . . . string without blanks
+#F  QuotesStripped( <str> ) . . . . . . . . . . .  string with quotes removed
 #F  IntOrInfinityToLaTeX( n ) . LaTeX string representing integer or infinity
 ##
 DeclareGlobalFunction( "BlankFreeString" );
+DeclareGlobalFunction( "QuotesStripped" );
 DeclareGlobalFunction( "IntOrInfinityToLaTeX" );
 
 #############################################################################

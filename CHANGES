@@ -2,6 +2,13 @@
                     Version history of the ResClasses package
                     =========================================
 
+
+Changes between version 3.3.0 and version 3.3.1 (, 2013):
+
+ - Minor adjustments to changes in the GAP Library.
+   Note that only RCWA in version 3.6.0 or newer works with this version
+   of ResClasses. -- So if you still have an old RCWA, you need to upgrade.
+
 Changes between version 3.2.0 and version 3.3.0 (December 12, 2012):
 
  - The operation `PartitionsIntoResidueClasses' has now an optional

@@ -21,8 +21,11 @@
 ##
 InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
                [ IsFFE and IsInternalRep ], 0, String );
-InstallMethod( ViewString, "for a string (ResClasses)", true,
-               [ IsString ], 5, String );
+
+if CompareVersionNumbers(GAPInfo.Version,"4.7.1") <> true then
+  InstallMethod( ViewString, "for a string (ResClasses)", true,
+                 [ IsString ], 5, str -> Concatenation( "\"", str, "\"" ) );
+fi;
 
 #############################################################################
 ##
@@ -265,6 +268,17 @@ InstallGlobalFunction( BlankFreeString,
 
     str := String(obj);
     RemoveCharacters(str," ");
+    return str;
+  end );
+
+#############################################################################
+##
+#F  QuotesStripped( <obj> ) . . . . . . . . . . . . . . string without blanks
+##
+InstallGlobalFunction( QuotesStripped,
+
+  function ( str )
+    RemoveCharacters(str,"\"");
     return str;
   end );
 
