@@ -28,7 +28,7 @@
     <name><first>Werner</first><last>Nickel</last></name>
   </author>
   <title>
-    <C>Polycyclic -- Computation with polycyclic groups; Version 2.8.1</C>
+    <C>Polycyclic -- Computation with polycyclic groups (Version 2.8.1)</C>
   </title>
   <year>2011</year>
   <other type="note">
@@ -40,8 +40,8 @@
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
-  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 3.4.0)</C></title>
-  <year>2012</year>
+  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 3.6.0)</C></title>
+  <year>2013</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>
   </other>
