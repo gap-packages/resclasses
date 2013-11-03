@@ -37,7 +37,7 @@ InstallMethod( ViewString,
 
   function ( P )
 
-    local  str, R, F, F_el, F_elints, lngs1, lngs2, i;
+    local  str, R, F, coeffs, coeffstrings, coeffintstrings, i;
 
     if   ValueGlobal("GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES") = []
     then TryNextMethod(); fi;
@@ -49,15 +49,13 @@ InstallMethod( ViewString,
     if not IsFinite(F) then TryNextMethod(); fi;
     if not IsPrimeField(F) then return str; fi;
 
-    F_el     := List(AsList(F),String);
-    F_elints := List(List(AsList(F),Int),String);
-    lngs1    := -List(F_el,Length);
-    lngs2    := ShallowCopy(lngs1);
-    SortParallel(lngs1,F_el);
-    SortParallel(lngs2,F_elints);
+    coeffs          := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
+    coeffs          := Concatenation(coeffs,[Zero(F),One(F)]);
+    coeffstrings    := List(coeffs,String);
+    coeffintstrings := List(List(coeffs,Int),String);
 
-    for i in [1..Length(F_el)] do
-      str := ReplacedString(str,F_el[i],F_elints[i]);
+    for i in [1..Length(coeffstrings)] do
+      str := ReplacedString(str,coeffstrings[i],coeffintstrings[i]);
     od;
 
     return str;
