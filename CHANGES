@@ -3,6 +3,11 @@
                     =========================================
 
 
+Changes between version 3.3.1 and version 3.3.2:
+
+ - Removed a potential performance problem in a `ViewString' method
+   for polynomials over finite fields.
+ 
 Changes between version 3.3.0 and version 3.3.1 (October 28, 2013):
 
  - Minor adjustments to changes in the GAP Library.
