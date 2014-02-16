@@ -3,14 +3,16 @@
                     =========================================
 
 
-Changes between version 3.3.2 and version 3.3.3:
+Changes between version 3.3.2 and version 3.4.0:
+
+ - An auxiliary function `NextProbablyPrimeInt' has been added.
 
  - The file resclasses/doc/manual.js has been added.
 
 Changes between version 3.3.1 and version 3.3.2 (November 18, 2013):
 
- - Removed a potential performance problem in a `ViewString' method
-   for polynomials over finite fields.
+ - A potential performance problem in a `ViewString' method
+   for polynomials over finite fields has been removed.
  
 Changes between version 3.3.0 and version 3.3.1 (October 28, 2013):
 

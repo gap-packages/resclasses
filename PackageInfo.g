@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "3.3.2",
-Date             := "18/11/2013",
+Version          := "3.4.0",
+Date             := "16/02/2014",
 ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/resclasses-3.3.2"),
+                                  "resclasses/resclasses-3.4.0"),
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -20,12 +20,6 @@ Persons          := [
                            IsMaintainer  := true,
                            Email         := "stefan@mcs.st-and.ac.uk",
                            WWWHome       := "http://www.gap-system.org/DevelopersPages/StefanKohl/"
-                           # , PostalAddress := Concatenation("Departamenti i Matematikes\n",
-                           #                                "Universiteti \"Ismail Qemali\" Vlore\n",
-                           #                                "Lagjja: Pavaresia\n",
-                           #                                "Vlore / Albania"),
-                           # Place         := "Vlore / Albania",
-                           # Institution   := "University of Vlora"
                          )
                     ],
 Status           := "deposited",
