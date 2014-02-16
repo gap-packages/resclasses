@@ -80,7 +80,7 @@ InstallMethod( IsCommuting,
 
 #############################################################################
 ##
-#S  Some utility functions for lists. ///////////////////////////////////////
+#S  Some utility functions. /////////////////////////////////////////////////
 ##
 #############################################################################
 
@@ -98,6 +98,26 @@ InstallGlobalFunction( QuotientsList,
                                      pos -> list[ pos ] / list[ pos-1 ] ) );
 InstallGlobalFunction( FloatQuotientsList,
                        list -> List( QuotientsList( list ), Float ) );
+
+#############################################################################
+##
+#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
+##
+InstallGlobalFunction( NextProbablyPrimeInt,
+
+  function ( n )
+    if   -3 = n            then n := -2;
+    elif -3 < n  and n < 2 then n :=  2;
+    elif n mod 2 = 0       then n := n+1;
+    else                        n := n+2;
+    fi;
+    while not IsProbablyPrimeInt(n) do
+        if n mod 6 = 1 then n := n+4;
+        else                n := n+2;
+        fi;
+    od;
+    return n;
+  end );
 
 #############################################################################
 ##
@@ -224,7 +244,7 @@ InstallGlobalFunction( EmailLogFile,
 
 #############################################################################
 ##
-#F  DownloadFile( <url> )
+#F  DownloadFile( <url> ) . . . . . . . . . download a file from the internet
 ##
 InstallGlobalFunction( DownloadFile,
 
@@ -251,7 +271,7 @@ InstallGlobalFunction( DownloadFile,
 
 #############################################################################
 ##
-#S  Miscellanea. ////////////////////////////////////////////////////////////
+#S  Some string manipulation trivia. ////////////////////////////////////////
 ##
 #############################################################################
 
@@ -272,7 +292,7 @@ InstallGlobalFunction( BlankFreeString,
 
 #############################################################################
 ##
-#F  QuotesStripped( <obj> ) . . . . . . . . . . . . . . string without blanks
+#F  QuotesStripped( <obj> ) . . . . . . . . . . . . . . string without quotes
 ##
 InstallGlobalFunction( QuotesStripped,
 
@@ -283,7 +303,7 @@ InstallGlobalFunction( QuotesStripped,
 
 #############################################################################
 ##
-#F  IntOrInfinityToLaTeX( n )
+#F  IntOrInfinityToLaTeX( n ) .  LaTeX string for a given integer or infinity
 ##
 InstallGlobalFunction( IntOrInfinityToLaTeX,
 
