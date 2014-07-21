@@ -12,7 +12,7 @@
 <Section Label="sec:Requirements">
 <Heading>Requirements</Heading>
 
-This version of &ResClasses; needs at least &GAP;&nbsp;4.5.4,
+This version of &ResClasses; needs at least &GAP;&nbsp;4.7.0,
 <Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/>
 and &GAPDoc;&nbsp;1.4&nbsp;<Cite Key="GAPDoc"/>.
 It can be used on all platforms for which &GAP; is available.
