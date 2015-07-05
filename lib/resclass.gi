@@ -2178,7 +2178,7 @@ InstallMethod( AsUnionOfFewClasses,
       if m mod d <> 0 or m/d > Length(res) then continue; fi;
       res_d := Set(res mod d);
       for r in res_d do
-        if IsSubset(res,[r,r+d..r+(m/d-1)*d]) then
+        if ForAll([0..m/d-1],k->r+k*d in res) then
           cl := ResidueClass(Integers,d,r);
           Add(cls,cl); remaining := Difference(remaining,cl);
           if IsList(remaining) then break; fi;
