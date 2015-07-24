@@ -523,7 +523,7 @@ InstallMethod( ResidueClassUnionCons,
 
       R := UnderlyingRing(FamilyObj(U));
       m := StandardAssociate(R,U!.m);  mRed := m;
-      r := List( U!.r, n -> n mod m ); rRed := r;
+      r := Set( U!.r, n -> n mod m ); rRed := r;
       fact := Set(Factors(R,m));
       for p in fact do
         repeat
