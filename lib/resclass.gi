@@ -1163,12 +1163,16 @@ InstallOtherMethod( ExcludedElements, "for finite sets (ResClasses)",
 ##
 #M  SparseRep( <U> ) . . . conversion to class list ("sparse") representation
 ##
-InstallMethod( SparseRep, "for residue class unions, std. rep. (ResClasses)",
+InstallMethod( SparseRep,
+               "for residue class unions in standard rep. (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0,
                U -> ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),
                                         List(AsUnionOfFewClasses(U),
                                              cl->[Residue(cl),Modulus(cl)]),
                                         U!.included,U!.excluded) );
+InstallMethod( SparseRep,
+               "for residue class unions in sparse rep (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0, U -> U );
 
 #############################################################################
 ##
@@ -1180,6 +1184,9 @@ InstallMethod( StandardRep,
                U -> ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),
                                         Modulus(U),Residues(U),
                                         U!.included,U!.excluded) );
+InstallMethod( StandardRep,
+               "for residue class unions in standard rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0, U -> U );
 
 #############################################################################
 ##
