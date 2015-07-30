@@ -3,7 +3,11 @@
                     =========================================
 
 
-Changes between version 3.4.0 and version 3.4.1 ():
+Changes between version 3.4.0 and version 4.0.0 ():
+
+ - A class list ("sparse") representation for residue class unions has been
+   implemented; this yields an enormous speedup for computations with unions
+   of few residue classes some of which have big modulus.
 
  - A performance problem has been fixed: the list of residues
    of a residue class union should know that it is a set.

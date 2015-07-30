@@ -91,6 +91,68 @@ DeclareRepresentation( "IsResidueClassUnionResidueListRep",
 
 #############################################################################
 ##
+#R  IsResidueClassUnionClassListRep . . . . representation by list of classes
+##
+##  The representation of unions of residue classes of the ring Z of the
+##  integers, of Z^2, of semilocalizations Z_(pi) of the integers and of
+##  univariate polynomial rings GF(q)[x] over finite fields, by normalized
+##  list of disjoint residue classes.
+## 
+##  Components:
+##
+##  - <cls>:      the list of residue classes, as pairs [ residue, modulus ]
+##  - <m>:        the modulus
+##  - <included>: set of elements added to the union of residue classes
+##  - <excluded>: set of elements subtracted from  "      "      "
+##
+##  The representation is unique, i.e. two residue class unions are equal
+##  if and only if their stored representations are equal.
+##
+##  This is achieved in the following way:
+##
+##  - The list <cls> of residue classes is sorted, firstly by ascending
+##    moduli and secondly by ascending residues.
+##  - The list of residue classes is always as short as possible, and the
+##    list of their moduli is always lexicographically minimal, i.e. for
+##    example 0(3) U 1(6) U 5(6) is not represented as [[0,3],[1,6],[5,6]],
+##    but rather as [[1,2],[0,6]].
+##  - Residue classes with the same modulus are ordered by ascending residue.
+##  - The set <included> contains only elements which are neither in one of
+##    the residue classes in the list <cls> nor in <excluded>.
+##  - The set <excluded> contains only elements which are neither in one of
+##    the residue classes in the list <cls> nor in <included>.
+##
+##  At present, this representation is only available for residue class
+##  unions of Z. 
+##
+DeclareRepresentation( "IsResidueClassUnionClassListRep", 
+                       IsComponentObjectRep and IsAttributeStoringRep, 
+                       [ "cls", "m", "included", "excluded" ] );
+
+#############################################################################
+##
+#O  ClassListRep( <U> )
+#O  SparseRep( <U> )
+#O  SparseRepresentation( <U> )
+#O  ResidueListRep( <U> )
+#O  StandardRep( <U> )
+#O  StandardRepresentation( <U> )
+##
+##  Conversion between the two representations of residue class unions:
+##  `IsResidueClassUnionResidueListRep' and `IsResidueClassUnionClassListRep'
+##
+##  Remark: the declarations are for `IsObject' since `SparseRep' and
+##          `StandardRep' are used in RCWA for rcwa mappings as well.
+##
+DeclareOperation( "ClassListRep", [ IsObject] );
+DeclareSynonym( "SparseRep", ClassListRep );
+DeclareSynonym( "SparseRepresentation", ClassListRep );
+DeclareOperation( "ResidueListRep", [ IsObject ] );
+DeclareSynonym( "StandardRep", ResidueListRep );
+DeclareSynonym( "StandardRepresentation", ResidueListRep );
+
+#############################################################################
+##
 #R  IsResidueClassUnionsIteratorRep . . . . . . . . . iterator representation
 ##
 DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
@@ -100,23 +162,32 @@ DeclareRepresentation( "IsResidueClassUnionsIteratorRep",
 #############################################################################
 ##
 #O  ResidueClassUnionCons( <filter>, <R>, <m>, <r>, <included>, <excluded> )
-#F  ResidueClassUnion( <R>, <m>, <r> )
-#F  ResidueClassUnion( <R>, <m>, <r>, <included>, <excluded> )
-#F  ResidueClassUnionNC( <R>, <m>, <r> )
-#F  ResidueClassUnionNC( <R>, <m>, <r>, <included>, <excluded> )
+#O  ResidueClassUnionCons( <filter>, <R>, <cls> <included>, <excluded> )
+#F  ResidueClassUnion( [ <R>, ] <m>, <r>, [ <included>, <excluded> ] )
+#F  ResidueClassUnion( [ <R>, ] <cls>, [ <included>, <excluded> ] )
+#F  ResidueClassUnionNC( [ <R>, ] <m>, <r>, [ <included>, <excluded> ] )
+#F  ResidueClassUnionNC ( [ <R>, ] <cls>, [ <included>, <excluded> ] )
 ##
 ##  The constructor for *residue class unions*,
 ##  i.e. set-theoretic unions of residue classes +/- finite sets of elements.
 ##
-##  Returns the union of the residue classes <r>[i] ( mod <m> ) of
-##  the ring <R>, plus a finite set <included> and minus a finite set
-##  <excluded> of ring elements.
+##  Returns
+##    - the union of the residue classes <r>[i] ( mod <m> ), respectively
+##    - the union of the residue classes <cls>[i][1] ( mod <cls>[i][2] )
+##  of the ring <R>, plus a finite set <included> and minus a finite set
+##  <excluded> of elements of <R>.
 ##
 DeclareConstructor( "ResidueClassUnionCons",
                     [ IsResidueClassUnion, IsRing, IsRingElement,
                       IsList, IsList, IsList ] );
 DeclareConstructor( "ResidueClassUnionCons",
+                    [ IsResidueClassUnion, IsRing,
+                      IsList, IsList, IsList ] );
+DeclareConstructor( "ResidueClassUnionCons",
                     [ IsResidueClassUnion, IsRowModule, IsMatrix,
+                      IsList, IsList, IsList ] );
+DeclareConstructor( "ResidueClassUnionCons",
+                    [ IsResidueClassUnion, IsRowModule,
                       IsList, IsList, IsList ] );
 DeclareGlobalFunction( "ResidueClassUnion" );
 DeclareGlobalFunction( "ResidueClassUnionNC" );
@@ -156,9 +227,11 @@ DeclareSynonym( "Mod", Modulus );
 ##
 #O  Residues( <U> ) . . . . . . . . . . . . . residues of residue class union
 #O  Residue( <cl> ) . . . . . . . . . . . . . . . .  residue of residue class
+#O  Classes( <U> )  . . . . . . . residue classes forming residue class union
 ##
 DeclareOperation( "Residues", [ IsResidueClassUnion ] );
 DeclareOperation( "Residue", [ IsResidueClass ] );
+DeclareOperation( "Classes", [ IsResidueClassUnion ] );
 
 #############################################################################
 ##

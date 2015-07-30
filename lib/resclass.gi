@@ -38,6 +38,10 @@ BindGlobal( "IsResidueClassOfGFqx",
 
 BindGlobal( "IsResidueClassUnionInResidueListRep",
              IsResidueClassUnion and IsResidueClassUnionResidueListRep );
+BindGlobal( "IsResidueClassUnionInClassListRep",
+             IsResidueClassUnion and IsResidueClassUnionClassListRep );
+BindGlobal( "IsResidueClassUnionOfZInClassListRep",
+             IsResidueClassUnionOfZ and IsResidueClassUnionClassListRep );
 
 #############################################################################
 ##
@@ -235,6 +239,47 @@ BindGlobal( "AllGFqPolynomialsModDegree",
          MakeReadOnlyGlobal( "POLYNOMIAL_RESIDUE_CACHE" );
          return erg;
     fi;
+  end );
+
+# Difference r1(m1) \ r2(m2) of two residue classes;
+# the residue classes r1(m1) and r2(m2) are to be given as pairs
+# [r1,m1] and [r2,m2] of integers, and the output is a list of
+# residue classes represented in the same way.
+
+BindGlobal( "DIFFERENCE_OF_RESIDUE_CLASSES",
+
+  function ( cl1, cl2 )
+
+    local  cls, r1, m1, r2, m2, r3, m3, divs, d, p, r, inc, i;
+
+    r1 := cl1[1]; m1 := cl1[2];
+    r2 := cl2[1]; m2 := cl2[2];
+
+    if (r1-r2) mod Gcd(m1,m2) <> 0 then return cl1; fi; # disjoint
+    m3 := Lcm(m1,m2);
+    if m3 = m1 then return []; fi; # second cl. is a superset of first cl.
+    r3 := ChineseRem([m1,m2],[r1,r2]);
+
+    divs := []; d := 1;
+    for p in Factors(m3/m1) do 
+      d := d * p;
+      Add(divs,d);
+    od;
+    cls := [];
+    for i in [1..Length(divs)] do
+      d := divs[i];
+      if i > 1 then inc := divs[i-1]; else inc := 1; fi;
+      for r in [inc,2*inc..d-inc] do
+        Add(cls,[r,d]);
+      od;
+    od;
+    for i in [1..Length(cls)] do # get moduli and residues right
+      cls[i][2] := cls[i][2] * m1;
+      cls[i][1] := (cls[i][1] * m1 + r3) mod cls[i][2];
+    od;
+    SortParallel( List( cls, Reversed ), cls );
+
+    return cls;
   end );
 
 #############################################################################
@@ -584,6 +629,113 @@ InstallMethod( ResidueClassUnionCons,
 
 #############################################################################
 ##
+#M  ResidueClassUnionCons( <filter>, <R>, <cls>, <included>, <excluded> )
+##
+InstallMethod( ResidueClassUnionCons,
+               "class list rep., for Z (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionOfZInClassListRep,
+                             IsIntegers, IsList, IsList, IsList ], 0,
+
+  function ( filter, R, cls, included, excluded )
+
+    local  ReduceResidueClassUnion, result, m, both, rep, pos;
+
+    ReduceResidueClassUnion := function ( U )
+
+      local  R, cls, clsRed, m, ndpair, d1, d2, density, divs, d, i,
+             partdens, cl, int, res, r, both;
+
+      cls := U!.cls;
+      cls := Set( cls, c -> [ c[1] mod c[2], AbsInt( c[2] ) ] );
+      SortParallel( List( cls, Reversed ), cls );
+      repeat
+        ndpair := First(Combinations(cls,2),
+                        c->(c[1][1]-c[2][1]) mod Gcd(c[1][2],c[2][2]) = 0);
+        if ndpair <> fail then
+          cls := Difference(cls,ndpair);
+          d1 := DIFFERENCE_OF_RESIDUE_CLASSES(ndpair[1],ndpair[2]);
+          d2 := DIFFERENCE_OF_RESIDUE_CLASSES(ndpair[2],ndpair[1]);
+          if Length(d1) <= Length(d2) then
+            Append(cls,d1); Add(cls,ndpair[2]);
+          else
+            Append(cls,d2); Add(cls,ndpair[1]);
+          fi;
+        fi;
+      until ndpair = fail;
+      SortParallel( List( cls, Reversed ), cls );
+
+      clsRed := [];
+      m := U!.m;
+      divs := DivisorsInt(m);
+      density := Sum(List(cls,cl->1/cl[2]));
+      for d in divs do
+        if 1/d > density then continue; fi;
+        res := Set(cls,cl->cl[1] mod d);
+        for r in res do
+          partdens := 0;
+          for cl in cls do
+            if (r - cl[1]) mod Gcd(d,cl[2]) = 0
+            then partdens := partdens + 1/Lcm(d,cl[2]); fi;
+          od;
+          if partdens = 1/d then
+            cls := Concatenation(List(cls,cl->DIFFERENCE_OF_RESIDUE_CLASSES(
+                     cl,[r,d])));
+            if cls = [] then break; fi;
+            SortParallel( List( cls, Reversed ), cls );
+            Add(clsRed,[r,d]);
+          elif partdens > 1/d then Error("internal error"); fi;
+        od;
+        if cls = [] then break; fi;
+      od;
+
+      m := Lcm(List(clsRed,c->c[2]));
+      SortParallel( List( clsRed, Reversed ), clsRed );
+      U!.cls := Immutable(clsRed); U!.m := m;
+      both := Intersection( U!.included, U!.excluded );
+      U!.included := Difference( U!.included, both );
+      U!.excluded := Difference( U!.excluded, both );
+      U!.included := Immutable(Set(Filtered(U!.included,
+                       n -> not ForAny(clsRed,c -> n mod c[2] = c[1]))));
+      U!.excluded := Immutable(Set(Filtered(U!.excluded,
+                       n -> ForAny(clsRed,c -> n mod c[2] = c[1]))));
+      if clsRed = [] then U := U!.included; fi;
+    end;
+
+    if not IsIntegers(R) then TryNextMethod(); fi;
+    if cls = [] then return Difference(included,excluded); fi;
+
+    result := Objectify( NewType( ResidueClassUnionsFamily( Integers ),
+                                  IsResidueClassUnionOfZ and
+                                  IsResidueClassUnionClassListRep ),
+                         rec( cls := cls, m := Lcm(List(cls,c->c[2])),
+                              included := included, excluded := excluded ) );
+    SetSize( result, infinity ); SetIsFinite( result, false );
+    SetIsEmpty( result, false );
+
+    if ValueOption("RCU_AlreadyReduced") <> true then
+      ReduceResidueClassUnion( result );
+      cls := result!.cls; m := result!.m;
+      included := result!.included; excluded := cls!.excluded;
+    fi;
+
+    rep := cls[1][1]; pos := 1;
+    while rep in excluded do
+      pos := pos + 1;
+      rep := cls[pos mod Length(cls) + 1][1]
+           + Int(pos/Length(cls)) * cls[pos mod Length(cls) + 1][2];
+    od;
+    if   included <> [ ] and rep > Minimum( included ) 
+    then rep := Minimum( included ); fi;
+    SetRepresentative( result, rep );
+
+    if Length(result!.cls) = 1 then SetIsResidueClass(result,true); fi;
+    if result!.m = 1 and result!.cls = [[0,1]]
+      and [result!.included,result!.excluded] = [[],[]]
+    then return Integers; else return result; fi;
+  end );
+
+#############################################################################
+##
 #M  ResidueClassUnionCons( <filter>, Integers^2,
 ##                         <L>, <r>, <included>, <excluded> )
 ##
@@ -674,21 +826,33 @@ InstallOtherMethod( ResidueClassUnionCons,
 ##
 #F  ResidueClassUnion( <R>, <m>, <r> ) . . . . . . . union of residue classes
 #F  ResidueClassUnion( <R>, <m>, <r>, <included>, <excluded> )
+#F  ResidueClassUnion( <R>, <cls> )
+#F  ResidueClassUnion( <R>, <cls>, <included>, <excluded> )
 ##
 InstallGlobalFunction( ResidueClassUnion,
 
   function ( arg )
 
-    if not (     Length(arg) in [3,5]
-             and (    IsRing(arg[1]) and arg[2] in arg[1]
-                   or     IsRowModule(arg[1]) and IsMatrix(arg[2])
-                      and IsSubset(arg[1],arg[2])
-                      and not IsZero(DeterminantMat(arg[2])) )
-             and IsList(arg[3]) and IsSubset(arg[1],arg[3])
-             and (    Length(arg) = 3 or IsList(arg[4]) and IsList(arg[5])
-                  and IsSubset(arg[1],arg[4]) and IsSubset(arg[1],arg[5])) )
+    if    not (     Length(arg) in [3,5]
+                and (    IsRing(arg[1]) and arg[2] in arg[1]
+                      or     IsRowModule(arg[1]) and IsMatrix(arg[2])
+                         and IsSubset(arg[1],arg[2])
+                         and not IsZero(DeterminantMat(arg[2])) )
+                and IsList(arg[3]) and IsSubset(arg[1],arg[3])
+                and (    Length(arg) = 3 or IsList(arg[4]) and IsList(arg[5])
+                     and IsSubset(arg[1],arg[4])
+                     and IsSubset(arg[1],arg[5])) )
+      and not (     Length(arg) in [2,4]
+                and (IsRing(arg[1]) and IsList(arg[2])
+                     and ForAll(arg[2],l->IsList(l) and Length(l) = 2
+                                and IsSubset(arg[1],l) and not IsZero(l[2])))
+                and (    Length(arg) = 2 or IsList(arg[3]) and IsList(arg[4])
+                     and IsSubset(arg[1],arg[3])
+                     and IsSubset(arg[1],arg[4])) )
     then Error("usage: ResidueClassUnion( <R>, <m>, <r> [, <included>",
-               ", <excluded>] ),\nfor details see manual.\n"); return fail;
+               ", <excluded> ] )\nor ResidueClassUnion( <R>, <cls> ",
+               "[, <included>, <excluded> ] ), for details see manual.\n");
+         return fail;
     fi;
     return CallFuncList( ResidueClassUnionNC, arg );
   end );
@@ -697,19 +861,30 @@ InstallGlobalFunction( ResidueClassUnion,
 ##
 #F  ResidueClassUnionNC( <R>, <m>, <r> ) . . . . . . union of residue classes
 #F  ResidueClassUnionNC( <R>, <m>, <r>, <included>, <excluded> )
+#F  ResidueClassUnionNC( <R>, <cls> )
+#F  ResidueClassUnionNC( <R>, <cls>, <included>, <excluded> )
 ##
 InstallGlobalFunction( ResidueClassUnionNC,
 
   function ( arg )
 
-    local  R, m, r, included, excluded;
+    local  R, m, r, cls, included, excluded;
 
-    R := arg[1]; m := arg[2]; r := Set(arg[3]);
-    if   Length(arg) = 5
-    then included := Set(arg[4]); excluded := Set(arg[5]);
-    else included := [];          excluded := []; fi;
-    return ResidueClassUnionCons( IsResidueClassUnion, R, m, r,
-                                  included, excluded );
+    if Length(arg) in [2,4] then
+      R := arg[1]; cls := arg[2];
+      if   Length(arg) = 4
+      then included := Set(arg[3]); excluded := Set(arg[4]);
+      else included := [];          excluded := []; fi;
+      return ResidueClassUnionCons( IsResidueClassUnion, R, cls,
+                                    included, excluded );
+    elif Length(arg) in [3,5] then
+      R := arg[1]; m := arg[2]; r := Set(arg[3]);
+      if   Length(arg) = 5
+      then included := Set(arg[4]); excluded := Set(arg[5]);
+      else included := [];          excluded := []; fi;
+      return ResidueClassUnionCons( IsResidueClassUnion, R, m, r,
+                                    included, excluded );
+    fi;
   end );
 
 #############################################################################
@@ -803,8 +978,11 @@ InstallMethod( IsResidueClass,
 
   function ( obj )
     if IsRing(obj) then return true; fi;
-    if    IsResidueClassUnion(obj) and Length(Residues(obj)) = 1
-      and IncludedElements(obj) = [] and ExcludedElements(obj) = []
+    if    IsResidueClassUnionInResidueListRep(obj)
+      and Length(obj!.r) = 1 and obj!.included = [] and obj!.excluded = []
+    then return true; fi;
+    if    IsResidueClassUnionInClassListRep(obj)
+      and Length(obj!.cls) = 1 and obj!.included = [] and obj!.excluded = []
     then return true; fi;
     return false;
   end );
@@ -825,6 +1003,16 @@ InstallMethod( ExtRepOfObj,
                U -> [ Modulus( U ), ShallowCopy( Residues( U ) ),
                       ShallowCopy( IncludedElements( U ) ),
                       ShallowCopy( ExcludedElements( U ) ) ] );
+
+#############################################################################
+##
+#M  ExtRepOfObj( <U> ) . . . . . . . . . . . . . . . for residue class unions
+##
+InstallMethod( ExtRepOfObj,
+               "for residue class unions in standard rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> [U!.m, ShallowCopy( U!.r ),
+                     ShallowCopy(U!.included), ShallowCopy(U!.excluded)] );
 
 #############################################################################
 ##
@@ -860,8 +1048,12 @@ InstallMethod( ObjByExtRep,
 ##  not contain, the method for that case silently assumes that these are
 ##  supposed to be integers, and returns 0.
 ##
-InstallMethod( Modulus, "for residue class unions (ResClasses)", true,
+InstallMethod( Modulus,
+               "for residue class unions, standard rep. (ResClasses)", true,
                [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.m );
+InstallMethod( Modulus,
+               "for residue class unions, sparse rep. (ResClasses)", true,
+               [ IsResidueClassUnionInClassListRep ], 0, U -> U!.m );
 InstallOtherMethod( Modulus, "for the base ring (ResClasses)", true,
                     [ IsRing ], 0, One );
 InstallOtherMethod( Modulus, "for the base module (ResClasses)", true,
@@ -889,6 +1081,24 @@ InstallOtherMethod( Residue, "for the base module (ResClasses)", true,
 #M  Residues( <R> ) . . . . . . . . . . . . . . . for the base ring / -module
 #M  Residues( <l> ) . . . . . . . . . . . . . . . . . . . . . for finite sets
 ##
+InstallMethod( Residues,
+               "for residue class unions of Z in sparse rep (ResClasses)",
+               true, [ IsResidueClassUnionOfZInClassListRep ], 0,
+
+  function ( U )
+
+    local  res, cls, m, cl, i;
+
+    cls := U!.cls; m := U!.m; res := [];
+    for cl in cls do
+      for i in [0..m/cl[2]-1] do
+        Add(res,i*cl[2]+cl[1]);
+      od;
+    od;
+    res := Set(res);
+    return res;
+  end );
+
 InstallMethod( Residues, "for residue class unions (ResClasses)", true,
                [ IsResidueClassUnionInResidueListRep ], 0, U -> U!.r );
 InstallOtherMethod( Residues, "for the base ring (ResClasses)", true,
@@ -900,12 +1110,26 @@ InstallOtherMethod( Residues, "for finite sets (ResClasses)", true,
 
 #############################################################################
 ##
+#M  Classes( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
+##
+InstallMethod( Classes, "for residue class unions, aparse rep. (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0, U -> U!.cls );
+InstallMethod( Classes, "for residue class unions, std. rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> List(AsUnionOfFewClasses(U),
+                         cl->[Residue(cl),Modulus(cl)]) );
+
+#############################################################################
+##
 #M  IncludedElements( <U> ) . . . . . . . . . . . .  for residue class unions
 #M  IncludedElements( <R> ) . . . . . . . . . . . for the base ring / -module
 #M  IncludedElements( <l> ) . . . . . . . . . . . . . . . . . for finite sets
 ##
 InstallMethod( IncludedElements, "for residue class unions (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> U!.included );
+InstallMethod( IncludedElements, "for residue class unions (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0,
                U -> U!.included );
 InstallOtherMethod( IncludedElements, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ ] );
@@ -923,12 +1147,37 @@ InstallOtherMethod( IncludedElements, "for finite sets (ResClasses)",
 InstallMethod( ExcludedElements, "for residue class unions (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0,
                U -> U!.excluded );
+InstallMethod( ExcludedElements, "for residue class unions (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0,
+               U -> U!.excluded );
 InstallOtherMethod( ExcludedElements, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ ] );
 InstallOtherMethod( ExcludedElements, "for the base module (ResClasses)",
                     true, [ IsRowModule ], 0, R -> [ ] );
 InstallOtherMethod( ExcludedElements, "for finite sets (ResClasses)",
                     true, [ IsList ], 0, l -> [ ] );
+
+#############################################################################
+##
+#M  SparseRep( <U> ) . . . conversion to class list ("sparse") representation
+##
+InstallMethod( SparseRep, "for residue class unions, std. rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
+               U -> ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),
+                                        List(AsUnionOfFewClasses(U),
+                                             cl->[Residue(cl),Modulus(cl)]),
+                                        U!.included,U!.excluded) );
+
+#############################################################################
+##
+#M  StandardRep( <U> ) . . . . . conversion to residue list ("standard") rep.
+##
+InstallMethod( StandardRep,
+               "for residue class unions in sparse rep. (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0,
+               U -> ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),
+                                        Modulus(U),Residues(U),
+                                        U!.included,U!.excluded) );
 
 #############################################################################
 ##
@@ -941,12 +1190,24 @@ InstallOtherMethod( ExcludedElements, "for finite sets (ResClasses)",
 #M  \=( <U1>, <U2> ) . . . . . . . . . . . . . . . . for residue class unions
 ##
 InstallMethod( \=,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
+               "for two residue class unions in standard rep. (ResClasses)",
+               IsIdenticalObj,
                [ IsResidueClassUnionInResidueListRep,
                  IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U1, U2 )
     return U1!.m = U2!.m and U1!.r = U2!.r
+           and U1!.included = U2!.included and U1!.excluded = U2!.excluded;
+  end );
+
+InstallMethod( \=,
+               "for two residue class unions in sparse rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+
+  function ( U1, U2 )
+    return U1!.m = U2!.m and U1!.cls = U2!.cls
            and U1!.included = U2!.included and U1!.excluded = U2!.excluded;
   end );
 
@@ -991,7 +1252,8 @@ InstallMethod( \=,
 ##  sorted lists and sets of these objects.
 ##
 InstallMethod( \<,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
+               "for two residue class unions in standard rep. (ResClasses)",
+               IsIdenticalObj,
                [ IsResidueClassUnionInResidueListRep,
                  IsResidueClassUnionInResidueListRep ], 0,
 
@@ -1003,6 +1265,46 @@ InstallMethod( \<,
     elif U1!.included <> U2!.included
     then return U1!.included < U2!.included;
     else return U1!.excluded < U2!.excluded; fi;
+  end );
+
+InstallMethod( \<,
+               "for two residue class unions in sparse rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+
+  function ( U1, U2 )
+    if   U1!.m <> U2!.m then return U1!.m < U2!.m;
+    elif List(U1!.cls,cl->cl[2]) <> List(U2!.cls,cl->cl[2])
+    then return List(U1!.cls,cl->cl[2]) < List(U2!.cls,cl->cl[2]);
+    elif U1!.cls <> U2!.cls then return U1!.cls < U2!.cls;
+    elif U1!.included <> U2!.included
+    then return U1!.included < U2!.included;
+    else return U1!.excluded < U2!.excluded; fi;
+  end );
+
+InstallMethod( \<,
+               "for two residue class unions, mixed rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+
+  function ( U1, U2 )
+    Error("residue class unions in different representations ",
+          "cannot be sorted\n-- convert to same representation first");
+    return fail;
+  end );
+
+InstallMethod( \<,
+               "for two residue class unions, mixed rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
+
+  function ( U1, U2 )
+    Error("residue class unions in different representations ",
+          "cannot be sorted\n-- convert to same representation first");
+    return fail;
   end );
 
 #############################################################################
@@ -1052,7 +1354,8 @@ InstallMethod( \<, "for a residue class union and a list (ResClasses)",
 #M  \in( <n>, <U> ) . . . . . .  for a ring element and a residue class union
 ##
 InstallMethod( \in,
-               "for a ring element and a residue class union (ResClasses)",
+               Concatenation("for a ring element and a residue class union ",
+                             "in standard rep. (ResClasses)"),
                ReturnTrue,
                [ IsObject, IsResidueClassUnionInResidueListRep ], 0,
 
@@ -1061,6 +1364,19 @@ InstallMethod( \in,
     if   n in U!.included then return true;
     elif n in U!.excluded then return false;
     else return n mod U!.m in U!.r; fi;
+  end );
+
+InstallMethod( \in,
+               Concatenation("for a ring element and a residue class union ",
+                             "in sparse rep. (ResClasses)"),
+               ReturnTrue,
+               [ IsObject, IsResidueClassUnionInClassListRep ], 0,
+
+  function ( n, U )
+    if not n in UnderlyingRing(FamilyObj(U)) then return false; fi;
+    if   n in U!.included then return true;
+    elif n in U!.excluded then return false;
+    else return ForAny(U!.cls,cl->n mod cl[2] = cl[1]); fi;
   end );
 
 #############################################################################
@@ -1075,11 +1391,17 @@ InstallMethod( \in,
 #M  Density( <R> ) . . . . . . . . . . . .  for the whole base ring / -module
 #M  Density( <l> ) . . . . . . . . . . . . . . . . . . . . .  for finite sets
 ##
-InstallMethod( Density, "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnion ], 0,
+InstallMethod( Density,
+               "for residue class unions in standard rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
                U -> Length(Residues(U))/
                     NumberOfResidues(UnderlyingRing(FamilyObj(U)),
                                      Modulus(U)) );
+InstallMethod( Density,
+               "for residue class unions in sparse rep. (ResClasses)",
+               true, [ IsResidueClassUnionOfZInClassListRep ], 0,
+               U -> Sum(List(U!.cls,cl->1/cl[2])) );
+
 InstallOtherMethod( Density, "for the whole base ring (ResClasses)", true,
                     [ IsRing ], 0, R -> 1 );
 InstallOtherMethod( Density, "for the whole base module (ResClasses)", true,
@@ -1107,10 +1429,11 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
-#M  IsSubset( <U1>, <U2> ) . . . . . . . . . . . . . for residue class unions
+#M  IsSubset( <U1>, <U2> ) . .  for two residue class unions in standard rep.
 ##
 InstallMethod( IsSubset,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
+               "for two residue class unions in standard rep. (ResClasses)",
+               IsIdenticalObj,
                [ IsResidueClassUnionInResidueListRep,
                  IsResidueClassUnionInResidueListRep ], 0,
 
@@ -1130,6 +1453,43 @@ InstallMethod( IsSubset,
     allres2 := Filtered(allres,n->n mod m2 in r2);
     return IsSubset(allres1,allres2);
   end );
+
+#############################################################################
+##
+#M  IsSubset( <U1>, <U2> ) . . .  for two residue class unions in sparse rep.
+##
+InstallMethod( IsSubset,
+               "for two residue class unions in sparse rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+
+  function ( U1, U2 )
+
+    if   not IsZero(U2!.m mod U1!.m) or Density(U2) > Density(U1)
+    then return false; fi; 
+    if   not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
+    then return false; fi;
+
+    return Difference(U2,U1) = [];
+  end );
+
+#############################################################################
+##
+#M  IsSubset( <U1>, <U2> ) . . for two residue class unions in different rep.
+##
+InstallMethod( IsSubset,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+               function ( U1, U2 ) return IsSubset(SparseRep(U1),U2); end );
+InstallMethod( IsSubset,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
+               function ( U1, U2 ) return IsSubset(U1,SparseRep(U2)); end );
 
 #############################################################################
 ##
@@ -1170,10 +1530,11 @@ InstallMethod( IsSubset, "for Z_pi and Rationals (ResClasses)",
 
 #############################################################################
 ##
-#M  Union2( <U1>, <U2> ) . . . . . . . . . . . . . . for residue class unions
+#M  Union2( <U1>, <U2> ) . . . . .  for residue class unions in standard rep.
 ##
 InstallMethod( Union2,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
+               "for two residue class unions in standard rep. (ResClasses)",
+               IsIdenticalObj,
                [ IsResidueClassUnionInResidueListRep,
                  IsResidueClassUnionInResidueListRep ], 0,
 
@@ -1203,6 +1564,45 @@ InstallMethod( Union2,
 
 #############################################################################
 ##
+#M  Union2( <U1>, <U2> ) . . . . . .  for residue class unions in sparse rep.
+##
+InstallMethod( Union2,
+               "for two residue class unions in sparse rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+
+  function ( U1, U2 )
+
+    local  R, m1, m2, m, r1, r2, r, included, excluded,
+           r1exp, r2exp, allres;
+
+    R := UnderlyingRing(FamilyObj(U1));
+    included := Union(U1!.included,U2!.included);
+    excluded := Difference(Union(Difference(U1!.excluded,U2),
+                                 Difference(U2!.excluded,U1)),included);
+    return ResidueClassUnionNC(R,Union(U1!.cls,U2!.cls),included,excluded);
+  end );
+
+#############################################################################
+##
+#M  Union2( <U1>, <U2> ) . . . . . for residue class unions in different rep.
+##
+InstallMethod( Union2,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+               function ( U1, U2 ) return Union2(SparseRep(U1),U2); end );
+InstallMethod( Union2,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
+               function ( U1, U2 ) return Union2(U1,SparseRep(U2)); end );
+
+#############################################################################
+##
 #M  Union2( <U>, <S> ) . . . . . . for a residue class union and a finite set
 ##
 InstallMethod( Union2,
@@ -1213,6 +1613,17 @@ InstallMethod( Union2,
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
     return ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),U!.m,U!.r,
+                               Union(U!.included,S),
+                               Difference(U!.excluded,S));
+  end );
+
+InstallMethod( Union2,
+               "for a residue class union and a finite set (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInClassListRep, IsList ], 0,
+
+  function ( U, S )
+    if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
+    return ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),U!.cls,
                                Union(U!.included,S),
                                Difference(U!.excluded,S));
   end );
@@ -1298,10 +1709,11 @@ InstallMethod( Union2,
 
 #############################################################################
 ##
-#M  Intersection2( <U1>, <U2> ) . . . . . . . . . .  for residue class unions
+#M  Intersection2( <U1>, <U2> ) . . for residue class unions in standard rep.
 ##
 InstallMethod( Intersection2,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
+               "for two residue class unions in standard rep. (ResClasses)",
+               IsIdenticalObj,
                [ IsResidueClassUnionInResidueListRep,
                  IsResidueClassUnionInResidueListRep ], 0,
 
@@ -1343,6 +1755,62 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
+#M  Intersection2( <U1>, <U2> )  for residue class unions of Z in sparse rep.
+##
+InstallMethod( Intersection2,
+               "for residue class unions of Z in sparse rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionOfZInClassListRep,
+                 IsResidueClassUnionOfZInClassListRep ], 0,
+
+  function ( U1, U2 )
+
+    local  cls1, cls2, cls, cl1, cl2, cl, included, excluded;
+
+    cls1 := U1!.cls; cls2 := U2!.cls; cls := [];
+
+    for cl1 in cls1 do
+      for cl2 in cls2 do
+        if (cl1[1]-cl2[1]) mod Gcd(cl1[2],cl2[2]) = 0 then
+          cl := [ChineseRem([cl1[2],cl2[2]],[cl1[1],cl2[1]]),
+                 Lcm(cl1[2],cl2[2])];
+          Add(cls,cl);
+        fi;
+      od;
+    od;
+
+    included := Union(U1!.included,U2!.included);
+    included := Filtered(included,n -> n in U1!.included and n in U2
+                                    or n in U2!.included and n in U1);
+    included := Union(included,Intersection(U1!.included,U2!.included));
+    excluded := Union(U1!.excluded,U2!.excluded);
+
+    return ResidueClassUnionNC(Integers,cls,included,excluded);
+  end );
+
+#############################################################################
+##
+#M  Intersection2( <U1>, <U2> ) .  for residue class unions in different rep.
+##
+InstallMethod( Intersection2,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+               function ( U1, U2 )
+                 return Intersection2(SparseRep(U1),U2);
+               end );
+InstallMethod( Intersection2,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
+               function ( U1, U2 )
+                 return Intersection2(U1,SparseRep(U2));
+               end );
+
+#############################################################################
+##
 #M  Intersection2( <U>, <S> ) . .  for a residue class union and a finite set
 ##
 InstallMethod( Intersection2,
@@ -1354,6 +1822,18 @@ InstallMethod( Intersection2,
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
     return Filtered( Set(S), n -> n in U!.included
                      or ( n mod U!.m in U!.r and not n in U!.excluded ) );
+  end );
+
+InstallMethod( Intersection2,
+               "for a residue class union and a finite set (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInClassListRep, IsList ],
+               0,
+
+  function ( U, S )
+    if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
+    return Filtered( Set(S), n -> n in U!.included
+                     or ( ForAny(U!.cls,cl->n mod cl[2] = cl[1])
+                          and not n in U!.excluded ) );
   end );
 
 #############################################################################
@@ -1417,10 +1897,11 @@ InstallMethod( Intersection2, "for the empty set and a set (ResClasses)",
 
 #############################################################################
 ##
-#M  Difference( <U1>, <U2> ) . . . . . . . . . . . . for residue class unions
+#M  Difference( <U1>, <U2> ) . . .  for residue class unions in standard rep.
 ##
 InstallMethod( Difference,
-               "for two residue class unions (ResClasses)", IsIdenticalObj,
+               "for two residue class unions in standard rep. (ResClasses)",
+               IsIdenticalObj,
                [ IsResidueClassUnionInResidueListRep,
                  IsResidueClassUnionInResidueListRep ], 0,
 
@@ -1450,6 +1931,62 @@ InstallMethod( Difference,
 
 #############################################################################
 ##
+#M  Difference( <U1>, <U2> ) . . for residue class unions of Z in sparse rep.
+##
+InstallMethod( Difference,
+               "for residue class unions of Z in sparse rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionOfZInClassListRep,
+                 IsResidueClassUnionOfZInClassListRep ], 0,
+
+  function ( U1, U2 )
+
+    local  cls1, cls2, cl, cls, included, excluded, i;
+
+    cls1 := U1!.cls; cls2 := U2!.cls; cls := [];
+
+    cls := ShallowCopy(cls1);
+    for cl in cls2 do
+      for i in [1..Length(cls)] do
+        cls[i] := DIFFERENCE_OF_RESIDUE_CLASSES(cls[i],cl);
+      od;
+      cls := Union(cls);
+    od;
+
+    included := Union(U1!.included,U2!.excluded);
+    included := Filtered(included,
+                         n -> n in U1!.included
+                          and not ForAny(cls2,cl->n mod cl[2] = cl[1])
+                           or n in U2!.excluded
+                          and ForAny(cls1,cl->n mod cl[2] = cl[1]));
+    excluded := Union(U1!.excluded,U2!.included);
+
+    return ResidueClassUnionNC(Integers,cls,included,excluded);
+  end );
+
+#############################################################################
+##
+#M  Difference( <U1>, <U2> ) . . . for residue class unions in different rep.
+##
+InstallMethod( Difference,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+               function ( U1, U2 )
+                 return Difference(SparseRep(U1),U2);
+               end );
+InstallMethod( Difference,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
+               function ( U1, U2 )
+                 return Difference(U1,SparseRep(U2));
+               end );
+
+#############################################################################
+##
 #M  Difference( <U>, <S> ) . . . . for a residue class union and a finite set
 ##
 InstallMethod( Difference,
@@ -1460,6 +1997,18 @@ InstallMethod( Difference,
   function ( U, S )
     if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
     return ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),U!.m,U!.r,
+                               Difference(U!.included,S),
+                               Union(U!.excluded,S));
+  end );
+
+InstallMethod( Difference,
+               "for a residue class union and a finite set (ResClasses)",
+               ReturnTrue, [ IsResidueClassUnionInClassListRep, IsList ],
+               100,
+
+  function ( U, S )
+    if not IsSubset(UnderlyingRing(FamilyObj(U)),S) then TryNextMethod(); fi;
+    return ResidueClassUnionNC(UnderlyingRing(FamilyObj(U)),U!.cls,
                                Difference(U!.included,S),
                                Union(U!.excluded,S));
   end );
@@ -1482,16 +2031,35 @@ InstallMethod( Difference,
 ##
 InstallMethod( Difference,
                "for the base ring and a residue class union (ResClasses)",
-               ReturnTrue, [ IsDomain, IsResidueClassUnion ], 0,
+               ReturnTrue,
+               [ IsDomain, IsResidueClassUnionInResidueListRep ], 0,
+
+  function ( R, U )
+    if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
+    return ResidueClassUnion(R,U!.m,Difference(AllResidues(R,U!.m),U!.r),
+                             U!.excluded,U!.included);
+  end );
+
+InstallMethod( Difference,
+               "for Z and a residue class union in sparse rep. (ResClasses)",
+               ReturnTrue,
+               [ IsIntegers, IsResidueClassUnionOfZInClassListRep ], 0,
 
   function ( R, U )
 
-    local  m;
+    local  cls1, cls, cl, i;
 
-    m := Modulus(U);
-    if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
-    return ResidueClassUnion(R,m,Difference(AllResidues(R,m),Residues(U)),
-                             ExcludedElements(U),IncludedElements(U));
+    cls1 := U!.cls; cls := [];
+
+    cls := [[0,1]];
+    for cl in cls1 do
+      for i in [1..Length(cls)] do
+        cls[i] := DIFFERENCE_OF_RESIDUE_CLASSES(cls[i],cl);
+      od;
+      cls := Union(cls);
+    od;
+
+    return ResidueClassUnionNC(Integers,cls,U!.excluded,U!.included);
   end );
 
 #############################################################################
@@ -1589,11 +2157,13 @@ InstallGlobalFunction( ResidueClassesIntersectionType,
 
 #############################################################################
 ##
-#M  \+( <U>, <x> ) . . . . . . . for a residue class union and a ring element
+#M  \+( <U>, <x> )  for residue class union in standard rep. and ring element
 ##
 InstallOtherMethod( \+,
-                    "for residue class union and ring element (ResClasses)",
-                    ReturnTrue, [ IsResidueClassUnion, IsObject ], 0,
+                    Concatenation("for residue class union in standard rep.",
+                                  " and ring element (ResClasses)"),
+                    ReturnTrue,
+                    [ IsResidueClassUnionInResidueListRep, IsObject ], 0,
 
   function ( U, x )
 
@@ -1605,10 +2175,34 @@ InstallOtherMethod( \+,
       then x := x * One(R); else TryNextMethod(); fi;
     fi;
     if not x in R then TryNextMethod(); fi;
-    return ResidueClassUnion(R,Modulus(U),
-                             List(Residues(U),r -> (r + x) mod Modulus(U)),
-                             List(IncludedElements(U),el->el+x),
-                             List(ExcludedElements(U),el->el+x));
+    return ResidueClassUnion(R,U!.m,List(U!.r,r->(r+x) mod U!.m),
+                             List(U!.included,el->el+x),
+                             List(U!.excluded,el->el+x));
+  end );
+
+#############################################################################
+##
+#M  \+( <U>, <x> ) .  for residue class union in sparse rep. and ring element
+##
+InstallOtherMethod( \+,
+                    Concatenation("for residue class union in sparse rep.",
+                                  " and ring element (ResClasses)"),
+                    ReturnTrue,
+                    [ IsResidueClassUnionInClassListRep, IsObject ], 0,
+
+  function ( U, x )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    if IsRing(R) and not x in R then
+      if   IsInt(x) or Characteristic(x) = Characteristic(R)
+      then x := x * One(R); else TryNextMethod(); fi;
+    fi;
+    if not x in R then TryNextMethod(); fi;
+    return ResidueClassUnion(R,List(U!.cls,cl->[(cl[1]+x) mod cl[2],cl[2]]),
+                             List(U!.included,el->el+x),
+                             List(U!.excluded,el->el+x));
   end );
 
 #############################################################################
@@ -1657,13 +2251,20 @@ InstallOtherMethod( \+,
 #M  AdditiveInverseOp( <U> ) . . . . . . . . . . . . for residue class unions
 ##
 InstallOtherMethod( AdditiveInverseOp,
-                    "for residue class unions (ResClasses)",
-                    true, [ IsResidueClassUnion ], 0,
+                    "for residue class unions in standard rep. (ResClasses)",
+                    true, [ IsResidueClassUnionInResidueListRep ], 0,
+  U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),U!.m,
+                         List(U!.r,r->(-r) mod U!.m),
+                         List(U!.included,el->-el),
+                         List(U!.excluded,el->-el)) );
 
-  U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),Modulus(U),
-                         List(Residues(U),r -> (-r) mod Modulus(U)),
-                         List(IncludedElements(U),el -> -el),
-                         List(ExcludedElements(U),el -> -el)) );
+InstallOtherMethod( AdditiveInverseOp,
+                    "for residue class unions in sparse rep. (ResClasses)",
+                    true, [ IsResidueClassUnionInClassListRep ], 0,
+  U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),U!.m,
+                         List(U!.cls,cl->[(-cl[1]) mod cl[2],cl[2]]),
+                         List(U!.included,el->-el),
+                         List(U!.excluded,el->-el)) );
 
 #############################################################################
 ##
@@ -1696,11 +2297,13 @@ InstallOtherMethod( AdditiveInverseOp,
 
 #############################################################################
 ##
-#M  \*( <U>, <x> ) . . . . . . . for a residue class union and a ring element
+#M  \*( <U>, <x> )  for residue class union in standard rep. and ring element
 ##
 InstallOtherMethod( \*,
-                    "for residue class union and ring element (ResClasses)",
-                    ReturnTrue, [ IsResidueClassUnion, IsRingElement ], 0,
+                    Concatenation("for residue class union in standard rep.",
+                                  " and ring element (ResClasses)"),
+                    ReturnTrue, [ IsResidueClassUnionInResidueListRep,
+                                  IsRingElement ], 0,
 
   function ( U, x )
 
@@ -1713,10 +2316,31 @@ InstallOtherMethod( \*,
     elif IsRowModule(R) and not x in LeftActingDomain(R)
     then TryNextMethod(); fi;
     if IsZero(x) then return [Zero(R)]; fi;
-    return ResidueClassUnionNC(R,Modulus(U)*x,
-                               List(Residues(U),r->r*x),
-                               List(IncludedElements(U),el->el*x),
-                               List(ExcludedElements(U),el->el*x));
+    return ResidueClassUnionNC(R,U!.m*x,U!.r*x,U!.included*x,U!.excluded*x);
+  end );
+
+#############################################################################
+##
+#M  \*( <U>, <x> ) .  for residue class union in sparse rep. and ring element
+##
+InstallOtherMethod( \*,
+                    Concatenation("for residue class union in sparse rep.",
+                                  " and ring element (ResClasses)"),
+                    ReturnTrue, [ IsResidueClassUnionInClassListRep,
+                                  IsRingElement ], 0,
+
+  function ( U, x )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    if IsRing(R) and not x in R then
+      if   IsInt(x) or Characteristic(x) = Characteristic(R)
+      then x := x * One(R); else TryNextMethod(); fi;
+    elif IsRowModule(R) and not x in LeftActingDomain(R)
+    then TryNextMethod(); fi;
+    if IsZero(x) then return [Zero(R)]; fi;
+    return ResidueClassUnionNC(R,U!.cls*x,U!.included*x,U!.excluded*x);
   end );
 
 #############################################################################
@@ -1835,23 +2459,25 @@ InstallOtherMethod( \*,
 
 #############################################################################
 ##
-#M  \/( <U>, <x> ) . . . . . . . for a residue class union and a ring element
+#M  \/( <U>, <x> )  for residue class union in standard rep. and ring element
 ##
 InstallOtherMethod( \/,
-                    "for residue class union and ring element (ResClasses)",
-                    ReturnTrue, [ IsResidueClassUnion, IsRingElement ], 0,
+                    Concatenation("for residue class union in standard rep.",
+                                  " and ring element (ResClasses)"),
+                    ReturnTrue, [ IsResidueClassUnionInResidueListRep,
+                                  IsRingElement ], 0,
 
   function ( U, x )
 
     local  R, S1, S2, m, quot;
 
-    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U);
+    R := UnderlyingRing(FamilyObj(U)); m := U!.m;
 
     if   IsRing(R)
     then S1 := R; S2 := R;
     elif IsRowModule(R)
-    then if Residues(U) = [] then
-           quot := IncludedElements(U)/x;
+    then if U!.r = [] then
+           quot := U!.included/x;
            if   IsSubset(R,quot)
            then return ResidueClassUnion(R,m,[],quot,[]);
            else TryNextMethod(); fi;
@@ -1861,13 +2487,32 @@ InstallOtherMethod( \/,
     fi;
 
     if not x in S1 or not m/x in S2
-       or not ForAll(Residues(U),r->r/x in R)
-       or not ForAll(IncludedElements(U),el->el/x in R) 
+       or not ForAll(U!.r,r->r/x in R)
+       or not ForAll(U!.included,el->el/x in R) 
     then TryNextMethod(); fi;
 
-    return ResidueClassUnion(R,m/x,List(Residues(U),r->r/x),
-                             List(IncludedElements(U),el->el/x),
-                             List(ExcludedElements(U),el->el/x));
+    return ResidueClassUnion(R,m/x,U!.r/x,U!.included/x,U!.excluded/x);
+  end );
+
+#############################################################################
+##
+#M  \/( <U>, <x> ) .  for residue class union of Z in sparse rep. and integer
+##
+InstallOtherMethod( \/,
+                    Concatenation("for residue class union of Z in sparse ",
+                                  "rep. and integer (ResClasses)"),
+                    ReturnTrue, [ IsResidueClassUnionOfZInClassListRep,
+                                  IsInt ], 0,
+
+  function ( U, x )
+
+    local  cls;
+
+    if x = 0 then Error("cannot divide by 0"); return fail; fi;
+    if not ForAll(U!.included/x,IsInt) then TryNextMethod(); fi;
+    cls := List(U!.cls,cl->cl/x);
+    if not ForAll(cls,cl->ForAll(cl,IsInt)) then TryNextMethod(); fi;
+    return ResidueClassUnion(Integers,cls,U!.included/x,U!.excluded/x);
   end );
 
 #############################################################################
@@ -2190,6 +2835,15 @@ InstallMethod( AsUnionOfFewClasses,
     od;
     return cls;
   end );
+
+#############################################################################
+##
+#M  AsUnionOfFewClasses( <U> ) . for residue class unions of Z in sparse rep.
+##
+InstallMethod( AsUnionOfFewClasses,
+               "for residue class unions of Z in sparse rep. (ResClasses)",
+               true, [ IsResidueClassUnionOfZInClassListRep ], 20,
+               U -> List(U!.cls,ResidueClass) );
 
 #############################################################################
 ##
@@ -2606,7 +3260,7 @@ InstallMethod( ViewObj,
   function ( U )
 
     local  PrintFiniteSet, RCString, str, pos, linelng,
-           R, m, r, included, excluded, n, cl, m_cl,
+           R, m, r, cls, included, excluded, numres, n,
            endval, short, bound, display;
 
     PrintFiniteSet := function ( S )
@@ -2644,12 +3298,16 @@ InstallMethod( ViewObj,
 
     short   := RESCLASSES_VIEWINGFORMAT = "short";
     display := ValueOption("RC_DISPLAY") = true;
-    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
-    included := IncludedElements(U); excluded := ExcludedElements(U);
-    if r = [] then View(included); return; fi;
-    if display or Length(r) <= 20 then cl := AsUnionOfFewClasses(U); fi;
-    if   (display or Length(r) > NumberOfResidues(R,m) - 20)
-      and Length(r) > NumberOfResidues(R,m)/2
+    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U);
+    if   IsResidueClassUnionInResidueListRep(U)
+    then r   := Residues(U); numres := Length(r);
+    else cls := AsUnionOfFewClasses(U);  numres := m * Density(U); fi;
+    included := IncludedElements(U);     excluded := ExcludedElements(U);
+    if numres = 0 then View(included); return; fi;
+    if  (display or numres <= 20) and not IsBound(cls)
+    then cls := AsUnionOfFewClasses(U); fi;
+    if   (display or numres > NumberOfResidues(R,m) - 20)
+      and numres > NumberOfResidues(R,m)/2
       and included = [] and excluded = []
       and Length(AsUnionOfFewClasses(Difference(R,U))) <= 3
     then
@@ -2658,19 +3316,19 @@ InstallMethod( ViewObj,
     fi;
     if   IsIntegers(R) or IsZ_pi(R)
     then bound := 5; elif short then bound := 3; else bound := 1; fi;
-    if display or (IsBound(cl) and Length(cl) <= bound) then
+    if display or (IsBound(cls) and Length(cls) <= bound) then
       if IsOne(m) then
         Print(RingToString(R)," \\ "); PrintFiniteSet(excluded);
       else
         if   not short and (included <> [] or excluded <> [])
         then Print("("); pos := 1; else pos := 0; fi;
         linelng := SizeScreen()[1];
-        if Length(r) > 1 then
+        if numres > 1 then
           if   not short
           then Print("Union of the residue classes "); pos := pos + 29; fi;
-          endval := Length(cl) - 1;
+          endval := Length(cls) - 1;
           for n in [1..endval] do
-            str := RCString(cl[n]);
+            str := RCString(cls[n]);
             Print(str); pos := pos + Length(str);
             if n < endval then
               if short then Print(" U "); pos := pos + 3;
@@ -2681,7 +3339,7 @@ InstallMethod( ViewObj,
           od;
           if short then Print(" U "); else Print(" and "); fi;
         elif not short then Print("The residue class "); fi;
-        Print(RCString(cl[Length(cl)]));
+        Print(RCString(cls[Length(cls)]));
         if not short then Print(" of ",RingToString(R)); fi;
         if included <> [] then
           if short then Print(" U "); else Print(") U "); fi;
@@ -2694,9 +3352,11 @@ InstallMethod( ViewObj,
         fi;
       fi;
     else
-      Print("<union of ",Length(r)," residue classes (mod ",
+      Print("<union of ",numres," residue classes (mod ",
             ModulusAsFormattedString(m),")");
       if not short then Print(" of ",RingToString(R)); fi;
+      if   IsBound(cls) and Length(cls) < numres
+      then Print(" (",Length(cls)," classes)"); fi;
       Print(">");
       if included <> [] then Print(" U ");  PrintFiniteSet(included); fi;
       if excluded <> [] then Print(" \\ "); PrintFiniteSet(excluded); fi;
@@ -2705,22 +3365,22 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
-#M  String( <U> ) . . . . . . . . . . . . . . . . .  for residue class unions
+#M  String( <U> ) . . . . . . . . . for residue class unions in standard rep.
 ##
 InstallMethod( String,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnion ], 0,
+               "for residue class unions in standard rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
 
   function ( U )
 
-    local  s, R, m, r, included, excluded;
+    local  s, R;
 
-    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
-    included := IncludedElements(U); excluded := ExcludedElements(U);
+    R := UnderlyingRing(FamilyObj(U));
     s := Concatenation("ResidueClassUnion( ",String(R),", ",
-                       String(Modulus(U)),", ",String(Residues(U)));
-    if   included <> [] or excluded <> []
-    then s := Concatenation(s,", ",String(included),", ",String(excluded));
+                       String(U!.m),", ",String(U!.r));
+    if   U!.included <> [] or U!.excluded <> []
+    then s := Concatenation(s,", ",String(U!.included),
+                              ", ",String(U!.excluded));
     fi;
     s := Concatenation(s," )");
     return s;
@@ -2728,21 +3388,61 @@ InstallMethod( String,
 
 #############################################################################
 ##
-#M  PrintObj( <U> ) . . . . . . . . . . . . . . . .  for residue class unions
+#M  String( <U> ) . . . . . . . . . . for residue class unions in sparse rep.
+##
+InstallMethod( String,
+               "for residue class unions in standard rep. (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0,
+
+  function ( U )
+
+    local  s, R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    s := Concatenation("ResidueClassUnion( ",String(R),", ",String(U!.cls));
+    if   U!.included <> [] or U!.excluded <> []
+    then s := Concatenation(s,", ",String(U!.included),
+                              ", ",String(U!.excluded));
+    fi;
+    s := Concatenation(s," )");
+    return s;
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <U> ) . . . . . . . . for residue class unions in standard rep.
 ##
 InstallMethod( PrintObj,
-               "for residue class unions (ResClasses)", true,
-               [ IsResidueClassUnion ], 0,
+               "for residue class unions in standard rep. (ResClasses)",
+               true, [ IsResidueClassUnionInResidueListRep ], 0,
 
  function ( U )
 
-    local  R, m, r, included, excluded, n;
+    local  R;
 
-    R := UnderlyingRing(FamilyObj(U)); m := Modulus(U); r := Residues(U);
-    included := IncludedElements(U); excluded := ExcludedElements(U);
-    Print("ResidueClassUnion( ",R,", ",Modulus(U),", ",Residues(U));
-    if   included <> [] or excluded <> []
-    then Print(", ",included,", ",excluded); fi;
+    R := UnderlyingRing(FamilyObj(U));
+    Print("ResidueClassUnion( ",R,", ",U!.m,", ",U!.r);
+    if   U!.included <> [] or U!.excluded <> []
+    then Print(", ",U!.included,", ",U!.excluded); fi;
+    Print(" )");
+  end );
+
+#############################################################################
+##
+#M  PrintObj( <U> ) . . . . . . . . . for residue class unions in sparse rep.
+##
+InstallMethod( PrintObj,
+               "for residue class unions in sparse rep. (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0,
+
+ function ( U )
+
+    local  R;
+
+    R := UnderlyingRing(FamilyObj(U));
+    Print("ResidueClassUnion( ",R,", ",U!.cls);
+    if   U!.included <> [] or U!.excluded <> []
+    then Print(", ",U!.included,", ",U!.excluded); fi;
     Print(" )");
   end );
 
@@ -2906,6 +3606,54 @@ InstallMethod( Display,
       fi;
       if exc <> [] then Print(" U "); PrintFiniteSet(exc); fi;
       if inc <> [] then Print(") U "); PrintFiniteSet(inc); fi;
+    fi;
+    Print("\n");
+  end );
+
+#############################################################################
+##
+#M  Display( <U> ) . . . . . . . for residue class unions of Z in sparse rep.
+##
+InstallMethod( Display,
+               "for residue class unions of Z in sparse rep. (ResClasses)",
+               true, [ IsResidueClassUnionOfZInClassListRep ], 0,
+
+  function ( U )
+
+    local  str, m, cls, clsraw, cls_complement, cl, inc, exc,
+           m_red, r_red, i;
+
+    if   RESCLASSES_VIEWINGFORMAT = "long"
+    then View(U:RC_DISPLAY); Print("\n"); return; fi;
+
+    m := U!.m; inc := U!.included; exc := U!.excluded;
+    clsraw := U!.cls;
+    cls := AsUnionOfFewClasses(U);
+    if not IsResidueClass(U) then
+      m_red := Gcd(m,Gcd(List(clsraw,cl->cl[1])));
+      r_red := clsraw[1][1] mod m_red;
+      cl := ResidueClass(r_red,m_red);
+      cls_complement := AsUnionOfFewClasses(Difference(cl,U));
+    fi;
+    if IsResidueClass(U) or Length(cls) <= Length(cls_complement) + 1 then
+      Print(ViewString(cls[1]));
+      for i in [2..Length(cls)] do
+        Print(" U ",ViewString(cls[i]));
+      od;
+      if inc <> [] then Print(" U "); Print(inc); fi;
+      if exc <> [] then Print(" \\ "); Print(exc); fi;
+    else
+      if inc <> [] then Print("("); fi;
+      if IsIntegers(cl) then Print("Z"); else Print(ViewString(cl)); fi;
+      if U <> cl then
+        Print(" \\ ");
+        for i in [1..Length(cls_complement)] do
+          Print(ViewString(cls_complement[i]));
+          if i < Length(cls_complement) then Print(" U "); fi;
+        od;
+      fi;
+      if exc <> [] then Print(" U "); Print(exc); fi;
+      if inc <> [] then Print(") U "); Print(inc); fi;
     fi;
     Print("\n");
   end );

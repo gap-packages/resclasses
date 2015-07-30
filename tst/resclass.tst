@@ -95,7 +95,7 @@ Union of the residue classes 1(30), 7(30), 11(30), 13(30), 17(30), 19(30),
 gap> M := Difference(I,J);
 Union of the residue classes 5(30) and 25(30) of Z
 gap> N := Difference(J,I);
-<union of 16 residue classes (mod 30) of Z>
+<union of 16 residue classes (mod 30) of Z (8 classes)>
 gap> Display(N);
 Union of the residue classes 2(10), 4(10), 6(10), 8(10), 3(30), 9(30), 
 21(30) and 27(30) of Z
@@ -280,7 +280,7 @@ gap> AsUnionOfFewClasses(U);
 gap> x := Indeterminate(GF(2));; SetName(x,"x");;
 gap> R := PolynomialRing(GF(2),1);;
 gap> U := ResidueClassUnion(R,x^3,[Zero(R),One(R),x,x^2,x^2+x]);
-GF(2)[x] \ <union of 3 residue classes (mod x^3) of GF(2)[x]>
+GF(2)[x] \ <union of 3 residue classes (mod x^3) of GF(2)[x] (2 classes)>
 gap> AsUnionOfFewClasses(U);
 [ The residue class 0 ( mod x ) of GF(2)[x], 
   The residue class 1 ( mod x^3 ) of GF(2)[x] ]
