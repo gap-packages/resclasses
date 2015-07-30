@@ -660,6 +660,7 @@ InstallMethod( ResidueClassUnionCons,
           else
             Append(cls,d2); Add(cls,ndpair[1]);
           fi;
+          cls := Filtered(cls,cl->cl<>[]);
         fi;
       until ndpair = fail;
       SortParallel( List( cls, Reversed ), cls );
@@ -2072,7 +2073,7 @@ InstallMethod( Difference,
       for i in [1..Length(cls)] do
         cls[i] := DIFFERENCE_OF_RESIDUE_CLASSES(cls[i],cl);
       od;
-      cls := Union(cls);
+      cls := Filtered(Union(cls),cl->cl<>[]);
     od;
 
     return ResidueClassUnionNC(Integers,cls,U!.excluded,U!.included);
@@ -2277,7 +2278,7 @@ InstallOtherMethod( AdditiveInverseOp,
 InstallOtherMethod( AdditiveInverseOp,
                     "for residue class unions in sparse rep. (ResClasses)",
                     true, [ IsResidueClassUnionInClassListRep ], 0,
-  U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),U!.m,
+  U -> ResidueClassUnion(UnderlyingRing(FamilyObj(U)),
                          List(U!.cls,cl->[(-cl[1]) mod cl[2],cl[2]]),
                          List(U!.included,el->-el),
                          List(U!.excluded,el->-el)) );

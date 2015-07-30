@@ -435,6 +435,85 @@ gap> PartitionsIntoResidueClasses(Integers,6:distinct);
   [ 1(4), 0(6), 2(6), 4(6), 3(8), 7(8) ], 
   [ 0(5), 1(5), 2(5), 3(5), 4(10), 9(10) ], 
   [ 0(6), 1(6), 2(6), 3(6), 4(6), 5(6) ] ]
+gap> S := ResidueClassUnion(Integers,[[1,2],[7,72]]);
+1(2)
+gap> S = ResidueClass(1,2);
+true
+gap> 2*S;
+2(4)
+gap> S+1;
+0(2)
+gap> -S;
+1(2)
+gap> 2*S;
+2(4)
+gap> last/2;
+1(2)
+gap> last = ResidueClass(1,2);
+true
+gap> S := Union(S,ResidueClass(4,60));
+1(2) U 4(60)
+gap> S!.cls;
+[ [ 1, 2 ], [ 4, 60 ] ]
+gap> 2*S;
+2(4) U 8(120)
+gap> S*3;
+3(6) U 12(180)
+gap> last/3;
+1(2) U 4(60)
+gap> S;
+1(2) U 4(60)
+gap> -S;
+1(2) U 56(60)
+gap> Representative(last);
+1
+gap> S := Union(S,[1..8]);
+1(2) U 4(60) U [ 2, 6, 8 ]
+gap> S := Difference(S,[7..15]);
+1(2) U 4(60) U [ 2, 6 ] \ [ 7, 9, 11, 13, 15 ]
+gap> 2*S;
+2(4) U 8(120) U [ 4, 12 ] \ [ 14, 18, 22, 26, 30 ]
+gap> last/2;
+1(2) U 4(60) U [ 2, 6 ] \ [ 7, 9, 11, 13, 15 ]
+gap> last=S;
+true
+gap> S := Difference(S,ResidueClass(0,7));
+<union of 186 residue classes (mod 420) (12 classes)> U [ 2, 6 ] \ 
+[ 9, 11, 13, 15 ]
+gap> S!.cls;
+[ [ 1, 14 ], [ 3, 14 ], [ 5, 14 ], [ 9, 14 ], [ 11, 14 ], [ 13, 14 ], 
+  [ 4, 420 ], [ 64, 420 ], [ 124, 420 ], [ 184, 420 ], [ 244, 420 ], 
+  [ 304, 420 ] ]
+gap> S0 := StandardRep(S);
+<union of 186 residue classes (mod 420)> U [ 2, 6 ] \ [ 9, 11, 13, 15 ]
+gap> S1 := Difference(Union(ResidueClass(1,2),ResidueClass(4,60)),ResidueClass(0,7));
+<union of 186 residue classes (mod 420)>
+gap> Difference(S0,S1);
+[ 2, 6 ]
+gap> TNUM_OBJ(last);
+[ 62, "list (plain,cyc,ssort)" ]
+gap> Difference(S1,S0);
+[ 9, 11, 13, 15 ]
+gap> IsResidueClassUnionOfZInClassListRep(S0);
+false
+gap> IsResidueClassUnionOfZInClassListRep(S);
+true
+gap> IsResidueClassUnionOfZInClassListRep(S1);
+false
+gap> AsUnionOfFewClasses(S1);
+[ 1(14), 3(14), 5(14), 9(14), 11(14), 13(14), 4(420), 64(420), 124(420), 
+  184(420), 244(420), 304(420) ]
+gap> S;
+<union of 186 residue classes (mod 420) (12 classes)> U [ 2, 6 ] \ 
+[ 9, 11, 13, 15 ]
+gap> S := S*5+17;
+<union of 186 residue classes (mod 2100) (12 classes)> U [ 27, 47 ] \ 
+[ 62, 72, 82, 92 ]
+gap> T := Difference(Integers,S);
+<union of 1914 residue classes (mod 2100) (17 classes)> U [ 62, 72, 82, 92 
+ ] \ [ 27, 47 ]
+gap> Union(S,T);
+Integers
 gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "resclass.tst", 60000000 );
 
