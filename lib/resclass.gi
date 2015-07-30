@@ -255,9 +255,9 @@ BindGlobal( "DIFFERENCE_OF_RESIDUE_CLASSES",
     r1 := cl1[1]; m1 := cl1[2];
     r2 := cl2[1]; m2 := cl2[2];
 
-    if (r1-r2) mod Gcd(m1,m2) <> 0 then return cl1; fi; # disjoint
+    if (r1-r2) mod Gcd(m1,m2) <> 0 then return [cl1]; fi; # disjoint
     m3 := Lcm(m1,m2);
-    if m3 = m1 then return []; fi; # second cl. is a superset of first cl.
+    if m3 = m1 then return [[]]; fi; # second cl. is a superset of first cl.
     r3 := ChineseRem([m1,m2],[r1,r2]);
 
     divs := []; d := 1;
@@ -678,11 +678,12 @@ InstallMethod( ResidueClassUnionCons,
             then partdens := partdens + 1/Lcm(d,cl[2]); fi;
           od;
           if partdens = 1/d then
-            cls := Concatenation(List(cls,cl->DIFFERENCE_OF_RESIDUE_CLASSES(
-                     cl,[r,d])));
+            Add(clsRed,[r,d]);
+            cls := List(cls,cl->DIFFERENCE_OF_RESIDUE_CLASSES(cl,[r,d]));
+            cls := Filtered(Concatenation(cls),cl->cl<>[]);
             if cls = [] then break; fi;
             SortParallel( List( cls, Reversed ), cls );
-            Add(clsRed,[r,d]);
+            density := Sum(List(cls,cl->1/cl[2]));
           elif partdens > 1/d then Error("internal error"); fi;
         od;
         if cls = [] then break; fi;
@@ -715,7 +716,7 @@ InstallMethod( ResidueClassUnionCons,
     if ValueOption("RCU_AlreadyReduced") <> true then
       ReduceResidueClassUnion( result );
       cls := result!.cls; m := result!.m;
-      included := result!.included; excluded := cls!.excluded;
+      included := result!.included; excluded := result!.excluded;
     fi;
 
     rep := cls[1][1]; pos := 1;
@@ -875,8 +876,8 @@ InstallGlobalFunction( ResidueClassUnionNC,
       if   Length(arg) = 4
       then included := Set(arg[3]); excluded := Set(arg[4]);
       else included := [];          excluded := []; fi;
-      return ResidueClassUnionCons( IsResidueClassUnion, R, cls,
-                                    included, excluded );
+      return ResidueClassUnionCons( IsResidueClassUnionOfZInClassListRep,
+                                    R, cls, included, excluded );
     elif Length(arg) in [3,5] then
       R := arg[1]; m := arg[2]; r := Set(arg[3]);
       if   Length(arg) = 5
@@ -1210,6 +1211,21 @@ InstallMethod( \=,
     return U1!.m = U2!.m and U1!.cls = U2!.cls
            and U1!.included = U2!.included and U1!.excluded = U2!.excluded;
   end );
+
+InstallMethod( \=,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInResidueListRep,
+                 IsResidueClassUnionInClassListRep ], 0,
+               function ( U1, U2 ) return SparseRep(U1) = U2; end );
+
+InstallMethod( \=,
+               "for two residue class unions in different rep. (ResClasses)",
+               IsIdenticalObj,
+               [ IsResidueClassUnionInClassListRep,
+                 IsResidueClassUnionInResidueListRep ], 0,
+               function ( U1, U2 ) return U1 = SparseRep(U2); end );
+
 
 #############################################################################
 ##
