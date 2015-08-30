@@ -121,6 +121,70 @@ InstallGlobalFunction( NextProbablyPrimeInt,
 
 #############################################################################
 ##
+#S  Methods to compute upper- and lower Fitting series of solvable groups. //
+##
+#############################################################################
+
+#############################################################################
+##
+#M  UpperFittingSeries( <G> ) . . . . . . . . . . . . . . . for finite groups
+##
+InstallMethod( UpperFittingSeries, "for finite groups",
+               true, [ IsGroup and IsFinite ], 0,
+
+  function ( G )
+
+    local  series, F, phi;
+
+    if   not IsSolvableGroup(G)
+    then return fail;
+    elif IsTrivial(G) then return [ G ]; fi;
+
+    F := FittingSubgroup(G); series := [ TrivialSubgroup(G), F ];
+    while F <> G do
+      phi := NaturalHomomorphismByNormalSubgroup(G,F);
+      F := PreImage(phi,FittingSubgroup(Image(phi)));
+      Add(series,F);
+    od;
+    return series;
+  end );
+
+#############################################################################
+##
+#M  LowerFittingSeries( <G> ) . . . . . . . . . . . . . . . for finite groups
+##
+InstallMethod( LowerFittingSeries, "for finite groups",
+               true, [ IsGroup and IsFinite ], 0,
+
+  function ( G )
+
+    local  series, F;
+
+    if not IsSolvableGroup(G) then return fail; fi;
+    series := [ G ]; F := G;
+    while not IsTrivial(F) do
+      F := Reversed(LowerCentralSeries(F))[1];
+      Add(series,F);
+    od;
+    return series;
+  end );
+
+#############################################################################
+##
+#M  FittingLength( <G> ) . . . . . . . . . . . . . . . . .  for finite groups
+##
+InstallMethod( FittingLength, "for finite groups",
+               true, [ IsGroup and IsFinite ], 0,
+
+  function ( G )
+    if not IsSolvableGroup(G) then return fail; fi;
+    if   HasUpperFittingSeries(G)
+    then return Length(UpperFittingSeries(G)) - 1;
+    else return Length(LowerFittingSeries(G)) - 1; fi;
+  end );
+
+#############################################################################
+##
 #S  A simple caching facility. //////////////////////////////////////////////
 ##
 #############################################################################
@@ -184,7 +248,7 @@ InstallGlobalFunction( "FetchFromCache",
 
 #############################################################################
 ##
-#S  SendEmail and EmailLogFile. /////////////////////////////////////////////
+#S  SendEmail, EmailLogFile and DownloadFile ////////////////////////////////
 ##
 #############################################################################
 
