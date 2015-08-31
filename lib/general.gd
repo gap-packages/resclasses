@@ -48,9 +48,12 @@ DeclareOperation( "IsCommuting", [ IsMultiplicativeElement,
 ##  The upper and lower Fitting series and the Fitting length of a solvable
 ##  group, as described here: https://en.wikipedia.org/wiki/Fitting_length
 ##
-DeclareAttribute( "UpperFittingSeries", IsGroup );
-DeclareAttribute( "LowerFittingSeries", IsGroup );
-DeclareAttribute( "FittingLength", IsGroup );
+if   not IsBound( UpperFittingSeries )
+then DeclareAttribute( "UpperFittingSeries", IsGroup ); fi;
+if   not IsBound( LowerFittingSeries )
+then DeclareAttribute( "LowerFittingSeries", IsGroup ); fi;
+if   not IsBound( FittingLength )
+then DeclareAttribute( "FittingLength", IsGroup ); fi;
 
 #############################################################################
 ##
