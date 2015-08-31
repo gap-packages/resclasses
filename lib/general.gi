@@ -127,23 +127,20 @@ InstallGlobalFunction( NextProbablyPrimeInt,
 
 #############################################################################
 ##
-#M  UpperFittingSeries( <G> ) . . . . . . . . . . . . . . . for finite groups
+#M  UpperFittingSeries( <G> ) . . . . . . . . . . . . . . . .  default method
 ##
-InstallMethod( UpperFittingSeries, "for finite groups",
-               true, [ IsGroup and IsFinite ], 0,
+InstallMethod( UpperFittingSeries, "default method", true, [ IsGroup ], 0,
 
   function ( G )
 
     local  series, F, phi;
 
-    if   not IsSolvableGroup(G)
-    then return fail;
-    elif IsTrivial(G) then return [ G ]; fi;
-
+    if IsTrivial(FittingSubgroup(G)) then return [ TrivialSubgroup(G) ]; fi;
     F := FittingSubgroup(G); series := [ TrivialSubgroup(G), F ];
     while F <> G do
       phi := NaturalHomomorphismByNormalSubgroup(G,F);
       F := PreImage(phi,FittingSubgroup(Image(phi)));
+      if series[Length(series)] = F then break; fi;
       Add(series,F);
     od;
     return series;
@@ -151,19 +148,18 @@ InstallMethod( UpperFittingSeries, "for finite groups",
 
 #############################################################################
 ##
-#M  LowerFittingSeries( <G> ) . . . . . . . . . . . . . . . for finite groups
+#M  LowerFittingSeries( <G> ) . . . . . . . . . . . . . . . .  default method
 ##
-InstallMethod( LowerFittingSeries, "for finite groups",
-               true, [ IsGroup and IsFinite ], 0,
+InstallMethod( LowerFittingSeries, "default method", true, [ IsGroup ], 0,
 
   function ( G )
 
     local  series, F;
 
-    if not IsSolvableGroup(G) then return fail; fi;
     series := [ G ]; F := G;
     while not IsTrivial(F) do
       F := Reversed(LowerCentralSeries(F))[1];
+      if series[Length(series)] = F then break; fi;
       Add(series,F);
     od;
     return series;
@@ -171,13 +167,12 @@ InstallMethod( LowerFittingSeries, "for finite groups",
 
 #############################################################################
 ##
-#M  FittingLength( <G> ) . . . . . . . . . . . . . . . . .  for finite groups
+#M  FittingLength( <G> ) . . . . . . . . . . . . . . . . . . . default method
 ##
-InstallMethod( FittingLength, "for finite groups",
-               true, [ IsGroup and IsFinite ], 0,
+InstallMethod( FittingLength, "default method", true, [ IsGroup ], 0,
 
   function ( G )
-    if not IsSolvableGroup(G) then return fail; fi;
+    if not IsSolvableGroup(G) then return infinity; fi;
     if   HasUpperFittingSeries(G)
     then return Length(UpperFittingSeries(G)) - 1;
     else return Length(LowerFittingSeries(G)) - 1; fi;
