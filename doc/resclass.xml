@@ -71,13 +71,13 @@ The residue class 0 ( mod x+1 ) of GF(2)[x]
         Label="by ring, modulus and residues"/>
   <Func Name="ResidueClassUnion"
         Arg="R, m, r, included, excluded"
-        Label="ditto, plus included / excluded elements"/>
+        Label="by ring, modulus, residues and included / excluded elements"/>
   <Func Name="ResidueClassUnion"
         Arg="R, cls"
         Label="by ring and list of classes"/>
   <Func Name="ResidueClassUnion"
         Arg="R, cls, included, excluded"
-        Label="ditto, plus included / excluded elements"/>
+        Label="by ring, list of classes and included / excluded elements"/>
   <Returns>
     in the first two cases, the union of the residue classes
     <A>r</A>[<M>i</M>]&nbsp;mod&nbsp;<A>m</A>
