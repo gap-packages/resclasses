@@ -72,18 +72,50 @@ The residue class 0 ( mod x+1 ) of GF(2)[x]
   <Func Name="ResidueClassUnion"
         Arg="R, m, r, included, excluded"
         Label="ditto, plus included / excluded elements"/>
+  <Func Name="ResidueClassUnion"
+        Arg="R, cls"
+        Label="by ring and list of classes"/>
+  <Func Name="ResidueClassUnion"
+        Arg="R, cls, included, excluded"
+        Label="ditto, plus included / excluded elements"/>
   <Returns>
-    the union of the residue classes
+    in the first two cases, the union of the residue classes
     <A>r</A>[<M>i</M>]&nbsp;mod&nbsp;<A>m</A>
     of the ring&nbsp;<A>R</A>, plus / minus finite sets <A>included</A>
     and <A>excluded</A> of elements of&nbsp;<A>R</A>.
+    In the last two cases, the union of the residue classes
+    <A>cls</A>[<M>i</M>][1]&nbsp;mod&nbsp;<A>cls</A>[<M>i</M>][2]
+    of the ring&nbsp;<A>R</A>=&ZZ;, plus / minus finite sets
+    <A>included</A> and <A>excluded</A> of integers.
   </Returns>
   <Description>
-<Alt Only="LaTeX">\pagebreak[4]</Alt>
+    For unions of residue classes of the integers, two distinct
+    representations are implemented: in the first representation,
+    a union of residue classes is represented by its modulus <A>m</A>
+    and the list of residues <A>r</A>; this is called the <Q>standard</Q>
+    representation. In the second (<Q>sparse</Q>) representation,
+    a union of residue classes <M>r_1(m_1) \cup \dots \cup r_k(m_k)</M>
+    is represented by the list <A>cls</A> of the pairs <C>[r_i,m_i]</C>.
+    <Index Key="StandardRep" Subkey="for a residue class union">
+      <C>StandardRep</C>
+    </Index>
+    <Index Key="SparseRep" Subkey="for a residue class union">
+      <C>SparseRep</C>
+    </Index>
+    One can switch between the two representations by using the operations
+    <C>StandardRep</C> and <C>SparseRep</C>, respectively.
+    The sparse representation allows more efficient computation in terms
+    of time- and memory requirements when computing with unions of
+    <Q>relatively few</Q> residue classes where the lcm of the moduli
+    is <Q>large</Q>; otherwise the standard representation is
+    advantageous. For rings other than &ZZ;, presently only the standard
+    representation is available.
 <Example>
 <![CDATA[
 gap> ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
+gap> ResidueClassUnion(Integers,[[1,2],[0,40],[2,1200]]);
+Union of the residue classes 1(2), 0(40) and 2(1200) of Z
 gap> ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
 Union of the residue classes 3(8) and 5(8) of Z_( 2, 3 )
 gap> ResidueClassUnion(R,x^2,[One(R),x],[],[One(R)]);
