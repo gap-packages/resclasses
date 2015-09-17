@@ -257,7 +257,7 @@ BindGlobal( "DIFFERENCE_OF_RESIDUE_CLASSES",
 
     if (r1-r2) mod Gcd(m1,m2) <> 0 then return [cl1]; fi; # disjoint
     m3 := Lcm(m1,m2);
-    if m3 = m1 then return [[]]; fi; # second cl. is a superset of first cl.
+    if m3 = m1 then return []; fi; # second cl. is a superset of first cl.
     r3 := ChineseRem([m1,m2],[r1,r2]);
 
     divs := []; d := 1;
