@@ -20,6 +20,14 @@ DeclareGlobalFunction( "FloatQuotientsList" );
 
 #############################################################################
 ##
+#F  RandomCombination( S, k )
+##
+##  Returns a random unordered <k>-tuple of distinct elements of the set <S>.
+##
+DeclareGlobalFunction( "RandomCombination" );
+
+#############################################################################
+##
 #F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
 ##
 ##  Returns the smallest integer larger than <n> which passes GAP's
