@@ -101,41 +101,24 @@ InstallGlobalFunction( FloatQuotientsList,
 
 #############################################################################
 ##
-#F  RandomCombination( S, k )
+#M  RandomCombination( S, k ) . . . . . . . . . . . . . . . .  default method
 ##
-InstallGlobalFunction( RandomCombination,
+InstallMethod( RandomCombination, "default method",
+               ReturnTrue, [ IsListOrCollection, IsPosInt ],
 
   function ( S, k )
 
-    local  t, i, pos;
+    local  c, elm, i;
 
-    if k > Length(S) then return fail; fi;
-    t := []; pos := 0;
+    if k > Size(S) then return fail; fi;
+    c := [];
     for i in [1..k] do
-      pos := Random([pos+1..Length(S)-k+i]);
-      t[i] := S[pos];
+      repeat
+        elm := Random(S);
+      until not elm in c;
+      Add(c,elm);
     od;
-    return t;
-  end );
-
-#############################################################################
-##
-#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
-##
-InstallGlobalFunction( NextProbablyPrimeInt,
-
-  function ( n )
-    if   -3 = n            then n := -2;
-    elif -3 < n  and n < 2 then n :=  2;
-    elif n mod 2 = 0       then n := n+1;
-    else                        n := n+2;
-    fi;
-    while not IsProbablyPrimeInt(n) do
-        if n mod 6 = 1 then n := n+4;
-        else                n := n+2;
-        fi;
-    od;
-    return n;
+    return Set(c);
   end );
 
 #############################################################################

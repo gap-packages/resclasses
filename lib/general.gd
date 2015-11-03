@@ -24,21 +24,7 @@ DeclareGlobalFunction( "FloatQuotientsList" );
 ##
 ##  Returns a random unordered <k>-tuple of distinct elements of the set <S>.
 ##
-DeclareGlobalFunction( "RandomCombination" );
-
-#############################################################################
-##
-#F  NextProbablyPrimeInt( <n> ) . . next integer passing `IsProbablyPrimeInt'
-##
-##  Returns the smallest integer larger than <n> which passes GAP's
-##  probabilistic primality test.
-##
-##  The function `NextProbablyPrimeInt' does the same as `NextPrimeInt',
-##  except that for reasons of performance it tests numbers only for
-##  `IsProbablyPrimeInt' instead of `IsPrimeInt'.
-##  For large <n>, this function is much faster than `NextPrimeInt'.
-##
-DeclareGlobalFunction( "NextProbablyPrimeInt" );
+DeclareOperation( "RandomCombination", [ IsListOrCollection, IsPosInt ] );
 
 #############################################################################
 ##

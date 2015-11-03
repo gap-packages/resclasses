@@ -15,7 +15,7 @@ Changes between version 3.4.0 and version 4.0.0 ():
  - Auxiliary attributes `UpperFittingSeries', `LowerFittingSeries'
    and `FittingLength' have been added, together with corresponding methods.
 
- - A utility function `RandomCombination' has been added.
+ - A utility operation `RandomCombination' has been added.
 
 Changes between version 3.3.2 and version 3.4.0 (July 21, 2014):
 
