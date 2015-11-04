@@ -348,7 +348,7 @@ InstallGlobalFunction( BlankFreeString,
 
 #############################################################################
 ##
-#F  QuotesStripped( <obj> ) . . . . . . . . . . . . . . string without quotes
+#F  QuotesStripped( <str> ) . . . . . . . . . . . . . . string without quotes
 ##
 InstallGlobalFunction( QuotesStripped,
 
