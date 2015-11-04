@@ -22,11 +22,6 @@
 InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
                [ IsFFE and IsInternalRep ], 0, String );
 
-if CompareVersionNumbers(GAPInfo.Version,"4.7.1") <> true then
-  InstallMethod( ViewString, "for a string (ResClasses)", true,
-                 [ IsString ], 5, str -> Concatenation( "\"", str, "\"" ) );
-fi;
-
 #############################################################################
 ##
 #M  ViewString( <P> ) . . . . for a univariate polynomial over a finite field
