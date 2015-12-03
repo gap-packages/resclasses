@@ -12,9 +12,6 @@ Changes between version 3.4.0 and version 4.0.0 ():
  - A performance problem has been fixed: the list of residues
    of a residue class union should know that it is a set.
 
- - Auxiliary attributes `UpperFittingSeries', `LowerFittingSeries'
-   and `FittingLength' have been added, together with corresponding methods.
-
  - A utility operation `RandomCombination' has been added.
 
 Changes between version 3.3.2 and version 3.4.0 (July 21, 2014):

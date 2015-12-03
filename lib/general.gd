@@ -35,22 +35,6 @@ DeclareOperation( "IsCommuting", [ IsMultiplicativeElement,
 
 #############################################################################
 ##
-#A  UpperFittingSeries( <G> ) . . . . . . . . . . upper fitting series of <G>
-#A  LowerFittingSeries( <G> ) . . . . . . . . . . lower fitting series of <G>
-#A  FittingLength( <G> )  . . . . . . . . . . . . . . . fitting length of <G>
-##
-##  The upper and lower Fitting series and the Fitting length of a solvable
-##  group, as described here: https://en.wikipedia.org/wiki/Fitting_length
-##
-if   not IsBound( UpperFittingSeries )
-then DeclareAttribute( "UpperFittingSeries", IsGroup ); fi;
-if   not IsBound( LowerFittingSeries )
-then DeclareAttribute( "LowerFittingSeries", IsGroup ); fi;
-if   not IsBound( FittingLength )
-then DeclareAttribute( "FittingLength", IsGroup ); fi;
-
-#############################################################################
-##
 #F  SetupCache( <name>, <size> )
 #F  PutIntoCache( <name>, <key>, <value> )
 #F  FetchFromCache( <name>, <key> )
