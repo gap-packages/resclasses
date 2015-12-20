@@ -14,6 +14,8 @@ Changes between version 3.4.0 and version 4.0.0 ():
 
  - A utility operation `RandomCombination' has been added.
 
+ - The tests are now done using `TestDirectory'.
+
 Changes between version 3.3.2 and version 3.4.0 (July 21, 2014):
 
  - The file resclasses/doc/manual.js has been added.

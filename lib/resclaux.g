@@ -77,11 +77,11 @@ BindGlobal( "ResClassesTest",
 
   function (  )
 
-    local  ResClassesDir, dir;
+    return
 
-    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-    dir := Concatenation( ResClassesDir, "/tst/" );
-    Read( Concatenation( dir, "testall.g" ) );
+    ReadAsFunction(Concatenation(
+                     GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath,
+                     "/tst/testall.g"))();
   end );
 
 #############################################################################
