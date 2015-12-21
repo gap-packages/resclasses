@@ -16,14 +16,6 @@
 
 #############################################################################
 ##
-#M  ViewString( <z> ) . . . . . . . . . . . . . .  for a finite field element
-#M  ViewString( <s> ) . . . . . . . . . . . . . . . . . . . . .  for a string
-##
-InstallMethod( ViewString, "for a finite field element (ResClasses)", true,
-               [ IsFFE and IsInternalRep ], 0, String );
-
-#############################################################################
-##
 #M  ViewString( <P> ) . . . . for a univariate polynomial over a finite field
 ##
 InstallMethod( ViewString,
