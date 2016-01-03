@@ -20,7 +20,17 @@ DeclareGlobalFunction( "FloatQuotientsList" );
 
 #############################################################################
 ##
-#F  RandomCombination( S, k )
+#O  PositionsSublist( <list>, <sub> )
+##
+##  Returns the list of indices in the list <list> at which a sublist equal
+##  to <sub> starts.
+##
+DeclareOperation( "PositionsSublist",
+                  [ IsListOrCollection, IsListOrCollection ] );
+
+#############################################################################
+##
+#O  RandomCombination( S, k )
 ##
 ##  Returns a random unordered <k>-tuple of distinct elements of the set <S>.
 ##

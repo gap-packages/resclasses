@@ -88,6 +88,25 @@ InstallGlobalFunction( FloatQuotientsList,
 
 #############################################################################
 ##
+#F  PositionsSublist( <list>, <sub> )
+##
+InstallMethod( PositionsSublist, "default method",
+               ReturnTrue, [ IsList, IsList ],
+
+  function ( list, sub )
+
+    local  positions, pos;
+
+    pos := 0; positions := [];
+    repeat
+      pos := PositionSublist(list,sub,pos);
+      if pos <> fail then Add(positions,pos); fi;
+    until pos = fail;
+    return positions;
+  end );
+
+#############################################################################
+##
 #M  RandomCombination( S, k ) . . . . . . . . . . . . . . . .  default method
 ##
 InstallMethod( RandomCombination, "default method",

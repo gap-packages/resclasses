@@ -12,7 +12,7 @@ Changes between version 3.4.0 and version 4.0.0 ():
  - A performance problem has been fixed: the list of residues
    of a residue class union should know that it is a set.
 
- - A utility operation `RandomCombination' has been added.
+ - Utility operations `PositionsSublist' and `RandomCombination' have been added.
 
  - The tests are now done using `TestDirectory'.
 
