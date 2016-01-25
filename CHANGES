@@ -3,7 +3,7 @@
                     =========================================
 
 
-Changes between version 3.4.0 and version 4.0.0 (January 25, 2016):
+Changes between ResClasses 3.4.0 and ResClasses 4.0.0 (January 25, 2016):
 
  - A class list ("sparse") representation for residue class unions has been
    implemented; this yields an enormous speedup for computations with unions
@@ -16,24 +16,24 @@ Changes between version 3.4.0 and version 4.0.0 (January 25, 2016):
 
  - The tests are now done using `TestDirectory'.
 
-Changes between version 3.3.2 and version 3.4.0 (July 21, 2014):
+Changes between ResClasses 3.3.2 and ResClasses 3.4.0 (July 21, 2014):
 
  - The file resclasses/doc/manual.js has been added.
 
  - An auxiliary function `NextProbablyPrimeInt' has been added.
 
-Changes between version 3.3.1 and version 3.3.2 (November 18, 2013):
+Changes between ResClasses 3.3.1 and ResClasses 3.3.2 (November 18, 2013):
 
  - A potential performance problem in a `ViewString' method
    for polynomials over finite fields has been removed.
  
-Changes between version 3.3.0 and version 3.3.1 (October 28, 2013):
+Changes between ResClasses 3.3.0 and ResClasses 3.3.1 (October 28, 2013):
 
  - Minor adjustments to changes in the GAP Library.
    Note that only RCWA in version 3.6.0 or newer works with this version
    of ResClasses. -- So if you still have an old RCWA, you need to upgrade.
 
-Changes between version 3.2.0 and version 3.3.0 (December 12, 2012):
+Changes between ResClasses 3.2.0 and ResClasses 3.3.0 (December 12, 2012):
 
  - The operation `PartitionsIntoResidueClasses' has now an optional
    third argument `Primes'. Also it interprets now an option "distinct"
@@ -43,7 +43,7 @@ Changes between version 3.2.0 and version 3.3.0 (December 12, 2012):
  - A bug has been fixed which caused [  ]/<ring element> to return its
    first argument instead of a copy of it.
 
-Changes between version 3.1.1 and version 3.2.0 (November 1, 2012):
+Changes between ResClasses 3.1.1 and ResClasses 3.2.0 (November 1, 2012):
 
  - A function `All2x2IntegerMatricesInHNFWithDeterminantUpTo' has been added.
    This function returns a list of all 2 x 2 integer matrices in Hermite
@@ -57,14 +57,14 @@ Changes between version 3.1.1 and version 3.2.0 (November 1, 2012):
    `ConvertPackageFilesToUNIXLineBreaks' and `RemoveTemporaryPackageFiles'
    have been added.
 
-Changes between version 3.1.0 and version 3.1.1:
+Changes between ResClasses 3.1.0 and ResClasses 3.1.1:
 
  - The `DefaultRingByGenerators' method for lists of integer matrices
    has been removed, since a method covering this case is now provided by
    the GAP Library. For this reason, ResClasses now needs GAP in version
    at least 4.5.4.
 
-Changes between version 3.0.4 and version 3.1.0 (May 7, 2012):
+Changes between ResClasses 3.0.4 and ResClasses 3.1.0 (May 7, 2012):
 
  - Added a `DisplayString' method for residue class unions.
 
@@ -79,19 +79,19 @@ Changes between version 3.0.4 and version 3.1.0 (May 7, 2012):
 
  - Added a helper function `DownloadFile' (needs the IO package).
 
-Changes between version 3.0.3 and version 3.0.4:
+Changes between ResClasses 3.0.3 and ResClasses 3.0.4:
 
  - Removed an `Intersection2' method for Integers^2 and a list of
    pairs of integers which returned a residue class union object,
    to get rid of a possible source of incompatibilities with other
    packages.
 
-Changes between version 3.0.2 and version 3.0.3:
+Changes between ResClasses 3.0.2 and ResClasses 3.0.3:
 
  - Fixed a `ViewString' method which changed line breaks in printing of
    rationals with large numerators / denominators.
 
-Changes between version 3.0.0 and version 3.0.2:
+Changes between ResClasses 3.0.0 and ResClasses 3.0.2:
 
  - Residue class unions of GF(p)[x] and polynomials with coefficients in
    GF(p)[x] are `View'ed in a much nicer way.
@@ -102,7 +102,7 @@ Changes between version 3.0.0 and version 3.0.2:
 
  - ResClasses needs now GAP 4.5.2 and GAPDoc 1.4.
 
-Changes between version 2.5.3 and version 3.0.0 (May 8, 2011):
+Changes between ResClasses 2.5.3 and ResClasses 3.0.0 (May 8, 2011):
 
 The main change is that ResClasses now supports computations with
 unions of residue classes of Z^2.
@@ -114,21 +114,21 @@ Further changes are:
  - The required versions of GAP, GAPDoc and Polycyclic have been incremented
    to 4.4.12, 1.1 and 2.6, respectively.
 
-Changes between version 2.5.2 and version 2.5.3:
+Changes between ResClasses 2.5.2 and ResClasses 2.5.3:
 
  - The line length used in the examples has been reduced to 75 in order to
    improve their appearance in the online help with standard settings.
 
-Changes between version 2.5.1 and version 2.5.2:
+Changes between ResClasses 2.5.1 and ResClasses 2.5.2:
 
  - Functions `SendEmail' and `EmailLogFile' have been added.
 
-Changes between version 2.5.0 and version 2.5.1:
+Changes between ResClasses 2.5.0 and ResClasses 2.5.1:
 
  - Some minor adjustments have been made, and ResClasses needs now the
    recently released version 1.0 of GAPDoc.
 
-Changes between version 2.4.4 and version 2.5.0:
+Changes between ResClasses 2.4.4 and ResClasses 2.5.0:
 
  - An operation `PartitionsIntoResidueClasses' has been added.
    This operation returns a sorted list of all partitions of a given ring
@@ -148,25 +148,25 @@ Changes between version 2.4.4 and version 2.5.0:
 
  - The bibliography format has been changed from BibTeX to GAPDoc XML.
 
-Changes between version 2.4.3 and version 2.4.4:
+Changes between ResClasses 2.4.3 and ResClasses 2.4.4:
 
  - Now ResClasses needs GAPDoc 0.99999.
 
-Changes between version 2.4.2 and version 2.4.3:
+Changes between ResClasses 2.4.2 and ResClasses 2.4.3:
 
  - A quirk with the style file for the HTML version of the manual has
    been fixed.
 
-Changes between version 2.4.1 and version 2.4.2:
+Changes between ResClasses 2.4.1 and ResClasses 2.4.2:
 
  - A bug in the `View' method for residue class unions of polynomial rings
    has been fixed.
 
-Changes between version 2.4.0 and version 2.4.1:
+Changes between ResClasses 2.4.0 and ResClasses 2.4.1:
 
  - Minor changes.
 
-Changes between version 2.3.7 and version 2.4.0 (February 9, 2007):
+Changes between ResClasses 2.3.7 and ResClasses 2.4.0 (February 9, 2007):
 
  - The support for residue class unions of polynomial rings GF(q)[x] has
    been improved. For example there are now methods for `SplittedClass'
@@ -186,7 +186,7 @@ Changes between version 2.3.7 and version 2.4.0 (February 9, 2007):
    for the objects returned by `ResidueClassUnion' (instead of "union of
    residue classes").
 
-Changes between version 2.3.6 and version 2.3.7:
+Changes between ResClasses 2.3.6 and ResClasses 2.3.7:
 
  - Synonyms `IsResidueClassUnion[OfZ|OfZ_pi|OfZorZ_pi|OfGFqx]' for the five
    categories `IsUnionOfResidueClasses[OfZ|OfZ_pi|OfZorZ_pi|OfGFqx]' have
@@ -194,7 +194,7 @@ Changes between version 2.3.6 and version 2.3.7:
 
  - The documentation has been improved in a few places.
 
-Changes between version 2.3.5 and version 2.3.6:
+Changes between ResClasses 2.3.5 and ResClasses 2.3.6:
 
  - A problem w.r.t. residue classes vs. ideals has been fixed.
    This problem has caused a `no method found' message when trying
@@ -211,7 +211,7 @@ Changes between version 2.3.5 and version 2.3.6:
    This bug caused an error message when sorting lists of residue class
    unions (in rare cases).
 
-Changes between version 2.3.4 and version 2.3.5:
+Changes between ResClasses 2.3.4 and ResClasses 2.3.5:
 
  - A method for `AsUnionOfFewClasses' for unions of residue classes of the
    rings Z_pi and GF(q)[x] has been added.
@@ -221,64 +221,64 @@ Changes between version 2.3.4 and version 2.3.5:
 
  - The documentation has been slightly improved.
 
-Changes between version 2.3.3 and version 2.3.4:
+Changes between ResClasses 2.3.3 and ResClasses 2.3.4:
 
  - An operation `RandomPartitionIntoResidueClasses' has been introduced.
 
-Changes between version 2.3.2 and version 2.3.3:
+Changes between ResClasses 2.3.2 and ResClasses 2.3.3:
 
  - A few minor internal changes have been made.
 
-Changes between version 2.3.1 and version 2.3.2:
+Changes between ResClasses 2.3.1 and ResClasses 2.3.2:
 
  - A few trivial methods have been added, and some undocumented
    global functions have been made local.
 
-Changes between version 2.3.0 and version 2.3.1:
+Changes between ResClasses 2.3.0 and ResClasses 2.3.1:
 
  - For convenience, an operation `Residue' has been introduced.
 
-Changes between version 2.2.2 and version 2.3.0 (May 30, 2006):
+Changes between ResClasses 2.2.2 and ResClasses 2.3.0 (May 30, 2006):
 
 The main change is that the manual has been revised.
 
 Further a couple of trivial methods have been added, some of which
 are needed by RCWA.
 
-Changes between version 2.2.1 and version 2.2.2:
+Changes between ResClasses 2.2.1 and ResClasses 2.2.2:
 
  - A couple of minor output formatting improvements have been made.
 
-Changes between version 2.2.0 and version 2.2.1:
+Changes between ResClasses 2.2.0 and ResClasses 2.2.1:
 
  - For convenience, `ResidueClass' now accepts also a list [r,m] as argument.
 
  - The output of `Display' for unions of residue classes has been improved
    a bit further.
 
-Changes between version 2.1.2 and version 2.2.0 (February 14, 2006):
+Changes between ResClasses 2.1.2 and ResClasses 2.2.0 (February 14, 2006):
 
  - The output of the `View' and `Display' methods for unions of residue
    classes has been improved.
 
  - `AsUnionOfFewClasses' has been made another bit more efficient.
 
-Changes between version 2.1.1 and version 2.1.2:
+Changes between ResClasses 2.1.1 and ResClasses 2.1.2:
 
  - A property `IsResidueClass' has been added.
 
-Changes between version 2.1.0 and version 2.1.1:
+Changes between ResClasses 2.1.0 and ResClasses 2.1.1:
 
  - An adaptation to an incompatible change in GAP 4.4.6 w.r.t.
    `InstallValue' for families has been made.
 
-Changes between version 2.0.6 and version 2.1.0 (August 8, 2005):
+Changes between ResClasses 2.0.6 and ResClasses 2.1.0 (August 8, 2005):
 
  - Significant performance improvements in `Union', `Intersection',
    `Difference' and `AsUnionOfFewClasses' for `sparse' unions of
    residue classes have been obtained.
 
-Changes between version 2.0.5 and version 2.0.6:
+Changes between ResClasses 2.0.5 and ResClasses 2.0.6:
 
  - The following name changes have been made:
    `DELTA' --> `Delta' and `RHO' --> `Rho'.
@@ -290,7 +290,7 @@ Changes between version 2.0.5 and version 2.0.6:
    gap> U = RepresentativeStabilizingRefinement(U,0);
    true
 
-Changes between version 2.0.2 and version 2.0.5:
+Changes between ResClasses 2.0.2 and ResClasses 2.0.5:
 
  - The manual has been cleaned up and compacted.
 
@@ -299,13 +299,13 @@ Changes between version 2.0.2 and version 2.0.5:
  - Minor improvements in the manual have been made, and a few trivial
    methods covering pathological cases have been added.
 
-Changes between version 2.0 and version 2.0.2:
+Changes between ResClasses 2.0 and ResClasses 2.0.2:
 
  - A bug in a `Union2' method for unions of residue classes has been fixed
    (ExcludedElements were not treated correctly). This bug caused wrong
    results in some cases.
 
-Changes between version 1.1 and version 2.0 (June 3, 2004):
+Changes between ResClasses 1.1 and ResClasses 2.0 (June 3, 2004):
 
  - A function `AllResidueClassesModulo' has been added.
 
@@ -319,10 +319,12 @@ Changes between version 1.1 and version 2.0 (June 3, 2004):
    2. The residue classes are not necessarily disjoint, thus the unions can
       be viewed as multisets of ring elements.
 
-Changes between version 1.0 and version 1.1:
+Changes between ResClasses 1.0 and ResClasses 1.1:
 
  - The output routines have been improved.
 
  - An attribute `Density' has been added.
 
-Initial version: 1.0 (January 2004)
+Release of ResClasses 1.0: January 2004
+
+
