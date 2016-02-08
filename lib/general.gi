@@ -192,6 +192,38 @@ InstallGlobalFunction( "FetchFromCache",
 
 #############################################################################
 ##
+#S  Creating timestamped logfiles. //////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F LogToDatedFile( <directory> )
+##
+InstallGlobalFunction( LogToDatedFile,
+
+  function ( arg )
+
+    local  name, directory, dmy;
+
+    if   Length(arg) >= 1 and IsString(arg[1])
+    then directory := arg[1];
+    else directory := "/user/GAP/log/"; fi;
+    dmy := DMYhmsSeconds(IO_gettimeofday().tv_sec);
+    name := Concatenation(directory,
+                          String(dmy[3]),"-",
+                          String(dmy[2]+100){[2..3]},"-",
+                          String(dmy[1]+100){[2..3]}," ",
+                          String(dmy[4]+100){[2..3]},"-",
+                          String(dmy[5]+100){[2..3]},"-",
+                          String(dmy[6]+100){[2..3]},".log");
+    if IN_LOGGING_MODE <> false then LogTo(); fi;
+    LogTo(name);
+    return name;
+  end );
+
+#############################################################################
+##
 #S  SendEmail, EmailLogFile and DownloadFile ////////////////////////////////
 ##
 #############################################################################

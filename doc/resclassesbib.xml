@@ -22,6 +22,20 @@
   </other>
 </manual></entry>
 
+<entry id="IO"><manual>
+  <author>
+    <name><first>Max</first><last>Horn</last></name>
+    <name><first>Max</first><last>Neunhöffer</last></name>
+  </author>
+  <title>
+    <C>IO -- Bindings for low level C library I/O routines (Version 4.4.4)</C>
+  </title>
+  <year>2014</year>
+  <other type="note">
+    GAP package, <URL>http://www.gap-system.org/Packages/io.html</URL>
+  </other>
+</manual></entry>
+
 <entry id="Polycyclic"><manual>
   <author>
     <name><first>Bettina</first><last>Eick</last></name>

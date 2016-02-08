@@ -13,6 +13,7 @@
 <Heading>Requirements</Heading>
 
 This version of &ResClasses; needs at least &GAP;&nbsp;4.8.1,
+<Package>IO</Package>&nbsp;4.4.4&nbsp;<Cite Key="IO"/>,
 <Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/>
 and &GAPDoc;&nbsp;1.4&nbsp;<Cite Key="GAPDoc"/>.
 It can be used on all platforms for which &GAP; is available.
@@ -108,6 +109,25 @@ of packages off, you can load &ResClasses; via
 
 <!-- #################################################################### -->
 
+<Section Label="sec:LogToDatedFile">
+<Heading>Creating timestamped logfiles</Heading>
+
+<ManSection>
+  <Func Name="LogToDatedFile" Arg="directory"/>
+  <Returns> the full pathname of the created logfile. </Returns>
+  <Description>
+    This function opens a logfile in the specified directory;
+    the name of the logfile has the form of a timestamp, i.e.
+    <C>year-month-day hour-minute-second.log.</C>
+    If &GAP; is already in logging mode, the old logfile is closed
+    before the new one is opened.
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
 <Section Label="sec:SendEmailAndEmailLogFile">
 <Heading>DownloadFile, SendEmail and EmailLogFile</Heading>
 
@@ -119,9 +139,9 @@ of packages off, you can load &ResClasses; via
     otherwise.
   </Returns>
   <Description>
-    This function needs the <Package>IO</Package> package, and
-    as most system-related functions it works only under UNIX.
-    Also the computer must of course be connected to the Internet.
+    As most system-related functions, <C>DownloadFile</C> works only under
+    UNIX / Linux. Also the computer must of course be connected to the
+    Internet.
   </Description>
 </ManSection>
 
@@ -136,8 +156,9 @@ of packages off, you can load &ResClasses; via
     <A>copyto</A>. The first two arguments must be lists of strings, and
     the latter two must be strings. <P/>
 
-    As most system-related functions, <C>SendEmail</C> works only under UNIX.
-    Also the computer must of course be connected to the Internet.
+    As most system-related functions, <C>SendEmail</C> works only under
+    UNIX / Linux. Also the computer must of course be connected to the
+    Internet.
   </Description>
 </ManSection>
 
@@ -148,12 +169,12 @@ of packages off, you can load &ResClasses; via
   </Returns>
   <Description>
     Sends the current log file by e-mail to <A>addresses</A>, if &GAP; is in
-    logging mode and one is working under UNIX, and does nothing otherwise.
-    The argument <A>addresses</A> must be either a list of e-mail addresses
-    or a single e-mail address. Long log files are abbreviated, i.e. if the
-    log file is larger than 64KB, then any output is truncated at 1KB, and
-    if the log file is still longer than 64KB afterwards, it is truncated
-    at&nbsp;64KB.
+    logging mode and one is working under UNIX / Linux, and does nothing
+    otherwise. The argument <A>addresses</A> must be either a list of e-mail
+    addresses or a single e-mail address. Long log files are abbreviated,
+    i.e. if the log file is larger than 64KB, then any output is truncated
+    at 1KB, and if the log file is still longer than 64KB afterwards, it is
+    truncated at&nbsp;64KB.
   </Description>
 </ManSection>
 

@@ -64,6 +64,15 @@ DeclareGlobalFunction( "FetchFromCache" );
 
 #############################################################################
 ##
+#F LogToDatedFile( <directory> )
+##
+## Opens a logfile in the specified directory whose name has the form of a
+## timestamp, i.e. <year>-<month>-<day> <hour>-<minute>-<second>.log.
+##
+DeclareGlobalFunction( "LogToDatedFile" );
+
+#############################################################################
+##
 #F  SendEmail( <sendto>, <copyto>, <subject>, <text> ) . . . . send an e-mail
 ##
 ##  Sends an e-mail with subject <subject> and body <text> to the addresses
