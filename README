@@ -25,10 +25,9 @@ viewer.
 
                                 Requirements
 
-This version of ResClasses needs at least GAP 4.8.1, IO 4.4.4 and  Polycyclic
-2.6, is completely written  in the GAP language  and does neither contain nor
-require external binaries.  GAPDoc 1.4 or higher is needed for displaying the
-documentation.
+This version of ResClasses needs  GAP >=4.8.1,  IO >=4.4.4,  GAPDoc >=1.4 and 
+Polycyclic >=2.6. It is completely written in the GAP language  and does nei-
+ther contain nor require external binaries.
 
 
                                 Installation
