@@ -6,7 +6,7 @@
 
 <Abstract>
 
-  &ResClasses; is a package for &GAP; 4, which provides a fully-featured
+  &ResClasses; is a package for &GAP; 4 which provides a fully-featured
   and easy-to-use implementation of set-theoretic unions of residue classes
   of the integers and of a few other rings. <P/>
 
