@@ -3,9 +3,14 @@
                     =========================================
 
 
-Changes between ResClasses 4.0.0 and ResClasses 4.1.0 (XXX, 2016):
+Changes between ResClasses 4.0.0 and ResClasses 4.1.0 (February 8, 2016):
 
  - An auxiliary function `LogToDatedFile' has been added.
+
+ - The file named in PackageInfo.g for the automated package tests
+   is now tst/resclass.tst.
+
+ - IO is now a needed package of ResClasses.
 
 Changes between ResClasses 3.4.0 and ResClasses 4.0.0 (January 25, 2016):
 
