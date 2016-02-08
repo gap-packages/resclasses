@@ -26,13 +26,15 @@ viewer.
                                 Requirements
 
 This version of ResClasses needs  GAP >=4.8.1,  IO >=4.4.4,  GAPDoc >=1.4 and 
-Polycyclic >=2.6. It is completely written in the GAP language  and does nei-
-ther contain nor require external binaries.
+Polycyclic >=2.6. All required packages are already present in a standard GAP
+installation.  ResClasses can be used on all platforms for which GAP is avai-
+lable. It is completely  written in the GAP language and does neither contain
+nor require  external binaries.
 
 
                                 Installation
 
-Like any other  GAP package,  ResClasses must  be installed in the  pkg/ sub-
+Like any other GAP package,  ResClasses is usually installed in the pkg/ sub-
 directory of the  GAP distribution.   This is accomplished  by extracting the
 package archive file in this directory.  After this  you can load the package
 as usual via LoadPackage( "resclasses" );.
