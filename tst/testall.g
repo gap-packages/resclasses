@@ -4,8 +4,6 @@
 ##                                                                
 #############################################################################
 
-return 
-
 TestDirectory(Concatenation(
                 GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath,
                 "/tst/"));

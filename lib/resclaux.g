@@ -79,9 +79,9 @@ BindGlobal( "ResClassesTest",
 
     return
 
-    ReadAsFunction(Concatenation(
-                     GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath,
-                     "/tst/testall.g"))();
+    TestDirectory(Concatenation(
+                  GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath,
+                  "/tst/"));
   end );
 
 #############################################################################
