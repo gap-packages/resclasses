@@ -43,7 +43,9 @@ of packages off, you can load &ResClasses; via
 
 <ManSection>
   <Func Name="ResClassesTest" Arg=""/>
-  <Returns> nothing. </Returns>
+  <Returns>
+    <C>true</C> if no errors were found, and <C>false</C> otherwise.
+  </Returns>
   <Description>
     Performs tests of the &ResClasses; package.
     Errors, i.e. differences to the correct results of the test computations,
