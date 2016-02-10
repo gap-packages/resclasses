@@ -3,7 +3,7 @@
                     =========================================
 
 
-Changes between ResClasses 4.0.0 and ResClasses 4.1.1 (February 9, 2016):
+Changes between ResClasses 4.0.0 and ResClasses 4.1.2 (February 10, 2016):
 
  - An auxiliary function `LogToDatedFile' has been added.
 

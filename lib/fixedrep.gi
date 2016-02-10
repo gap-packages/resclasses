@@ -390,7 +390,7 @@ InstallMethod( Union2,
   "for two unions of residue classes with fixed rep's (ResClasses)",
   IsIdenticalObj,
   [ IsUnionOfResidueClassesWithFixedRepresentatives,
-    IsUnionOfResidueClassesWithFixedRepresentatives ], 2^28 - SUM_FLAGS,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
     return UnionOfResidueClassesWithFixedRepresentatives(
@@ -407,7 +407,7 @@ InstallMethod( Intersection2,
   "for two unions of residue classes with fixed rep's (ResClasses)",
   IsIdenticalObj,
   [ IsUnionOfResidueClassesWithFixedRepresentatives,
-    IsUnionOfResidueClassesWithFixedRepresentatives ], 2^28 - SUM_FLAGS,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
 
@@ -429,7 +429,7 @@ InstallMethod( Difference,
   "for two unions of residue classes with fixed rep's (ResClasses)",
   IsIdenticalObj,
   [ IsUnionOfResidueClassesWithFixedRepresentatives,
-    IsUnionOfResidueClassesWithFixedRepresentatives ], 2^28 - SUM_FLAGS,
+    IsUnionOfResidueClassesWithFixedRepresentatives ], 0,
 
   function ( U1, U2 )
 
