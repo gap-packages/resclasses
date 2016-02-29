@@ -31,6 +31,9 @@ ResidueClassWithFixedRepresentative( Integers, 3, 2 )
 gap> Print(U,"\n");
 UnionOfResidueClassesWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ] 
  ] )
+gap> String(U);
+"UnionOfResidueClassesWithFixedRepresentatives( Integers, [ [ 2, 1 ], [ 7, 4 ]\
+ ] )"
 gap> p := List([1..25],i->[Primes[i],i]);;
 gap> P := UnionOfResidueClassesWithFixedRepresentatives(Integers,p);
 <union of 25 residue classes of Z with fixed representatives>
@@ -84,6 +87,10 @@ gap> cl1 + 1;
 [3/3]
 gap> U+23;
 [24/2] U [27/7]
+gap> 2+U; 
+[3/2] U [6/7]
+gap> 2-U;
+[-2/-7] U [1/-2]
 gap> cl2 - 1;
 [0/2]
 gap> U - 17;
@@ -94,6 +101,8 @@ gap> 7*U;
 [7/14] U [28/49]
 gap> (2*cl1+2)/3;
 [2/2]
+gap> ViewString(ResidueClassWithFixedRep(3,8));
+"[8/3]"
 gap> RepresentativeStabilizingRefinement(cl1,2);
 [2/6] U [5/6]
 gap> V := RepresentativeStabilizingRefinement(U,3);

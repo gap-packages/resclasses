@@ -1114,7 +1114,7 @@ InstallOtherMethod( Residues, "for finite sets (ResClasses)", true,
 ##
 #M  Classes( <U> ) . . . . . . . . . . . . . . . . . for residue class unions
 ##
-InstallMethod( Classes, "for residue class unions, aparse rep. (ResClasses)",
+InstallMethod( Classes, "for residue class unions, sparse rep. (ResClasses)",
                true, [ IsResidueClassUnionInClassListRep ], 0, U -> U!.cls );
 InstallMethod( Classes, "for residue class unions, std. rep. (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0,
@@ -2147,30 +2147,6 @@ InstallMethod( Difference,
       elif IsZxZ(R)  then return ResidueClassUnion(R,[[1,0],[0,1]],[],[],[]);
       else TryNextMethod(); fi;
     else TryNextMethod(); fi;
-  end );
-
-#############################################################################
-##
-#F  ResidueClassesIntersectionType( <classes> )
-##
-InstallGlobalFunction( ResidueClassesIntersectionType,
-
-  function ( classes )
-
-    local  subsets, internonempty, diffnonempty, n, Sn, Sn2, cls, combs;
-
-    n     := Length(classes);
-    combs := Filtered(Combinations([1..n]),l->l<>[]);
-    Sn  := Action(SymmetricGroup(n),combs,OnSets);
-    Sn2 := Action(SymmetricGroup(n),Tuples(combs,2),OnTuplesSets);
-    subsets := Filtered(Combinations(classes),cl->cl<>[]);
-    internonempty := List(subsets,S->not IsEmpty(Intersection(S)));
-    internonempty := Minimum(List(AsList(Sn),g->Permuted(internonempty,g)));
-    diffnonempty  := List(Tuples(subsets,2),
-                          t->not IsEmpty(Difference(Union(t[1]),
-                                                    Union(t[2]))));
-    diffnonempty  := Minimum(List(AsList(Sn2),g->Permuted(diffnonempty,g)));
-    return [internonempty,diffnonempty];
   end );
 
 #############################################################################

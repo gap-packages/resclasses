@@ -11,6 +11,10 @@ gap> START_TEST( "zxz.tst" );
 gap> ResClassesDoThingsToBeDoneBeforeTest();
 gap> R := Integers^2;
 ( Integers^2 )
+gap> -R;
+( Integers^2 )
+gap> R * [[2,2],[0,4]];
+The residue class (0,0)+(2,2)Z+(0,4)Z of Z^2
 gap> Difference(R,R);
 [  ]
 gap> Union(R,R);
@@ -25,6 +29,36 @@ gap> Union(last,[[1,-1]]);
 Z^2 \ [ [ 0, 0 ] ]
 gap> Union(last,[[0,0]]);
 ( Integers^2 )
+gap> D := Difference(Union(R*[[2,2],[0,4]],[[1,2],[3,4]]),R*[[2,2],[0,4]]);     
+[ [ 1, 2 ], [ 3, 4 ] ]
+gap> Classes(D);
+[  ]
+gap> Mod(D);
+[ [ 1, 0 ], [ 0, 1 ] ]
+gap> 2*D;
+[ [ 2, 4 ], [ 6, 8 ] ]
+gap> (6*D)/2;
+[ [ 3, 6 ], [ 9, 12 ] ]
+gap> D[1];
+[ 1, 2 ]
+gap> List(D,Sum);
+[ 3, 7 ]
+gap> Filtered(D,v->Maximum(v) < 3);
+[ [ 1, 2 ] ]
+gap> ForAny(D,v->IsSubset(NonnegativeIntegers,v));
+true
+gap> ForAll(D,v->IsSubset(NonnegativeIntegers,v));
+true
+gap> Mod(R);
+[ [ 1, 0 ], [ 0, 1 ] ]
+gap> Residues(R);
+[ [ 0, 0 ] ]
+gap> IncludedElements(R);
+[  ]
+gap> ExcludedElements(R);
+[  ]
+gap> AsUnionOfFewClasses(R);       
+[ ( Integers^2 ) ]
 gap> R+[1,0];
 ( Integers^2 )
 gap> Difference(R,[[0,0],[1,1]]);
@@ -54,6 +88,8 @@ gap> []+[1,1];
 gap> 2*empty;
 [  ]
 gap> empty*[[2,0],[0,3]];
+[  ]
+gap> [  ]/2;
 [  ]
 gap> l := Intersection(R,[[1,0],[7,-3]]);;
 gap> l = [ [ 1, 0 ], [ 7, -3 ] ];
@@ -201,6 +237,12 @@ gap> ResidueClass(R,[[2,0],[0,2]],[1,0]);
 (1,0)+(2,0)Z+(0,2)Z
 gap> last=last2;
 true
+gap> ResidueClass([[2,0],[0,2]],[1,0]);  
+(1,0)+(2,0)Z+(0,2)Z
+gap> ResidueClassNC([[2,0],[0,2]],[1,0]);
+(1,0)+(2,0)Z+(0,2)Z
+gap> ResidueClassNC([1,0],[[2,0],[0,2]]);      
+(1,0)+(2,0)Z+(0,2)Z
 gap> ResidueClass(R,[[2,0],[0,3]],[1,0]);
 (1,0)+(2,0)Z+(0,3)Z
 gap> ResidueClass(R,[[2,0],[0,3]],[1,2]);
@@ -303,6 +345,10 @@ gap> SplittedClass(cl,[2,3]);
   (3,1)+(4,0)Z+(0,9)Z, (3,4)+(4,0)Z+(0,9)Z, (3,7)+(4,0)Z+(0,9)Z ]
 gap> Union(last) = cl;
 true
+gap> StandardAssociate(Integers^[2,2],[[2,2],[2,3]]);
+[ [ 2, 0 ], [ 0, 1 ] ]
+gap> Lcm(Integers^[2,2],[[2,1],[0,3]],[[1,1],[0,2]]);
+[ [ 2, 4 ], [ 0, 6 ] ]
 gap> All2x2IntegerMatricesInHNFWithDeterminantUpTo(2);
 [ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 2 ] ], [ [ 1, 1 ], [ 0, 2 ] ], 
   [ [ 2, 0 ], [ 0, 1 ] ] ]

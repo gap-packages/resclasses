@@ -394,18 +394,6 @@ DeclareAttribute( "Density", IsResidueClassUnion );
 
 #############################################################################
 ##
-#F  ResidueClassesIntersectionType( <classes> )
-##
-##  Given a list <classes> of residue classes, this function returns a list
-##  of two lists of booleans. The return value is a class invariant:
-##  It is the same for all lists of residue classes of the underlying ring R
-##  which one can get from <classes> by applying a permutation of some super-
-##  set of R.
-##  
-DeclareGlobalFunction( "ResidueClassesIntersectionType" );
-
-#############################################################################
-##
 #F  DisplayAsGrid( <U> ) .  display the residue class union <U> as ASCII grid
 ##
 DeclareGlobalFunction( "DisplayAsGrid" );

@@ -15,6 +15,30 @@ gap> cl2 := ResidueClass(Z_pi([2,5]),2,1);
 The residue class 1(2) of Z_( 2, 5 )
 gap> cl2 = ResidueClass(Integers,2,1);
 false
+gap> cl1 = ResidueClassNC(2,3);
+true
+gap> ExtRepOfObj(cl1);
+[ 3, [ 2 ], [  ], [  ] ]
+gap> Mod(Integers);
+1
+gap> Mod([1,2,3]);
+0
+gap> Mod([]);     
+0
+gap> Residues(Integers);
+[ 0 ]
+gap> Residues([1,2,3]);
+[  ]
+gap> Residues([]);      
+[  ]
+gap> SizeOfSmallestResidueClassRing(Integers);
+2
+gap> SizeOfSmallestResidueClassRing(Z_pi([3,7]));
+3
+gap> SizeOfSmallestResidueClassRing(PolynomialRing(GF(5),1));
+5
+gap> SizeOfSmallestResidueClassRing(Integers^2);             
+2
 gap> R := PolynomialRing(GF(7),1);;
 gap> x := Indeterminate(GF(7),1);; SetName(x,"x");
 gap> cl3 := ResidueClass(R,x+One(R),3*One(R));
@@ -23,10 +47,44 @@ gap> DisplayString(cl3);
 "3(x+1)"
 gap> U1 := ResidueClassUnion(Integers,6,[2,4]);
 Union of the residue classes 2(6) and 4(6) of Z
+gap> Classes(U1);
+[ [ 2, 6 ], [ 4, 6 ] ]
+gap> Classes(SparseRep(U1));
+[ [ 2, 6 ], [ 4, 6 ] ]
+gap> SparseRep(SparseRep(U1)) = U1;
+true
+gap> StandardRep(StandardRep(U1)) = U1;
+true
+gap> U1 = SparseRep(U1);               
+true
+gap> U1 = [1,2,3];
+false
+gap> [1,2,3] = U1;
+false
 gap> U2 := ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> DisplayString(U2);
 "1(5) U 2(5) U [ 3, 8 ] \\ [ -4, 1 ]"
+gap> String(SparseRep(U2));
+"ResidueClassUnion( Integers, [ [ 1, 5 ], [ 2, 5 ] ], [ 3, 8 ], [ -4, 1 ] )"
+gap> Print(SparseRep(U2),"\n"); 
+ResidueClassUnion( Integers, [ [ 1, 5 ], [ 2, 5 ] ], [ 3, 8 ], [ -4, 1 ] )
+gap> Display(U2);             
+(Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
+gap> Display(SparseRep(U2));
+(Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
+gap> U1 < U2;
+false
+gap> SparseRep(U1) < SparseRep(U2);
+false
+gap> 7 in SparseRep(U2);
+true
+gap> 8 in SparseRep(U2);
+true
+gap> -4 in SparseRep(U2);
+false
+gap> 0 in SparseRep(U2); 
+false
 gap> U3 := ResidueClassUnion(R,x,[One(R),5*One(R),6*One(R)],
 >                               [Zero(R)],[One(R)]);
 <union of 3 residue classes (mod x) of GF(7)[x]> U [ 0 ] \ [ 1 ]
@@ -71,8 +129,98 @@ gap> Zero(R) in U3;
 true
 gap> IsSubset(cl1,U1);
 false
+gap> IsSubset(cl1,SparseRep(U1));
+false
+gap> IsSubset(SparseRep(cl1),U1);
+false
+gap> IsSubset(SparseRep(cl1),SparseRep(U1));
+false
 gap> IsSubset(U4,ResidueClass(Z_pi([2,3]),16,11));
 true
+gap> IsSubset(U2,ResidueClass(7,10));
+true
+gap> IsSubset(U2,SparseRep(ResidueClass(7,10)));
+true
+gap> IsSubset(SparseRep(U2),SparseRep(ResidueClass(7,10)));
+true
+gap> IsSubset(SparseRep(U2),ResidueClass(7,10));
+true
+gap> U5 := ResidueClassUnion(Integers,15,[6,12],[8],[]);
+(Union of the residue classes 6(15) and 12(15) of Z) U [ 8 ]
+gap> IsSubset(U2,U5);                                      
+true
+gap> IsSubset(SparseRep(U2),SparseRep(U5));
+true
+gap> U6 := ResidueClassUnion(Integers,15,[6,12],[8,11,23],[]);
+(Union of the residue classes 6(15) and 12(15) of Z) U [ 8, 11, 23 ]
+gap> IsSubset(U2,U6);
+false
+gap> IsSubset(SparseRep(U2),SparseRep(U6));
+false
+gap> IsSubset(Integers,U5);
+true
+gap> IsSubset(U5,Integers);
+false
+gap> U7 := ResidueClassUnion(Integers,15,[6,12],[8,11,23],[21]);
+(Union of the residue classes 6(15) and 12(15) of Z) U [ 8, 11, 23 ] \ [ 21 ]
+gap> Delta(U7);               
+1/5
+gap> Delta(SparseRep(U7));
+1/5
+gap> List([0..6],k->Rho(ResidueClass(k,7)));
+[ E(4), -E(28)^23, E(28)^11, -E(28)^27, -E(28)^15, E(28)^3, -E(28)^19 ]
+gap> Product(last);
+-E(4)
+gap> Union(U7,U7) = U7;
+true
+gap> Union(U7,SparseRep(U7)) = U7;
+true
+gap> Union(SparseRep(U7),U7) = U7;
+true
+gap> Union(SparseRep(U7),SparseRep(U7)) = U7;
+true
+gap> Union(Difference(Integers,U7),U7);
+Integers
+gap> Union(Difference(Integers,U7),SparseRep(U7));
+Integers
+gap> Union(SparseRep(Difference(Integers,U7)),SparseRep(U7));
+Integers
+gap> Union(U7,Integers);
+Integers
+gap> Union(Integers,U7);
+Integers
+gap> Union(Integers,[1,2,3]);
+Integers
+gap> Union([1,2,3],Integers);
+Integers
+gap> Union(Integers,Integers);
+Integers
+gap> Union(Z_pi(2),Z_pi(2));  
+Z_( 2 )
+gap> Intersection(U2+1,U7);
+(The residue class 12(15) of Z) U [ 8, 23 ] \ [ -3 ]
+gap> Intersection(SparseRep(U2+1),U7);
+(The residue class 12(15) of Z) U [ 8, 23 ] \ [ -3 ]
+gap> Intersection(SparseRep(U2)+1,U7);
+(The residue class 12(15) of Z) U [ 8, 23 ] \ [ -3 ]
+gap> Intersection(U2+1,SparseRep(U7));
+(The residue class 12(15) of Z) U [ 8, 23 ] \ [ -3 ]
+gap> Intersection(SparseRep(U2)+1,SparseRep(U7));
+(The residue class 12(15) of Z) U [ 8, 23 ] \ [ -3 ]
+gap> Intersection(U7,[-50..50]);
+[ -48, -39, -33, -24, -18, -9, -3, 6, 8, 11, 12, 23, 27, 36, 42 ]
+gap> Intersection([-50..50],U7) = last;
+true
+gap> Difference(U7,U2);
+[ 23 ]
+gap> Difference(U2,U7);
+(Union of the residue classes 1(15), 2(15), 7(15) and 11(15) of Z) U 
+[ 3, 21 ] \ [ -4, 1, 11 ]
+gap> Difference(SparseRep(U7),U2);
+[ 23 ]
+gap> Difference(SparseRep(U2),U7);
+(Union of the residue classes 1(15), 2(15), 7(15) and 11(15) of Z) U 
+[ 3, 21 ] \ [ -4, 1, 11 ]
 gap> List([U1,U1/2,2*U1+7,U3,U4,[1,2,3],[1/2,2,3],[x],[],Integers,Z_pi(3),R],
 >         Density);
 [ 1/3, 2/3, 1/6, 3/7, 1/4, 0, 0, 0, 0, 1, 1, 1 ]
@@ -391,6 +539,19 @@ gap> Integers = [0];
 false
 gap> [0] = Integers;
 false
+gap> Integers + 3;
+Integers
+gap> 3 + Integers;   
+Integers
+gap> AsUnionOfFewClasses([1,2,3]);                
+[  ]
+gap> AsUnionOfFewClasses(Integers);
+[ Integers ]
+gap> PartitionsIntoResidueClasses(Integers,5,[3]);
+[ [ 0(3), 1(3), 2(9), 5(9), 8(9) ], [ 0(3), 2(3), 1(9), 4(9), 7(9) ], 
+  [ 1(3), 2(3), 0(9), 3(9), 6(9) ] ]
+gap> Union(RandomPartitionIntoResidueClasses(Integers,5,[2,3]));
+Integers
 gap> S := ResidueClassUnion(Integers,6,[1,2,4],[3,9],[1,7]);
 1(3) U 2(6) U [ 3, 9 ] \ [ 1, 7 ]
 gap> l := ExtRepOfObj(S);

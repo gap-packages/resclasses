@@ -53,6 +53,8 @@ gap> IsField(R);
 false
 gap> Intersection(Rationals,T);
 Z_( 3, 11 )
+gap> Intersection(Z_pi(2),Rationals);
+Z_( 2 )
 gap> IsSubset(R,U);
 true
 gap> IsSubset(T,R);
