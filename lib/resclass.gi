@@ -1878,8 +1878,16 @@ InstallMethod( Intersection2,
                ReturnTrue, [ IsResidueClassUnion, IsDomain ], 0,
 
   function ( U, R )
-    if not UnderlyingRing(FamilyObj(U)) = R then TryNextMethod(); fi;
-    return U;
+
+    local  S;
+
+    S := UnderlyingRing(FamilyObj(U));
+    if S = R or IsSubset(R,S) then return U; fi;
+    if IsResidueClassUnion(R) then TryNextMethod(); fi;
+    if Intersection(S,R) <> [] then
+      Error("sorry, this case is not yet implemented");
+      return fail;
+    else return []; fi;
   end );
 
 #############################################################################
