@@ -13,7 +13,6 @@
 <Heading>Requirements</Heading>
 
 This version of &ResClasses; needs at least &GAP;&nbsp;4.8.1,
-<Package>IO</Package>&nbsp;4.4.4&nbsp;<Cite Key="IO"/>,
 <Package>Polycyclic</Package>&nbsp;2.6&nbsp;<Cite Key="Polycyclic"/>
 and &GAPDoc;&nbsp;1.4&nbsp;<Cite Key="GAPDoc"/>.
 It can be used on all platforms for which &GAP; is available.
@@ -122,7 +121,10 @@ of packages off, you can load &ResClasses; via
     the name of the logfile has the form of a timestamp, i.e.
     <C>year-month-day hour-minute-second.log.</C>
     If &GAP; is already in logging mode, the old logfile is closed
-    before the new one is opened.
+    before the new one is opened. <P/>
+
+    The availability of this function depends on whether the package
+    <Package>IO</Package><Cite Key="IO"/> is installed and compiled.
   </Description>
 </ManSection>
 

@@ -3,11 +3,20 @@
                     =========================================
 
 
+Changes between ResClasses 4.1.2 and ResClasses 4.2.0 (March 1, 2016):
+
+ - The test suite has been amended for better coverage of the code by the tests.
+
+ - The undocumented and unused function `ResidueClassesIntersectionType'
+   has been removed.
+
+ - IO is now a suggested package of ResClasses.
+
+ - Minor issues with file permissions etc. have been resolved.
+
 Changes between ResClasses 4.0.0 and ResClasses 4.1.2 (February 10, 2016):
 
  - An auxiliary function `LogToDatedFile' has been added.
-
- - IO is now a needed package of ResClasses.
 
 Changes between ResClasses 3.4.0 and ResClasses 4.0.0 (January 25, 2016):
 

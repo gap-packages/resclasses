@@ -204,12 +204,19 @@ InstallGlobalFunction( LogToDatedFile,
 
   function ( arg )
 
-    local  name, directory, dmy;
+    local  name, directory, gettimeofday, dmy;
 
+    if IsBoundGlobal("IO_gettimeofday") then
+      gettimeofday := ValueGlobal("IO_gettimeofday");
+    else
+      Error("the function `LogToDatedFile' is available only if the ",
+            "IO package\nis installed and compiled.");
+      return fail;
+    fi;
     if   Length(arg) >= 1 and IsString(arg[1])
     then directory := arg[1];
     else directory := "/user/GAP/log/"; fi;
-    dmy := DMYhmsSeconds(IO_gettimeofday().tv_sec);
+    dmy := DMYhmsSeconds(gettimeofday().tv_sec);
     name := Concatenation(directory,
                           String(dmy[3]),"-",
                           String(dmy[2]+100){[2..3]},"-",
