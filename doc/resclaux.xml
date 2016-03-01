@@ -123,8 +123,8 @@ of packages off, you can load &ResClasses; via
     If &GAP; is already in logging mode, the old logfile is closed
     before the new one is opened. <P/>
 
-    The availability of this function depends on whether the package
-    <Package>IO</Package><Cite Key="IO"/> is installed and compiled.
+    The availability of this function depends on that the package
+    <Package>IO</Package>&nbsp;<Cite Key="IO"/> is installed and compiled.
   </Description>
 </ManSection>
 
