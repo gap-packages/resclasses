@@ -676,7 +676,7 @@ gap> T := Difference(Integers,S);
 gap> Union(S,T);
 Integers
 gap> ResClassesDoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "resclass.tst", 60000000 );
+gap> STOP_TEST( "resclass.tst", 140000000 );
 
 #############################################################################
 ##

@@ -193,7 +193,7 @@ gap> Rho(U);
 gap> RepresentativeStabilizingRefinement(U,0);
 [23/4]
 gap> ResClassesDoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "fixedrep.tst", 5000000 );
+gap> STOP_TEST( "fixedrep.tst", 27000000 );
 
 #############################################################################
 ##

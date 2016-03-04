@@ -4,9 +4,8 @@
 ##                                                                
 #############################################################################
 
-TestDirectory(Concatenation(
-                GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath,
-                "/tst/"));
+TestDirectory(DirectoriesPackageLibrary( "resclasses", "tst" ),
+              rec(exitGAP := true));
 
 #############################################################################
 ##

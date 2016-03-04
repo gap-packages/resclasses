@@ -2,21 +2,11 @@
 ##
 #W  general.gd             GAP4 Package `ResClasses'              Stefan Kohl
 ##
-##  This file contains declarations of a couple of functions and methods
+##  This file contains declarations of a couple of functions and operations
 ##  which are not directly related to computations with residue classes, and
-##  which might perhaps later be moved into the GAP Library.
+##  which might perhaps later be moved into the GAP Library or elsewhere.
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
-#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
-#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
-##
-DeclareGlobalFunction( "DifferencesList" );
-DeclareGlobalFunction( "QuotientsList" );
-DeclareGlobalFunction( "FloatQuotientsList" );
 
 #############################################################################
 ##
@@ -27,21 +17,6 @@ DeclareGlobalFunction( "FloatQuotientsList" );
 ##
 DeclareOperation( "PositionsSublist",
                   [ IsListOrCollection, IsListOrCollection ] );
-
-#############################################################################
-##
-#O  RandomCombination( S, k )
-##
-##  Returns a random unordered <k>-tuple of distinct elements of the set <S>.
-##
-DeclareOperation( "RandomCombination", [ IsListOrCollection, IsPosInt ] );
-
-#############################################################################
-##
-#O  IsCommuting( <a>, <b> ) .  checks whether two group elements etc. commute
-##
-DeclareOperation( "IsCommuting", [ IsMultiplicativeElement,
-                                   IsMultiplicativeElement ] );
 
 #############################################################################
 ##
@@ -104,16 +79,6 @@ DeclareGlobalFunction( "EmailLogFile" );
 ##  The IO package is needed for using this function.
 ##
 DeclareGlobalFunction( "DownloadFile" );
-
-#############################################################################
-##
-#F  BlankFreeString( <obj> )  . . . . . . . . . . . . . string without blanks
-#F  QuotesStripped( <str> ) . . . . . . . . . . .  string with quotes removed
-#F  IntOrInfinityToLaTeX( n ) . LaTeX string representing integer or infinity
-##
-DeclareGlobalFunction( "BlankFreeString" );
-DeclareGlobalFunction( "QuotesStripped" );
-DeclareGlobalFunction( "IntOrInfinityToLaTeX" );
 
 #############################################################################
 ##

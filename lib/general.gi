@@ -4,7 +4,7 @@
 ##
 ##  This file contains a couple of functions and methods which are not
 ##  directly related to computations with residue classes, and which might
-##  perhaps later be moved into the GAP Library.
+##  perhaps later be moved into the GAP Library or elsewhere.
 ##
 #############################################################################
 
@@ -50,41 +50,17 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
-#M  Comm( [ <elm1>, <elm2> ] ) . . .  for arguments enclosed in list brackets
+#M  ViewString( <z> ) . . . . . . . . .  for a cyclotomic, delegate to String
 ##
-InstallOtherMethod( Comm,
-                    "for arguments enclosed in list brackets (ResClasses)",
-                    true, [ IsList ], 0, LeftNormedComm );
-
-#############################################################################
-##
-#M  IsCommuting( <a>, <b> ) . . . . . . . . . . . . . . . . . fallback method
-##
-InstallMethod( IsCommuting,
-               "fallback method (ResClasses)", IsIdenticalObj,
-               [ IsMultiplicativeElement, IsMultiplicativeElement ], 0,
-               function ( a, b ) return a*b = b*a; end );
+InstallMethod( ViewString,
+               "for a cyclotomic, delegate to String (ResClasses)",
+               true, [ IsCyclotomic ], 0, String );
 
 #############################################################################
 ##
 #S  Some utility functions. /////////////////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  DifferencesList( <list> ) . . . . differences of consecutive list entries
-#F  QuotientsList( <list> ) . . . . . . quotients of consecutive list entries
-#F  FloatQuotientsList( <list> )  . . . . . . . . . . . . dito, but as floats
-##
-InstallGlobalFunction( DifferencesList,
-                       list -> List( [ 2..Length(list) ],
-                                     pos -> list[ pos ] - list[ pos-1 ] ) );
-InstallGlobalFunction( QuotientsList,
-                       list -> List( [ 2 .. Length( list ) ],
-                                     pos -> list[ pos ] / list[ pos-1 ] ) );
-InstallGlobalFunction( FloatQuotientsList,
-                       list -> List( QuotientsList( list ), Float ) );
 
 #############################################################################
 ##
@@ -103,28 +79,6 @@ InstallMethod( PositionsSublist, "default method",
       if pos <> fail then Add(positions,pos); fi;
     until pos = fail;
     return positions;
-  end );
-
-#############################################################################
-##
-#M  RandomCombination( S, k ) . . . . . . . . . . . . . . . .  default method
-##
-InstallMethod( RandomCombination, "default method",
-               ReturnTrue, [ IsListOrCollection, IsPosInt ],
-
-  function ( S, k )
-
-    local  c, elm, i;
-
-    if k > Size(S) then return fail; fi;
-    c := [];
-    for i in [1..k] do
-      repeat
-        elm := Random(S);
-      until not elm in c;
-      Add(c,elm);
-    od;
-    return Set(c);
   end );
 
 #############################################################################
@@ -314,50 +268,6 @@ InstallGlobalFunction( DownloadFile,
       return fail;
     fi;
     return r.body;
-  end );
-
-#############################################################################
-##
-#S  Some string manipulation trivia. ////////////////////////////////////////
-##
-#############################################################################
-
-#############################################################################
-##
-#F  BlankFreeString( <obj> ) . . . . . . . . . . . . .  string without blanks
-##
-InstallGlobalFunction( BlankFreeString,
-
-  function ( obj )
-
-    local  str;
-
-    str := String(obj);
-    RemoveCharacters(str," ");
-    return str;
-  end );
-
-#############################################################################
-##
-#F  QuotesStripped( <str> ) . . . . . . . . . . . . . . string without quotes
-##
-InstallGlobalFunction( QuotesStripped,
-
-  function ( str )
-    RemoveCharacters(str,"\"");
-    return str;
-  end );
-
-#############################################################################
-##
-#F  IntOrInfinityToLaTeX( n ) .  LaTeX string for a given integer or infinity
-##
-InstallGlobalFunction( IntOrInfinityToLaTeX,
-
-  function( n )
-    if   IsInt(n)      then return String(n);
-    elif IsInfinity(n) then return "\\infty";
-    else return fail; fi;
   end );
 
 #############################################################################

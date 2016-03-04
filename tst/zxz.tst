@@ -363,7 +363,7 @@ gap> All2x2IntegerMatricesInHNFWithDeterminantUpTo(4);
   [ [ 1, 1 ], [ 0, 4 ] ], [ [ 1, 2 ], [ 0, 4 ] ], [ [ 1, 3 ], [ 0, 4 ] ], 
   [ [ 2, 0 ], [ 0, 2 ] ], [ [ 2, 1 ], [ 0, 2 ] ], [ [ 4, 0 ], [ 0, 1 ] ] ]
 gap> ResClassesDoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "zxz.tst", 200000000 );
+gap> STOP_TEST( "zxz.tst", 170000000 );
 
 #############################################################################
 ##

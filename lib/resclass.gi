@@ -538,9 +538,9 @@ InstallMethod( Superlattices,
 BindGlobal( "ModulusAsFormattedString",
   function ( m )
     if not IsMatrix(m) then return ViewString(m); fi;
-    return Concatenation(List(["(",m[1][1],",",m[1][2],")Z+(",
-                                   m[2][1],",",m[2][2],")Z"],
-                              BlankFreeString));
+    return Filtered(Concatenation(List(["(",m[1][1],",",m[1][2],")Z+(",
+                                            m[2][1],",",m[2][2],")Z"],
+                                       String)),ch->ch<>' ');
   end );
 
 #############################################################################
@@ -3250,8 +3250,9 @@ InstallMethod( ViewString,
 
     local  str;
 
-    str := Concatenation(BlankFreeString(Residue(cl)),"+",
-                         ModulusAsFormattedString(Modulus(cl)));
+    str := Filtered(Concatenation(String(Residue(cl)),"+",
+                                  ModulusAsFormattedString(Modulus(cl))),
+                    ch->ch<>' ');
     str := ReplacedString(str,"[","(");
     str := ReplacedString(str,"]",")");
     return str;

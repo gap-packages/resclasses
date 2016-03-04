@@ -28,9 +28,9 @@
     <name><first>Max</first><last>Neunhöffer</last></name>
   </author>
   <title>
-    <C>IO -- Bindings for low level C library I/O routines (Version 4.4.4)</C>
+    <C>IO -- Bindings for low level C library I/O routines (Version 4.4.5)</C>
   </title>
-  <year>2014</year>
+  <year>2016</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/io.html</URL>
   </other>
@@ -39,12 +39,13 @@
 <entry id="Polycyclic"><manual>
   <author>
     <name><first>Bettina</first><last>Eick</last></name>
+    <name><first>Max</first><last>Horn</last></name>
     <name><first>Werner</first><last>Nickel</last></name>
   </author>
   <title>
-    <C>Polycyclic -- Computation with polycyclic groups (Version 2.8.1)</C>
+    <C>Polycyclic -- Computation with polycyclic groups (Version 2.11)</C>
   </title>
-  <year>2011</year>
+  <year>2013</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/polycyclic.html</URL>
   </other>
@@ -54,10 +55,25 @@
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
-  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 3.8.0)</C></title>
-  <year>2015</year>
+  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 4.2.0)</C></title>
+  <year>2016</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>
+  </other>
+</manual></entry>
+
+<entry id="Utils"><manual>
+  <author>
+    <name><first>Sebastian</first><last>Gutsche</last></name>
+    <name><first>Stefan</first><last>Kohl</last></name>
+    <name><first>Christopher</first><last>Wensley</last></name>
+  </author>
+  <title>
+    <C>Utils - Utility functions in GAP (Version 0.38)</C>
+  </title>
+  <year>2016</year>
+  <other type="note">
+    GAP package, <URL>http://www.gap-system.org/Packages/utils.html</URL>
   </other>
 </manual></entry>
 

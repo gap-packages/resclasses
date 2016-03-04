@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.2.0",
-Date             := "01/03/2016",
+Version          := "4.3.0",
+Date             := "04/03/2016",
 ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/resclasses-4.2.0"),
+                                  "resclasses/resclasses-4.3.0"),
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -44,8 +44,9 @@ PackageDoc       := rec(
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.8.1",
-                         NeededOtherPackages    := [ ["GAPDoc",">=1.4"], ["Polycyclic",">=2.6"] ],
-                         SuggestedOtherPackages := [ ["IO",">=4.4.4"] ],
+                         NeededOtherPackages    := [ ["GAPDoc",">=1.5.1"], ["Polycyclic",">=2.11"],
+                                                     ["utils", ">=0.38"] ],
+                         SuggestedOtherPackages := [ ["IO",">=4.4.5"] ],
                          ExternalConditions     := [ ]
                        ),
 AvailabilityTest := ReturnTrue,

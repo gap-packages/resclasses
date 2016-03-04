@@ -3,6 +3,13 @@
                     =========================================
 
 
+Changes between ResClasses 4.2.0 and ResClasses 4.3.0 (March 4, 2016):
+
+ - The utility functions and -operations `DifferencesList', `QuotientsList',
+   `FloatQuotientsList', `RandomCombination', `IsCommuting', `BlankFreeString',
+   `QuotesStripped' and `IntOrInfinityToLaTeX' have been moved to the
+   Utils package. Therefore Utils is now a needed package of ResClasses.
+
 Changes between ResClasses 4.1.2 and ResClasses 4.2.0 (March 1, 2016):
 
  - The test suite has been amended for better coverage of the code by the tests.

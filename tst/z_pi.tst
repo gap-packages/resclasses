@@ -150,7 +150,7 @@ false
 gap> IsIrreducibleRingElement(T,-3);
 true
 gap> ResClassesDoThingsToBeDoneAfterTest();
-gap> STOP_TEST( "z_pi.tst", 2000000 );
+gap> STOP_TEST( "z_pi.tst", 34000000 );
 
 #############################################################################
 ##

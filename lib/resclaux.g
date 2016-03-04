@@ -2,13 +2,14 @@
 ##
 #W  resclaux.g             GAP4 Package `ResClasses'              Stefan Kohl
 ##
-##  This file contains some auxiliary functions for the ResClasses package.
+##  This file contains auxiliary functions for the ResClasses package.
 ##
 #############################################################################
 
 BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
-RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;
-RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel( InfoWarning );
+RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;
+RESCLASSES_WARNINGLEVEL_BACKUP := InfoLevel( InfoWarning );
+RESCLASSES_ASSERTIONLEVEL_BACKUP := AssertionLevel();
 
 #############################################################################
 ##
@@ -49,9 +50,10 @@ BindGlobal( "ONE_LETTER_GLOBALS",
 BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
 
   function (  )
-    RESCLASSES_WARNINGLEVEL_BUFFER := InfoLevel(InfoWarning);;
+    RESCLASSES_WARNINGLEVEL_BACKUP := InfoLevel(InfoWarning);;
     SetInfoLevel(InfoWarning,0);
-    RESCLASSES_VIEWINGFORMAT_BUFFER := RESCLASSES_VIEWINGFORMAT;;
+    SetAssertionLevel(0);
+    RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;;
     ResidueClassUnionViewingFormat("long");
     CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
   end );
@@ -60,8 +62,9 @@ BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
 
   function (  )
     CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
-    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BUFFER);
-    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BUFFER);
+    ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BACKUP);
+    SetAssertionLevel(RESCLASSES_ASSERTIONLEVEL_BACKUP);
+    SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BACKUP);
   end );
 
 #############################################################################
@@ -70,18 +73,11 @@ BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
 ##
 ##  Performs tests of the ResClasses package.
 ##
-##  This function makes use of an adaptation of the test file `tst/testall.g'
-##  of the {\GAP}-library to this package. 
-##
 BindGlobal( "ResClassesTest",
 
   function (  )
-
-    return
-
-    TestDirectory(Concatenation(
-                  GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath,
-                  "/tst/"));
+    RESCLASSES_ASSERTIONLEVEL_BACKUP := AssertionLevel();
+    return TestDirectory( DirectoriesPackageLibrary( "resclasses", "tst" ) );
   end );
 
 #############################################################################
@@ -110,9 +106,7 @@ BindGlobal( "ResClassesTestExamples",
 ##
 ##  This function builds the manual of the ResClasses package in the file
 ##  formats &LaTeX;, DVI, Postscript, PDF and HTML.
-##
-##  This is done using the GAPDoc package by Frank L\"ubeck and
-##  Max Neunh\"offer.
+##  This is done using the GAPDoc package by Frank Lübeck and Max Neunhöffer.
 ##
 BindGlobal( "ResClassesBuildManual",
 
@@ -134,9 +128,8 @@ BindGlobal( "ResClassesBuildManual",
 ##
 #F  ConvertPackageFilesToUNIXLineBreaks( <package> )
 ##
-##  Converts the text files of package <package> from Windows- to
-##  UNIX line breaks. Here <package> is assumed to be either "resclasses"
-##  or "rcwa".
+##  Converts the text files of package <package> from Windows- to UNIX line
+##  breaks. Here <package> is assumed to be either "resclasses" or "rcwa".
 ##
 BindGlobal( "ConvertPackageFilesToUNIXLineBreaks",
 
@@ -167,8 +160,7 @@ BindGlobal( "ConvertPackageFilesToUNIXLineBreaks",
           or file in ["README","CHANGES","version"]
         then RecodeFile(Concatenation(dir,"/",file));
         elif file in ["data","3ctsgroups6","3ctsgroups9","4ctsgroups6",
-                      "ctproducts","doc","examples","lib","paper",
-                      "tst","timings"]
+                      "ctproducts","doc","examples","lib","paper","tst"]
         then ProcessDirectory(Concatenation(dir,"/",file)); fi;
       od;
     end;
@@ -188,7 +180,7 @@ BindGlobal( "RemoveTemporaryPackageFiles",
 
   function ( package )
 
-    local  packagedir, docdir, timingsdir, file;
+    local  packagedir, docdir, file;
 
     packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
     if   ".hg" in DirectoryContents(packagedir)
@@ -200,13 +192,6 @@ BindGlobal( "RemoveTemporaryPackageFiles",
                   ext->PositionSublist(file,ext) <> fail)
       then RemoveFile(Concatenation(docdir,"/",file)); fi; 
     od;
-    if "timings" in DirectoryContents(Concatenation(packagedir,"/tst")) then
-      timingsdir := Concatenation(packagedir,"/tst/timings");
-      for file in DirectoryContents(timingsdir) do
-        if   PositionSublist(file,".runtimes") <> fail
-        then RemoveFile(Concatenation(timingsdir,"/",file)); fi;
-      od;
-    fi;
   end );
 
 #############################################################################
