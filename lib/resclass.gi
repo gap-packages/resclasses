@@ -2890,7 +2890,7 @@ InstallMethod( AsUnionOfFewClasses,
       od;
       if IsList(remaining) then break; fi;
     od;
-    return cls;
+    return Set(cls);
   end );
 
 #############################################################################
