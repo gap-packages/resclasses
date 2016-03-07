@@ -37,7 +37,7 @@ InstallMethod( ViewString,
     if not IsPrimeField(F) then return str; fi;
 
     coeffs          := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
-    coeffs          := Concatenation(coeffs,[Zero(F),One(F)]);
+    coeffs          := Concatenation([Zero(F),One(F)],coeffs);
     coeffstrings    := List(coeffs,String);
     coeffintstrings := List(List(coeffs,Int),String);
 
@@ -50,11 +50,20 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
-#M  ViewString( <z> ) . . . . . . . . .  for a cyclotomic, delegate to String
+#M  ViewString( <z> ) . . . . . . . . . . . . . . . . . . .  for a cyclotomic
 ##
 InstallMethod( ViewString,
-               "for a cyclotomic, delegate to String (ResClasses)",
-               true, [ IsCyclotomic ], 0, String );
+               "for cyclotomics (ResClasses)", true, [ IsCyclotomic ], 0, 
+
+  function ( z )
+
+    local  str;
+
+    str := String(z);
+    if   Length(str) <= 30
+    then return str;
+    else TryNextMethod(); fi; # avoid line break issues for longer strings
+  end );
 
 #############################################################################
 ##
