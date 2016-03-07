@@ -36,8 +36,9 @@ InstallMethod( ViewString,
     if not IsFinite(F) then TryNextMethod(); fi;
     if not IsPrimeField(F) then return str; fi;
 
-    coeffs          := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
-    coeffs          := Concatenation([Zero(F),One(F)],coeffs);
+    coeffs := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
+    coeffs := Concatenation([Zero(F),One(F)],coeffs);
+    SortParallel(List(coeffs,c->-Length(String(c))),coeffs);
     coeffstrings    := List(coeffs,String);
     coeffintstrings := List(List(coeffs,Int),String);
 

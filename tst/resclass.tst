@@ -489,6 +489,15 @@ gap> Z(2)*R;
 GF(2)[x]
 gap> R*Z(2);
 GF(2)[x]
+gap> x := Indeterminate(GF(13),"x");;
+gap> Z(13)*x^3+Z(13)^3*x^2+Z(13)*x+Z(13)^6;
+2*x^3+8*x^2+2*x-1
+gap> Z(13)*x^4+Z(13)^3*x^3+Z(13)*x^2+Z(13)^4*x+Z(13)^6;
+2*x^4+8*x^3+2*x^2+3*x-1
+gap> P := Z(13)^2*x+Z(13);
+4*x+2
+gap> List([1..4],n->P^n);
+[ 4*x+2, 3*x^2+3*x+4, -x^3+5*x^2+9*x+8, 9*x^4+5*x^3+7*x^2+11*x+3 ]
 gap> ResidueClassUnionViewingFormat("short");;
 gap> PartitionsIntoResidueClasses(Integers,1);
 [ [ Integers ] ]
