@@ -51,23 +51,6 @@ InstallMethod( ViewString,
 
 #############################################################################
 ##
-#M  ViewString( <z> ) . . . . . . . . . . . . . . . . . . .  for a cyclotomic
-##
-InstallMethod( ViewString,
-               "for cyclotomics (ResClasses)", true, [ IsCyclotomic ], 0, 
-
-  function ( z )
-
-    local  str;
-
-    str := String(z);
-    if   Length(str) <= 30
-    then return str;
-    else TryNextMethod(); fi; # avoid line break issues for longer strings
-  end );
-
-#############################################################################
-##
 #S  Some utility functions. /////////////////////////////////////////////////
 ##
 #############################################################################
