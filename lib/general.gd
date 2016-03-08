@@ -10,6 +10,12 @@
 
 #############################################################################
 ##
+#S  List operations. ////////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
 #O  PositionsSublist( <list>, <sub> )
 ##
 ##  Returns the list of indices in the list <list> at which a sublist equal
@@ -20,31 +26,63 @@ DeclareOperation( "PositionsSublist",
 
 #############################################################################
 ##
-#F  SetupCache( <name>, <size> )
-#F  PutIntoCache( <name>, <key>, <value> )
-#F  FetchFromCache( <name>, <key> )
+#S  Routines to generate small graphs. //////////////////////////////////////
 ##
-##  A simple caching facility:
-##
-##  - The function `SetupCache' creates an empty cache named <name> for
-##    at most <size> values.
-##  - The function `PutIntoCache' puts the entry <value> with key <key>
-##    into the cache named <name>.
-##  - The function `FetchFromCache' picks the entry with key <key> from
-##    the cache named <name>, and returns fail if no such entry exists.
-##
-DeclareGlobalFunction( "SetupCache" );
-DeclareGlobalFunction( "PutIntoCache" );
-DeclareGlobalFunction( "FetchFromCache" );
+#############################################################################
 
 #############################################################################
 ##
-#F LogToDatedFile( <directory> )
+#F  AllGraphs( <n> ) . . . .  all graphs with <n> vertices, up to isomorphism
+##
+##  This function returns a list of all graphs with vertices 1, 2, ... , <n>,
+##  up to isomorphism. The graphs are represented as lists of edges.
+##
+DeclareOperation( "AllGraphs", [ IsPosInt ] );
+
+#############################################################################
+##
+#F  GraphClasses( <n> )  isomorphism classes of graphs with vertices 1,2,..,n
+##
+##  This function returns a list of isomorphism classes of graphs with
+##  vertices 1, 2, ... , <n>, where the graphs are represented as lists of
+##  edges.
+##
+DeclareOperation( "GraphClasses", [ IsPosInt ] );
+
+#############################################################################
+##
+#F  IdGraphNC( <graph>, <classes> ) . . identify isomorphism class of <graph>
+##
+##  Finds the index i such that <graph> lies in the i-th class in the list
+##  <classes>. The graph <graph> needs to be represented as a list of edges,
+##  and <classes> needs to have the same format as the return value of
+##  GraphClasses( n ) for some positive integer n. If the list <classes>
+##  contains no class which contains <graph>, the return value is `fail'.
+##  Argument checks are not done since they could be quite expensive in terms
+##  of runtime.
+##
+DeclareOperation( "IdGraphNC", [ IsList, IsList ] );
+
+#############################################################################
+##
+#S  Creating timestamped logfiles. //////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  LogToDatedFile( <directory> )
 ##
 ## Opens a logfile in the specified directory whose name has the form of a
 ## timestamp, i.e. <year>-<month>-<day> <hour>-<minute>-<second>.log.
 ##
 DeclareGlobalFunction( "LogToDatedFile" );
+
+#############################################################################
+##
+#S  SendEmail, EmailLogFile and DownloadFile. ///////////////////////////////
+##
+#############################################################################
 
 #############################################################################
 ##
@@ -79,6 +117,80 @@ DeclareGlobalFunction( "EmailLogFile" );
 ##  The IO package is needed for using this function.
 ##
 DeclareGlobalFunction( "DownloadFile" );
+
+#############################################################################
+##
+#S  Routines for bitmap pictures. ///////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  SaveAsBitmapPicture( <picture>, <filename> )
+##
+##  Writes the pixel matrix <picture> to a bitmap- (bmp-) picture file
+##  named <filename>. The filename should include the entire pathname.
+##
+##  The argument <picture> can be a GF(2) matrix, in which case a monochrome
+##  picture file is generated. In this case, zeros stand for black pixels and
+##  ones stand for white pixels.
+##
+##  The argument <picture> can also be an integer matrix, in which case
+##  a 24-bit True Color picture file is generated. In this case, the entries
+##  of the matrix are supposed to be integers n = 65536*red+256*green+blue in
+##  the range 0,...,2^24-1 specifying the RGB values of the colors of the
+##  pixels.
+##
+DeclareGlobalFunction( "SaveAsBitmapPicture" );
+
+#############################################################################
+##
+#F  LoadBitmapPicture( <filename> )
+##
+##  Loads the bitmap picture file <filename> created by `SaveAsBitmapPicture'
+##  back into GAP. The function returns the pixel matrix <picture>, as it has
+##  been passed as first argument to `SaveAsBitmapPicture'.
+##  The file <filename> must be an uncompressed monochrome
+##  or 24-bit True Color bitmap file.
+##
+DeclareGlobalFunction( "LoadBitmapPicture" );
+
+#############################################################################
+##
+#F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
+##
+##  Draws a picture of the residue class union <U> of Z^2 or the partition
+##  <U> of Z^2 into residue class unions, respectively.
+##
+DeclareGlobalFunction( "DrawGrid" );
+
+#############################################################################
+##
+#S  Other. //////////////////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  SetupCache( <name>, <size> )
+#F  PutIntoCache( <name>, <key>, <value> )
+#F  FetchFromCache( <name>, <key> )
+##
+##  A simple caching facility:
+##
+##  - The function `SetupCache' creates an empty cache named <name> for
+##    at most <size> values.
+##  - The function `PutIntoCache' puts the entry <value> with key <key>
+##    into the cache named <name>.
+##  - The function `FetchFromCache' picks the entry with key <key> from
+##    the cache named <name>, and returns fail if no such entry exists.
+##
+##  Note that the implementation is not efficient enough for larger appli-
+##  cations, and therefore these functions are not documented.
+##
+DeclareGlobalFunction( "SetupCache" );
+DeclareGlobalFunction( "PutIntoCache" );
+DeclareGlobalFunction( "FetchFromCache" );
 
 #############################################################################
 ##

@@ -10,54 +10,35 @@
 
 #############################################################################
 ##
-#S  Some trivial methods which are missing in the GAP Library. //////////////
+#S  Multiplication with infinity. ///////////////////////////////////////////
 ##
 #############################################################################
 
 #############################################################################
 ##
-#M  ViewString( <P> ) . . . . for a univariate polynomial over a finite field
+#M  \*( <n>, infinity ) . . . . . . . . .  for positive rational and infinity
+#M  \*( infinity, <n> ) . . . . . . . . .  for infinity and positive rational
+#M  \*( infinity, infinity )  . . . . . . . . . . . for infinity and infinity
 ##
-InstallMethod( ViewString,
-               "for univariate polynomial over finite field (ResClasses)",
-               true, [ IsUnivariatePolynomial ], 0,
-
-  function ( P )
-
-    local  str, R, F, coeffs, coeffstrings, coeffintstrings, i;
-
-    if   ValueGlobal("GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES") = []
-    then TryNextMethod(); fi;
-
-    str := String(P);
-
-    R := DefaultRing(P);
-    F := LeftActingDomain(R);
-    if not IsFinite(F) then TryNextMethod(); fi;
-    if not IsPrimeField(F) then return str; fi;
-
-    coeffs := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
-    coeffs := Concatenation([Zero(F),One(F)],coeffs);
-    SortParallel(List(coeffs,c->-Length(String(c))),coeffs);
-    coeffstrings    := List(coeffs,String);
-    coeffintstrings := List(List(coeffs,Int),String);
-
-    for i in [1..Length(coeffstrings)] do
-      str := ReplacedString(str,coeffstrings[i],coeffintstrings[i]);
-    od;
-
-    return str;
-  end );
+InstallMethod( \*, "for positive rational and infinity (RCWA)",
+               ReturnTrue, [ IsPosRat, IsInfinity ], 0,
+               function ( n, infty ) return infinity; end );
+InstallMethod( \*, "for infinity and positive rational (RCWA)",
+               ReturnTrue, [ IsInfinity, IsPosRat ], 0,
+               function ( infty, n ) return infinity; end );
+InstallMethod( \*, "for infinity and infinity (RCWA)",
+               ReturnTrue, [ IsInfinity, IsInfinity ], 0,
+               function ( infty1, infty2 ) return infinity; end );
 
 #############################################################################
 ##
-#S  Some utility functions. /////////////////////////////////////////////////
+#S  List operations. ////////////////////////////////////////////////////////
 ##
 #############################################################################
 
 #############################################################################
 ##
-#F  PositionsSublist( <list>, <sub> )
+#M  PositionsSublist( <list>, <sub> )
 ##
 InstallMethod( PositionsSublist, "default method",
                ReturnTrue, [ IsList, IsList ],
@@ -76,65 +57,109 @@ InstallMethod( PositionsSublist, "default method",
 
 #############################################################################
 ##
-#S  A simple caching facility. //////////////////////////////////////////////
+#M  EquivalenceClasses( <list>, <relation> )
+#M  EquivalenceClasses( <list>, <classinvariant> )
 ##
-#############################################################################
-
-#############################################################################
+##  Returns a list of equivalence classes on <list> under <relation>
+##  or a list of equivalence classes on <list> given by <classinvariant>,
+##  respectively.
 ##
-#F  SetupCache( <name>, <size> )
-##
-InstallGlobalFunction( SetupCache,
-                       function ( name, size )
-                         BindGlobal(name,[[size,-1,fail]]);
-                       end );
+##  The argument <relation> must be a function which takes as arguments
+##  two entries of <list> and returns either true or false, and which
+##  describes an equivalence relation on <list>.
+##  The argument <classinvariant> must be a function which takes as argument
+##  an element of <list> and returns a class invariant.
+##  
+InstallOtherMethod( EquivalenceClasses,
+                    "for a list and a relation or a class invariant (RCWA)",
+                    ReturnTrue, [ IsList, IsFunction ], 0,
 
-#############################################################################
-##
-#F  PutIntoCache( <name>, <key>, <value> )
-##
-InstallGlobalFunction( PutIntoCache,
+  function ( list, relation )
 
-  function ( name, key, value )
+    local  classes, invs, longestfirst, byinvs, elm, pos, inserted, count;
 
-    local  cache, pos, i;
+    if IsEmpty(list) then return []; fi;
 
-    cache := ValueGlobal(name);
-    MakeReadWriteGlobal(name);
-    pos := Position(List(cache,t->t[1]),key,1);
-    if pos = fail then Add(cache,[key,0,value]);
-                  else cache[pos][2] := 0; fi;
-    for i in [2..Length(cache)] do
-      cache[i][2] := cache[i][2] + 1;
-    od;
-    Sort(cache,function(t1,t2) return t1[2]<t2[2]; end);
-    if   Length(cache) > cache[1][1]+1
-    then cache := cache{[1..cache[1][1]+1]}; fi;
-    MakeReadOnlyGlobal(name);
+    longestfirst := function(c1,c2) return Length(c1) > Length(c2); end;
+    byinvs := function(c1,c2) return relation(c1[1]) < relation(c2[1]); end;
+
+    if   NumberArgumentsFunction(relation) = 1 then
+      invs    := List(list,relation);
+      classes := List(Set(invs),inv->list{Positions(invs,inv)});
+      Sort(classes,byinvs);
+    elif NumberArgumentsFunction(relation) = 2 then
+      classes := [[list[1]]]; count := 0;
+      for elm in list{[2..Length(list)]} do
+        inserted := false; count := count + 1;
+        for pos in [1..Length(classes)] do
+          if relation(elm,classes[pos][1]) then
+            Add(classes[pos],elm);
+            inserted := true;
+            break;
+          fi;
+        od;
+        if   not inserted
+        then classes := Concatenation(classes,[[elm]]); fi;
+        if   count mod 100 = 0 # rough performance heuristics ...
+        then Sort(classes,longestfirst); fi;
+      od;
+      Sort(classes,longestfirst);
+    else TryNextMethod(); fi;
+
+    return classes;
   end );
 
 #############################################################################
 ##
-#F  FetchFromCache( <name>, <key> )
+#S  Functions to generate small graphs. /////////////////////////////////////
 ##
-InstallGlobalFunction( "FetchFromCache",
+#############################################################################
 
-  function ( name, key )
+#############################################################################
+##
+#F  AllGraphs( <n> ) . . . .  all graphs with <n> vertices, up to isomorphism
+##
+InstallMethod( AllGraphs,
+               "for given number of vertices", true, [ IsPosInt ], 0,
+               n -> List( GraphClasses( n ), Representative ) );
 
-    local  cache, pos, i;
+#############################################################################
+##
+#F  GraphClasses( <n> )  isomorphism classes of graphs with vertices 1,2,..,n
+##
+InstallMethod( GraphClasses,
+               "for given number of vertices", true, [ IsPosInt ], 0,
 
-    cache := ValueGlobal(name);
-    pos   := Position(List(cache,t->t[1]),key,1);
-    if IsInt(pos) then
-      MakeReadWriteGlobal(name);
-      cache[pos][2] := 0;
-      for i in [2..Length(cache)] do
-        cache[i][2] := cache[i][2] + 1;
-      od;
-      MakeReadOnlyGlobal(name);
-      return cache[pos][3];
-    fi;
-    return fail;
+  function ( n )
+
+    local  classes;
+
+    classes := ShallowCopy(Orbits(SymmetricGroup(n),
+                                  Combinations(Combinations([1..n],2)),
+                                  function(Gamma,g)
+                                    return Set(Gamma,k->OnSets(k,g));
+                                  end));
+    SortParallel(List(classes,cl->Length(cl[1])),classes);
+    return classes;
+  end );
+
+#############################################################################
+##
+#F  IdGraphNC( <graph>, <classes> ) . . identify isomorphism class of <graph>
+##
+InstallMethod( IdGraphNC,
+               "for a graph and a list of classes of graphs", ReturnTrue,
+               [ IsList, IsList ], 0,
+
+  function ( graph, classes )
+
+    local  vertexnums, i;
+
+    vertexnums := Set(Flat(graph));
+    graph      := Set(graph,edge->List(edge,v->Position(vertexnums,v)));
+    return First([1..Length(classes)],
+                 i ->    Length(graph) = Length(classes[i][1])
+                     and graph in classes[i]);
   end );
 
 #############################################################################
@@ -261,6 +286,278 @@ InstallGlobalFunction( DownloadFile,
       return fail;
     fi;
     return r.body;
+  end );
+
+#############################################################################
+##
+#S  Routines for bitmap pictures. ///////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  SaveAsBitmapPicture( <picture>, <filename> ) . . . .  save bitmap picture
+##
+InstallGlobalFunction( SaveAsBitmapPicture,
+
+  function ( picture, filename )
+
+    local  AppendHex, Append16Bit, Append32Bit, str, colored,
+           height, width, fullwidth, length, offset, vec8, pix,
+           chunk, fill, x, y, n, i;
+
+    Append16Bit := function ( n )
+      Add(str,CHAR_INT(n mod 256)); Add(str,CHAR_INT(Int(n/256)));
+    end;
+
+    Append32Bit := function ( n )
+      Add(str,CHAR_INT(n mod 256)); n := Int(n/256);
+      Add(str,CHAR_INT(n mod 256)); n := Int(n/256);
+      Add(str,CHAR_INT(n mod 256)); n := Int(n/256);
+      Add(str,CHAR_INT(n));
+    end;
+
+    if not IsMatrix(picture) or not IsString(filename)
+      or (not IsInt(picture[1][1]) and not picture[1][1] in GF(2))
+    then Error("usage: SaveAsBitmapPicture( <picture>, <filename> )\n"); fi;
+
+    colored := IsInt(picture[1][1]);
+    height  := Length(picture);
+    width   := Length(picture[1]);
+    if colored then fullwidth := width + (width mod 4)/3;
+    elif width mod 32 <> 0 then
+      fullwidth := width + 32 - width mod 32;
+      fill := List([1..fullwidth-width],i->Zero(GF(2)));
+      ConvertToGF2VectorRep(fill);
+      picture := List(picture,line->Concatenation(line,fill));
+    else fullwidth := width; fi;
+    str := "BM";
+    if colored then offset := 54; length := 3 * fullwidth * height + offset;
+               else offset := 62; length := (fullwidth * height)/8 + offset;
+    fi;
+    for n in [length,0,offset,40,width,height] do Append32Bit(n); od;
+    Append16Bit(1);
+    if colored then
+      Append16Bit(24);
+      for i in [1..6] do Append32Bit(0); od;
+      for y in [1..height] do
+        for x in [1..width] do
+          pix := picture[y][x];
+          Add(str,CHAR_INT(pix mod 256)); pix := Int(pix/256);
+          Add(str,CHAR_INT(pix mod 256)); pix := Int(pix/256);
+          Add(str,CHAR_INT(pix));
+        od;
+        for i in [1..width mod 4] do Add(str,CHAR_INT(0)); od;
+      od;
+    else # monochrome picture
+      Append16Bit(1);
+      for i in [1..6] do Append32Bit(0); od;
+      Append32Bit(0); Append32Bit(2^24-1);
+      vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
+      for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
+      for y in [1..height] do
+        for x in [1,9..fullwidth-7] do
+          Add(str,CHAR_INT(PositionSorted(vec8,picture[y]{[x..x+7]})-1));
+        od;
+      od;
+    fi;
+    FileString(filename,str);
+  end );
+
+#############################################################################
+##
+#F  LoadBitmapPicture( <filename> ) . . . . . . . . . . . load bitmap picture
+##
+InstallGlobalFunction( LoadBitmapPicture,
+
+  function ( filename )
+
+    local  str, picture, height, width, fullwidth, vec8, chunk, x, y, i;
+
+    if   not IsString(filename)
+    then Error("usage: LoadBitmapPicture( <filename> )\n"); fi;
+
+    str    := StringFile(filename);
+    if str = fail then Error("file not found"); return fail; fi;
+    width  := List(str{[19..22]},INT_CHAR) * List([0..3],i->256^i);
+    height := List(str{[23..26]},INT_CHAR) * List([0..3],i->256^i);
+    if INT_CHAR(str[29]) = 24 then # 24-bit RGB picture
+      fullwidth := width + (width mod 4)/3;
+      picture := List([1..height],
+                      y->List([1..Int(fullwidth)],
+                              x->List(str{[55+3*(fullwidth*(y-1)+x-1)..
+                                           55+3*(fullwidth*(y-1)+x-1)+2]},
+                                      INT_CHAR)
+                                *[1,256,65536]));
+    else # monochrome picture
+      if width mod 32 = 0 then fullwidth := width;
+                          else fullwidth := width + 32 - width mod 32; fi;
+      vec8 := List([0..255],i->CoefficientsQadic(i+256,2){[8,7..1]})*Z(2)^0;
+      for i in [1..256] do ConvertToGF2VectorRep(vec8[i]); od;
+      picture := List([1..height],y->Concatenation(List([1,9..fullwidth-7],
+                     x->vec8[INT_CHAR(str[63+(fullwidth*(y-1)+x-1)/8])+1])));
+    fi;
+    if width = fullwidth then return picture;
+                         else return picture{[1..height]}{[1..width]}; fi;
+  end );
+
+#############################################################################
+##
+#F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
+##
+InstallGlobalFunction( DrawGrid,
+
+  function ( U, range_y, range_x, filename )
+
+    local  grid, x, y, one, offset_x, offset_y, colors, color, pos;
+
+    if   not (   IsResidueClassUnionOfZxZ(U)
+              or IsList(U) and ForAll(U,IsResidueClassUnionOfZxZ))
+      or not IsRange(range_y) or not IsRange(range_x)
+      or not IsString(filename)
+    then
+      Error("usage: DrawGrid( <U>, <range_y>, <range_x>, <filename> )\n");
+      return fail;
+    fi;
+
+    offset_x := -Minimum(range_x) + 1;
+    offset_y := -Minimum(range_y) + 1;
+
+    if IsResidueClassUnionOfZxZ(U) then
+
+      grid     := NullMat(Length(range_y),Length(range_x),GF(2));
+      one      := One(GF(2));
+
+      for y in range_y do for x in range_x do
+        if not [y,x] in U then grid[y+offset_y][x+offset_x] := one; fi;
+      od; od;
+
+    else
+
+      colors := [[255,0,0],[0,255,0],[0,0,255],[255,255,0],[255,0,255],
+                 [0,255,255],[255,128,128],[128,255,128],[128,128,255]]
+              * [65536,256,1];
+
+      grid := NullMat(Length(range_y),Length(range_x));
+
+      for y in range_y do
+        for x in range_x do
+          pos := First([1..Length(U)],k->[y,x] in U[k]);
+          if   pos = fail then color := 0;
+          elif pos > Length(colors) then color := 2^24-1;
+          else color := colors[pos]; fi;
+          grid[y+offset_y][x+offset_x] := color;
+        od;
+      od;
+
+    fi;
+
+    SaveAsBitmapPicture( grid, filename );
+
+  end );
+
+#############################################################################
+##
+#S  A simple caching facility. //////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  SetupCache( <name>, <size> )
+##
+InstallGlobalFunction( SetupCache,
+                       function ( name, size )
+                         BindGlobal(name,[[size,-1,fail]]);
+                       end );
+
+#############################################################################
+##
+#F  PutIntoCache( <name>, <key>, <value> )
+##
+InstallGlobalFunction( PutIntoCache,
+
+  function ( name, key, value )
+
+    local  cache, pos, i;
+
+    cache := ValueGlobal(name);
+    MakeReadWriteGlobal(name);
+    pos := Position(List(cache,t->t[1]),key,1);
+    if pos = fail then Add(cache,[key,0,value]);
+                  else cache[pos][2] := 0; fi;
+    for i in [2..Length(cache)] do
+      cache[i][2] := cache[i][2] + 1;
+    od;
+    Sort(cache,function(t1,t2) return t1[2]<t2[2]; end);
+    if   Length(cache) > cache[1][1]+1
+    then cache := cache{[1..cache[1][1]+1]}; fi;
+    MakeReadOnlyGlobal(name);
+  end );
+
+#############################################################################
+##
+#F  FetchFromCache( <name>, <key> )
+##
+InstallGlobalFunction( "FetchFromCache",
+
+  function ( name, key )
+
+    local  cache, pos, i;
+
+    cache := ValueGlobal(name);
+    pos   := Position(List(cache,t->t[1]),key,1);
+    if IsInt(pos) then
+      MakeReadWriteGlobal(name);
+      cache[pos][2] := 0;
+      for i in [2..Length(cache)] do
+        cache[i][2] := cache[i][2] + 1;
+      od;
+      MakeReadOnlyGlobal(name);
+      return cache[pos][3];
+    fi;
+    return fail;
+  end );
+
+#############################################################################
+##
+#S  Package-specific customizations. ////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  ViewString( <P> ) . . . . for a univariate polynomial over a finite field
+##
+InstallMethod( ViewString,
+               "for univariate polynomial over finite field (ResClasses)",
+               true, [ IsUnivariatePolynomial ], 0,
+
+  function ( P )
+
+    local  str, R, F, coeffs, coeffstrings, coeffintstrings, i;
+
+    if   ValueGlobal("GF_Q_X_RESIDUE_CLASS_UNIONS_FAMILIES") = []
+    then TryNextMethod(); fi;
+
+    str := String(P);
+
+    R := DefaultRing(P);
+    F := LeftActingDomain(R);
+    if not IsFinite(F) then TryNextMethod(); fi;
+    if not IsPrimeField(F) then return str; fi;
+
+    coeffs := CoefficientsOfUnivariateLaurentPolynomial(P)[1];
+    coeffs := Concatenation([Zero(F),One(F)],coeffs);
+    SortParallel(List(coeffs,c->-Length(String(c))),coeffs);
+    coeffstrings    := List(coeffs,String);
+    coeffintstrings := List(List(coeffs,Int),String);
+
+    for i in [1..Length(coeffstrings)] do
+      str := ReplacedString(str,coeffstrings[i],coeffintstrings[i]);
+    od;
+
+    return str;
   end );
 
 #############################################################################

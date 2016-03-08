@@ -2929,7 +2929,7 @@ InstallMethod( PartitionsIntoResidueClasses,
 
   function ( R, length )
 
-    local  Recurse, partitions, primes, desiredprimes, distinct,
+    local  Recurse, partitions, primes, desiredprimes, distinct, eqcls,
            p, q, x, i, j;
 
     Recurse := function ( P, pos, p )
@@ -2982,13 +2982,8 @@ InstallMethod( PartitionsIntoResidueClasses,
 
     partitions := Set(partitions);
     if distinct then
-      SortParallel(List(partitions,P->List(P,Density)),partitions);
-      for i in [2..Length(partitions)] do
-        j := i; repeat j := j-1; until IsBound(partitions[j]);
-        if   List(partitions[i],Density) = List(partitions[j],Density)
-        then Unbind(partitions[i]); fi;
-      od;
-      partitions := Set(partitions);
+      eqcls := EquivalenceClasses(partitions,P->List(P,Density));
+      partitions := Set(eqcls,cl->cl[1]);
     fi;
     return partitions;
   end );

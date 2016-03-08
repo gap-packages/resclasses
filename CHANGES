@@ -3,9 +3,17 @@
                     =========================================
 
 
-Changes between ResClasses 4.3.0 and ResClasses 4.3.1 (March 8, 2016):
+Changes between ResClasses 4.3.0 and ResClasses 4.4.0 (March 8, 2016):
 
- - Minor adjustments.
+ - The utility functions and -operations `SaveAsBitmapPicture',
+   `LoadBitmapPicture', `DrawGrid', `EquivalenceClasses', `GraphClasses',
+   `AllGraphs' and `IdGraph' have been moved from the RCWA package here,
+   and `IdGraph' has been renamed to `IdGraphNC'.
+
+ - The operations `PositionsSublist', `GraphClasses', `AllGraphs' and `IdGraphNC'
+   have been documented.
+
+ - A few minor adjustments have been made.
 
 Changes between ResClasses 4.2.0 and ResClasses 4.3.0 (March 4, 2016):
 

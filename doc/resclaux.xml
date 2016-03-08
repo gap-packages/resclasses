@@ -38,7 +38,7 @@ of packages off, you can load &ResClasses; via
 
 <!-- #################################################################### -->
 
-<Section Label="sec:TheTestingRoutine">
+<Section Label="sec:TheTestingRoutines">
 <Heading>The testing routines</Heading>
 
 <ManSection>
@@ -182,6 +182,154 @@ of packages off, you can load &ResClasses; via
     truncated at&nbsp;64KB.
   </Description>
 </ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:BitmapPictures">
+<Heading>Utility functions for bitmap pictures</Heading>
+
+&ResClasses; provides functions to create bitmap picture files from suitable
+pixel matrices and vice versa. The author has successfully tested this
+feature both under Linux and under Windows, and the produced pictures
+can be processed further with many common graphics programs:
+
+<ManSection>
+  <Func Name="SaveAsBitmapPicture"
+        Arg="picture, filename" Label="picture, filename"/>
+  <Returns> nothing. </Returns>
+  <Description>
+    Writes the pixel matrix <A>picture</A> to a bitmap- (bmp-)
+    picture file named <A>filename</A>. The filename should include
+    the entire pathname.
+
+    The argument <A>picture</A> can be a GF(2) matrix, in which case a
+    monochrome picture file is generated. In this case, zeros stand for
+    black pixels and ones stand for white pixels.
+
+    The argument <A>picture</A> can also be an integer matrix, in which case
+    a 24-bit True Color picture file is generated. In this case, the entries
+    of the matrix are supposed to be integers <M>n = 65536 \cdot red + 256
+    \cdot green + blue</M> in the range <M>0, \dots, 2^{24}-1</M> specifying
+    the RGB values of the colors of the pixels. <P/>
+
+    <Index Key="LoadBitmapPicture" Subkey="filename">
+      <C>LoadBitmapPicture</C>
+    </Index>
+
+    The picture can be read back into &GAP; by the function
+    <C>LoadBitmapPicture(<A>filename</A>)</C>.
+<Log>
+<![CDATA[
+gap> color   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;
+gap> picture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;
+gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
+]]>
+</Log>
+  </Description>
+</ManSection>
+
+</Section>
+
+<!-- #################################################################### -->
+
+<Section Label="sec:UtilityFunctions">
+<Heading>Some general utility functions</Heading>
+
+&ResClasses; provides a few small utility functions and -operations
+which can be used in a more general context.
+They are described in this section. <P/>
+
+<Index Key="PositionsSublist"><C>PositionsSublist</C></Index>
+
+There is an operation <C>PositionsSublist(<A>list</A>,<A>sub</A>)</C>
+which returns the list of positions at which <A>sub</A> occurs as a sublist
+of <A>list</A>.
+
+<Example>
+<![CDATA[
+gap> PositionsSublist([1,2,6,2,7,2,7,2,3,1,6,2,7,2,8],[2,7,2]);
+[ 4, 6, 12 ]
+gap> PositionsSublist([1,2,3,4,3,2,1],[1,3,5]);
+[  ]
+gap> PositionsSublist("This is an example, isn't it?","is");   
+[ 3, 6, 21 ]
+]]>
+</Example>
+
+<Index Key="EquivalenceClasses"
+       Subkey="for a list and a function computing a class invariant">
+  <C>EquivalenceClasses</C>
+</Index>
+<Index Key="EquivalenceClasses"
+       Subkey="for a list and a function describing an equivalence relation">
+  <C>EquivalenceClasses</C>
+</Index>
+
+Also there are methods <C>EquivalenceClasses(<A>l</A>,<A>inv</A>)</C>
+and <C>EquivalenceClasses(<A>l</A>,<A>rel</A>)</C> which decompose
+a list&nbsp;<A>l</A> into equivalence classes under an equivalence
+relation. The equivalence relation is given either as a function <A>inv</A>
+computing a class invariant of a given list entry or as a function <A>rel</A>
+which takes as arguments two list entries and returns either <C>true</C>
+or <C>false</C> depending on whether the arguments belong to the same
+equivalence class or not. <P/>
+
+<Example>
+<![CDATA[
+gap> EquivalenceClasses([2..50],n->Length(Factors(n))); 
+[ [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 ], 
+  [ 4, 6, 9, 10, 14, 15, 21, 22, 25, 26, 33, 34, 35, 38, 39, 46, 49 ], 
+  [ 8, 12, 18, 20, 27, 28, 30, 42, 44, 45, 50 ], [ 16, 24, 36, 40 ], 
+  [ 32, 48 ] ]
+gap> EquivalenceClasses(AsList(AlternatingGroup(4)),
+>                       function ( g, h )
+>                         return IsConjugate(SymmetricGroup(4),g,h);
+>                       end);
+[ [ (2,3,4), (2,4,3), (1,2,3), (1,2,4), (1,3,2), (1,3,4), (1,4,2), 
+      (1,4,3) ], [ (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], [ () ] ]
+]]>
+</Example>
+
+<Index Key="GraphClasses"><C>GraphClasses</C></Index>
+<Index Key="AllGraphs"><C>AllGraphs</C></Index>
+<Index Key="IdGraphNC"><C>IdGraphNC</C></Index>
+
+Further, there is an operation <C>GraphClasses(<A>n</A>)</C>, which computes
+a list of isomorphism classes of graphs with vertices <M>1, 2, \dots, n</M>,
+and an operation <C>AllGraphs(<A>n</A>)</C> which computes a list of
+representatives of these classes.
+The graphs are represented as lists of edges, where each edge is a list of
+the two vertices it connects, and they are ordered by ascending number
+of edges. The operation <C>IdGraphNC(<A>graph</A>,<A>classes</A>)</C> returns
+the index <C>i</C> such that <A>graph</A> lies <A>classes</A><C>[i]</C>.
+For reasons of efficiency, <C>IdGraphNC</C> performs no argument checks. <P/>
+
+<Example>
+<![CDATA[
+gap> GraphClasses(3);
+[ [ [  ] ], [ [ [ 1, 2 ] ], [ [ 2, 3 ] ], [ [ 1, 3 ] ] ], 
+  [ [ [ 1, 2 ], [ 1, 3 ] ], [ [ 1, 2 ], [ 2, 3 ] ], 
+      [ [ 1, 3 ], [ 2, 3 ] ] ], [ [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ] ] ]
+gap> List(last,Length); # sizes of classes
+[ 1, 3, 3, 1 ]
+gap> AllGraphs(4);
+[ [  ], [ [ 1, 2 ] ], [ [ 1, 2 ], [ 1, 3 ] ], [ [ 1, 2 ], [ 3, 4 ] ], 
+  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ] ], [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ], 
+  [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ] ], 
+  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ] ], 
+  [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ], [ 3, 4 ] ], 
+  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ] ], 
+  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], [ 3, 4 ] ] ]
+gap> List(last,Length); # numbers of edges
+[ 0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 6 ]
+gap> IdGraph([[1,3],[1,8],[3,8]],GraphClasses(4)); # a triangle graph
+6
+gap> AllGraphs(4)[last];
+[ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ]
+]]>
+</Example>
 
 </Section>
 
