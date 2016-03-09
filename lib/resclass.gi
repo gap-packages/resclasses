@@ -1905,23 +1905,14 @@ InstallMethod( Intersection2,
 ##
 InstallMethod( Intersection2,
                "for two times the same ring (ResClasses)", ReturnTrue,
-               [ IsRing, IsRing ], SUM_FLAGS,
+               [ IsListOrCollection, IsListOrCollection ], SUM_FLAGS,
 
   function ( R, R_ )
     if IsIdenticalObj(R,R_) then return R; else
-      if ForAll([R,R_],IsZ_pi) and R = R_ then return R; fi;
-      if ForAll([R,R_],S -> IsUnivariatePolynomialRing(S)
-                        and IsFiniteFieldPolynomialRing(S)) and R = R_
-      then return R; fi;
+      if   ForAll([R,R_],IsZ_pi) or ForAll([R,R_],IsRowModule)
+      then if R = R_ then return R; fi; fi; 
       TryNextMethod();
     fi;
-  end );
-
-InstallOtherMethod( Intersection2,
-                    "for two times Z^2 (ResClasses)", ReturnTrue,
-                    [ IsRowModule, IsRowModule ], SUM_FLAGS,
-  function ( R, R_ )
-    if IsZxZ(R) then return R; else TryNextMethod(); fi;
   end );
 
 #############################################################################

@@ -8,10 +8,10 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.4.0",
-Date             := "08/03/2016",
+Version          := "4.4.1",
+Date             := "09/03/2016",
 ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/resclasses-4.4.0"),
+                                  "resclasses/resclasses-4.4.1"),
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
