@@ -406,6 +406,39 @@ gap> Sum(List(last2,Density));
 </ManSection>
 
 <ManSection>
+  <Meth Name="CoverByResidueClasses"
+        Arg="Integers, moduli"
+        Label="of the integers, by residue classes with given moduli"/>
+  <Meth Name="CoversByResidueClasses"
+        Arg="Integers, moduli"
+        Label="of the integers, by residue classes with given moduli"/>
+  <Returns>
+    in the first form a cover of the integers by residue classes with moduli
+    <A>moduli</A> if such cover exists, and <C>fail</C> otherwise;
+    in the second form a list of all covers of the integers by residue
+    classes with moduli <A>moduli</A>.
+  </Returns>
+  <Description>
+    Since there are often very many such covers, computing all of them
+    can take a lot of time and memory.
+<Log>
+<![CDATA[
+gap> CoverByResidueClasses(Integers,[2,3,4,6,8,12]);
+[ 0(2), 0(3), 1(4), 1(6), 3(8), 11(12) ]
+gap> Union(last);
+Integers
+gap> CoversByResidueClasses(Integers,[2,3,3,6]);
+[ [ 0(2), 0(3), 1(3), 5(6) ], [ 0(2), 0(3), 2(3), 1(6) ], 
+  [ 0(2), 1(3), 2(3), 3(6) ], [ 1(2), 0(3), 1(3), 2(6) ], 
+  [ 1(2), 0(3), 2(3), 4(6) ], [ 1(2), 1(3), 2(3), 0(6) ] ]
+gap> List(last,Union);
+[ Integers, Integers, Integers, Integers, Integers, Integers ]
+]]>
+</Log>
+  </Description>
+</ManSection>
+
+<ManSection>
   <Oper Name="Density" Arg="U" Label="of a residue class union"/>
   <Returns>
     the natural density of&nbsp;<A>U</A> as a subset of the underlying ring.

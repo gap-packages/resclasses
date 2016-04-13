@@ -684,6 +684,16 @@ gap> T := Difference(Integers,S);
  ] \ [ 27, 47 ]
 gap> Union(S,T);
 Integers
+gap> CoverByResidueClasses(Integers,[2,3,4,6,8,12]);
+[ 0(2), 0(3), 1(4), 1(6), 3(8), 11(12) ]
+gap> Union(last);
+Integers
+gap> CoversByResidueClasses(Integers,[2,3,3,6]);
+[ [ 0(2), 0(3), 1(3), 5(6) ], [ 0(2), 0(3), 2(3), 1(6) ], 
+  [ 0(2), 1(3), 2(3), 3(6) ], [ 1(2), 0(3), 1(3), 2(6) ], 
+  [ 1(2), 0(3), 2(3), 4(6) ], [ 1(2), 1(3), 2(3), 0(6) ] ]
+gap> List(last,Union);
+[ Integers, Integers, Integers, Integers, Integers, Integers ]
 gap> ResClassesDoThingsToBeDoneAfterTest();
 gap> STOP_TEST( "resclass.tst", 140000000 );
 
