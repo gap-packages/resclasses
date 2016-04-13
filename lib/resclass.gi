@@ -3052,6 +3052,76 @@ InstallMethod( RandomPartitionIntoResidueClasses,
 
 #############################################################################
 ##
+#S  Covers by residue classes. //////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#M  CoverByResidueClasses( Integers, <moduli> ) .  for Z and list of integers
+##
+InstallMethod( CoverByResidueClasses,
+               "for Z and list of positive integers (ResClasses)",
+               IsIdenticalObj, [ IsIntegers, IsList ], 0,
+
+  function ( R, moduli )
+
+    local  covers;
+
+    covers := CoversByResidueClasses(R,moduli:onlyone);
+    if covers <> [] then return covers[1]; else return fail; fi;
+  end );
+
+#############################################################################
+##
+#M  CoversByResidueClasses( Integers, <moduli> ) . for Z and list of integers
+##
+InstallMethod( CoversByResidueClasses,
+               "for Z and list of positive integers (ResClasses)",
+               IsIdenticalObj, [ IsIntegers, IsList ], 0,
+
+  function ( R, moduli )
+
+    local  construct, covers, m, onlyone;
+
+    construct := function ( residues, remaining )
+
+      local  cover, i, residue, r;
+
+      if onlyone and Length(covers) >= 1 then return; fi;
+      if remaining = [] then
+        cover := Set([1..Length(residues)],
+                     i->ResidueClass(residues[i],moduli[i]));
+        Add(covers,cover);
+        return;
+      elif Length(residues) = Length(moduli) then
+        return;
+      fi;
+      i := Length(residues) + 1;
+      for residue in [0..moduli[i]-1] do
+        if ForAny(remaining,r->r mod moduli[i] = residue) then
+          construct(Concatenation(residues,[residue]),
+                    Filtered(remaining,r->r mod moduli[i] <> residue));
+        fi;
+      od;
+    end;
+
+    if not ForAll(moduli,IsPosInt) then TryNextMethod(); fi;
+    if Sum(moduli,m->1/m) < 1 then return []; fi;
+
+    onlyone := ValueOption("onlyone") = true;
+
+    moduli := AsSortedList(moduli);
+    covers := [];
+    m := Lcm(moduli);
+
+    construct([],[0..m-1]);
+
+    return Set(covers);
+  end );
+
+#############################################################################
+##
 #S  The invariants Delta and Rho. ///////////////////////////////////////////
 ##
 #############################################################################

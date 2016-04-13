@@ -388,6 +388,18 @@ DeclareOperation( "RandomPartitionIntoResidueClasses",
 
 #############################################################################
 ##
+#O  CoverByResidueClasses( <S>, <moduli> ) . .  cover of S by residue classes
+#O  CoversByResidueClasses( <S>, <moduli> )
+##
+##  One, respectively all, covers of the set <S> by residue classes with
+##  moduli <moduli>.
+##  If no such cover exists, the former operation returns `fail'.
+##
+DeclareOperation( "CoverByResidueClasses", [ IsListOrCollection, IsList ] );
+DeclareOperation( "CoversByResidueClasses", [ IsListOrCollection, IsList ] );
+
+#############################################################################
+##
 #A  Density( <S> ) . .  natural density of the set <S> in the underlying ring
 ##
 DeclareAttribute( "Density", IsResidueClassUnion );
