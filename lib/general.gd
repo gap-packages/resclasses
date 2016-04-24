@@ -172,6 +172,12 @@ DeclareGlobalFunction( "DrawGrid" );
 
 #############################################################################
 ##
+#F  AssignGlobalNC( <name>, <value> ) .  forced assignment to global variable
+##
+DeclareGlobalFunction( "AssignGlobalNC" );
+
+#############################################################################
+##
 #F  SetupCache( <name>, <size> )
 #F  PutIntoCache( <name>, <key>, <value> )
 #F  FetchFromCache( <name>, <key> )

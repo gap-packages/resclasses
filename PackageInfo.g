@@ -43,9 +43,9 @@ PackageDoc       := rec(
                          Autoload         := true
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.8.2",
+                         GAP                    := ">=4.8.3",
                          NeededOtherPackages    := [ ["GAPDoc",">=1.5.1"], ["Polycyclic",">=2.11"],
-                                                     ["utils", ">=0.38"] ],
+                                                     ["utils", ">=0.39"] ],
                          SuggestedOtherPackages := [ ["IO",">=4.4.5"] ],
                          ExternalConditions     := [ ]
                        ),

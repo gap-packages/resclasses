@@ -521,6 +521,24 @@ InstallGlobalFunction( "FetchFromCache",
 
 #############################################################################
 ##
+#S  Other utilities. ////////////////////////////////////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  AssignGlobalNC( <name>, <value> ) .  forced assignment to global variable
+##
+InstallGlobalFunction( AssignGlobalNC,
+
+  function ( name, value )
+    if IsReadOnlyGlobal(name) then MakeReadWriteGlobal(name); fi;
+    if IsBoundGlobal(name)    then UnbindGlobal(name);        fi;
+    BindGlobal(name,value);
+  end );
+
+#############################################################################
+##
 #S  Package-specific customizations. ////////////////////////////////////////
 ##
 #############################################################################
