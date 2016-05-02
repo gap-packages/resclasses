@@ -423,7 +423,7 @@ InstallGlobalFunction( DrawLineNC,
       ym := y1+(x-x1)*d;
       b1 := ym-c*width;
       b2 := ym+c*width;
-      for y in [Int(b1)..Int(b2+0.99)] do
+      for y in [Int(b1)..Int(b2+0.5)] do
         if switched then
           if x < 1 or x > h or y < 1 or y > w then continue; fi;
         else
