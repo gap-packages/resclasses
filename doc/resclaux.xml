@@ -220,13 +220,33 @@ can be processed further with many common graphics programs:
 
     The picture can be read back into &GAP; by the function
     <C>LoadBitmapPicture(<A>filename</A>)</C>.
-<Log>
+<Example>
 <![CDATA[
 gap> color   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;
 gap> picture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;
-gap> SaveAsBitmapPicture(picture,"~/images/gcd.bmp");
+gap> SaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),"gcd.bmp"));
 ]]>
-</Log>
+</Example>
+  </Description>
+</ManSection>
+
+<ManSection>
+  <Func Name="DrawLineNC"
+        Arg="pic, x1, y1, x2, y2, color, width"
+        Label="pic, x1, y1, x2, y2, color, width"/>
+  <Returns> nothing. </Returns>
+  <Description>
+    Draws a line on picture <A>pic</A> from (<A>x1</A>,<A>y1</A>)
+    to (<A>x2</A>,<A>y2</A>), with color <A>color</A> and of width
+    <A>width</A>.
+<Example>
+<![CDATA[
+gap> picture := NullMat(100,100)+2^24-1;;
+gap> DrawLineNC(picture,30,20,70,80,255,8);                 
+gap> SaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),
+>                        "example.bmp"));
+]]>
+</Example>
   </Description>
 </ManSection>
 
@@ -296,7 +316,7 @@ gap> EquivalenceClasses(AsList(AlternatingGroup(4)),
 <Index Key="AllGraphs"><C>AllGraphs</C></Index>
 <Index Key="IdGraphNC"><C>IdGraphNC</C></Index>
 
-Further, there is an operation <C>GraphClasses(<A>n</A>)</C>, which returns
+Further, there is an operation <C>GraphClasses(<A>n</A>)</C> which returns
 a list of isomorphism classes of graphs with vertices <M>1, 2, \dots, n</M>,
 and an operation <C>AllGraphs(<A>n</A>)</C> which returns a list of
 representatives of these classes.

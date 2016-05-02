@@ -157,6 +157,15 @@ DeclareGlobalFunction( "LoadBitmapPicture" );
 
 #############################################################################
 ##
+#F  DrawLineNC( <pic>, <x1>, <y1>, <x2>, <y2>, <color>, <width> )
+##
+##  Draws a line on picture <pic> from (<x1>,<y1>) to (<x2>,<y2>),
+##  with color <color> and of width <width>.
+##
+DeclareGlobalFunction( "DrawLineNC");
+
+#############################################################################
+##
 #F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
 ##
 ##  Draws a picture of the residue class union <U> of Z^2 or the partition

@@ -403,6 +403,45 @@ InstallGlobalFunction( LoadBitmapPicture,
 
 #############################################################################
 ##
+#F  DrawLineNC( <pic>, <x1>, <y1>, <x2>, <y2>, <color>, <width> )
+##
+InstallGlobalFunction( DrawLineNC,
+
+  function ( pic, x1, y1, x2, y2, color, width )
+
+    local  w, h, x, y, ym, d, c, b1, b2, switched, tmp, i, j;
+
+    w := Length(pic[1]); h := Length(pic);
+    if AbsInt(x2-x1) < AbsInt(y2-y1) then
+      tmp := x1; x1 := y1; y1 := tmp;
+      tmp := x2; x2 := y2; y2 := tmp;
+      switched := true;
+    else switched := false; fi;
+    d := (y2-y1)/(x2-x1);
+    c := Sqrt(Float(((x2-x1)^2+(y2-y1)^2)/(x2-x1)^2))/2;
+    for x in [Minimum(x1,x2)..Maximum(x1,x2)] do
+      ym := y1+(x-x1)*d;
+      b1 := ym-c*width;
+      b2 := ym+c*width;
+      for y in [Int(b1)..Int(b2+0.99)] do
+        if switched then
+          if x < 1 or x > h or y < 1 or y > w then continue; fi;
+        else
+          if y < 1 or y > h or x < 1 or x > w then continue; fi;
+        fi;
+        if 1.0*y > b1 and 1.0*y < b2 then
+          if switched then pic[x][y] := color; else pic[y][x] := color; fi;
+        else
+          if Random([1..100]) < Int(Minimum(100*(b1-y),100*(y-b2))) then
+            if switched then pic[x][y] := color; else pic[y][x] := color; fi;
+          fi;
+        fi;
+      od;
+    od;
+  end );
+
+#############################################################################
+##
 #F  DrawGrid( <U>, <range_y>, <range_x>, <filename> )
 ##
 InstallGlobalFunction( DrawGrid,

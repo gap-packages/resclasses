@@ -9,7 +9,7 @@ Changes between ResClasses 4.4.2 and ResClasses 4.5.0 (, 2016):
    introduced, and methods to compute covers of the integers by residue classes
    with prescribed moduli have been implemented.
 
- - A utility function `AssignGlobalNC' has been added.
+ - Utility functions `DrawLineNC' and `AssignGlobalNC' have been added.
 
 Changes between ResClasses 4.4.0 and ResClasses 4.4.2 (March 9, 2016):
 
