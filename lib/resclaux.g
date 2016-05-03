@@ -112,16 +112,20 @@ BindGlobal( "ResClassesBuildManual",
 
   function ( )
 
-    local  ResClassesDir;
+    local  ResClassesDir, i;
 
     ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-    MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "main.xml",
-                   [ "../lib/resclaux.g",
-                     "../lib/general.gd", "../lib/general.gi",
-                     "../lib/z_pi.gd", "../lib/z_pi.gi",
-                     "../lib/resclass.gd", "../lib/resclass.gi",
-                     "../lib/fixedrep.gd", "../lib/fixedrep.gi" ],
-                     "ResClasses", "../../../" );
+    for i in [1..3] do
+      Print("\nCompiling ResClasses manual: pass number ",i,"(3) . . .\n\n");
+      MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "main.xml",
+                     [ "../lib/resclaux.g",
+                       "../lib/general.gd", "../lib/general.gi",
+                       "../lib/z_pi.gd", "../lib/z_pi.gi",
+                       "../lib/resclass.gd", "../lib/resclass.gi",
+                       "../lib/fixedrep.gd", "../lib/fixedrep.gi" ],
+                       "ResClasses", "../../../" );
+    od;
+    RemoveTemporaryPackageFiles("resclasses");
   end );
 
 #############################################################################
