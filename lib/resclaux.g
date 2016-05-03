@@ -6,27 +6,15 @@
 ##
 #############################################################################
 
-BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
-RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;
 RESCLASSES_WARNINGLEVEL_BACKUP := InfoLevel( InfoWarning );
 RESCLASSES_ASSERTIONLEVEL_BACKUP := AssertionLevel();
+RESCLASSES_VIEWINGFORMAT_BACKUP := "long";
 
 #############################################################################
 ##
-#F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
+#S  Test utilities. /////////////////////////////////////////////////////////
 ##
-BindGlobal( "ResidueClassUnionViewingFormat",
-
-  function ( format )
-
-    if   not format in [ "short", "long" ]
-    then Error( "viewing formats other than \"short\" and \"long\" ",
-                "are not supported.\n");
-    fi;
-    MakeReadWriteGlobal( "RESCLASSES_VIEWINGFORMAT" );
-    RESCLASSES_VIEWINGFORMAT := format;
-    MakeReadOnlyGlobal( "RESCLASSES_VIEWINGFORMAT" );
-  end );
+#############################################################################
 
 #############################################################################
 ##
@@ -82,22 +70,33 @@ BindGlobal( "ResClassesTest",
 
 #############################################################################
 ##
-#F  ResClassesTestExamples( ) . . . .  test examples in the ResClasses manual
+#S  Building the manual and testing the examples. ///////////////////////////
 ##
-##  Tests the examples in the manual of the ResClasses package.
+#############################################################################
+
+#############################################################################
 ##
-BindGlobal( "ResClassesTestExamples",
+#F  RemoveTemporaryPackageFiles( <package> )
+##
+##  Cleans up temporary files and repository data of package <package>.
+##  Here <package> is assumed to be either "resclasses" or "rcwa".
+##
+BindGlobal( "RemoveTemporaryPackageFiles",
 
-  function ( )
+  function ( package )
 
-    local  path;
+    local  packagedir, docdir, file;
 
-    ResClassesDoThingsToBeDoneBeforeTest();
-    path := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-    RunExamples(ExtractExamples(Concatenation(path,"/doc"),
-                                "main.xml",[],"Chapter"),
-                rec( width := 75, compareFunction := "uptowhitespace" ) );
-    ResClassesDoThingsToBeDoneAfterTest();
+    packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
+    if   ".hg" in DirectoryContents(packagedir)
+    then RemoveDirectoryRecursively(Concatenation(packagedir,"/.hg")); fi;
+    docdir := Concatenation(packagedir,"/doc");
+    for file in DirectoryContents(docdir) do
+      if   ForAny([".aux",".bbl",".bib",".blg",".brf",".idx",".ilg",
+                   ".log",".out",".pnr",".tex"],
+                  ext->PositionSublist(file,ext) <> fail)
+      then RemoveFile(Concatenation(docdir,"/",file)); fi; 
+    od;
   end );
 
 #############################################################################
@@ -127,6 +126,32 @@ BindGlobal( "ResClassesBuildManual",
     od;
     RemoveTemporaryPackageFiles("resclasses");
   end );
+
+#############################################################################
+##
+#F  ResClassesTestExamples( ) . . . .  test examples in the ResClasses manual
+##
+##  Tests the examples in the manual of the ResClasses package.
+##
+BindGlobal( "ResClassesTestExamples",
+
+  function ( )
+
+    local  path;
+
+    ResClassesDoThingsToBeDoneBeforeTest();
+    path := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
+    RunExamples(ExtractExamples(Concatenation(path,"/doc"),
+                                "main.xml",[],"Chapter"),
+                rec( width := 75, compareFunction := "uptowhitespace" ) );
+    ResClassesDoThingsToBeDoneAfterTest();
+  end );
+
+#############################################################################
+##
+#S  Other. //////////////////////////////////////////////////////////////////
+##
+#############################################################################
 
 #############################################################################
 ##
@@ -171,31 +196,6 @@ BindGlobal( "ConvertPackageFilesToUNIXLineBreaks",
 
     packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
     ProcessDirectory(packagedir);
-  end );
-
-#############################################################################
-##
-#F  RemoveTemporaryPackageFiles( <package> )
-##
-##  Cleans up temporary files and repository data of package <package>.
-##  Here <package> is assumed to be either "resclasses" or "rcwa".
-##
-BindGlobal( "RemoveTemporaryPackageFiles",
-
-  function ( package )
-
-    local  packagedir, docdir, file;
-
-    packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
-    if   ".hg" in DirectoryContents(packagedir)
-    then RemoveDirectoryRecursively(Concatenation(packagedir,"/.hg")); fi;
-    docdir := Concatenation(packagedir,"/doc");
-    for file in DirectoryContents(docdir) do
-      if   ForAny([".aux",".bbl",".bib",".blg",".brf",".idx",".ilg",
-                   ".log",".out",".pnr",".tex"],
-                  ext->PositionSublist(file,ext) <> fail)
-      then RemoveFile(Concatenation(docdir,"/",file)); fi; 
-    od;
   end );
 
 #############################################################################

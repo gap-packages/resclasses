@@ -3284,6 +3284,25 @@ InstallMethod( ViewObj,
 
 #############################################################################
 ##
+#V  RESCLASSES_VIEWINGFORMAT . . . current viewing format ("short" or "long")
+#F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
+##
+InstallValue( RESCLASSES_VIEWINGFORMAT, "long" );
+InstallGlobalFunction( ResidueClassUnionViewingFormat,
+
+  function ( format )
+
+    if   not format in [ "short", "long" ]
+    then Error( "viewing formats other than \"short\" and \"long\" ",
+                "are not supported.\n");
+    fi;
+    MakeReadWriteGlobal( "RESCLASSES_VIEWINGFORMAT" );
+    RESCLASSES_VIEWINGFORMAT := format;
+    MakeReadOnlyGlobal( "RESCLASSES_VIEWINGFORMAT" );
+  end );
+
+#############################################################################
+##
 #F  RingToString( <R> ) . . . how the ring <R> is printed by `View'/`Display'
 ##
 InstallGlobalFunction( RingToString,

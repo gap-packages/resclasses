@@ -218,6 +218,14 @@ DeclareProperty( "IsResidueClass", IsObject );
 
 #############################################################################
 ##
+#V  RESCLASSES_VIEWINGFORMAT . . . current viewing format ("short" or "long")
+#F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
+##
+DeclareGlobalVariable( "RESCLASSES_VIEWINGFORMAT" );
+DeclareGlobalFunction( "ResidueClassUnionViewingFormat" );
+
+#############################################################################
+##
 #O  Modulus( <U> ) . . . . . . . . . . . . . modulus of a residue class union
 ##
 DeclareOperation( "Modulus", [ IsResidueClassUnion ] );
