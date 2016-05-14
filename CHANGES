@@ -3,7 +3,7 @@
                     =========================================
 
 
-Changes between ResClasses 4.4.2 and ResClasses 4.5.0 (, 2016):
+Changes between ResClasses 4.4.2 and ResClasses 4.5.0 (May 14, 2016):
 
  - Operations `CoverByResidueClasses' and `CoversByResidueClasses' have been
    introduced, and methods to compute covers of the integers by residue classes
