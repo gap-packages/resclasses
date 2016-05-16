@@ -55,7 +55,7 @@
   <author>
     <name><first>Stefan</first><last>Kohl</last></name>
   </author>
-  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 4.2.0)</C></title>
+  <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 4.4.0)</C></title>
   <year>2016</year>
   <other type="note">
     GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>

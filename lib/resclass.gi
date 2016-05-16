@@ -523,9 +523,7 @@ InstallMethod( Superlattices,
       if ForAll(Flat(L/sup),IsInt) then Add(lattices,sup); fi;
     od; od; od;
     lattices := Set(lattices,HermiteNormalFormIntegerMat);
-    Sort(lattices, function(L1,L2)
-                     return DeterminantMat(L1) < DeterminantMat(L2);
-                   end);
+    SortParallel(List(lattices,Li->[DeterminantMat(Li),Li]),lattices);
     
     PutIntoCache( "RESCLASSES_SUPERLATTICES_CACHE", L, lattices );
     return lattices;

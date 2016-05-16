@@ -152,12 +152,12 @@ Z^2 \ [ [ -2, 3 ] ]
 gap> S := Union(3*R,2*R+[1,1]);
 <union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2 (3 classes)>
 gap> Display(S);
-Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
- and (0,0)+(6,0)Z+(0,6)Z of Z^2
+Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,0)+(3,0)Z+(0,6)Z
+ and (0,3)+(6,0)Z+(0,6)Z of Z^2
 gap> cls := AsUnionOfFewClasses(S);
 [ The residue class (1,1)+(2,0)Z+(0,2)Z of Z^2, 
-  The residue class (0,3)+(3,3)Z+(0,6)Z of Z^2, 
-  The residue class (0,0)+(6,0)Z+(0,6)Z of Z^2 ]
+  The residue class (0,0)+(3,0)Z+(0,6)Z of Z^2, 
+  The residue class (0,3)+(6,0)Z+(0,6)Z of Z^2 ]
 gap> List(cls,Density);
 [ 1/4, 1/18, 1/36 ]
 gap> Union(cls) = S;
@@ -179,17 +179,17 @@ gap> Difference(S,[[0,0]]);
 <union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2 (3 classes)> \ 
 [ [ 0, 0 ] ]
 gap> Display(last2);
-(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
- and (0,0)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ]
+(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,0)+(3,0)Z+(0,6)Z
+ and (0,3)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ]
 gap> Display(last);
-(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
- and (0,0)+(6,0)Z+(0,6)Z of Z^2) \ [ [ 0, 0 ] ]
+(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,0)+(3,0)Z+(0,6)Z
+ and (0,3)+(6,0)Z+(0,6)Z of Z^2) \ [ [ 0, 0 ] ]
 gap> Difference(Union(S,[[4,0]]),[[0,0]]);
 <union of 12 residue classes (mod (6,0)Z+(0,6)Z) of Z^2 (3 classes)> U 
 [ [ 4, 0 ] ] \ [ [ 0, 0 ] ]
 gap> Display(last);
-(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,3)+(3,3)Z+(0,6)Z
- and (0,0)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ] \ [ [ 0, 0 ] ]
+(Union of the residue classes (1,1)+(2,0)Z+(0,2)Z, (0,0)+(3,0)Z+(0,6)Z
+ and (0,3)+(6,0)Z+(0,6)Z of Z^2) U [ [ 4, 0 ] ] \ [ [ 0, 0 ] ]
 gap> S := 2*R;
 The residue class (0,0)+(2,0)Z+(0,2)Z of Z^2
 gap> Union(S,S+[1,0]);
