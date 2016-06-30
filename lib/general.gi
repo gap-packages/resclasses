@@ -111,6 +111,38 @@ InstallOtherMethod( EquivalenceClasses,
 
 #############################################################################
 ##
+#S  Utility functions for groups and their elements. ////////////////////////
+##
+#############################################################################
+
+#############################################################################
+##
+#F  LaTeXStringWord( <w> ) . . . . . . . . . .  LaTeX string for a group word
+##
+InstallGlobalFunction( "LaTeXStringWord",
+
+  function ( w )
+
+    local  s, i;
+
+    s := String(w);
+    s := ReplacedString(s,"^","^{");
+    for i in [0..9] do
+      s := ReplacedString(s,Concatenation(String(i),"*"),
+                            Concatenation(String(i),"}*"));
+      s := ReplacedString(s,Concatenation(String(i),")"),
+                            Concatenation(String(i),"})"));
+    od;
+    s := ReplacedString(s,"*","");
+    if s[Length(s)] in DIGITS then Append(s,"}"); fi;
+    for i in [2..9] do
+      s := ReplacedString(s,Concatenation("{",String(i),"}"),String(i));
+    od;
+    return s;
+  end );
+
+#############################################################################
+##
 #S  Functions to generate small graphs. /////////////////////////////////////
 ##
 #############################################################################

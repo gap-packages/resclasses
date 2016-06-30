@@ -187,6 +187,12 @@ DeclareGlobalFunction( "AssignGlobalNC" );
 
 #############################################################################
 ##
+#F  LaTeXStringWord( <w> ) . . . . . . . . . .  LaTeX string for a group word
+##
+DeclareGlobalFunction( "LaTeXStringWord" );
+
+#############################################################################
+##
 #F  SetupCache( <name>, <size> )
 #F  PutIntoCache( <name>, <key>, <value> )
 #F  FetchFromCache( <name>, <key> )
