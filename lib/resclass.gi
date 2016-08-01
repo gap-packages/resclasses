@@ -1488,8 +1488,7 @@ InstallMethod( IsSubset,
 
   function ( U1, U2 )
 
-    if   not IsZero(U2!.m mod U1!.m) or Density(U2) > Density(U1)
-    then return false; fi; 
+    if Density(U2) > Density(U1) then return false; fi; 
     if   not IsSubset(U1,U2!.included) or Intersection(U1!.excluded,U2) <> []
     then return false; fi;
 
