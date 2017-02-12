@@ -7,6 +7,9 @@ Changes between ResClasses 4.5.0 and ResClasses 4.6.0 (, 2016):
 
  - A utility function `LaTeXStringWord' has been added.
 
+ - The method for multiplying the empty list with a matrix has been made
+   superfluous and removed.
+
 Changes between ResClasses 4.4.2 and ResClasses 4.5.0 (May 14, 2016):
 
  - Operations `CoverByResidueClasses' and `CoversByResidueClasses' have been
