@@ -3,7 +3,7 @@
                     =========================================
 
 
-Changes between ResClasses 4.5.0 and ResClasses 4.6.0 (, 2016):
+Changes between ResClasses 4.5.0 and ResClasses 4.6.0 (February 12, 2017):
 
  - A utility function `LaTeXStringWord' has been added.
 
