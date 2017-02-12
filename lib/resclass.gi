@@ -2380,19 +2380,18 @@ InstallOtherMethod( \*,
 
     R := UnderlyingRing(FamilyObj(U));
 
-    m   := Modulus(U) * M;
-    r   := Residues(U) * M;
-    inc := IncludedElements(U) * M;
-    exc := ExcludedElements(U) * M;
+    m := Modulus(U) * M;
+    if   Residues(U) <> []
+    then r := Residues(U) * M; else r := []; fi;
+    if   IncludedElements(U) <> []
+    then inc := IncludedElements(U) * M; else inc := []; fi;
+    if   ExcludedElements(U) <> []
+    then exc := ExcludedElements(U) * M; else exc := []; fi;
 
     if not ForAll([m,r,inc,exc],S->IsSubset(R,S)) then TryNextMethod(); fi;
 
     return ResidueClassUnionNC(R,m,r,inc,exc);
   end );
-
-InstallOtherMethod( \*, "for empty list and matrix (ResClasses)",
-                    ReturnTrue, [ IsList and IsEmpty, IsMatrix ], 0,
-                    function ( empty, M ) return [  ]; end );
 
 #############################################################################
 ##

@@ -87,8 +87,6 @@ gap> []+[1,1];
 [ 1, 1 ]
 gap> 2*empty;
 [  ]
-gap> empty*[[2,0],[0,3]];
-[  ]
 gap> [  ]/2;
 [  ]
 gap> l := Intersection(R,[[1,0],[7,-3]]);;
