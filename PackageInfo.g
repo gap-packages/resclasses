@@ -10,8 +10,7 @@ PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
 Version          := "4.6.0",
 Date             := "12/02/2017",
-ArchiveURL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/resclasses-4.6.0"),
+ArchiveURL       := "https://stefan-kohl.github.io/resclasses/resclasses-4.6.0"),
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -19,15 +18,13 @@ Persons          := [
                            IsAuthor      := true,
                            IsMaintainer  := true,
                            Email         := "stefan@mcs.st-and.ac.uk",
-                           WWWHome       := "http://www.gap-system.org/DevelopersPages/StefanKohl/"
+                           WWWHome       := "https://stefan-kohl.github.io/"
                          )
                     ],
 Status           := "deposited",
-PackageWWWHome   := "http://www.gap-system.org/DevelopersPages/StefanKohl/resclasses.html",
-README_URL       := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/README.resclasses"),
-PackageInfoURL   := Concatenation("http://www.gap-system.org/DevelopersPages/StefanKohl/",
-                                  "resclasses/PackageInfo.g"),
+PackageWWWHome   := "https://stefan-kohl.github.io/resclasses.html",
+README_URL       := "https://stefan-kohl.github.io/resclasses/README.resclasses"),
+PackageInfoURL   := "https://stefan-kohl.github.io/resclasses/PackageInfo.g"),
 AbstractHTML     := Concatenation("This package permits to compute with set-theoretic ",
                                   "unions of residue classes of&nbsp;Z and a few other rings. ",
                                   "In particular it provides methods for computing unions, ",
