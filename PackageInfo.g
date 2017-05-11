@@ -8,9 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.6.0",
+Version          := "4.7.0",
 Date             := "12/02/2017",
-ArchiveURL       := "https://stefan-kohl.github.io/resclasses/resclasses-4.6.0",
+ArchiveURL       := "https://stefan-kohl.github.io/resclasses/resclasses-4.7.0",
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -40,7 +40,7 @@ PackageDoc       := rec(
                          Autoload         := true
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.8.5",
+                         GAP                    := ">=4.8.7",
                          NeededOtherPackages    := [ ["GAPDoc",">=1.5.1"], ["Polycyclic",">=2.11"],
                                                      ["utils", ">=0.40"] ],
                          SuggestedOtherPackages := [ ["IO",">=4.4.5"] ],

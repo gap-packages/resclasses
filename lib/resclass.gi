@@ -1169,8 +1169,15 @@ InstallMethod( SparseRep,
                                              cl->[Residue(cl),Modulus(cl)]),
                                         U!.included,U!.excluded) );
 InstallMethod( SparseRep,
+               "for the base ring (ResClasses)",
+               true, [ IsRing ], 0, R -> R );
+InstallMethod( SparseRep,
+               "for the base module (ResClasses)",
+               true, [ IsRowModule ], 0, R -> R );
+InstallMethod( SparseRep,
                "for residue class unions in sparse rep (ResClasses)",
                true, [ IsResidueClassUnionInClassListRep ], 0, U -> U );
+
 
 #############################################################################
 ##
