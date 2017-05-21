@@ -1121,7 +1121,6 @@ InstallMethod( Classes, "for residue class unions, std. rep. (ResClasses)",
 InstallOtherMethod( Classes, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ [ Zero(R), One(R) ] ] );
 
-
 #############################################################################
 ##
 #M  IncludedElements( <U> ) . . . . . . . . . . . .  for residue class unions
