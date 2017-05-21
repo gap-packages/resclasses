@@ -1118,6 +1118,9 @@ InstallMethod( Classes, "for residue class unions, std. rep. (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0,
                U -> List(AsUnionOfFewClasses(U),
                          cl->[Residue(cl),Modulus(cl)]) );
+InstallOtherMethod( Classes, "for the base ring (ResClasses)",
+                    true, [ IsRing ], 0, R -> [ [ Zero(R), One(R) ] ] );
+
 
 #############################################################################
 ##
