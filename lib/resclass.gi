@@ -1171,15 +1171,17 @@ InstallMethod( SparseRep,
                                              cl->[Residue(cl),Modulus(cl)]),
                                         U!.included,U!.excluded) );
 InstallMethod( SparseRep,
+               "for residue class unions in sparse rep (ResClasses)",
+               true, [ IsResidueClassUnionInClassListRep ], 0, U -> U );
+InstallMethod( SparseRep,
+               "for lists of elements (ResClasses)",
+               true, [ IsList ], 0, l -> l );
+InstallMethod( SparseRep,
                "for the base ring (ResClasses)",
                true, [ IsRing ], 0, R -> R );
 InstallMethod( SparseRep,
                "for the base module (ResClasses)",
                true, [ IsRowModule ], 0, R -> R );
-InstallMethod( SparseRep,
-               "for residue class unions in sparse rep (ResClasses)",
-               true, [ IsResidueClassUnionInClassListRep ], 0, U -> U );
-
 
 #############################################################################
 ##
@@ -1194,6 +1196,15 @@ InstallMethod( StandardRep,
 InstallMethod( StandardRep,
                "for residue class unions in standard rep. (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0, U -> U );
+InstallMethod( StandardRep,
+               "for lists of elements (ResClasses)",
+               true, [ IsList ], 0, l -> l );
+InstallMethod( StandardRep,
+               "for the base ring (ResClasses)",
+               true, [ IsRing ], 0, R -> R );
+InstallMethod( StandardRep,
+               "for the base module (ResClasses)",
+               true, [ IsRowModule ], 0, R -> R );
 
 #############################################################################
 ##
