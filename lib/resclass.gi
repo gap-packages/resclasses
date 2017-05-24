@@ -1120,6 +1120,8 @@ InstallMethod( Classes, "for residue class unions, std. rep. (ResClasses)",
                          cl->[Residue(cl),Modulus(cl)]) );
 InstallOtherMethod( Classes, "for the base ring (ResClasses)",
                     true, [ IsRing ], 0, R -> [ [ Zero(R), One(R) ] ] );
+InstallOtherMethod( Classes, "for finite sets (ResClasses)",
+                    true, [ IsList ], 0, R -> [  ] );
 
 #############################################################################
 ##
@@ -1174,7 +1176,7 @@ InstallMethod( SparseRep,
                "for residue class unions in sparse rep (ResClasses)",
                true, [ IsResidueClassUnionInClassListRep ], 0, U -> U );
 InstallMethod( SparseRep,
-               "for lists of elements (ResClasses)",
+               "for finite sets (ResClasses)",
                true, [ IsList ], 0, l -> l );
 InstallMethod( SparseRep,
                "for the base ring (ResClasses)",
@@ -1197,7 +1199,7 @@ InstallMethod( StandardRep,
                "for residue class unions in standard rep. (ResClasses)",
                true, [ IsResidueClassUnionInResidueListRep ], 0, U -> U );
 InstallMethod( StandardRep,
-               "for lists of elements (ResClasses)",
+               "for finite sets (ResClasses)",
                true, [ IsList ], 0, l -> l );
 InstallMethod( StandardRep,
                "for the base ring (ResClasses)",
