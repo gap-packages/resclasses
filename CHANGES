@@ -5,7 +5,10 @@
 
 Changes between ResClasses 4.6.0 and ResClasses 4.7.0 (, 2017):
 
- - Added trivial methods for `SparseRep' for the base ring (now needed by RCWA).
+ - Several trivial methods for `SparseRep', `StandardRep' and `Classes' have been
+   added (these methods are now needed by RCWA).
+
+ - A utility function `GetOption' has been added.
 
 Changes between ResClasses 4.5.0 and ResClasses 4.6.0 (February 12, 2017):
 

@@ -187,6 +187,16 @@ DeclareGlobalFunction( "AssignGlobalNC" );
 
 #############################################################################
 ##
+#F  GetOption( <option>, <default> [, <filter> ] )
+##
+##  Returns the value of the option <option> if it is set and fulfils the
+##  filter <filter>, and <default> otherwise. If not specified, <filter>
+##  defaults to IsObject.
+##
+DeclareGlobalFunction( "GetOption" );
+
+#############################################################################
+##
 #F  LaTeXStringWord( <w> ) . . . . . . . . . .  LaTeX string for a group word
 ##
 DeclareGlobalFunction( "LaTeXStringWord" );

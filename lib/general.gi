@@ -610,6 +610,31 @@ InstallGlobalFunction( AssignGlobalNC,
 
 #############################################################################
 ##
+#F  GetOption( <option>, <default> [, <filter> ] )
+##
+InstallGlobalFunction( GetOption,
+
+  function ( arg )
+
+    local  value, option, filter, default;
+
+    if not Length(arg) in [2,3] or not IsString(arg[1]) then return fail; fi;
+    option  := arg[1];
+    default := arg[2];
+    if Length(arg) = 2 then
+      filter := IsObject;
+    else
+      filter := arg[3];
+      if not IsFunction(filter) then return fail; fi;
+    fi;
+    value := ValueOption(option);
+    if   value <> fail and filter(value) = true
+    then return value;
+    else return default; fi;
+  end );
+
+#############################################################################
+##
 #S  Package-specific customizations. ////////////////////////////////////////
 ##
 #############################################################################
