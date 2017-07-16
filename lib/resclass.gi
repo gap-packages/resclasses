@@ -929,6 +929,8 @@ InstallGlobalFunction( ResidueClass,
     elif Length( arg ) = 1 then
       if   IsList( arg[1] )
       then return CallFuncList( ResidueClass, arg[1] );
+      elif IsResidueClass( arg[1] )
+      then return arg[1];
       else Error( usage ); return fail; fi;
     else
       Error( usage ); return fail;
