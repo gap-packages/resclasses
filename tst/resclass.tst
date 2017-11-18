@@ -660,8 +660,8 @@ gap> S1 := Difference(Union(ResidueClass(1,2),ResidueClass(4,60)),ResidueClass(0
 <union of 186 residue classes (mod 420)>
 gap> Difference(S0,S1);
 [ 2, 6 ]
-gap> TNUM_OBJ(last);
-[ 62, "list (plain,cyc,ssort)" ]
+gap> IsList(last);
+true
 gap> Difference(S1,S0);
 [ 9, 11, 13, 15 ]
 gap> IsResidueClassUnionOfZInClassListRep(S0);
