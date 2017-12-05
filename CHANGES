@@ -3,7 +3,7 @@
                     =========================================
 
 
-Changes between ResClasses 4.6.0 and ResClasses 4.7.0 (, 2017):
+Changes between ResClasses 4.6.0 and ResClasses 4.7.0 (December 5, 2017):
 
  - Several trivial methods for `SparseRep', `StandardRep' and `Classes' have been
    added (these methods are now needed by RCWA).

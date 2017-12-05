@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
 Version          := "4.7.0",
-Date             := "12/02/2017",
+Date             := "05/12/2017",
 ArchiveURL       := "https://stefan-kohl.github.io/resclasses/resclasses-4.7.0",
 ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
