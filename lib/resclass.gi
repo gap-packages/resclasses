@@ -2122,7 +2122,7 @@ InstallMethod( Difference,
                [ IsRing, IsList ], 0,
 
   function ( R, S )
-    if not IsSubset(R,S) then TryNextMethod(); fi;
+    if IsFinite(R) or not IsSubset(R,S) then TryNextMethod(); fi;
     return ResidueClassUnionNC(R,One(R),[Zero(R)],[],Set(S));
   end );
 
@@ -2156,7 +2156,7 @@ InstallMethod( Difference,
                [ IsDomain, IsDomain ], SUM_FLAGS,
 
   function ( R, R_ )
-    if R = R_ then
+    if IsIdenticalObj(R,R_) then
       if   IsRing(R) then return [];
       elif IsZxZ(R)  then return ResidueClassUnion(R,[[1,0],[0,1]],[],[],[]);
       else TryNextMethod(); fi;
