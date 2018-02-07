@@ -1935,18 +1935,6 @@ InstallMethod( Intersection2,
 
 #############################################################################
 ##
-#M  Intersection2( <set>, [ ] ) . . . . . . . . . for a set and the empty set
-#M  Intersection2( [ ], <set> ) . . . . . . . . . for the empty set and a set
-##
-InstallMethod( Intersection2, "for a set and the empty set (ResClasses)",
-               ReturnTrue, [ IsListOrCollection, IsList and IsEmpty ], 0,
-               function ( S, empty ) return [  ]; end );
-InstallMethod( Intersection2, "for the empty set and a set (ResClasses)",
-               ReturnTrue, [ IsList and IsEmpty, IsListOrCollection ], 0,
-               function ( empty, S ) return [  ]; end );
-
-#############################################################################
-##
 #M  Difference( <U1>, <U2> ) . . .  for residue class unions in standard rep.
 ##
 InstallMethod( Difference,
