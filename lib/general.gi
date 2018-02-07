@@ -269,7 +269,7 @@ InstallGlobalFunction( EmailLogFile,
 
     if ARCH_IS_UNIX() and IN_LOGGING_MODE <> false then
       if IsString(addresses) then addresses := [addresses]; fi;
-      filename := USER_HOME_EXPAND(IN_LOGGING_MODE);
+      filename := UserHomeExpand(IN_LOGGING_MODE);
       logfile  := ReadAll(InputTextFile(filename));
       if Length(logfile) > 2^16 then # Abbreviate output in long logfiles.
         selection := ""; pos1 := 1;
