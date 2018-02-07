@@ -1559,11 +1559,8 @@ InstallMethod( IsSubset,
 
 #############################################################################
 ##
-#M  IsSubset( Integers, Rationals ) . . . . . . . . . . . . . . . for Z and Q
 #M  IsSubset( Z_pi( <pi> ), Rationals ) . . . . . . . . . . .  for Z_pi and Q
 ##
-InstallMethod( IsSubset, "for Integers and Rationals (ResClasses)",
-               ReturnTrue, [ IsIntegers, IsRationals ], 0, ReturnFalse );
 InstallMethod( IsSubset, "for Z_pi and Rationals (ResClasses)",
                ReturnTrue, [ IsZ_pi, IsRationals ], 0, ReturnFalse );
 
