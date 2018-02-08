@@ -1,0 +1,66 @@
+  
+  [1X3 [33X[0;0YSemilocalizations of the Integers[133X[101X
+  
+  [33X[0;0YThis  package implements residue class unions of the semilocalizations [22Xℤ_(π)[122X
+  of  the ring of integers. It also provides the underlying [5XGAP[105X implementation
+  of these rings themselves.[133X
+  
+  
+  [1X3.1 [33X[0;0YEntering semilocalizations of the integers[133X[101X
+  
+  [1X3.1-1 Z_pi[101X
+  
+  [33X[1;0Y[29X[2XZ_pi[102X( [3Xpi[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZ_pi[102X( [3Xp[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe ring [22Xℤ_(π)[122X or the ring [22Xℤ_(p)[122X, respectively.[133X
+  
+  [33X[0;0YThe  returned  ring  has  the  property [10XIsZ_pi[110X. The set [3Xpi[103X of non-invertible
+  primes can be retrieved by the operation [10XNoninvertiblePrimes[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR := Z_pi(2);[127X[104X
+    [4X[28XZ_( 2 )[128X[104X
+    [4X[25Xgap>[125X [27XS := Z_pi([2,5,7]);[127X[104X
+    [4X[28XZ_( 2, 5, 7 )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YMethods for semilocalizations of the integers[133X[101X
+  
+  [33X[0;0YThere   are   methods   for   the  operations  [10Xin[110X,  [10XIntersection[110X,  [10XIsSubset[110X,
+  [10XStandardAssociate[110X,    [10XGcd[110X,   [10XLcm[110X,   [10XFactors[110X   and   [10XIsUnit[110X   available   for
+  semilocalizations   of   the   integers.  For  the  documentation  of  these
+  operations,  see  the  [5XGAP[105X  reference  manual.  The standard associate of an
+  element  of  a  ring  [22Xℤ_(π)[122X  is defined by the product of the non-invertible
+  prime factors of its numerator.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X4/7 in R; 3/2 in R;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIntersection(R,Z_pi([3,11])); IsSubset(R,S);[127X[104X
+    [4X[28XZ_( 2, 3, 11 )[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XStandardAssociate(R,-6/7);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XGcd(S,90/3,60/17,120/33);[127X[104X
+    [4X[28X10[128X[104X
+    [4X[25Xgap>[125X [27XLcm(S,90/3,60/17,120/33);[127X[104X
+    [4X[28X40[128X[104X
+    [4X[25Xgap>[125X [27XFactors(R,840);[127X[104X
+    [4X[28X[ 105, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XFactors(R,-2/3);[127X[104X
+    [4X[28X[ -1/3, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XIsUnit(S,3/11);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

@@ -1,0 +1,259 @@
+  
+  [1X4 [33X[0;0YInstallation and Auxiliary Functions[133X[101X
+  
+  
+  [1X4.1 [33X[0;0YRequirements[133X[101X
+  
+  [33X[0;0YThis     version     of     [5XResClasses[105X    needs    at    least    [5XGAP[105X 4.9.0,
+  [5XPolycyclic[105X 2.11 [EHN13],  [5XGAPDoc[105X 1.5.1 [LN12] and [5XUtils[105X 0.40 [GKW16]. It can
+  be  used  on  all  platforms  for  which  [5XGAP[105X  is  available.  [5XResClasses[105X is
+  completely  written in the [5XGAP[105X language and does neither contain nor require
+  external binaries.[133X
+  
+  
+  [1X4.2 [33X[0;0YInstallation[133X[101X
+  
+  [33X[0;0YLike  any  other  [5XGAP[105X  package,  [5XResClasses[105X  is usually installed in the [11Xpkg[111X
+  subdirectory of the [5XGAP[105X distribution. This is accomplished by extracting the
+  distribution  file  in this directory. By default, the package [5XResClasses[105X is
+  autoloaded.  If  you have switched autoloading of packages off, you can load
+  [5XResClasses[105X via [10XLoadPackage( "resclasses" );[110X.[133X
+  
+  
+  [1X4.3 [33X[0;0YThe testing routines[133X[101X
+  
+  [1X4.3-1 ResClassesTest[101X
+  
+  [33X[1;0Y[29X[2XResClassesTest[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X if no errors were found, and [10Xfalse[110X otherwise.[133X
+  
+  [33X[0;0YPerforms  tests  of  the [5XResClasses[105X package. Errors, i.e. differences to the
+  correct  results  of the test computations, are reported. The processed test
+  files are in the directory [11Xpkg/resclasses/tst[111X.[133X
+  
+  [1X4.3-2 ResClassesTestExamples[101X
+  
+  [33X[1;0Y[29X[2XResClassesTestExamples[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YRuns  all  examples in the manual of the [5XResClasses[105X package, and reports any
+  differences between the actual output and the output printed in the manual.[133X
+  
+  
+  [1X4.4 [33X[0;0YUtilities for preparing the package for distribution[133X[101X
+  
+  [1X4.4-1 ResClassesBuildManual[101X
+  
+  [33X[1;0Y[29X[2XResClassesBuildManual[102X(  ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis  function  is  a  development  tool  which  builds  the  manual  of the
+  [5XResClasses[105X package in the file formats LaTeX, PDF, HTML and ASCII text. This
+  is accomplished using the [5XGAPDoc[105X package by Frank Lübeck and Max Neunhöffer.
+  Building  the  manual  is  possible  only  on UNIX-type systems and requires
+  PDFLaTeX.  As  all  files  generated  by  this  function are included in the
+  distribution file anyway, users will not need it.[133X
+  
+  [1X4.4-2 ConvertPackageFilesToUNIXLineBreaks[101X
+  
+  [33X[1;0Y[29X[2XConvertPackageFilesToUNIXLineBreaks[102X( [3Xpackage[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis function is a development tool which converts the text files of package
+  [3Xpackage[103X  from  Windows-  to  UNIX line breaks. Here [3Xpackage[103X is assumed to be
+  either [10X"resclasses"[110X or [10X"rcwa"[110X.[133X
+  
+  [1X4.4-3 RemoveTemporaryPackageFiles[101X
+  
+  [33X[1;0Y[29X[2XRemoveTemporaryPackageFiles[102X( [3Xpackage[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis  function  is a development tool which cleans up the temporary files of
+  package  [3Xpackage[103X.  Here  [3Xpackage[103X  is  assumed  to  be either [10X"resclasses"[110X or
+  [10X"rcwa"[110X.[133X
+  
+  
+  [1X4.5 [33X[0;0YCreating timestamped logfiles[133X[101X
+  
+  [1X4.5-1 LogToDatedFile[101X
+  
+  [33X[1;0Y[29X[2XLogToDatedFile[102X( [3Xdirectory[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe full pathname of the created logfile.[133X
+  
+  [33X[0;0YThis  function  opens  a logfile in the specified directory; the name of the
+  logfile    has    the    form    of   a   timestamp,   i.e.   [10Xyear-month-day
+  hour-minute-second.log.[110X  If  [5XGAP[105X is already in logging mode, the old logfile
+  is closed before the new one is opened.[133X
+  
+  [33X[0;0YThe  availability  of this function depends on that the package [5XIO[105X [HN16] is
+  installed and compiled.[133X
+  
+  
+  [1X4.6 [33X[0;0YDownloadFile, SendEmail and EmailLogFile[133X[101X
+  
+  [1X4.6-1 DownloadFile[101X
+  
+  [33X[1;0Y[29X[2XDownloadFile[102X( [3Xurl[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  contents  of the file with URL [3Xurl[103X in the form of a string if
+            that  file  exists  and  the  download  was  successful,  and [10Xfail[110X
+            otherwise.[133X
+  
+  [33X[0;0YAs  most  system-related  functions,  [10XDownloadFile[110X  works  only under UNIX /
+  Linux. Also the computer must of course be connected to the Internet.[133X
+  
+  [1X4.6-2 SendEmail[101X
+  
+  [33X[1;0Y[29X[2XSendEmail[102X( [3Xsendto[103X, [3Xcopyto[103X, [3Xsubject[103X, [3Xtext[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yzero  if  everything  worked  correctly, and a system error number
+            otherwise.[133X
+  
+  [33X[0;0YSends  an  e-mail with subject [3Xsubject[103X and body [3Xtext[103X to the addresses in the
+  list  [3Xsendto[103X,  and  copies  it  to  those  in the list [3Xcopyto[103X. The first two
+  arguments must be lists of strings, and the latter two must be strings.[133X
+  
+  [33X[0;0YAs  most  system-related functions, [10XSendEmail[110X works only under UNIX / Linux.
+  Also the computer must of course be connected to the Internet.[133X
+  
+  [1X4.6-3 EmailLogFile[101X
+  
+  [33X[1;0Y[29X[2XEmailLogFile[102X( [3Xaddresses[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yzero  if  everything  worked  correctly, and a system error number
+            otherwise.[133X
+  
+  [33X[0;0YSends the current log file by e-mail to [3Xaddresses[103X, if [5XGAP[105X is in logging mode
+  and  one  is  working  under  UNIX  / Linux, and does nothing otherwise. The
+  argument  [3Xaddresses[103X  must  be  either a list of e-mail addresses or a single
+  e-mail  address.  Long  log  files  are abbreviated, i.e. if the log file is
+  larger  than  64KB, then any output is truncated at 1KB, and if the log file
+  is still longer than 64KB afterwards, it is truncated at 64KB.[133X
+  
+  
+  [1X4.7 [33X[0;0YCreating bitmap pictures[133X[101X
+  
+  [33X[0;0Y[5XResClasses[105X provides functions to generate bitmap picture files from suitable
+  pixel  matrices  and  vice  versa.  The  author has successfully tested this
+  feature  both  under Linux and under Windows, and the generated pictures can
+  be processed further with many common graphics programs:[133X
+  
+  [1X4.7-1 SaveAsBitmapPicture[101X
+  
+  [33X[1;0Y[29X[2XSaveAsBitmapPicture[102X( [3Xpicture[103X, [3Xfilename[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YWrites  the  pixel  matrix  [3Xpicture[103X  to  a bitmap- (bmp-) picture file named
+  [3Xfilename[103X.  The  filename  should  include  the entire pathname. The argument
+  [3Xpicture[103X  can  be  a GF(2) matrix, in which case a monochrome picture file is
+  generated.  In  this  case,  zeros stand for black pixels and ones stand for
+  white  pixels.  The argument [3Xpicture[103X can also be an integer matrix, in which
+  case  a  24-bit  true  color  picture  file  is generated. In this case, the
+  entries  of  the  matrix are supposed to be integers [22Xn = 65536 ⋅ red + 256 ⋅
+  green  +  blue[122X in the range [22X0, dots, 2^24-1[122X specifying the RGB values of the
+  colors of the pixels.[133X
+  
+  [33X[0;0YThe    picture    can    be   read   back   into   [5XGAP[105X   by   the   function
+  [10XLoadBitmapPicture([3Xfilename[103X[10X)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xcolor   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;[127X[104X
+    [4X[25Xgap>[125X [27Xpicture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;[127X[104X
+    [4X[25Xgap>[125X [27XSaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),"gcd.bmp"));[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.7-2 DrawLineNC[101X
+  
+  [33X[1;0Y[29X[2XDrawLineNC[102X( [3Xpic[103X, [3Xx1[103X, [3Xy1[103X, [3Xx2[103X, [3Xy2[103X, [3Xcolor[103X, [3Xwidth[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YDraws a line on picture [3Xpic[103X from ([3Xx1[103X,[3Xy1[103X) to ([3Xx2[103X,[3Xy2[103X), with color [3Xcolor[103X and of
+  width [3Xwidth[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xpicture := NullMat(100,100)+2^24-1;;[127X[104X
+    [4X[25Xgap>[125X [27XDrawLineNC(picture,30,20,70,80,255,8);                 [127X[104X
+    [4X[25Xgap>[125X [27XSaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),[127X[104X
+    [4X[25X>[125X [27X                       "example.bmp"));[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.8 [33X[0;0YSome general utility functions[133X[101X
+  
+  [33X[0;0Y[5XResClasses[105X  provides a few small utility functions and -operations which can
+  be used in a more general context. They are described in this section.[133X
+  
+  [33X[0;0YThere  is  an operation [10XPositionsSublist([3Xlist[103X[10X,[3Xsub[103X[10X)[110X which returns the list of
+  positions at which [3Xsub[103X occurs as a sublist of [3Xlist[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPositionsSublist([1,2,6,2,7,2,7,2,3,1,6,2,7,2,8],[2,7,2]);[127X[104X
+    [4X[28X[ 4, 6, 12 ][128X[104X
+    [4X[25Xgap>[125X [27XPositionsSublist([1,2,3,4,3,2,1],[1,3,5]);[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27XPositionsSublist("This is an example, isn't it?","is");   [127X[104X
+    [4X[28X[ 3, 6, 21 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlso      there      are      methods      [10XEquivalenceClasses([3Xl[103X[10X,[3Xinv[103X[10X)[110X     and
+  [10XEquivalenceClasses([3Xl[103X[10X,[3Xrel[103X[10X)[110X  which decompose a list [3Xl[103X into equivalence classes
+  under an equivalence relation. The equivalence relation is given either as a
+  function  [3Xinv[103X  computing  a  class  invariant  of a given list entry or as a
+  function  [3Xrel[103X  which  takes as arguments two list entries and returns either
+  [10Xtrue[110X  or  [10Xfalse[110X  depending  on  whether  the  arguments  belong  to the same
+  equivalence class or not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XEquivalenceClasses([2..50],n->Length(Factors(n))); [127X[104X
+    [4X[28X[ [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 ], [128X[104X
+    [4X[28X  [ 4, 6, 9, 10, 14, 15, 21, 22, 25, 26, 33, 34, 35, 38, 39, 46, 49 ], [128X[104X
+    [4X[28X  [ 8, 12, 18, 20, 27, 28, 30, 42, 44, 45, 50 ], [ 16, 24, 36, 40 ], [128X[104X
+    [4X[28X  [ 32, 48 ] ][128X[104X
+    [4X[25Xgap>[125X [27XEquivalenceClasses(AsList(AlternatingGroup(4)),[127X[104X
+    [4X[25X>[125X [27X                      function ( g, h )[127X[104X
+    [4X[25X>[125X [27X                        return IsConjugate(SymmetricGroup(4),g,h);[127X[104X
+    [4X[25X>[125X [27X                      end);[127X[104X
+    [4X[28X[ [ (2,3,4), (2,4,3), (1,2,3), (1,2,4), (1,3,2), (1,3,4), (1,4,2), [128X[104X
+    [4X[28X      (1,4,3) ], [ (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], [ () ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFurther,  there  is  an  operation  [10XGraphClasses([3Xn[103X[10X)[110X  which returns a list of
+  isomorphism  classes of graphs with vertices [22X1, 2, dots, n[122X, and an operation
+  [10XAllGraphs([3Xn[103X[10X)[110X  which  returns a list of representatives of these classes. The
+  graphs  are  represented as lists of edges, where each edge is a list of the
+  two vertices it connects, and they are ordered by ascending number of edges.
+  Given     a     graph    [3Xgraph[103X    with    [3Xn[103X    vertices,    the    operation
+  [10XIdGraphNC([3Xgraph[103X[10X,GraphClasses([3Xn[103X[10X))[110X returns the index [10Xi[110X such that [3Xgraph[103X lies in
+  [10XGraphClasses([3Xn[103X[10X)[i][110X.   For  reasons  of  efficiency,  [10XIdGraphNC[110X  performs  no
+  argument checks.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGraphClasses(3);[127X[104X
+    [4X[28X[ [ [  ] ], [ [ [ 1, 2 ] ], [ [ 2, 3 ] ], [ [ 1, 3 ] ] ], [128X[104X
+    [4X[28X  [ [ [ 1, 2 ], [ 1, 3 ] ], [ [ 1, 2 ], [ 2, 3 ] ], [128X[104X
+    [4X[28X      [ [ 1, 3 ], [ 2, 3 ] ] ], [ [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(last,Length); # sizes of classes[127X[104X
+    [4X[28X[ 1, 3, 3, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XAllGraphs(4);[127X[104X
+    [4X[28X[ [  ], [ [ 1, 2 ] ], [ [ 1, 2 ], [ 1, 3 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [128X[104X
+    [4X[28X  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ] ], [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ], [128X[104X
+    [4X[28X  [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ] ], [128X[104X
+    [4X[28X  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ] ], [128X[104X
+    [4X[28X  [ [ 1, 2 ], [ 1, 3 ], [ 2, 4 ], [ 3, 4 ] ], [128X[104X
+    [4X[28X  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ] ], [128X[104X
+    [4X[28X  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], [ 3, 4 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(last,Length); # numbers of edges[127X[104X
+    [4X[28X[ 0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XIdGraphNC([[1,3],[1,8],[3,8]],GraphClasses(4)); # a triangle graph[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XAllGraphs(4)[last];[127X[104X
+    [4X[28X[ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

@@ -1,0 +1,441 @@
+  
+  [1X1 [33X[0;0YSet-Theoretic Unions of Residue Classes[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YEntering residue classes and set-theoretic unions thereof[133X[101X
+  
+  [1X1.1-1 ResidueClass[101X
+  
+  [33X[1;0Y[29X[2XResidueClass[102X( [3XR[103X, [3Xm[103X, [3Xr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClass[102X( [3Xm[103X, [3Xr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClass[102X( [3Xr[103X, [3Xm[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yin  the  three-argument  form  the  residue  class  [3Xr[103X mod [3Xm[103X of the
+            ring [3XR[103X,  and in the two-argument form the residue class [3Xr[103X mod [3Xm[103X of
+            the  [21Xdefault  ring[121X  ([22X→[122X [10XDefaultRing[110X in the [5XGAP[105X Reference Manual) of
+            the arguments.[133X
+  
+  [33X[0;0YIn  the  two-argument case, [3Xm[103X is taken to be the larger and [3Xr[103X is taken to be
+  the  smaller  of  the arguments. For convenience, it is permitted to enclose
+  the argument list in list brackets.[133X
+  
+  [33X[0;0YResidue  classes  have  the  property  [10XIsResidueClass[110X. Rings are regarded as
+  residue  class  0 (mod 1),  and  therefore  have  this  property.  There are
+  operations  [10XModulus[110X and [10XResidue[110X to retrieve the modulus [3Xm[103X resp. residue [3Xr[103X of
+  a residue class.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XResidueClass(2,3);[127X[104X
+    [4X[28XThe residue class 2(3) of Z[128X[104X
+    [4X[25Xgap>[125X [27XResidueClass(Z_pi([2,5]),2,1);[127X[104X
+    [4X[28XThe residue class 1(2) of Z_( 2, 5 )[128X[104X
+    [4X[25Xgap>[125X [27XR := PolynomialRing(GF(2),1);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Indeterminate(GF(2),1);; SetName(x,"x");[127X[104X
+    [4X[25Xgap>[125X [27XResidueClass(R,x+One(R),Zero(R));[127X[104X
+    [4X[28XThe residue class 0 ( mod x+1 ) of GF(2)[x][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.1-2 ResidueClassUnion[101X
+  
+  [33X[1;0Y[29X[2XResidueClassUnion[102X( [3XR[103X, [3Xm[103X, [3Xr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClassUnion[102X( [3XR[103X, [3Xm[103X, [3Xr[103X, [3Xincluded[103X, [3Xexcluded[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClassUnion[102X( [3XR[103X, [3Xcls[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClassUnion[102X( [3XR[103X, [3Xcls[103X, [3Xincluded[103X, [3Xexcluded[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yin  the  first  two  cases,  the  union  of  the  residue  classes
+            [3Xr[103X[[22Xi[122X] mod [3Xm[103X  of  the  ring [3XR[103X, plus / minus finite sets [3Xincluded[103X and
+            [3Xexcluded[103X of elements of [3XR[103X. In the last two cases, the union of the
+            residue  classes  [3Xcls[103X[[22Xi[122X][1] mod [3Xcls[103X[[22Xi[122X][2]  of the ring [3XR[103X=ℤ, plus /
+            minus finite sets [3Xincluded[103X and [3Xexcluded[103X of integers.[133X
+  
+  [33X[0;0YFor  unions of residue classes of the integers, two distinct representations
+  are  implemented: in the first representation, a union of residue classes is
+  represented  by its modulus [3Xm[103X and the list of residues [3Xr[103X; this is called the
+  [21Xstandard[121X  representation.  In the second ([21Xsparse[121X) representation, a union of
+  residue classes [22Xr_1(m_1) ∪ dots ∪ r_k(m_k)[122X is represented by the list [3Xcls[103X of
+  the pairs [10X[r_i,m_i][110X. One can switch between the two representations by using
+  the   operations   [10XStandardRep[110X   and  [10XSparseRep[110X,  respectively.  The  sparse
+  representation  allows  more  efficient  computation  in  terms of time- and
+  memory  requirements  when  computing  with unions of [21Xrelatively few[121X residue
+  classes  where  the  lcm  of  the  moduli  is  [21Xlarge[121X; otherwise the standard
+  representation  is  advantageous. For rings other than ℤ, presently only the
+  standard representation is available.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);[127X[104X
+    [4X[28X(Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnion(Integers,[[1,2],[0,40],[2,1200]]);[127X[104X
+    [4X[28XUnion of the residue classes 1(2), 0(40) and 2(1200) of Z[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnion(Z_pi([2,3]),8,[3,5]);[127X[104X
+    [4X[28XUnion of the residue classes 3(8) and 5(8) of Z_( 2, 3 )[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnion(R,x^2,[One(R),x],[],[One(R)]);[127X[104X
+    [4X[28X<union of 2 residue classes (mod x^2) of GF(2)[x]> \ [ 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWhen  talking about a [13Xresidue class union[113X in this chapter, we always mean an
+  object as it is returned by this function.[133X
+  
+  [33X[0;0YThere    are    operations    [10XModulus[110X,    [10XResidues[110X,   [10XIncludedElements[110X   and
+  [10XExcludedElements[110X to retrieve the components of a residue class union as they
+  have originally been passed as arguments to [2XResidueClassUnion[102X.[133X
+  
+  [33X[0;0YThe  user has the choice between a longer and more descriptive and a shorter
+  and less bulky output format for residue classes and unions thereof:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnionViewingFormat("short");[127X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnion(Integers,12,[0,1,4,7,8]);[127X[104X
+    [4X[28X0(4) U 1(6)[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnionViewingFormat("long");[127X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnion(Integers,12,[0,1,4,7,8]);[127X[104X
+    [4X[28XUnion of the residue classes 0(4) and 1(6) of Z[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.1-3 AllResidueClassesModulo[101X
+  
+  [33X[1;0Y[29X[2XAllResidueClassesModulo[102X( [3XR[103X, [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAllResidueClassesModulo[102X( [3Xm[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya sorted list of all residue classes (mod [3Xm[103X) of the ring [3XR[103X.[133X
+  
+  [33X[0;0YIf the argument [3XR[103X is omitted it defaults to the default ring of [3Xm[103X -- cf. the
+  documentation  of [10XDefaultRing[110X in the [5XGAP[105X reference manual. A transversal for
+  the   residue   classes   (mod [3Xm[103X)   can   be   obtained   by  the  operation
+  [10XAllResidues([3XR[103X[10X,[3Xm[103X[10X)[110X,  and  their  number  can  be  determined  by the operation
+  [10XNumberOfResidues([3XR[103X[10X,[3Xm[103X[10X)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAllResidueClassesModulo(Integers,2);[127X[104X
+    [4X[28X[ The residue class 0(2) of Z, The residue class 1(2) of Z ][128X[104X
+    [4X[25Xgap>[125X [27XAllResidueClassesModulo(Z_pi(2),2);[127X[104X
+    [4X[28X[ The residue class 0(2) of Z_( 2 ), The residue class 1(2) of Z_( 2 ) ][128X[104X
+    [4X[25Xgap>[125X [27XAllResidueClassesModulo(R,x);[127X[104X
+    [4X[28X[ The residue class 0 ( mod x ) of GF(2)[x], [128X[104X
+    [4X[28X  The residue class 1 ( mod x ) of GF(2)[x] ][128X[104X
+    [4X[25Xgap>[125X [27XAllResidues(R,x^3);[127X[104X
+    [4X[28X[ 0, 1, x, x+1, x^2, x^2+1, x^2+x, x^2+x+1 ][128X[104X
+    [4X[25Xgap>[125X [27XNumberOfResidues(Z_pi([2,3]),360);[127X[104X
+    [4X[28X72[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.2 [33X[0;0YMethods for residue class unions[133X[101X
+  
+  [33X[0;0YThere  are  methods  for  [10XPrint[110X,  [10XString[110X and [10XDisplay[110X which are applicable to
+  residue class unions. There is a method for [10Xin[110X which tests whether some ring
+  element lies in a given residue class union.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPrint(ResidueClass(1,2),"\n");[127X[104X
+    [4X[28XResidueClassUnion( Integers, 2, [ 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27X1 in ResidueClass(1,2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere are methods for [10XUnion[110X, [10XIntersection[110X, [10XDifference[110X and [10XIsSubset[110X available
+  for  residue  class unions. They also accept finite subsets of the base ring
+  as arguments.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XS := Union(ResidueClass(0,2),ResidueClass(0,3));[127X[104X
+    [4X[28XZ \ Union of the residue classes 1(6) and 5(6) of Z[128X[104X
+    [4X[25Xgap>[125X [27XIntersection(S,ResidueClass(0,7));[127X[104X
+    [4X[28XUnion of the residue classes 0(14) and 21(42) of Z[128X[104X
+    [4X[25Xgap>[125X [27XDifference(S,ResidueClass(2,4));[127X[104X
+    [4X[28XUnion of the residue classes 0(4) and 3(6) of Z[128X[104X
+    [4X[25Xgap>[125X [27XIsSubset(ResidueClass(0,2),ResidueClass(4,8));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XUnion(S,[1..10]);[127X[104X
+    [4X[28X(Union of the residue classes 0(2) and 3(6) of Z) U [ 1, 5, 7 ][128X[104X
+    [4X[25Xgap>[125X [27XIntersection(S,[1..6]);[127X[104X
+    [4X[28X[ 2, 3, 4, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XDifference(S,[1..6]);[127X[104X
+    [4X[28X(Union of the residue classes 0(2) and 3(6) of Z) \ [ 2, 3, 4, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XDifference(Integers,[1..10]);[127X[104X
+    [4X[28XZ \ <set of cardinality 10>[128X[104X
+    [4X[25Xgap>[125X [27XIsSubset(S,[1..10]);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf  the  underlying  ring has a residue class ring of a given cardinality [22Xt[122X,
+  then a residue class can be written as a disjoint union of [22Xt[122X residue classes
+  with equal moduli:[133X
+  
+  [1X1.2-1 SplittedClass[101X
+  
+  [33X[1;0Y[29X[2XSplittedClass[102X( [3Xcl[103X, [3Xt[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  partition  of  the residue class [3Xcl[103X into [3Xt[103X residue classes with
+            equal  moduli,  provided  that  such a partition exists. Otherwise
+            [10Xfail[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSplittedClass(ResidueClass(1,2),2);[127X[104X
+    [4X[28X[ The residue class 1(4) of Z, The residue class 3(4) of Z ][128X[104X
+    [4X[25Xgap>[125X [27XSplittedClass(ResidueClass(Z_pi(3),3,0),2);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YOften  one needs a partition of a given residue class union into [21Xfew[121X residue
+  classes. The following operation takes care of this:[133X
+  
+  [1X1.2-2 AsUnionOfFewClasses[101X
+  
+  [33X[1;0Y[29X[2XAsUnionOfFewClasses[102X( [3XU[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya set of disjoint residue classes whose union is equal to [3XU[103X, up to
+            the finite sets [10XIncludedElements([3XU[103X[10X)[110X and [10XExcludedElements([3XU[103X[10X)[110X.[133X
+  
+  [33X[0;0YAs  the  name of the operation suggests, it is taken care that the number of
+  residue  classes  in  the  returned list is kept [21Xreasonably small[121X. It is not
+  guaranteed that it is minimal.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassUnionViewingFormat("short");[127X[104X
+    [4X[25Xgap>[125X [27XAsUnionOfFewClasses(Difference(Integers,ResidueClass(0,30)));[127X[104X
+    [4X[28X[ 1(2), 2(6), 4(6), 6(30), 12(30), 18(30), 24(30) ][128X[104X
+    [4X[25Xgap>[125X [27XUnion(last);[127X[104X
+    [4X[28XZ \ 0(30)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YOne can compute the sets of sums, differences, products and quotients of the
+  elements of a residue class union and an element of the base ring:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XResidueClass(0,2) + 1;[127X[104X
+    [4X[28X1(2)[128X[104X
+    [4X[25Xgap>[125X [27XResidueClass(0,2) - 2 = ResidueClass(0,2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X3 * ResidueClass(0,2);[127X[104X
+    [4X[28X0(6)[128X[104X
+    [4X[25Xgap>[125X [27XResidueClass(0,2)/2;[127X[104X
+    [4X[28XIntegers[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-3 PartitionsIntoResidueClasses[101X
+  
+  [33X[1;0Y[29X[2XPartitionsIntoResidueClasses[102X( [3XR[103X, [3Xlength[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPartitionsIntoResidueClasses[102X( [3XR[103X, [3Xlength[103X, [3Xprimes[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yin  the  2-argument version a sorted list of all partitions of the
+            ring  [3XR[103X  into  [3Xlength[103X residue classes. In the 3-argument version a
+            sorted  list  of  all partitions of the ring [3XR[103X into [3Xlength[103X residue
+            classes whose moduli have only prime factors in the list [3Xprimes[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPartitionsIntoResidueClasses(Integers,4);[127X[104X
+    [4X[28X[ [ 0(2), 1(4), 3(8), 7(8) ], [ 0(2), 3(4), 1(8), 5(8) ], [128X[104X
+    [4X[28X  [ 0(2), 1(6), 3(6), 5(6) ], [ 1(2), 0(4), 2(8), 6(8) ], [128X[104X
+    [4X[28X  [ 1(2), 2(4), 0(8), 4(8) ], [ 1(2), 0(6), 2(6), 4(6) ], [128X[104X
+    [4X[28X  [ 0(3), 1(3), 2(6), 5(6) ], [ 0(3), 2(3), 1(6), 4(6) ], [128X[104X
+    [4X[28X  [ 1(3), 2(3), 0(6), 3(6) ], [ 0(4), 1(4), 2(4), 3(4) ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-4 RandomPartitionIntoResidueClasses[101X
+  
+  [33X[1;0Y[29X[2XRandomPartitionIntoResidueClasses[102X( [3XR[103X, [3Xlength[103X, [3Xprimes[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya [21Xrandom[121X partition of the ring [3XR[103X into [3Xlength[103X residue classes whose
+            moduli  have only prime factors in [3Xprimes[103X, respectively [10Xfail[110X if no
+            such partition exists.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XRandomPartitionIntoResidueClasses(Integers,30,[2,3,5,7]);[127X[104X
+    [4X[28X[ 0(7), 2(7), 5(7), 3(14), 10(14), 1(21), 8(21), 15(21), 18(21), 20(21), [128X[104X
+    [4X[28X  6(63), 13(63), 25(63), 27(63), 32(63), 34(63), 46(63), 48(63), 53(63), [128X[104X
+    [4X[28X  55(63), 4(126), 67(126), 137(189), 74(567), 200(567), 263(567), [128X[104X
+    [4X[28X  389(567), 452(567), 11(1134), 578(1134) ][128X[104X
+    [4X[25Xgap>[125X [27XUnion(last);[127X[104X
+    [4X[28XIntegers[128X[104X
+    [4X[25Xgap>[125X [27XSum(List(last2,Density));[127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-5 CoverByResidueClasses[101X
+  
+  [33X[1;0Y[29X[2XCoverByResidueClasses[102X( [3XIntegers[103X, [3Xmoduli[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XCoversByResidueClasses[102X( [3XIntegers[103X, [3Xmoduli[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yin  the first form a cover of the integers by residue classes with
+            moduli  [3Xmoduli[103X  if  such  cover exists, and [10Xfail[110X otherwise; in the
+            second  form  a  list  of  all  covers  of the integers by residue
+            classes with moduli [3Xmoduli[103X.[133X
+  
+  [33X[0;0YSince  there are often very many such covers, computing all of them can take
+  a lot of time and memory.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCoverByResidueClasses(Integers,[2,3,4,6,8,12]);[127X[104X
+    [4X[28X[ 0(2), 0(3), 1(4), 1(6), 3(8), 11(12) ][128X[104X
+    [4X[25Xgap>[125X [27XUnion(last);[127X[104X
+    [4X[28XIntegers[128X[104X
+    [4X[25Xgap>[125X [27XCoversByResidueClasses(Integers,[2,3,3,6]);[127X[104X
+    [4X[28X[ [ 0(2), 0(3), 1(3), 5(6) ], [ 0(2), 0(3), 2(3), 1(6) ], [128X[104X
+    [4X[28X  [ 0(2), 1(3), 2(3), 3(6) ], [ 1(2), 0(3), 1(3), 2(6) ], [128X[104X
+    [4X[28X  [ 1(2), 0(3), 2(3), 4(6) ], [ 1(2), 1(3), 2(3), 0(6) ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(last,Union);[127X[104X
+    [4X[28X[ Integers, Integers, Integers, Integers, Integers, Integers ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-6 Density[101X
+  
+  [33X[1;0Y[29X[2XDensity[102X( [3XU[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe natural density of [3XU[103X as a subset of the underlying ring.[133X
+  
+  [33X[0;0YThe  [13Xnatural  density[113X  of  a  residue  class  [22Xr(m)[122X of a ring [22XR[122X is defined by
+  [22X1/|R/mR|[122X,  and  the  [13Xnatural  density[113X  of a union [22XU[122X of finitely many residue
+  classes  is  defined  by  the  sum  of  the  densities  of the elements of a
+  partition of [22XU[122X into finitely many residue classes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDensity(ResidueClass(0,2));[127X[104X
+    [4X[28X1/2[128X[104X
+    [4X[25Xgap>[125X [27XDensity(Difference(Integers,ResidueClass(0,5)));[127X[104X
+    [4X[28X4/5[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor looping over residue class unions of the integers, there are methods for
+  the operations [10XIterator[110X and [10XNextIterator[110X.[133X
+  
+  
+  [1X1.3 [33X[0;0YOn residue class unions of [22Xℤ^2[122X[101X[1X[133X[101X
+  
+  [33X[0;0YResidue  class unions of [22Xℤ^2[122X are treated similar as those of any other ring.
+  Also  there  is  roughly  the same functionality available for them. However
+  there  are  some  differences  and  a  few  additional  features,  which are
+  described in this section.[133X
+  
+  [33X[0;0YThe  elements  of [22Xℤ^2[122X  are  represented  as  lists  of length 2 with integer
+  entries.  The  modulus  of  a  residue class union of [22Xℤ^2[122X is a lattice. This
+  lattice  is  stored as a [22X2 × 2[122X integer matrix of full rank in Hermite normal
+  form,  whose  rows  are  the spanning vectors. Residue classes of [22Xℤ^2[122X modulo
+  principal  ideals are presently not implemented. Residue class unions of [22Xℤ^2[122X
+  can  be  multiplied  by matrices of full rank from the right. A snippet of a
+  residue  class union of [22Xℤ^2[122X is shown in [21XASCII art[121X when one [10XDisplay[110X's it with
+  option [10XAsGrid[110X. We give some illustrative examples:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR := Integers^2;[127X[104X
+    [4X[28X( Integers^2 )[128X[104X
+    [4X[25Xgap>[125X [27X5*R+[2,3];[127X[104X
+    [4X[28X(2,3)+(5,0)Z+(0,5)Z[128X[104X
+    [4X[25Xgap>[125X [27XDifference(R,last);[127X[104X
+    [4X[28XZ^2 \ (2,3)+(5,0)Z+(0,5)Z[128X[104X
+    [4X[25Xgap>[125X [27XDensity(last);[127X[104X
+    [4X[28X24/25[128X[104X
+    [4X[25Xgap>[125X [27XL1 := [[2,1],[-1,2]];;[127X[104X
+    [4X[25Xgap>[125X [27XL2 := [[6,2],[0,6]];;[127X[104X
+    [4X[25Xgap>[125X [27XAllResidueClassesModulo(R,L1); # The modulus is transformed to HNF.[127X[104X
+    [4X[28X[ (0,0)+(1,3)Z+(0,5)Z, (0,1)+(1,3)Z+(0,5)Z, (0,2)+(1,3)Z+(0,5)Z,[128X[104X
+    [4X[28X  (0,3)+(1,3)Z+(0,5)Z, (0,4)+(1,3)Z+(0,5)Z ][128X[104X
+    [4X[25Xgap>[125X [27Xcl1 := ResidueClass(R,L1,[0,0]);[127X[104X
+    [4X[28X(0,0)+(1,3)Z+(0,5)Z[128X[104X
+    [4X[25Xgap>[125X [27Xcl2 := ResidueClass(R,L2,[0,0]);[127X[104X
+    [4X[28X(0,0)+(6,2)Z+(0,6)Z[128X[104X
+    [4X[25Xgap>[125X [27Xcl3 := Intersection(cl1,cl2);[127X[104X
+    [4X[28X(0,0)+(6,8)Z+(0,30)Z[128X[104X
+    [4X[25Xgap>[125X [27XS1 := Difference(cl1,cl2);[127X[104X
+    [4X[28X<union of 35 residue classes (mod (6,8)Z+(0,30)Z)>[128X[104X
+    [4X[25Xgap>[125X [27XS2 := Difference(cl2,cl1);[127X[104X
+    [4X[28X<union of 4 residue classes (mod (6,8)Z+(0,30)Z)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(S1); # The set is written as union of "few" residue classes:[127X[104X
+    [4X[28X(0,5)+(1,3)Z+(0,10)Z U (1,3)+(2,6)Z+(0,10)Z U (2,6)+(6,8)Z+(0,10)Z U[128X[104X
+    [4X[28X(4,2)+(6,8)Z+(0,10)Z U (0,10)+(6,8)Z+(0,30)Z U (0,20)+(6,8)Z+(0,30)Z[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(S2);[127X[104X
+    [4X[28X(0,6)+(6,8)Z+(0,30)Z U (0,12)+(6,8)Z+(0,30)Z U (0,18)+(6,8)Z+(0,30)Z[128X[104X
+    [4X[28X U (0,24)+(6,8)Z+(0,30)Z[128X[104X
+    [4X[25Xgap>[125X [27Xcls := AsUnionOfFewClasses(S1);[127X[104X
+    [4X[28X[ (0,5)+(1,3)Z+(0,10)Z, (1,3)+(2,6)Z+(0,10)Z, (2,6)+(6,8)Z+(0,10)Z,[128X[104X
+    [4X[28X  (4,2)+(6,8)Z+(0,10)Z, (0,10)+(6,8)Z+(0,30)Z, (0,20)+(6,8)Z+(0,30)Z ][128X[104X
+    [4X[25Xgap>[125X [27XUnion(cls) = S1;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS3 := S1*[[3,5],[2,4]];[127X[104X
+    [4X[28X<union of 35 residue classes (mod (2,46)Z+(0,180)Z)>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(S1:AsGrid);[127X[104X
+    [4X[28X    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X   *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X*    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X    *    *    *    *         *    *    *    *    *         *    *    *[128X[104X
+    [4X[28X *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X   *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X*    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X *    *    *         *    *    *    *    *         *    *    *    *    *[128X[104X
+    [4X[28X   *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X*    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X   *         *    *    *    *    *         *    *    *    *    *[128X[104X
+    [4X[28X*    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X *    *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X   *    *    *    *    *    *    *    *    *    *    *    *    *    *[128X[104X
+    [4X[28X     *    *    *    *    *         *    *    *    *    *         *    *[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that in [5XGAP[105X multiplying lists of integers means computing their scalar
+  product  as vectors. The consequence is that technically the free module [22Xℤ^2[122X
+  is not a ring in [5XGAP[105X.[133X
+  
+  
+  [1X1.4 [33X[0;0YThe categories and families of residue class unions[133X[101X
+  
+  [1X1.4-1 IsResidueClassUnion[101X
+  
+  [33X[1;0Y[29X[2XIsResidueClassUnion[102X( [3XU[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsResidueClassUnionOfZ[102X( [3XU[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsResidueClassUnionOfZxZ[102X( [3XU[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsResidueClassUnionOfZ_pi[102X( [3XU[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsResidueClassUnionOfGFqx[102X( [3XU[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X  if [3XU[103X is a residue class union, a residue class union of ℤ, a
+            residue   class   union   of [22Xℤ^2[122X,  a  residue  class  union  of  a
+            semilocalization  of ℤ  or  a  residue class union of a polynomial
+            ring  in one variable over a finite field, respectively, and [10Xfalse[110X
+            otherwise.[133X
+  
+  [33X[0;0YOften  the  same methods can be used for residue class unions of the ring of
+  integers  and of its semilocalizations. For this reason, there is a category
+  [10XIsResidueClassUnionOfZorZ_pi[110X  which  is  the union of [10XIsResidueClassUnionOfZ[110X
+  and  [10XIsResidueClassUnionOfZ_pi[110X. The internal representation of residue class
+  unions   is  called  [10XIsResidueClassUnionResidueListRep[110X.  There  are  methods
+  available for [10XExtRepOfObj[110X and [10XObjByExtRep[110X.[133X
+  
+  [1X1.4-2 ResidueClassUnionsFamily[101X
+  
+  [33X[1;0Y[29X[2XResidueClassUnionsFamily[102X( [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClassUnionsFamily[102X( [3XR[103X, [3Xfixedreps[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  family  of  residue  class  unions or the family of unions of
+            residue   classes   with  fixed  representatives  of  the  ring [3XR[103X,
+            depending on whether [3Xfixedreps[103X is present and [10Xtrue[110X or not.[133X
+  
+  [33X[0;0YThe  ring [3XR[103X can be retrieved as [10XUnderlyingRing(ResidueClassUnionsFamily([3XR[103X[10X))[110X.
+  There  is  no  coercion  between  residue  class unions or unions of residue
+  classes  with  fixed  representatives  which  belong  to different families.
+  Unions  of  residue  classes with fixed representatives are described in the
+  next chapter.[133X
+  

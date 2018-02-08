@@ -1,0 +1,281 @@
+  
+  [1X2 [33X[0;0YUnions of Residue Classes with Fixed Representatives[133X[101X
+  
+  [33X[0;0Y[5XResClasses[105X  supports  computations  with unions of residue classes which are
+  endowed  with distinguished ([21Xfixed[121X) representatives. These unions of residue
+  classes  can  be  viewed  as multisets of ring elements. The residue classes
+  forming such a union do not need to be disjoint or even only distinct.[133X
+  
+  
+  [1X2.1 [33X[0;0YEntering unions of residue classes with fixed representatives[133X[101X
+  
+  [1X2.1-1 ResidueClassWithFixedRepresentative[101X
+  
+  [33X[1;0Y[29X[2XResidueClassWithFixedRepresentative[102X( [3XR[103X, [3Xm[103X, [3Xr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResidueClassWithFixedRepresentative[102X( [3Xm[103X, [3Xr[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe   residue   class  [3Xr[103X mod [3Xm[103X  of  the  ring [3XR[103X,  with  the  fixed
+            representative [3Xr[103X.[133X
+  
+  [33X[0;0YIf  the argument [3XR[103X is omitted, it defaults to [10XIntegers[110X. Residue classes with
+  fixed           representatives          have          the          property
+  [10XIsResidueClassWithFixedRepresentative[110X.  The  fixed  representative [3Xr[103X  can be
+  retrieved  by  the  operation [10XResidue[110X, and the modulus [3Xm[103X can be retrieved by
+  the operation [10XModulus[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XResidueClassWithFixedRepresentative(Integers,2,1);[127X[104X
+    [4X[28X[1/2][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-2 UnionOfResidueClassesWithFixedReps[101X
+  
+  [33X[1;0Y[29X[2XUnionOfResidueClassesWithFixedReps[102X( [3XR[103X, [3Xclasses[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUnionOfResidueClassesWithFixedReps[102X( [3Xclasses[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe  union  of the residue classes [3Xclasses[103X[[22Xi[122X][2] mod [3Xclasses[103X[[22Xi[122X][1]
+            of the ring [3XR[103X, with fixed representatives [3Xclasses[103X[[22Xi[122X][2].[133X
+  
+  [33X[0;0YThe  argument  [3Xclasses[103X  must  be  a list of pairs of elements of the ring [3XR[103X.
+  Their  first  entries -- the moduli -- must be nonzero. If the argument [3XR[103X is
+  omitted, it defaults to [10XIntegers[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XUnionOfResidueClassesWithFixedReps(Integers,[[2,4],[3,9]]);[127X[104X
+    [4X[28X[4/2] U [9/3][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere  is  a  method  for the operation [10XModulus[110X which returns the lcm of the
+  moduli  of  the  residue  classes  forming such a union. Further there is an
+  operation  [10XClasses[110X  for retrieving the list of classes which has been passed
+  as   an   argument   to  [10XUnionOfResidueClassesWithFixedReps[110X.  The  operation
+  [10XAsListOfClasses[110X  does  the  same,  except  that  the  returned list contains
+  residue  classes  instead  of pairs [10X[[3Xmodulus[103X[10X,[3Xresidue[103X[10X][110X. There are methods for
+  [10XPrint[110X, [10XString[110X and [10XDisplay[110X available for unions of residue classes with fixed
+  representatives.[133X
+  
+  [1X2.1-3 AllResidueClassesWithFixedRepsModulo[101X
+  
+  [33X[1;0Y[29X[2XAllResidueClassesWithFixedRepsModulo[102X( [3XR[103X, [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAllResidueClassesWithFixedRepsModulo[102X( [3Xm[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya  sorted  list of all residue classes (mod [3Xm[103X) of the ring [3XR[103X, with
+            fixed representatives.[133X
+  
+  [33X[0;0YIf  the  argument [3XR[103X is omitted it defaults to the default ring of [3Xm[103X, cf. the
+  documentation   of   [10XDefaultRing[110X   in   the   [5XGAP[105X   reference   manual.  The
+  representatives  are the same as those chosen by the operation [10Xmod[110X. See also
+  [2XAllResidueClassesModulo[102X ([14X1.1-3[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAllResidueClassesWithFixedRepsModulo(4);[127X[104X
+    [4X[28X[ [0/4], [1/4], [2/4], [3/4] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2 [33X[0;0YMethods for unions of residue classes with fixed representatives[133X[101X
+  
+  [33X[0;0YThroughout this chapter, the argument [3XR[103X denotes the underlying ring, and the
+  arguments  [3XU[103X,  [3XU1[103X  and [3XU2[103X  denote  unions of residue classes of [3XR[103X with fixed
+  representatives.[133X
+  
+  [33X[0;0YUnions of residue classes with fixed representatives are multisets. Elements
+  and residue classes can be contained with multiplicities:[133X
+  
+  [1X2.2-1 Multiplicity[101X
+  
+  [33X[1;0Y[29X[2XMultiplicity[102X( [3Xx[103X, [3XU[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XMultiplicity[102X( [3Xcl[103X, [3XU[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe  multiplicity  of  [3Xx[103X  in [3XU[103X  regarded  as  a  multiset  of ring
+            elements,  resp.  the  multiplicity  of  the residue class [3Xcl[103X in [3XU[103X
+            regarded as a multiset of residue classes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XList([0..20],n->Multiplicity(n,U));[127X[104X
+    [4X[28X[ 2, 0, 1, 1, 1, 0, 2, 0, 1, 1, 1, 0, 2, 0, 1, 1, 1, 0, 2, 0, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XMultiplicity(ResidueClassWithFixedRep(2,0),U);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YLet [10XU[110X be a union of residue classes with fixed representatives. The multiset
+  [10XU[110X  can  have  an  attribute  [10XDensity[110X  which denotes its [13Xnatural density[113X as a
+  multiset, i.e. elements with multiplicity [22Xk[122X count [22Xk[122X-fold. The multiset [10XU[110X has
+  the  property  [10XIsOverlappingFree[110X if it consists of pairwise disjoint residue
+  classes.  The  set-theoretic  union  of the residue classes forming [10XU[110X can be
+  determined  by  the  operation  [10XAsOrdinaryUnionOfResidueClasses[110X.  The object
+  returned  by  this operation is an [21Xordinary[121X residue class union as described
+  in Chapter [14X1[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XDensity(U);[127X[104X
+    [4X[28X5/6[128X[104X
+    [4X[25Xgap>[125X [27XIsOverlappingFree(U);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XAsOrdinaryUnionOfResidueClasses(U);[127X[104X
+    [4X[28XZ \ 1(6) U 5(6)[128X[104X
+    [4X[25Xgap>[125X [27XDensity(last);[127X[104X
+    [4X[28X2/3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  sequel we abbreviate the term [21Xthe multiset of ring elements endowed
+  with  the structure of a union of residue classes with fixed representatives[121X
+  by [21Xthe multiset[121X.[133X
+  
+  [33X[0;0YThere are methods for [10X+[110X and [10X-[110X available for computing the multiset of sums [22Xu
+  +  x[122X,  [22Xu  ∈  U[122X, the multiset of differences [22Xu - x[122X resp. [22Xx - u[122X, [22Xu ∈ U[122X and the
+  multiset  of  the  additive inverses of the elements of [22XU[122X. Further there are
+  methods  for [10X*[110X and [10X/[110X available for computing the multiset of products [22Xx ⋅ u[122X,
+  [22Xu ∈ U[122X and the multiset of quotients [22Xu/x[122X, [22Xu ∈ U[122X. The division method requires
+  all  elements  of [10XU[110X to be divisible by [22Xx[122X. If the underlying ring is the ring
+  of  integers,  scalar multiplication and division leave [22Xδ[122X invariant ([22X→[122X [2XDelta[102X
+  ([14X2.3-1[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XU + 7;[127X[104X
+    [4X[28X[7/2] U [7/3][128X[104X
+    [4X[25Xgap>[125X [27XU - 7; 7 - U; -U;[127X[104X
+    [4X[28X[-7/2] U [-7/3][128X[104X
+    [4X[28X[7/-3] U [7/-2][128X[104X
+    [4X[28X[0/-3] U [0/-2][128X[104X
+    [4X[25Xgap>[125X [27XV := 2 * U;[127X[104X
+    [4X[28X[0/4] U [0/6][128X[104X
+    [4X[25Xgap>[125X [27XV/2;[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-2 Union[101X
+  
+  [33X[1;0Y[29X[2XUnion[102X( [3XU1[103X, [3XU2[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe union of [3XU1[103X and [3XU2[103X.[133X
+  
+  [33X[0;0YThe  multiplicity  of  any ring element or residue class in the union is the
+  sum    of   its   multiplicities   in   the   arguments.   It   holds   that
+  [10XDelta(Union([3XU1[103X[10X,[3XU2[103X[10X)) = Delta([3XU1[103X[10X) + Delta([3XU2[103X[10X)[110X. ([22X→[122X [2XDelta[102X ([14X2.3-1[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XUnion(U,U);                                      [127X[104X
+    [4X[28X[0/2] U [0/2] U [0/3] U [0/3][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-3 Intersection[101X
+  
+  [33X[1;0Y[29X[2XIntersection[102X( [3XU1[103X, [3XU2[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe intersection of [3XU1[103X and [3XU2[103X.[133X
+  
+  [33X[0;0YThe  multiplicity of any residue class in the intersection is the minimum of
+  its multiplicities in the arguments.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XIntersection(U,ResidueClassWithFixedRep(2,0));[127X[104X
+    [4X[28X[0/2][128X[104X
+    [4X[25Xgap>[125X [27XIntersection(U,ResidueClassWithFixedRep(6,0));[127X[104X
+    [4X[28X[][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-4 Difference[101X
+  
+  [33X[1;0Y[29X[2XDifference[102X( [3XU1[103X, [3XU2[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe difference of [3XU1[103X and [3XU2[103X.[133X
+  
+  [33X[0;0YThe  multiplicity of any residue class in the difference is its multiplicity
+  in [3XU1[103X  minus  its  multiplicity  in [3XU2[103X,  if  this  value is nonnegative. The
+  difference  of  the empty residue class union with fixed representatives and
+  some  residue  class  [22X[r/m][122X  is  set  equal  to  [22X[(m-r)/m][122X.  It  holds  that
+  [10XDelta(Difference([3XU1[103X[10X,[3XU2[103X[10X)) = Delta([3XU1[103X[10X) - Delta([3XU2[103X[10X)[110X. ([22X→[122X [2XDelta[102X ([14X2.3-1[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XV := UnionOfResidueClassesWithFixedReps(Integers,[[3,0],[5,2]]);[127X[104X
+    [4X[28X[0/3] U [2/5][128X[104X
+    [4X[25Xgap>[125X [27XDifference(U,V);[127X[104X
+    [4X[28X[0/2] U [3/5][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YThe invariant Delta[133X[101X
+  
+  [1X2.3-1 Delta[101X
+  
+  [33X[1;0Y[29X[2XDelta[102X( [3XU[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ythe value of the invariant [22Xδ[122X of the residue class union [3XU[103X.[133X
+  
+  [33X[0;0YFor a residue class [22X[r/m][122X with fixed representative we set [22Xδ([r/m]) := r/m -
+  1/2[122X,  and  extend  this  definition  additively  to  unions  of such residue
+  classes.  If  no  representatives are fixed, this definition is still unique
+  (mod 1).  There is a related invariant [22Xρ[122X which is defined by [22Xe^δ(U) π i[122X. The
+  corresponding attribute is called [10XRho[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,3],[3,4]]);[127X[104X
+    [4X[28X[3/2] U [4/3][128X[104X
+    [4X[25Xgap>[125X [27XDelta(U) = (3/2-1/2) + (4/3-1/2);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XV := RepresentativeStabilizingRefinement(U,3);[127X[104X
+    [4X[28X[3/6] U [5/6] U [7/6] U [4/9] U [7/9] U [10/9][128X[104X
+    [4X[25Xgap>[125X [27XDelta(V) = Delta(U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRho(V);[127X[104X
+    [4X[28XE(12)^11[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.3-2 RepresentativeStabilizingRefinement[101X
+  
+  [33X[1;0Y[29X[2XRepresentativeStabilizingRefinement[102X( [3XU[103X, [3Xk[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ythe representative stabilizing refinement of [3XU[103X into [3Xk[103X parts.[133X
+  
+  [33X[0;0YThe [13Xrepresentative stabilizing refinement[113X of a residue class [22X[r/m][122X of ℤ into
+  [22Xk[122X  parts  is  defined  by [22X[r/km] ∪ [(r+m)/km] ∪ dots ∪ [(r+(k-1)m)/km][122X. This
+  definition is extended in the obvious way to unions of residue classes.[133X
+  
+  [33X[0;0YIf  the  argument  [3Xk[103X  is  zero, the method performs a simplification of [3XU[103X by
+  joining appropriate residue classes, if this is possible.[133X
+  
+  [33X[0;0YIn any case the value of [10XDelta([3XU[103X[10X)[110X is invariant under this operation ([22X→[122X [2XDelta[102X
+  ([14X2.3-1[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XU := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[25Xgap>[125X [27XRepresentativeStabilizingRefinement(U,4);   [127X[104X
+    [4X[28X[0/8] U [2/8] U [4/8] U [6/8] U [0/12] U [3/12] U [6/12] U [9/12][128X[104X
+    [4X[25Xgap>[125X [27XRepresentativeStabilizingRefinement(last,0);[127X[104X
+    [4X[28X[0/2] U [0/3][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.4 [33X[0;0YThe categories of unions of residue classes with fixed rep's[133X[101X
+  
+  [33X[0;0YThe  names  of  the  categories  of  unions  of  residue  classes with fixed
+  representatives                                                          are
+  [10XIsUnionOfResidueClassesOf[Z|Z_pi|ZorZ_pi|GFqx]WithFixedRepresentatives[110X.[133X
+  

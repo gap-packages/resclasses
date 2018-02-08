@@ -1,1 +1,122 @@
-Placeholder
+  
+  
+                                   [1X[5XResClasses[105X[101X
+  
+  
+               [1X Set-Theoretic Computations with Residue Classes [101X
+  
+  
+                                 Version 4.7.1
+  
+  
+                               December 18, 2017
+  
+  
+                                  Stefan Kohl
+  
+  
+  
+  Stefan Kohl
+      Email:    [7Xmailto:stefan@mcs.st-and.ac.uk[107X
+      Homepage: [7Xhttps://stefan-kohl.github.io/[107X
+  
+  -------------------------------------------------------
+  [1XAbstract[101X
+  [33X[0;0Y[5XResClasses[105X  is  a  package  for  [5XGAP[105X  4  which provides a fully-featured and
+  easy-to-use implementation of set-theoretic unions of residue classes of the
+  integers and of a few other rings.[133X
+  
+  [33X[0;0YThe  class  of sets which [5XResClasses[105X can deal with includes the open and the
+  closed  sets  in  the  topology  on  the respective ring which is induced by
+  taking  the  set  of  all  residue  classes  as a basis, as far as the usual
+  restrictions imposed by the finiteness of computing resources permit this.[133X
+  
+  [33X[0;0YThe  package  further  provides  slightly more specialized functionality for
+  unions  of  residue  classes  with  distinguished representatives and signed
+  moduli.[133X
+  
+  [33X[0;0YThe  [5XResClasses[105X  package  is used in a group theoretical context by the [5XRCWA[105X
+  package [Koh16].[133X
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 2003 - 2017 by Stefan Kohl.[133X
+  
+  [33X[0;0Y[5XResClasses[105X  is free software: you can redistribute it and/or modify it under
+  the  terms  of  the  GNU  General  Public  License  as published by the Free
+  Software  Foundation,  either  version 2 of the License, or (at your option)
+  any later version.[133X
+  
+  [33X[0;0Y[5XResClasses[105X  is  distributed  in the hope that it will be useful, but WITHOUT
+  ANY  WARRANTY;  without  even  the  implied  warranty  of MERCHANTABILITY or
+  FITNESS  FOR  A  PARTICULAR  PURPOSE. See the GNU General Public License for
+  more details.[133X
+  
+  [33X[0;0YFor  a  copy  of the GNU General Public License, see the file [11XGPL[111X in the [11Xetc[111X
+  directory       of       the       [5XGAP[105X       distribution       or       see
+  [7Xhttp://www.gnu.org/licenses/gpl.html[107X.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (ResClasses)[101X
+  
+  1 [33X[0;0YSet-Theoretic Unions of Residue Classes[133X
+    1.1 [33X[0;0YEntering residue classes and set-theoretic unions thereof[133X
+      1.1-1 ResidueClass
+      1.1-2 ResidueClassUnion
+      1.1-3 AllResidueClassesModulo
+    1.2 [33X[0;0YMethods for residue class unions[133X
+      1.2-1 SplittedClass
+      1.2-2 AsUnionOfFewClasses
+      1.2-3 PartitionsIntoResidueClasses
+      1.2-4 RandomPartitionIntoResidueClasses
+      1.2-5 CoverByResidueClasses
+      1.2-6 Density
+    1.3 [33X[0;0YOn residue class unions of [22Xℤ^2[122X[133X
+    1.4 [33X[0;0YThe categories and families of residue class unions[133X
+      1.4-1 IsResidueClassUnion
+      1.4-2 ResidueClassUnionsFamily
+  2 [33X[0;0YUnions of Residue Classes with Fixed Representatives[133X
+    2.1 [33X[0;0YEntering unions of residue classes with fixed representatives[133X
+      2.1-1 ResidueClassWithFixedRepresentative
+      2.1-2 UnionOfResidueClassesWithFixedReps
+      2.1-3 AllResidueClassesWithFixedRepsModulo
+    2.2 [33X[0;0YMethods for unions of residue classes with fixed representatives[133X
+      2.2-1 Multiplicity
+      2.2-2 Union
+      2.2-3 Intersection
+      2.2-4 Difference
+    2.3 [33X[0;0YThe invariant Delta[133X
+      2.3-1 Delta
+      2.3-2 RepresentativeStabilizingRefinement
+    2.4 [33X[0;0YThe categories of unions of residue classes with fixed rep's[133X
+  3 [33X[0;0YSemilocalizations of the Integers[133X
+    3.1 [33X[0;0YEntering semilocalizations of the integers[133X
+      3.1-1 Z_pi
+    3.2 [33X[0;0YMethods for semilocalizations of the integers[133X
+  4 [33X[0;0YInstallation and Auxiliary Functions[133X
+    4.1 [33X[0;0YRequirements[133X
+    4.2 [33X[0;0YInstallation[133X
+    4.3 [33X[0;0YThe testing routines[133X
+      4.3-1 ResClassesTest
+      4.3-2 ResClassesTestExamples
+    4.4 [33X[0;0YUtilities for preparing the package for distribution[133X
+      4.4-1 ResClassesBuildManual
+      4.4-2 ConvertPackageFilesToUNIXLineBreaks
+      4.4-3 RemoveTemporaryPackageFiles
+    4.5 [33X[0;0YCreating timestamped logfiles[133X
+      4.5-1 LogToDatedFile
+    4.6 [33X[0;0YDownloadFile, SendEmail and EmailLogFile[133X
+      4.6-1 DownloadFile
+      4.6-2 SendEmail
+      4.6-3 EmailLogFile
+    4.7 [33X[0;0YCreating bitmap pictures[133X
+      4.7-1 SaveAsBitmapPicture
+      4.7-2 DrawLineNC
+    4.8 [33X[0;0YSome general utility functions[133X
+  
+  
+  [32X
