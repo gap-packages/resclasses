@@ -4,6 +4,7 @@
 ##                                                                
 #############################################################################
 
+LoadPackage("resclasses");
 TestDirectory(DirectoriesPackageLibrary( "resclasses", "tst" ),
               rec(exitGAP := true));
 
