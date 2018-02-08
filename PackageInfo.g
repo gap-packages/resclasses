@@ -10,8 +10,6 @@ PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
 Version          := "4.7.1",
 Date             := "18/12/2017",
-ArchiveURL       := "https://stefan-kohl.github.io/resclasses/resclasses-4.7.1",
-ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
@@ -22,9 +20,20 @@ Persons          := [
                          )
                     ],
 Status           := "deposited",
-PackageWWWHome   := "https://stefan-kohl.github.io/resclasses.html",
-README_URL       := "https://stefan-kohl.github.io/resclasses/README.resclasses",
-PackageInfoURL   := "https://stefan-kohl.github.io/resclasses/PackageInfo.g",
+
+PackageWWWHome  := "https://gap-packages.github.io/resclasses/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README"        ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/resclasses",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/resclasses-", ~.Version ),
+ArchiveFormats   := ".tar.gz",
+
 AbstractHTML     := Concatenation("This package permits to compute with set-theoretic ",
                                   "unions of residue classes of&nbsp;Z and a few other rings. ",
                                   "In particular it provides methods for computing unions, ",
