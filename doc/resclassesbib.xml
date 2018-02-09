@@ -18,7 +18,7 @@
   <organization>RWTH Aachen</organization>
   <year>2012</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/gapdoc.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/gapdoc.html</URL>
   </other>
 </manual></entry>
 
@@ -32,7 +32,7 @@
   </title>
   <year>2016</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/io.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/io.html</URL>
   </other>
 </manual></entry>
 
@@ -47,7 +47,7 @@
   </title>
   <year>2013</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/polycyclic.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/polycyclic.html</URL>
   </other>
 </manual></entry>
 
@@ -58,7 +58,7 @@
   <title><C>RCWA - Residue-Class-Wise Affine Groups (Version 4.4.0)</C></title>
   <year>2016</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/rcwa.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/rcwa.html</URL>
   </other>
 </manual></entry>
 
@@ -73,7 +73,7 @@
   </title>
   <year>2016</year>
   <other type="note">
-    GAP package, <URL>http://www.gap-system.org/Packages/utils.html</URL>
+    GAP package, <URL>https://www.gap-system.org/Packages/utils.html</URL>
   </other>
 </manual></entry>
 
