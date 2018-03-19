@@ -1,6 +1,6 @@
 name: ResClasses
 version: 4.7.1
-date: 18/12/2017
+date: 2017-12-18
 description: |
     Set-Theoretic Computations with Residue Classes
 
@@ -20,7 +20,7 @@ needed-pkgs:
       url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
     - name: "Polycyclic"
       version: ">=2.11"
-      url: "http://www.icm.tu-bs.de/ag_algebra/software/polycyclic/"
+      url: "https://gap-packages.github.io/polycyclic/"
     - name: "utils"
       version: ">=0.40"
       url: "https://gap-packages.github.io/utils"
