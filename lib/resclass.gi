@@ -2286,7 +2286,7 @@ InstallOtherMethod( AdditiveInverseOp,
 ##
 InstallOtherMethod( \-,
                     "for residue class union and ring element (ResClasses)",
-                    ReturnTrue, [ IsListOrCollection, IsObject ], 0,
+                    ReturnTrue, [ IsResidueClassUnion, IsObject ], 0,
                     function ( U, x ) return U + (-x); end );
 
 #############################################################################
@@ -2295,7 +2295,7 @@ InstallOtherMethod( \-,
 ##
 InstallOtherMethod( \-,
                     "for ring element and residue class union (ResClasses)",
-                    ReturnTrue, [ IsObject, IsListOrCollection ], 0,
+                    ReturnTrue, [ IsObject, IsResidueClassUnion ], 0,
                     function ( x, U ) return (-U) + x; end );
 
 #############################################################################
