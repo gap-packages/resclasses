@@ -18,20 +18,6 @@ RESCLASSES_VIEWINGFORMAT_BACKUP := "long";
 
 #############################################################################
 ##
-#V  One-character global variables ...
-##
-##  ... should not be overwritten when reading test files, e.g., although
-##  one-letter variable names are used in test files frequently.
-##  This is just the list of their names.
-##
-##  The actual caching is done by `ResClassesDoThingsToBeDoneBeforeTest' and
-##  `ResClassesDoThingsToBeDoneAfterTest'.
-##
-BindGlobal( "ONE_LETTER_GLOBALS",
-  List( "ABCDFGHIJKLMNOPQRSTUVWYabcdefghijklmnopqrstuvwxyz", ch -> [ch] ) );
-
-#############################################################################
-##
 #F  ResClassesDoThingsToBeDoneBeforeTest(  )
 #F  ResClassesDoThingsToBeDoneAfterTest(  )
 ##
@@ -43,13 +29,11 @@ BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
     SetAssertionLevel(0);
     RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;;
     ResidueClassUnionViewingFormat("long");
-    CallFuncList(HideGlobalVariables,ONE_LETTER_GLOBALS);
   end );
 
 BindGlobal( "ResClassesDoThingsToBeDoneAfterTest",
 
   function (  )
-    CallFuncList(UnhideGlobalVariables,ONE_LETTER_GLOBALS);
     ResidueClassUnionViewingFormat(RESCLASSES_VIEWINGFORMAT_BACKUP);
     SetAssertionLevel(RESCLASSES_ASSERTIONLEVEL_BACKUP);
     SetInfoLevel(InfoWarning,RESCLASSES_WARNINGLEVEL_BACKUP);
