@@ -2300,6 +2300,15 @@ InstallOtherMethod( \-,
 
 #############################################################################
 ##
+#M  \-( <x>, <U> ) . . . . . . . . . . . . . .  for a ring element and a ring
+##
+InstallOtherMethod( \-,
+                    "for a ring element and a ring (ResClasses)",
+                    IsElmsColls, [ IsRingElement, IsRing ], 0,
+                    function ( x, U ) return (-U) + x; end );
+
+#############################################################################
+##
 #M  AdditiveInverseOp( <R> ) . . . . . . . . . . . . . . .  for the base ring
 ##
 InstallOtherMethod( AdditiveInverseOp,
