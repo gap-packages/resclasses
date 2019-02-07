@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.7.1",
+Version          := "4.7.1dev",
 Date             := "18/12/2017",
 Persons          := [
                       rec( LastName      := "Kohl",
