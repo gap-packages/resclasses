@@ -1373,11 +1373,27 @@ InstallMethod( \<, "for a module and a residue class union (ResClasses)",
                ReturnTrue, [ IsRowModule, IsResidueClassUnion ], 0,
                ReturnTrue );
 InstallMethod( \<, "for a list of elements and a ring (ResClasses)",
-               IsIdenticalObj, [ IsList, IsRing ], 0, ReturnFalse );
+               IsIdenticalObj, [ IsList, IsRing ], 0,
+  function ( list, R )
+    if not IsIntegers(R) and not IsZ_pi(R)
+       and not (     IsUnivariatePolynomialRing(R)
+                 and IsFiniteFieldPolynomialRing(R))
+    then TryNextMethod(); fi;
+    return false;
+   end );
+
 InstallMethod( \<, "for a list of elements and a module (ResClasses)",
                IsIdenticalObj, [ IsList, IsRowModule ], 0, ReturnFalse );
 InstallMethod( \<, "for a ring and a list of elements (ResClasses)",
-               IsIdenticalObj, [ IsRing, IsList ], 0, ReturnTrue );
+               IsIdenticalObj, [ IsRing, IsList ], 0,
+  function ( R, list )
+    if not IsIntegers(R) and not IsZ_pi(R)
+       and not (     IsUnivariatePolynomialRing(R)
+                 and IsFiniteFieldPolynomialRing(R))
+    then TryNextMethod(); fi;
+    return true;
+   end );
+
 InstallMethod( \<, "for a module and a list of elements (ResClasses)",
                IsIdenticalObj, [ IsRowModule, IsList ], 0, ReturnTrue );
 InstallMethod( \<, "for a list and a residue class union (ResClasses)",
