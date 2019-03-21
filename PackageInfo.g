@@ -61,7 +61,30 @@ BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
                                    "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk\n\n" ),
 TestFile         := "tst/testall.g",
-Keywords         := [ "residue classes", "integers", "number theory" ]
+Keywords         := [ "residue classes", "integers", "number theory" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+&copyright; 2003 - 2017 by Stefan Kohl. <P/>
+
+&ResClasses; is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version. <P/>
+
+&ResClasses; is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. <P/>
+
+For a copy of the GNU General Public License, see 
+the file <F>GPL</F> in the <F>etc</F> directory of the &GAP;
+distribution or see <URL>https://www.gnu.org/licenses/gpl.html</URL>.
+        """,
+        Abstract := """<#Include SYSTEM "abstract.xml">""",
+    ),
+),
 
 ) );
 
