@@ -1,6 +1,6 @@
 name: ResClasses
-version: 4.7.1
-date: 2017-12-18
+version: 4.7.2
+date: 2019-03-24
 description: |
     Set-Theoretic Computations with Residue Classes
 
@@ -30,13 +30,13 @@ suggested-pkgs:
       version: ">=4.4.5"
       url: "https://gap-packages.github.io/io"
 
-www: https://stefan-kohl.github.io/resclasses.html
-readme: README.resclasses
-packageinfo: https://stefan-kohl.github.io/resclasses/PackageInfo.g
+www: https://gap-packages.github.io/resclasses/
+readme: README
+packageinfo: https://gap-packages.github.io/resclasses/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://stefan-kohl.github.io/resclasses/resclasses-4.7.1.tar.gz
+      url: https://github.com/gap-packages/resclasses/releases/download/v4.7.2/resclasses-4.7.2.tar.gz
 
 abstract: |
     This package permits to compute with set-theoretic unions of residue classes of&nbsp;Z and a few other rings. In particular it provides methods for computing unions, intersections and differences of these sets.

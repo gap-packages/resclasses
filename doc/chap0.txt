@@ -1,15 +1,15 @@
   
   
-                                   [1X[5XResClasses[105X[101X
+                                  [1X ResClasses [101X
   
   
                [1X Set-Theoretic Computations with Residue Classes [101X
   
   
-                                 Version 4.7.1
+                                     4.7.2
   
   
-                               December 18, 2017
+                                 24 March 2019
   
   
                                   Stefan Kohl
@@ -55,7 +55,7 @@
   
   [33X[0;0YFor  a  copy  of the GNU General Public License, see the file [11XGPL[111X in the [11Xetc[111X
   directory       of       the       [5XGAP[105X       distribution       or       see
-  [7Xhttp://www.gnu.org/licenses/gpl.html[107X.[133X
+  [7Xhttps://www.gnu.org/licenses/gpl.html[107X.[133X
   
   
   -------------------------------------------------------

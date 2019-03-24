@@ -4,7 +4,7 @@
 
                            -- A GAP 4 Package --
 
-                               Version 4.7.1
+                               Version 4.7.2
 
          Author and Maintainer:  Stefan Kohl, stefan@mcs.st-and.ac.uk
 
@@ -46,7 +46,7 @@ ter `Installation and Auxiliary Functions' in the manual.
 
 New releases of this package are put online on the package web page
 
-    https://stefan-kohl.github.io/resclasses.html
+    https://gap-packages.github.io/resclasses/
 
                                      ---
 

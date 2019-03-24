@@ -8,10 +8,9 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.7.1",
-Date             := "18/12/2017",
-ArchiveURL       := "https://stefan-kohl.github.io/resclasses/resclasses-4.7.1",
-ArchiveFormats   := ".tar.gz", # "-win.zip" when providing text files with Windows line breaks
+Version          := "4.7.2",
+Date             := "24/03/2019", # dd/mm/yyyy format
+License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
@@ -22,9 +21,20 @@ Persons          := [
                          )
                     ],
 Status           := "deposited",
-PackageWWWHome   := "https://stefan-kohl.github.io/resclasses.html",
-README_URL       := "https://stefan-kohl.github.io/resclasses/README.resclasses",
-PackageInfoURL   := "https://stefan-kohl.github.io/resclasses/PackageInfo.g",
+
+PackageWWWHome  := "https://gap-packages.github.io/resclasses/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README"        ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/resclasses",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/resclasses-", ~.Version ),
+ArchiveFormats   := ".tar.gz",
+
 AbstractHTML     := Concatenation("This package permits to compute with set-theoretic ",
                                   "unions of residue classes of&nbsp;Z and a few other rings. ",
                                   "In particular it provides methods for computing unions, ",
@@ -51,7 +61,30 @@ BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
                                    "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk\n\n" ),
 TestFile         := "tst/testall.g",
-Keywords         := [ "residue classes", "integers", "number theory" ]
+Keywords         := [ "residue classes", "integers", "number theory" ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+&copyright; 2003 - 2017 by Stefan Kohl. <P/>
+
+&ResClasses; is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version. <P/>
+
+&ResClasses; is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. <P/>
+
+For a copy of the GNU General Public License, see 
+the file <F>GPL</F> in the <F>etc</F> directory of the &GAP;
+distribution or see <URL>https://www.gnu.org/licenses/gpl.html</URL>.
+        """,
+        Abstract := """<#Include SYSTEM "abstract.xml">""",
+    ),
+),
 
 ) );
 
