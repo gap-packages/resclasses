@@ -3,6 +3,19 @@
                     =========================================
 
 
+Changes between ResClasses 4.7.1 and ResClasses 4.7.2 (March 24, 2019):
+
+ - Clarified that this package is licensed under GPL 2 or later.
+
+ - Moved package homepage to <https://gap-packages.github.io/resclasses>.
+
+ - Fixed some issues where loading ResClasses could inadvertently alter
+   the behavior of GAP library functions.
+
+ - Improved compatibility with future GAP releases (4.11 and later).
+
+ - Other minor adjustments.
+
 Changes between ResClasses 4.7.0 and ResClasses 4.7.1 (December 18, 2017):
 
  - The email address stefan@gap-system.org does not seem to work any more
