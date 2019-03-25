@@ -54,62 +54,9 @@ BindGlobal( "ResClassesTest",
 
 #############################################################################
 ##
-#S  Building the manual and testing the examples. ///////////////////////////
+#S  Testing the examples. ///////////////////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  RemoveTemporaryPackageFiles( <package> )
-##
-##  Cleans up temporary files and repository data of package <package>.
-##  Here <package> is assumed to be either "resclasses" or "rcwa".
-##
-BindGlobal( "RemoveTemporaryPackageFiles",
-
-  function ( package )
-
-    local  packagedir, docdir, file;
-
-    packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
-    if   ".hg" in DirectoryContents(packagedir)
-    then RemoveDirectoryRecursively(Concatenation(packagedir,"/.hg")); fi;
-    docdir := Concatenation(packagedir,"/doc");
-    for file in DirectoryContents(docdir) do
-      if   ForAny([".aux",".bbl",".bib",".blg",".brf",".idx",".ilg",
-                   ".log",".out",".pnr",".tex"],
-                  ext->PositionSublist(file,ext) <> fail)
-      then RemoveFile(Concatenation(docdir,"/",file)); fi; 
-    od;
-  end );
-
-#############################################################################
-##
-#F  ResClassesBuildManual( ) . . . . . . . . . . . . . . . . build the manual
-##
-##  This function builds the manual of the ResClasses package in the file
-##  formats &LaTeX;, DVI, Postscript, PDF and HTML.
-##  This is done using the GAPDoc package by Frank Lübeck and Max Neunhöffer.
-##
-BindGlobal( "ResClassesBuildManual",
-
-  function ( )
-
-    local  ResClassesDir, i;
-
-    ResClassesDir := GAPInfo.PackagesInfo.("resclasses")[1].InstallationPath;
-    for i in [1..3] do
-      Print("\nCompiling ResClasses manual: pass number ",i,"(3) . . .\n\n");
-      MakeGAPDocDoc( Concatenation( ResClassesDir, "/doc/" ), "main.xml",
-                     [ "../lib/resclaux.g",
-                       "../lib/general.gd", "../lib/general.gi",
-                       "../lib/z_pi.gd", "../lib/z_pi.gi",
-                       "../lib/resclass.gd", "../lib/resclass.gi",
-                       "../lib/fixedrep.gd", "../lib/fixedrep.gi" ],
-                       "ResClasses", "../../../" );
-    od;
-    RemoveTemporaryPackageFiles("resclasses");
-  end );
 
 #############################################################################
 ##
@@ -136,51 +83,6 @@ BindGlobal( "ResClassesTestExamples",
 #S  Other. //////////////////////////////////////////////////////////////////
 ##
 #############################################################################
-
-#############################################################################
-##
-#F  ConvertPackageFilesToUNIXLineBreaks( <package> )
-##
-##  Converts the text files of package <package> from Windows- to UNIX line
-##  breaks. Here <package> is assumed to be either "resclasses" or "rcwa".
-##
-BindGlobal( "ConvertPackageFilesToUNIXLineBreaks",
-
-  function ( package )
-
-    local  packagedir, RecodeFile, ProcessDirectory;
-
-    RecodeFile := function ( file )
-
-      local  str;
-
-      str := StringFile(file);
-      if PositionSublist(str,"\r\n") <> fail then
-        str := ReplacedString(str,"\r\n","\n");
-        FileString(file,str);
-      fi;
-    end;
-
-    ProcessDirectory := function ( dir )
-
-      local  files, file;
-
-      files := DirectoryContents(dir);
-      for file in files do
-        if file in [".",".."] then continue; fi;
-        if  ForAny([".txt",".g",".gd",".gi",".xml",".tst"],
-                   ext->PositionSublist(file,ext) <> fail)
-          or file in ["README","CHANGES","version"]
-        then RecodeFile(Concatenation(dir,"/",file));
-        elif file in ["data","3ctsgroups6","3ctsgroups9","4ctsgroups6",
-                      "ctproducts","doc","examples","lib","paper","tst"]
-        then ProcessDirectory(Concatenation(dir,"/",file)); fi;
-      od;
-    end;
-
-    packagedir := GAPInfo.PackagesInfo.(package)[1].InstallationPath;
-    ProcessDirectory(packagedir);
-  end );
 
 #############################################################################
 ##
