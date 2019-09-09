@@ -13,8 +13,9 @@ addons:
 matrix:
   include:
     - env: GAPBRANCH=master
-    - env: GAPBRANCH=stable-4.9
+    - env: GAPBRANCH=stable-4.11
     - env: GAPBRANCH=stable-4.10
+    - env: GAPBRANCH=stable-4.9
 
 branches:
   only:
@@ -26,7 +27,7 @@ before_script:
 script:
   - scripts/build_pkg.sh && scripts/run_tests.sh
   # also run RCWA tests
-  - cd $HOME/gap/pkg/rcwa && $TRAVIS_BUILD_DIR/scripts/run_tests.sh
+  - $HOME/gap/bin/gap.sh -l "$TRAVIS_BUILD_DIR/gaproot;" --quitonbreak $HOME/gap/pkg/rcwa/tst/testall.g
 after_script:
   - bash scripts/gather-coverage.sh
   - bash <(curl -s https://codecov.io/bash)
