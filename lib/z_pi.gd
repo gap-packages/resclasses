@@ -15,7 +15,7 @@
 ##
 DeclareConstructor( "Z_piCons", [ IsRing, IsList ] );
 DeclareGlobalFunction( "Z_pi" );
-DeclareProperty( "IsZ_pi", IsEuclideanRing );
+DeclareCategory( "IsZ_pi", IsEuclideanRing and IsCyclotomicCollection );
 
 #############################################################################
 ##
