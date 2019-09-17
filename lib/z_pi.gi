@@ -25,7 +25,8 @@ InstallMethod( Z_piCons, "natural Z_pi (ResClasses)", true,
                              IsRing and IsAttributeStoringRep ),
                     rec( primes := Immutable( pi ) ) );
     SetIsTrivial( R, false );
-    SetIsZ_pi( R, true );
+    SetIsWholeFamily( R, false );
+    SetFilterObj( R, IsZ_pi );
     SetZero( R, 0 ); SetOne( R, 1 );
     SetIsFinite( R, false ); SetSize( R, infinity );
     SetIsAssociative( R, true ); SetIsCommutative( R, true );
@@ -51,15 +52,6 @@ InstallGlobalFunction( Z_pi,
     then Error( "Z_pi( <pi> ): <pi> must be a set of primes.\n" ); fi;
     return Z_piCons( IsRing, Set( pi ) );
   end );
-
-#############################################################################
-##
-#M  IsZ_pi( <obj> ) . . . . . . . . . . . . . . . . . . . . . . . . .  Z_(pi)
-##
-##  Return false, if the contrary is not known explicitly.
-##
-InstallOtherMethod( IsZ_pi, "for non-Z_(pi) (ResClasses)", true,
-                    [ IsObject ], 0, ReturnFalse );
 
 #############################################################################
 ##
