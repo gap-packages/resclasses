@@ -2987,9 +2987,8 @@ InstallMethod( PartitionsIntoResidueClasses,
     if   IsIntegers(R)
     then primes := Filtered([2..length],IsPrime);
          desiredprimes := ValueOption("Primes");
-         if desiredprimes <> fail and IsList(desiredprimes)
-           and IsSubset(primes,desiredprimes)
-         then primes := Set(desiredprimes); fi;
+         if   desiredprimes <> fail and IsList(desiredprimes)
+         then primes := Intersection(primes,desiredprimes); fi;
     elif IsZ_pi(R)
     then primes := Intersection([2..length],NoninvertiblePrimes(R));
     elif IsUnivariatePolynomialRing(R) and IsFiniteFieldPolynomialRing(R)
