@@ -16,7 +16,7 @@ Persons          := [
                            FirstNames    := "Stefan",
                            IsAuthor      := true,
                            IsMaintainer  := true,
-                           Email         := "stefan@mcs.st-and.ac.uk",
+                           Email         := "sk239@st-andrews.ac.uk",
                            WWWHome       := "https://stefan-kohl.github.io/"
                          )
                     ],
@@ -59,7 +59,7 @@ Dependencies     := rec(
 AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
-                                   "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk\n\n" ),
+                                   "\nby Stefan Kohl, sk239@st-andrews.ac.uk\n\n" ),
 TestFile         := "tst/testall.g",
 Keywords         := [ "residue classes", "integers", "number theory" ],
 
