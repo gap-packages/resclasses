@@ -3,6 +3,18 @@
                     =========================================
 
 
+Changes between ResClasses 4.7.2 and ResClasses 4.7.3 (Juli 29, 2022):
+
+ - Fixed a bug in the 3-argument version of 'PartitionsIntoResidueClasses':
+   If the length of the partitions to be computed was smaller than the biggest
+   prime specified in the third argument, the third argument was just ignored.
+
+ - Changed IsZ_pi from a property to a category.
+
+ - Remove several internal helper functions.
+
+ - Other minor adjustments.
+
 Changes between ResClasses 4.7.1 and ResClasses 4.7.2 (March 24, 2019):
 
  - Clarified that this package is licensed under GPL 2 or later.
