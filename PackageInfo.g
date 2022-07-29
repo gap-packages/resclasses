@@ -8,15 +8,15 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.7.2",
-Date             := "24/03/2019", # dd/mm/yyyy format
+Version          := "4.7.3",
+Date             := "29/07/2022", # dd/mm/yyyy format
 License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
                            FirstNames    := "Stefan",
                            IsAuthor      := true,
                            IsMaintainer  := true,
-                           Email         := "stefan@mcs.st-and.ac.uk",
+                           Email         := "sk239@st-andrews.ac.uk",
                            WWWHome       := "https://stefan-kohl.github.io/"
                          )
                     ],
@@ -42,7 +42,7 @@ AbstractHTML     := Concatenation("This package permits to compute with set-theo
 PackageDoc       := rec(
                          BookName         := "ResClasses",
                          ArchiveURLSubset := ["doc"],
-                         HTMLStart        := "doc/chap0.html",
+                         HTMLStart        := "doc/chap0_mj.html",
                          PDFFile          := "doc/manual.pdf",
                          SixFile          := "doc/manual.six",
                          LongTitle        := Concatenation("Computations with Residue Classes ",
@@ -59,7 +59,7 @@ Dependencies     := rec(
 AvailabilityTest := ReturnTrue,
 BannerString     := Concatenation( "\nLoading ResClasses ", ~.Version,
                                    " (Computations with Residue Classes)",
-                                   "\nby Stefan Kohl, stefan@mcs.st-and.ac.uk\n\n" ),
+                                   "\nby Stefan Kohl, sk239@st-andrews.ac.uk\n\n" ),
 TestFile         := "tst/testall.g",
 Keywords         := [ "residue classes", "integers", "number theory" ],
 

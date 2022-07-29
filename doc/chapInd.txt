@@ -2,7 +2,7 @@
   
   [1XIndex[101X
   
-  [10XAllGraphs[110X 4.8 
+  [10XAllGraphs[110X 4.7 
   [2XAllResidueClassesModulo[102X, by modulus, of the default ring of that modulus 1.1-3 
       of a given ring, modulo a given modulus 1.1-3 
   [2XAllResidueClassesWithFixedRepsModulo[102X, by modulus, of the default ring of that modulus 2.1-3 
@@ -12,7 +12,6 @@
   [10XAsOrdinaryUnionOfResidueClasses[110X, for a union of residue classes with fixed rep's 2.2-1 
   [2XAsUnionOfFewClasses[102X, for a residue class union 1.2-2 
   [10XClasses[110X, of a union of residue classes with fixed rep's 2.1-2 
-  [2XConvertPackageFilesToUNIXLineBreaks[102X 4.4-2 
   [2XCoverByResidueClasses[102X, of the integers, by residue classes with given moduli 1.2-5 
   [2XCoversByResidueClasses[102X, of the integers, by residue classes with given moduli 1.2-5 
   [2XDelta[102X, for a union of residue classes with fixed representatives 2.3-1 
@@ -21,17 +20,17 @@
   [10XDifference[110X, for residue class unions 1.2 
   [2XDifference[102X, for unions of residue classes with fixed representatives 2.2-4 
   [10XDisplay[110X, for a residue class union 1.2 
-  [2XDownloadFile[102X 4.6-1 
-  [2XDrawLineNC[102X, pic, x1, y1, x2, y2, color, width 4.7-2 
-  [2XEmailLogFile[102X 4.6-3 
-  [10XEquivalenceClasses[110X, for a list and a function computing a class invariant 4.8 
-      for a list and a function describing an equivalence relation 4.8 
+  [2XDownloadFile[102X 4.5-1 
+  [2XDrawLineNC[102X, pic, x1, y1, x2, y2, color, width 4.6-2 
+  [2XEmailLogFile[102X 4.5-3 
+  [10XEquivalenceClasses[110X, for a list and a function computing a class invariant 4.7 
+      for a list and a function describing an equivalence relation 4.7 
   [10XExcludedElements[110X, of a residue class union 1.1-2 
   [10XExtRepOfObj[110X 1.4-1 
   [10XFactors[110X, of an element of a semilocalization of Z 3.2 
   [10XGcd[110X, of elements of a semilocalization of Z 3.2 
-  [10XGraphClasses[110X 4.8 
-  [10XIdGraphNC[110X 4.8 
+  [10XGraphClasses[110X 4.7 
+  [10XIdGraphNC[110X 4.7 
   [10XIncludedElements[110X, of a residue class union 1.1-2 
   [10XIntersection[110X, for residue class unions 1.2 
   [2XIntersection[102X, for unions of residue classes with fixed representatives 2.2-3 
@@ -50,8 +49,8 @@
   [10XIsZ_pi[110X 3.1-1 
   [10XIterator[110X, for a residue class union 1.2-6 
   [10XLcm[110X, of elements of a semilocalization of Z 3.2 
-  [10XLoadBitmapPicture[110X, filename 4.7-1 
-  [2XLogToDatedFile[102X 4.5-1 
+  [10XLoadBitmapPicture[110X, filename 4.6-1 
+  [2XLogToDatedFile[102X 4.4-1 
   [10XModulus[110X, of a residue class 1.1-1 
       of a residue class union 1.1-2 
       of a union of residue classes with fixed rep's 2.1-2 
@@ -64,12 +63,10 @@
   [10XObjByExtRep[110X 1.4-1 
   [2XPartitionsIntoResidueClasses[102X, of a given ring, of given length 1.2-3 
       of a given ring, of given length, with moduli with given factors 1.2-3 
-  [10XPositionsSublist[110X 4.8 
+  [10XPositionsSublist[110X 4.7 
   [10XPrint[110X, for a residue class union 1.2 
   [2XRandomPartitionIntoResidueClasses[102X, of a given ring, of given length 1.2-4 
-  [2XRemoveTemporaryPackageFiles[102X 4.4-3 
   [2XRepresentativeStabilizingRefinement[102X, of a union of res.-classes with fixed rep's 2.3-2 
-  [2XResClassesBuildManual[102X 4.4-1 
   [2XResClassesTest[102X 4.3-1 
   [2XResClassesTestExamples[102X 4.3-2 
   [10XResidue[110X, of a residue class 1.1-1 
@@ -89,8 +86,8 @@
       of Z, by modulus and residue 2.1-1 
   [10XResidues[110X, of a residue class union 1.1-2 
   [10XRho[110X, for a union of residue classes with fixed rep's 2.3-1 
-  [2XSaveAsBitmapPicture[102X, picture, filename 4.7-1 
-  [2XSendEmail[102X 4.6-2 
+  [2XSaveAsBitmapPicture[102X, picture, filename 4.6-1 
+  [2XSendEmail[102X 4.5-2 
   [10XSparseRep[110X, for a residue class union 1.1-2 
   [2XSplittedClass[102X, for a residue class and a number of parts 1.2-1 
   [10XStandardAssociate[110X, of an element of a semilocalization of Z 3.2 

@@ -40,42 +40,9 @@
   differences between the actual output and the output printed in the manual.[133X
   
   
-  [1X4.4 [33X[0;0YUtilities for preparing the package for distribution[133X[101X
+  [1X4.4 [33X[0;0YCreating timestamped logfiles[133X[101X
   
-  [1X4.4-1 ResClassesBuildManual[101X
-  
-  [33X[1;0Y[29X[2XResClassesBuildManual[102X(  ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10Ynothing.[133X
-  
-  [33X[0;0YThis  function  is  a  development  tool  which  builds  the  manual  of the
-  [5XResClasses[105X package in the file formats LaTeX, PDF, HTML and ASCII text. This
-  is accomplished using the [5XGAPDoc[105X package by Frank Lübeck and Max Neunhöffer.
-  Building  the  manual  is  possible  only  on UNIX-type systems and requires
-  PDFLaTeX.  As  all  files  generated  by  this  function are included in the
-  distribution file anyway, users will not need it.[133X
-  
-  [1X4.4-2 ConvertPackageFilesToUNIXLineBreaks[101X
-  
-  [33X[1;0Y[29X[2XConvertPackageFilesToUNIXLineBreaks[102X( [3Xpackage[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10Ynothing.[133X
-  
-  [33X[0;0YThis function is a development tool which converts the text files of package
-  [3Xpackage[103X  from  Windows-  to  UNIX line breaks. Here [3Xpackage[103X is assumed to be
-  either [10X"resclasses"[110X or [10X"rcwa"[110X.[133X
-  
-  [1X4.4-3 RemoveTemporaryPackageFiles[101X
-  
-  [33X[1;0Y[29X[2XRemoveTemporaryPackageFiles[102X( [3Xpackage[103X ) [32X function[133X
-  [6XReturns:[106X  [33X[0;10Ynothing.[133X
-  
-  [33X[0;0YThis  function  is a development tool which cleans up the temporary files of
-  package  [3Xpackage[103X.  Here  [3Xpackage[103X  is  assumed  to  be either [10X"resclasses"[110X or
-  [10X"rcwa"[110X.[133X
-  
-  
-  [1X4.5 [33X[0;0YCreating timestamped logfiles[133X[101X
-  
-  [1X4.5-1 LogToDatedFile[101X
+  [1X4.4-1 LogToDatedFile[101X
   
   [33X[1;0Y[29X[2XLogToDatedFile[102X( [3Xdirectory[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe full pathname of the created logfile.[133X
@@ -89,9 +56,9 @@
   installed and compiled.[133X
   
   
-  [1X4.6 [33X[0;0YDownloadFile, SendEmail and EmailLogFile[133X[101X
+  [1X4.5 [33X[0;0YDownloadFile, SendEmail and EmailLogFile[133X[101X
   
-  [1X4.6-1 DownloadFile[101X
+  [1X4.5-1 DownloadFile[101X
   
   [33X[1;0Y[29X[2XDownloadFile[102X( [3Xurl[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe  contents  of the file with URL [3Xurl[103X in the form of a string if
@@ -101,7 +68,7 @@
   [33X[0;0YAs  most  system-related  functions,  [10XDownloadFile[110X  works  only under UNIX /
   Linux. Also the computer must of course be connected to the Internet.[133X
   
-  [1X4.6-2 SendEmail[101X
+  [1X4.5-2 SendEmail[101X
   
   [33X[1;0Y[29X[2XSendEmail[102X( [3Xsendto[103X, [3Xcopyto[103X, [3Xsubject[103X, [3Xtext[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yzero  if  everything  worked  correctly, and a system error number
@@ -114,7 +81,7 @@
   [33X[0;0YAs  most  system-related functions, [10XSendEmail[110X works only under UNIX / Linux.
   Also the computer must of course be connected to the Internet.[133X
   
-  [1X4.6-3 EmailLogFile[101X
+  [1X4.5-3 EmailLogFile[101X
   
   [33X[1;0Y[29X[2XEmailLogFile[102X( [3Xaddresses[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yzero  if  everything  worked  correctly, and a system error number
@@ -128,14 +95,14 @@
   is still longer than 64KB afterwards, it is truncated at 64KB.[133X
   
   
-  [1X4.7 [33X[0;0YCreating bitmap pictures[133X[101X
+  [1X4.6 [33X[0;0YCreating bitmap pictures[133X[101X
   
   [33X[0;0Y[5XResClasses[105X provides functions to generate bitmap picture files from suitable
   pixel  matrices  and  vice  versa.  The  author has successfully tested this
   feature  both  under Linux and under Windows, and the generated pictures can
   be processed further with many common graphics programs:[133X
   
-  [1X4.7-1 SaveAsBitmapPicture[101X
+  [1X4.6-1 SaveAsBitmapPicture[101X
   
   [33X[1;0Y[29X[2XSaveAsBitmapPicture[102X( [3Xpicture[103X, [3Xfilename[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
@@ -161,7 +128,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X4.7-2 DrawLineNC[101X
+  [1X4.6-2 DrawLineNC[101X
   
   [33X[1;0Y[29X[2XDrawLineNC[102X( [3Xpic[103X, [3Xx1[103X, [3Xy1[103X, [3Xx2[103X, [3Xy2[103X, [3Xcolor[103X, [3Xwidth[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
@@ -179,7 +146,7 @@
   [4X[32X[104X
   
   
-  [1X4.8 [33X[0;0YSome general utility functions[133X[101X
+  [1X4.7 [33X[0;0YSome general utility functions[133X[101X
   
   [33X[0;0Y[5XResClasses[105X  provides a few small utility functions and -operations which can
   be used in a more general context. They are described in this section.[133X

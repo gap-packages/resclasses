@@ -34,32 +34,25 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8733F00082901C2C">4.3-1 ResClassesTest</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X802034807F5D6C47">4.3-2 ResClassesTestExamples</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7F199F678137FE7D">4.4 <span class="Heading">Utilities for preparing the package for distribution</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7B0129E185088420">4.4 <span class="Heading">Creating timestamped logfiles</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7B4E650D828174F7">4.4-1 ResClassesBuildManual</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7EBC3ED67ABADB93">4.4-2 ConvertPackageFilesToUNIXLineBreaks</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7CD897C87D3B8C5C">4.4-3 RemoveTemporaryPackageFiles</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7B023FD184CC118D">4.4-1 LogToDatedFile</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7B0129E185088420">4.5 <span class="Heading">Creating timestamped logfiles</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X81DD0163859E9EF5">4.5 <span class="Heading">DownloadFile, SendEmail and EmailLogFile</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7B023FD184CC118D">4.5-1 LogToDatedFile</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7C1543408472A82B">4.5-1 DownloadFile</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F27919085001EA8">4.5-2 SendEmail</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8000E5CF7DF4339C">4.5-3 EmailLogFile</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X81DD0163859E9EF5">4.6 <span class="Heading">DownloadFile, SendEmail and EmailLogFile</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X855F2CE284BFB06B">4.6 <span class="Heading">Creating bitmap pictures</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7C1543408472A82B">4.6-1 DownloadFile</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F27919085001EA8">4.6-2 SendEmail</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8000E5CF7DF4339C">4.6-3 EmailLogFile</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81DE1E838615C214">4.6-1 SaveAsBitmapPicture</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83D7129581B8CF21">4.6-2 DrawLineNC</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X855F2CE284BFB06B">4.7 <span class="Heading">Creating bitmap pictures</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81DE1E838615C214">4.7-1 SaveAsBitmapPicture</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83D7129581B8CF21">4.7-2 DrawLineNC</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X808A30E37A293D19">4.8 <span class="Heading">Some general utility functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X808A30E37A293D19">4.7 <span class="Heading">Some general utility functions</span></a>
 </span>
 </div>
 </div>
@@ -100,44 +93,13 @@
 
 <p>Runs all examples in the manual of the <strong class="pkg">ResClasses</strong> package, and reports any differences between the actual output and the output printed in the manual.</p>
 
-<p><a id="X7F199F678137FE7D" name="X7F199F678137FE7D"></a></p>
-
-<h4>4.4 <span class="Heading">Utilities for preparing the package for distribution</span></h4>
-
-<p><a id="X7B4E650D828174F7" name="X7B4E650D828174F7"></a></p>
-
-<h5>4.4-1 ResClassesBuildManual</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResClassesBuildManual</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: nothing.</p>
-
-<p>This function is a development tool which builds the manual of the <strong class="pkg">ResClasses</strong> package in the file formats LaTeX, PDF, HTML and ASCII text. This is accomplished using the <strong class="pkg">GAPDoc</strong> package by Frank Lübeck and Max Neunhöffer. Building the manual is possible only on UNIX-type systems and requires PDFLaTeX. As all files generated by this function are included in the distribution file anyway, users will not need it.</p>
-
-<p><a id="X7EBC3ED67ABADB93" name="X7EBC3ED67ABADB93"></a></p>
-
-<h5>4.4-2 ConvertPackageFilesToUNIXLineBreaks</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertPackageFilesToUNIXLineBreaks</code>( <var class="Arg">package</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: nothing.</p>
-
-<p>This function is a development tool which converts the text files of package <var class="Arg">package</var> from Windows- to UNIX line breaks. Here <var class="Arg">package</var> is assumed to be either <code class="code">"resclasses"</code> or <code class="code">"rcwa"</code>.</p>
-
-<p><a id="X7CD897C87D3B8C5C" name="X7CD897C87D3B8C5C"></a></p>
-
-<h5>4.4-3 RemoveTemporaryPackageFiles</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveTemporaryPackageFiles</code>( <var class="Arg">package</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: nothing.</p>
-
-<p>This function is a development tool which cleans up the temporary files of package <var class="Arg">package</var>. Here <var class="Arg">package</var> is assumed to be either <code class="code">"resclasses"</code> or <code class="code">"rcwa"</code>.</p>
-
 <p><a id="X7B0129E185088420" name="X7B0129E185088420"></a></p>
 
-<h4>4.5 <span class="Heading">Creating timestamped logfiles</span></h4>
+<h4>4.4 <span class="Heading">Creating timestamped logfiles</span></h4>
 
 <p><a id="X7B023FD184CC118D" name="X7B023FD184CC118D"></a></p>
 
-<h5>4.5-1 LogToDatedFile</h5>
+<h5>4.4-1 LogToDatedFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogToDatedFile</code>( <var class="Arg">directory</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the full pathname of the created logfile.</p>
@@ -148,11 +110,11 @@
 
 <p><a id="X81DD0163859E9EF5" name="X81DD0163859E9EF5"></a></p>
 
-<h4>4.6 <span class="Heading">DownloadFile, SendEmail and EmailLogFile</span></h4>
+<h4>4.5 <span class="Heading">DownloadFile, SendEmail and EmailLogFile</span></h4>
 
 <p><a id="X7C1543408472A82B" name="X7C1543408472A82B"></a></p>
 
-<h5>4.6-1 DownloadFile</h5>
+<h5>4.5-1 DownloadFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DownloadFile</code>( <var class="Arg">url</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the contents of the file with URL <var class="Arg">url</var> in the form of a string if that file exists and the download was successful, and <code class="code">fail</code> otherwise.</p>
@@ -161,7 +123,7 @@
 
 <p><a id="X7F27919085001EA8" name="X7F27919085001EA8"></a></p>
 
-<h5>4.6-2 SendEmail</h5>
+<h5>4.5-2 SendEmail</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SendEmail</code>( <var class="Arg">sendto</var>, <var class="Arg">copyto</var>, <var class="Arg">subject</var>, <var class="Arg">text</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: zero if everything worked correctly, and a system error number otherwise.</p>
@@ -172,7 +134,7 @@
 
 <p><a id="X8000E5CF7DF4339C" name="X8000E5CF7DF4339C"></a></p>
 
-<h5>4.6-3 EmailLogFile</h5>
+<h5>4.5-3 EmailLogFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmailLogFile</code>( <var class="Arg">addresses</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: zero if everything worked correctly, and a system error number otherwise.</p>
@@ -181,13 +143,13 @@
 
 <p><a id="X855F2CE284BFB06B" name="X855F2CE284BFB06B"></a></p>
 
-<h4>4.7 <span class="Heading">Creating bitmap pictures</span></h4>
+<h4>4.6 <span class="Heading">Creating bitmap pictures</span></h4>
 
 <p><strong class="pkg">ResClasses</strong> provides functions to generate bitmap picture files from suitable pixel matrices and vice versa. The author has successfully tested this feature both under Linux and under Windows, and the generated pictures can be processed further with many common graphics programs:</p>
 
 <p><a id="X81DE1E838615C214" name="X81DE1E838615C214"></a></p>
 
-<h5>4.7-1 SaveAsBitmapPicture</h5>
+<h5>4.6-1 SaveAsBitmapPicture</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveAsBitmapPicture</code>( <var class="Arg">picture</var>, <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
@@ -207,7 +169,7 @@
 
 <p><a id="X83D7129581B8CF21" name="X83D7129581B8CF21"></a></p>
 
-<h5>4.7-2 DrawLineNC</h5>
+<h5>4.6-2 DrawLineNC</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawLineNC</code>( <var class="Arg">pic</var>, <var class="Arg">x1</var>, <var class="Arg">y1</var>, <var class="Arg">x2</var>, <var class="Arg">y2</var>, <var class="Arg">color</var>, <var class="Arg">width</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
@@ -226,7 +188,7 @@
 
 <p><a id="X808A30E37A293D19" name="X808A30E37A293D19"></a></p>
 
-<h4>4.8 <span class="Heading">Some general utility functions</span></h4>
+<h4>4.7 <span class="Heading">Some general utility functions</span></h4>
 
 <p><strong class="pkg">ResClasses</strong> provides a few small utility functions and -operations which can be used in a more general context. They are described in this section.</p>
 
