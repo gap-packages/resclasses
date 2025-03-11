@@ -47,7 +47,6 @@ PackageDoc       := rec(
                          SixFile          := "doc/manual.six",
                          LongTitle        := Concatenation("Computations with Residue Classes ",
                                                            "and their Set-Theoretic Unions"),
-                         Autoload         := true
                        ),
 Dependencies     := rec(
                          GAP                    := ">=4.8.7",
