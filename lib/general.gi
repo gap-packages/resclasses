@@ -134,7 +134,7 @@ InstallGlobalFunction( "LaTeXStringWord",
                             Concatenation(String(i),"})"));
     od;
     s := ReplacedString(s,"*","");
-    if s[Length(s)] in DIGITS then Append(s,"}"); fi;
+    if Last(s) in DIGITS then Append(s,"}"); fi;
     for i in [2..9] do
       s := ReplacedString(s,Concatenation("{",String(i),"}"),String(i));
     od;

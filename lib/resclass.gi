@@ -3461,7 +3461,7 @@ InstallMethod( ViewObj,
           od;
           if short then Print(" U "); else Print(" and "); fi;
         elif not short then Print("The residue class "); fi;
-        Print(RCString(cls[Length(cls)]));
+        Print(RCString(Last(cls)));
         if not short then Print(" of ",RingToString(R)); fi;
         if included <> [] then
           if short then Print(" U "); else Print(") U "); fi;
