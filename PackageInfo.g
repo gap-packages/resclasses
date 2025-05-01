@@ -49,7 +49,7 @@ PackageDoc       := rec(
                                                            "and their Set-Theoretic Unions"),
                        ),
 Dependencies     := rec(
-                         GAP                    := ">=4.8.7",
+                         GAP                    := ">=4.11.1",
                          NeededOtherPackages    := [ ["GAPDoc",">=1.5.1"], ["Polycyclic",">=2.11"],
                                                      ["utils", ">=0.40"] ],
                          SuggestedOtherPackages := [ ["IO",">=4.4.5"] ],
