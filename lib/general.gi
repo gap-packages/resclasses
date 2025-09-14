@@ -553,7 +553,6 @@ InstallGlobalFunction( PutIntoCache,
     local  cache, pos, i;
 
     cache := ValueGlobal(name);
-    MakeReadWriteGlobal(name);
     pos := Position(List(cache,t->t[1]),key,1);
     if pos = fail then Add(cache,[key,0,value]);
                   else cache[pos][2] := 0; fi;
@@ -561,9 +560,9 @@ InstallGlobalFunction( PutIntoCache,
       cache[i][2] := cache[i][2] + 1;
     od;
     Sort(cache,function(t1,t2) return t1[2]<t2[2]; end);
-    if   Length(cache) > cache[1][1]+1
-    then cache := cache{[1..cache[1][1]+1]}; fi;
-    MakeReadOnlyGlobal(name);
+    while Length(cache) > cache[1][1]+1 do
+      Remove(cache);
+    od;
   end );
 
 #############################################################################
@@ -579,12 +578,10 @@ InstallGlobalFunction( "FetchFromCache",
     cache := ValueGlobal(name);
     pos   := Position(List(cache,t->t[1]),key,1);
     if IsInt(pos) then
-      MakeReadWriteGlobal(name);
       cache[pos][2] := 0;
       for i in [2..Length(cache)] do
         cache[i][2] := cache[i][2] + 1;
       od;
-      MakeReadOnlyGlobal(name);
       return cache[pos][3];
     fi;
     return fail;
