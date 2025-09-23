@@ -3316,7 +3316,7 @@ InstallMethod( ViewObj,
 #V  RESCLASSES_VIEWINGFORMAT . . . current viewing format ("short" or "long")
 #F  ResidueClassUnionViewingFormat( format ) . short <--> long viewing format
 ##
-InstallValue( RESCLASSES_VIEWINGFORMAT, "long" );
+BindGlobal( "RESCLASSES_VIEWINGFORMAT", "long" );
 InstallGlobalFunction( ResidueClassUnionViewingFormat,
 
   function ( format )
