@@ -3,6 +3,12 @@
                     =========================================
 
 
+Changes between ResClasses 4.7.3 and ResClasses 4.7.4 (September 24, 2025):
+
+ - Require GAP >= 4.11.1
+
+ - Various janitorial changes.
+
 Changes between ResClasses 4.7.2 and ResClasses 4.7.3 (Juli 29, 2022):
 
  - Fixed a bug in the 3-argument version of 'PartitionsIntoResidueClasses':
