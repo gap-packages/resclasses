@@ -24,10 +24,10 @@ RESCLASSES_VIEWINGFORMAT_BACKUP := "long";
 BindGlobal( "ResClassesDoThingsToBeDoneBeforeTest",
 
   function (  )
-    RESCLASSES_WARNINGLEVEL_BACKUP := InfoLevel(InfoWarning);;
+    RESCLASSES_WARNINGLEVEL_BACKUP := InfoLevel(InfoWarning);
     SetInfoLevel(InfoWarning,0);
     SetAssertionLevel(0);
-    RESCLASSES_VIEWINGFORMAT_BACKUP := RESCLASSES_VIEWINGFORMAT;;
+    RESCLASSES_VIEWINGFORMAT_BACKUP := ValueGlobal("RESCLASSES_VIEWINGFORMAT");
     ResidueClassUnionViewingFormat("long");
   end );
 
