@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- ########################################################################################### -->
 <!-- ##                                                                                       ## -->
 <!-- ##  resclassesbib.xml              ResClasses documentation                 Stefan Kohl  ## -->
@@ -11,8 +11,8 @@
 
 <entry id="GAPDoc"><manual>
   <author>
-    <name><first>Frank</first><last>Lübeck</last></name>
-    <name><first>Max</first><last>Neunhöffer</last></name>
+    <name><first>Frank</first><last>LÃ¼beck</last></name>
+    <name><first>Max</first><last>NeunhÃ¶ffer</last></name>
   </author>
   <title><C>GAPDoc (Version 1.5.1)</C></title>
   <organization>RWTH Aachen</organization>
@@ -25,7 +25,7 @@
 <entry id="IO"><manual>
   <author>
     <name><first>Max</first><last>Horn</last></name>
-    <name><first>Max</first><last>Neunhöffer</last></name>
+    <name><first>Max</first><last>NeunhÃ¶ffer</last></name>
   </author>
   <title>
     <C>IO -- Bindings for low level C library I/O routines (Version 4.4.5)</C>
