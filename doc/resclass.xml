@@ -8,11 +8,9 @@
 <Heading>Set-Theoretic Unions of Residue Classes</Heading>
 
 <Ignore Remark="set screen width to 75, for the example tester">
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> SizeScreen([75,24]);;
-]]>
-</Example>
+]]></Example>
 </Ignore>
 
 <!-- #################################################################### -->
@@ -50,8 +48,7 @@ gap> SizeScreen([75,24]);;
     and therefore have this property. There are operations <C>Modulus</C>
     and <C>Residue</C> to retrieve the modulus&nbsp;<A>m</A> resp.
     residue&nbsp;<A>r</A> of a residue class.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ResidueClass(2,3);
 The residue class 2(3) of Z
 gap> ResidueClass(Z_pi([2,5]),2,1);
@@ -60,8 +57,7 @@ gap> R := PolynomialRing(GF(2),1);;
 gap> x := Indeterminate(GF(2),1);; SetName(x,"x");
 gap> ResidueClass(R,x+One(R),Zero(R));
 The residue class 0 ( mod x+1 ) of GF(2)[x]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -110,8 +106,7 @@ The residue class 0 ( mod x+1 ) of GF(2)[x]
     is <Q>large</Q>; otherwise the standard representation is
     advantageous. For rings other than &ZZ;, presently only the standard
     representation is available.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ResidueClassUnion(Integers,5,[1,2],[3,8],[-4,1]);
 (Union of the residue classes 1(5) and 2(5) of Z) U [ 3, 8 ] \ [ -4, 1 ]
 gap> ResidueClassUnion(Integers,[[1,2],[0,40],[2,1200]]);
@@ -120,8 +115,7 @@ gap> ResidueClassUnion(Z_pi([2,3]),8,[3,5]);
 Union of the residue classes 3(8) and 5(8) of Z_( 2, 3 )
 gap> ResidueClassUnion(R,x^2,[One(R),x],[],[One(R)]);
 <union of 2 residue classes (mod x^2) of GF(2)[x]> \ [ 1 ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -159,16 +153,14 @@ The user has the choice between a longer and more descriptive
 and a shorter and less bulky output format for residue classes and
 unions thereof:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
 gap> ResidueClassUnion(Integers,12,[0,1,4,7,8]);
 0(4) U 1(6)
 gap> ResidueClassUnionViewingFormat("long");
 gap> ResidueClassUnion(Integers,12,[0,1,4,7,8]);
 Union of the residue classes 0(4) and 1(6) of Z
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
   <Func Name="AllResidueClassesModulo"
@@ -196,8 +188,7 @@ Union of the residue classes 0(4) and 1(6) of Z
     obtained by the operation <C>AllResidues(<A>R</A>,<A>m</A>)</C>,
     and their number can be determined by the operation
     <C>NumberOfResidues(<A>R</A>,<A>m</A>)</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> AllResidueClassesModulo(Integers,2);
 [ The residue class 0(2) of Z, The residue class 1(2) of Z ]
 gap> AllResidueClassesModulo(Z_pi(2),2);
@@ -209,8 +200,7 @@ gap> AllResidues(R,x^3);
 [ 0, 1, x, x+1, x^2, x^2+1, x^2+x, x^2+x+1 ]
 gap> NumberOfResidues(Z_pi([2,3]),360);
 72
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -236,14 +226,12 @@ which are applicable to residue class unions. There is a method
 for <C>in</C> which tests whether some ring element lies in a given
 residue class union.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Print(ResidueClass(1,2),"\n");
 ResidueClassUnion( Integers, 2, [ 1 ] )
 gap> 1 in ResidueClass(1,2);
 true
-]]>
-</Example>
+]]></Example>
 
 <Index Key="Union" Subkey="for residue class unions">
   <C>Union</C>
@@ -262,8 +250,7 @@ There are methods for <C>Union</C>, <C>Intersection</C>, <C>Difference</C>
 and <C>IsSubset</C> available for residue class unions.
 They also accept finite subsets of the base ring as arguments.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> S := Union(ResidueClass(0,2),ResidueClass(0,3));
 Z \ Union of the residue classes 1(6) and 5(6) of Z
 gap> Intersection(S,ResidueClass(0,7));
@@ -282,8 +269,7 @@ gap> Difference(Integers,[1..10]);
 Z \ <set of cardinality 10>
 gap> IsSubset(S,[1..10]);
 false
-]]>
-</Example>
+]]></Example>
 
 If the underlying ring has a residue class ring of a given
 cardinality&nbsp;<M>t</M>, then a residue class can be written as
@@ -298,14 +284,12 @@ a disjoint union of <M>t</M> residue classes with equal moduli:
     Otherwise <C>fail</C>.
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> SplittedClass(ResidueClass(1,2),2);
 [ The residue class 1(4) of Z, The residue class 3(4) of Z ]
 gap> SplittedClass(ResidueClass(Z_pi(3),3,0),2);
 fail
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -324,23 +308,20 @@ Often one needs a partition of a given residue class union into
     As the name of the operation suggests, it is taken care that
     the number of residue classes in the returned list is kept
     <Q>reasonably small</Q>. It is not guaranteed that it is minimal.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ResidueClassUnionViewingFormat("short");
 gap> AsUnionOfFewClasses(Difference(Integers,ResidueClass(0,30)));
 [ 1(2), 2(6), 4(6), 6(30), 12(30), 18(30), 24(30) ]
 gap> Union(last);
 Z \ 0(30)
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
 One can compute the sets of sums, differences, products and quotients of
 the elements of a residue class union and an element of the base ring:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ResidueClass(0,2) + 1;
 1(2)
 gap> ResidueClass(0,2) - 2 = ResidueClass(0,2);
@@ -349,8 +330,7 @@ gap> 3 * ResidueClass(0,2);
 0(6)
 gap> ResidueClass(0,2)/2;
 Integers
-]]>
-</Example>
+]]></Example>
 
 <ManSection>
   <Oper Name="PartitionsIntoResidueClasses"
@@ -366,16 +346,14 @@ Integers
     <A>primes</A>.
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> PartitionsIntoResidueClasses(Integers,4);
 [ [ 0(2), 1(4), 3(8), 7(8) ], [ 0(2), 3(4), 1(8), 5(8) ], 
   [ 0(2), 1(6), 3(6), 5(6) ], [ 1(2), 0(4), 2(8), 6(8) ], 
   [ 1(2), 2(4), 0(8), 4(8) ], [ 1(2), 0(6), 2(6), 4(6) ], 
   [ 0(3), 1(3), 2(6), 5(6) ], [ 0(3), 2(3), 1(6), 4(6) ], 
   [ 1(3), 2(3), 0(6), 3(6) ], [ 0(4), 1(4), 2(4), 3(4) ] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -389,8 +367,7 @@ gap> PartitionsIntoResidueClasses(Integers,4);
     respectively <C>fail</C> if no such partition exists.
   </Returns>
   <Description>
-<Log>
-<![CDATA[
+<Log><![CDATA[
 gap> RandomPartitionIntoResidueClasses(Integers,30,[2,3,5,7]);
 [ 0(7), 2(7), 5(7), 3(14), 10(14), 1(21), 8(21), 15(21), 18(21), 20(21), 
   6(63), 13(63), 25(63), 27(63), 32(63), 34(63), 46(63), 48(63), 53(63), 
@@ -400,8 +377,7 @@ gap> Union(last);
 Integers
 gap> Sum(List(last2,Density));
 1
-]]>
-</Log>
+]]></Log>
   </Description>
 </ManSection>
 
@@ -421,8 +397,7 @@ gap> Sum(List(last2,Density));
   <Description>
     Since there are often very many such covers, computing all of them
     can take a lot of time and memory.
-<Log>
-<![CDATA[
+<Log><![CDATA[
 gap> CoverByResidueClasses(Integers,[2,3,4,6,8,12]);
 [ 0(2), 0(3), 1(4), 1(6), 3(8), 11(12) ]
 gap> Union(last);
@@ -433,8 +408,7 @@ gap> CoversByResidueClasses(Integers,[2,3,3,6]);
   [ 1(2), 0(3), 2(3), 4(6) ], [ 1(2), 1(3), 2(3), 0(6) ] ]
 gap> List(last,Union);
 [ Integers, Integers, Integers, Integers, Integers, Integers ]
-]]>
-</Log>
+]]></Log>
   </Description>
 </ManSection>
 
@@ -449,14 +423,12 @@ gap> List(last,Union);
     the <E>natural density</E> of a union&nbsp;<M>U</M> of finitely many
     residue classes is defined by the sum of the densities of the elements
     of a partition of&nbsp;<M>U</M> into finitely many residue classes.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> Density(ResidueClass(0,2));
 1/2
 gap> Density(Difference(Integers,ResidueClass(0,5)));
 4/5
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -493,8 +465,7 @@ class union of&nbsp;<M>&ZZ;^2</M> is shown in <Q>ASCII art</Q> when one
 <C>Display</C>'s it with option <C>AsGrid</C>. We give some illustrative
 examples:
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> R := Integers^2;
 ( Integers^2 )
 gap> 5*R+[2,3];
@@ -556,8 +527,7 @@ gap> Display(S1:AsGrid);
  *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
    *    *    *    *    *    *    *    *    *    *    *    *    *    *
      *    *    *    *    *         *    *    *    *    *         *    *
-]]>
-</Example>
+]]></Example>
 
 Note that in &GAP; multiplying lists of integers means computing their
 scalar product as vectors. The consequence is that technically the free

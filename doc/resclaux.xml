@@ -177,13 +177,11 @@ can be processed further with many common graphics programs:
 
     The picture can be read back into &GAP; by the function
     <C>LoadBitmapPicture(<A>filename</A>)</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> color   := n->32*(n mod 8)+256*32*(Int(n/8) mod 8)+65536*32*Int(n/64);;
 gap> picture := List([1..512],y->List([1..512],x->color(Gcd(x,y)-1)));;
 gap> SaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),"gcd.bmp"));
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -196,14 +194,12 @@ gap> SaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),"gcd.bmp"));
     Draws a line on picture <A>pic</A> from (<A>x1</A>,<A>y1</A>)
     to (<A>x2</A>,<A>y2</A>), with color <A>color</A> and of width
     <A>width</A>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> picture := NullMat(100,100)+2^24-1;;
 gap> DrawLineNC(picture,30,20,70,80,255,8);                 
 gap> SaveAsBitmapPicture(picture,Filename(DirectoryTemporary(),
 >                        "example.bmp"));
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -224,16 +220,14 @@ There is an operation <C>PositionsSublist(<A>list</A>,<A>sub</A>)</C>
 which returns the list of positions at which <A>sub</A> occurs as a sublist
 of <A>list</A>.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> PositionsSublist([1,2,6,2,7,2,7,2,3,1,6,2,7,2,8],[2,7,2]);
 [ 4, 6, 12 ]
 gap> PositionsSublist([1,2,3,4,3,2,1],[1,3,5]);
 [  ]
 gap> PositionsSublist("This is an example, isn't it?","is");   
 [ 3, 6, 21 ]
-]]>
-</Example>
+]]></Example>
 
 <Index Key="EquivalenceClasses"
        Subkey="for a list and a function computing a class invariant">
@@ -253,8 +247,7 @@ which takes as arguments two list entries and returns either <C>true</C>
 or <C>false</C> depending on whether the arguments belong to the same
 equivalence class or not. <P/>
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> EquivalenceClasses([2..50],n->Length(Factors(n))); 
 [ [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 ], 
   [ 4, 6, 9, 10, 14, 15, 21, 22, 25, 26, 33, 34, 35, 38, 39, 46, 49 ], 
@@ -266,8 +259,7 @@ gap> EquivalenceClasses(AsList(AlternatingGroup(4)),
 >                       end);
 [ [ (2,3,4), (2,4,3), (1,2,3), (1,2,4), (1,3,2), (1,3,4), (1,4,2), 
       (1,4,3) ], [ (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ], [ () ] ]
-]]>
-</Example>
+]]></Example>
 
 <Index Key="GraphClasses"><C>GraphClasses</C></Index>
 <Index Key="AllGraphs"><C>AllGraphs</C></Index>
@@ -284,8 +276,7 @@ of edges. Given a graph <A>graph</A> with <A>n</A> vertices, the operation
 <C>i</C> such that <A>graph</A> lies in <C>GraphClasses(<A>n</A>)[i]</C>.
 For reasons of efficiency, <C>IdGraphNC</C> performs no argument checks. <P/>
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> GraphClasses(3);
 [ [ [  ] ], [ [ [ 1, 2 ] ], [ [ 2, 3 ] ], [ [ 1, 3 ] ] ], 
   [ [ [ 1, 2 ], [ 1, 3 ] ], [ [ 1, 2 ], [ 2, 3 ] ], 
@@ -306,8 +297,7 @@ gap> IdGraphNC([[1,3],[1,8],[3,8]],GraphClasses(4)); # a triangle graph
 6
 gap> AllGraphs(4)[last];
 [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ]
-]]>
-</Example>
+]]></Example>
 
 </Section>
 

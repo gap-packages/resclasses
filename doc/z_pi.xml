@@ -8,11 +8,9 @@
 <Heading>Semilocalizations of the Integers</Heading>
 
 <Ignore Remark="set screen width to 75, for the example tester">
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> SizeScreen([75,24]);;
-]]>
-</Example>
+]]></Example>
 </Ignore>
 
 This package implements residue class unions of the semilocalizations
@@ -39,14 +37,12 @@ underlying &GAP; implementation of these rings themselves.
     <Index Key="NoninvertiblePrimes" Subkey="of a semilocalization of Z">
       <C>NoninvertiblePrimes</C>
     </Index>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> R := Z_pi(2);
 Z_( 2 )
 gap> S := Z_pi([2,5,7]);
 Z_( 2, 5, 7 )
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -82,19 +78,16 @@ reference manual. The standard associate of an element of a ring
 <M>&ZZ;_{(\pi)}</M> is defined by the product of the non-invertible
 prime factors of its numerator.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> 4/7 in R; 3/2 in R;
 true
 false
 gap> Intersection(R,Z_pi([3,11])); IsSubset(R,S);
 Z_( 2, 3, 11 )
 true
-]]>
-</Example>
+]]></Example>
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> StandardAssociate(R,-6/7);
 2
 gap> Gcd(S,90/3,60/17,120/33);
@@ -107,8 +100,7 @@ gap> Factors(R,-2/3);
 [ -1/3, 2 ]
 gap> IsUnit(S,3/11);
 true
-]]>
-</Example>
+]]></Example>
 
 <Alt Only="HTML">&nbsp;</Alt>
 

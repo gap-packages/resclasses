@@ -8,11 +8,9 @@
 <Heading>Unions of Residue Classes with Fixed Representatives</Heading>
 
 <Ignore Remark="set screen width to 75, for the example tester">
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> SizeScreen([75,24]);;
-]]>
-</Example>
+]]></Example>
 </Ignore>
 
 &ResClasses; supports computations with unions of residue classes which
@@ -49,12 +47,10 @@ only distinct.
     The fixed representative&nbsp;<A>r</A> can be retrieved by the operation
     <C>Residue</C>, and the modulus&nbsp;<A>m</A> can be retrieved by the
     operation <C>Modulus</C>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> ResidueClassWithFixedRepresentative(Integers,2,1);
 [1/2]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -75,12 +71,10 @@ gap> ResidueClassWithFixedRepresentative(Integers,2,1);
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> UnionOfResidueClassesWithFixedReps(Integers,[[2,4],[3,9]]);
 [4/2] U [9/3]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -123,12 +117,10 @@ with fixed representatives.
     chosen by the operation <C>mod</C>.
     See also <Ref Func="AllResidueClassesModulo"
                   Label="of a given ring, modulo a given modulus"/>.
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> AllResidueClassesWithFixedRepsModulo(4);
 [ [0/4], [1/4], [2/4], [3/4] ]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -159,16 +151,14 @@ Elements and residue classes can be contained with multiplicities:
     in&nbsp;<A>U</A> regarded as a multiset of residue classes.
   </Returns>
   <Description>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> List([0..20],n->Multiplicity(n,U));
 [ 2, 0, 1, 1, 1, 0, 2, 0, 1, 1, 1, 0, 2, 0, 1, 1, 1, 0, 2, 0, 1 ]
 gap> Multiplicity(ResidueClassWithFixedRep(2,0),U);
 1
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -196,8 +186,7 @@ operation <C>AsOrdinaryUnionOfResidueClasses</C>. The object returned
 by this operation is an <Q>ordinary</Q> residue class union as described
 in Chapter&nbsp;<Ref Label="ch:UnionsOfResidueClasses"/>.
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> Density(U);
@@ -208,8 +197,7 @@ gap> AsOrdinaryUnionOfResidueClasses(U);
 Z \ 1(6) U 5(6)
 gap> Density(last);
 2/3
-]]>
-</Example>
+]]></Example>
 
 In the sequel we abbreviate the term <Q>the multiset of ring elements
 endowed with the structure of a union of residue classes with fixed
@@ -228,8 +216,7 @@ multiplication and division leave <M>\delta</M> invariant
 (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
 Label="for a union of residue classes with fixed representatives"/>).
 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> U + 7;
@@ -242,8 +229,7 @@ gap> V := 2 * U;
 [0/4] U [0/6]
 gap> V/2;
 [0/2] U [0/3]
-]]>
-</Example>
+]]></Example>
 
 <Alt Only="LaTeX">\pagebreak[4]</Alt>
 
@@ -260,14 +246,12 @@ gap> V/2;
     = Delta(<A>U1</A>) + Delta(<A>U2</A>)</C>.
     (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
     Label="for a union of residue classes with fixed representatives"/>).
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> Union(U,U);                                      
 [0/2] U [0/2] U [0/3] U [0/3]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -280,16 +264,14 @@ gap> Union(U,U);
   <Description>
     The multiplicity of any residue class in the intersection
     is the minimum of its multiplicities in the arguments. 
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> Intersection(U,ResidueClassWithFixedRep(2,0));
 [0/2]
 gap> Intersection(U,ResidueClassWithFixedRep(6,0));
 []
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -309,16 +291,14 @@ gap> Intersection(U,ResidueClassWithFixedRep(6,0));
     = Delta(<A>U1</A>) - Delta(<A>U2</A>)</C>.
     (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
     Label="for a union of residue classes with fixed representatives"/>).
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> V := UnionOfResidueClassesWithFixedReps(Integers,[[3,0],[5,2]]);
 [0/3] U [2/5]
 gap> Difference(U,V);
 [0/2] U [3/5]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -350,8 +330,7 @@ gap> Difference(U,V);
            Subkey="for a union of residue classes with fixed rep's">
       <C>Rho</C>
     </Index>
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,3],[3,4]]);
 [3/2] U [4/3]
 gap> Delta(U) = (3/2-1/2) + (4/3-1/2);
@@ -362,8 +341,7 @@ gap> Delta(V) = Delta(U);
 true
 gap> Rho(V);
 E(12)^11
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
@@ -388,16 +366,14 @@ E(12)^11
     In any case the value of <C>Delta(<A>U</A>)</C> is invariant under
     this operation (<M>\rightarrow</M>&nbsp;<Ref Attr="Delta"
     Label="for a union of residue classes with fixed representatives"/>).
-<Example>
-<![CDATA[
+<Example><![CDATA[
 gap> U := UnionOfResidueClassesWithFixedReps(Integers,[[2,0],[3,0]]);
 [0/2] U [0/3]
 gap> RepresentativeStabilizingRefinement(U,4);   
 [0/8] U [2/8] U [4/8] U [6/8] U [0/12] U [3/12] U [6/12] U [9/12]
 gap> RepresentativeStabilizingRefinement(last,0);
 [0/2] U [0/3]
-]]>
-</Example>
+]]></Example>
   </Description>
 </ManSection>
 
