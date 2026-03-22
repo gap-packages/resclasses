@@ -181,6 +181,18 @@ DeclareGlobalFunction( "DrawGrid" );
 
 #############################################################################
 ##
+#O  UnionOp( <list>, <example> )  . . . . . . . . . . .  union of collections
+##
+##  This operation takes as first argument the list of the collections whose
+##  union is to be formed and as second argument an example from that list
+##  whose type is used for purposes of method selection.
+##
+if not IsBound( UnionOp ) then
+  DeclareOperation( "UnionOp", [ IsListOrCollection, IsListOrCollection ] );
+fi;
+
+#############################################################################
+##
 #F  AssignGlobalNC( <name>, <value> ) .  forced assignment to global variable
 ##
 DeclareGlobalFunction( "AssignGlobalNC" );
