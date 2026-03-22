@@ -197,6 +197,65 @@ gap> Union(Integers,Integers);
 Integers
 gap> Union(Z_pi(2),Z_pi(2));  
 Z_( 2 )
+gap> cls := AllResidueClassesModulo(6);
+[ The residue class 0(6) of Z, The residue class 1(6) of Z, 
+  The residue class 2(6) of Z, The residue class 3(6) of Z, 
+  The residue class 4(6) of Z, The residue class 5(6) of Z ]
+gap> UnionOp(cls,cls[1]);
+Integers
+gap> cls[2] := Union(cls[2],[4]);      
+(The residue class 1(6) of Z) U [ 4 ]
+gap> cls[5] := Difference(cls[5],[4]);
+(The residue class 4(6) of Z) \ [ 4 ]
+gap> UnionOp(cls,cls[1]);
+Integers
+gap> cls[2] := Difference(cls[2],[7]);
+(The residue class 1(6) of Z) U [ 4 ] \ [ 7 ]
+gap> UnionOp(cls,cls[1]);
+Z \ [ 7 ]
+gap> cls[4] := Union(cls[4],[4..12]);
+(The residue class 3(6) of Z) U [ 4, 5, 6, 7, 8, 10, 11, 12 ]
+gap> UnionOp(cls,cls[1]);
+Integers
+gap> UnionOp(cls{[1..3]},cls[1]);;
+gap> cls := List(AllResidueClassesModulo(6),SparseRep);;
+gap> UnionOp(cls,cls[1]);
+Integers
+gap> cls[1] := Difference(cls[1],[0]);
+(The residue class 0(6) of Z) \ [ 0 ]
+gap> UnionOp(cls,cls[1]);
+Z \ [ 0 ]
+gap> UnionOp(cls{[1..4]},cls[1]);
+(Union of the residue classes 0(3), 1(6) and 2(6) of Z) \ [ 0 ]
+gap> cls[4] := Union(cls[4],[0]);
+(The residue class 3(6) of Z) U [ 0 ]
+gap> UnionOp(cls{[1..4]},cls[1]);
+Z \ Union of the residue classes 4(6) and 5(6) of Z
+gap> cls := AllResidueClassesModulo(Z_pi(2),8);;
+gap> UnionOp(cls,cls[1]);
+Z_( 2 )
+gap> UnionOp(cls{[1..4]},cls[1]);
+Union of the residue classes 0(8), 1(8), 2(8) and 3(8) of Z_( 2 )
+gap> x := Indeterminate(GF(2),"x");;
+gap> R := PolynomialRing(GF(2),"x");
+GF(2)[x]
+gap> cls := AllResidueClassesModulo(R,x^2);;
+gap> UnionOp(cls,cls[1]);
+GF(2)[x]
+gap> UnionOp(cls{[1..2]},cls[1]);
+<union of 2 residue classes (mod x^2) of GF(2)[x]>
+gap> cls[1] := Difference(cls[1],[x^2]);
+(The residue class 0 ( mod x^2 ) of GF(2)[x]) \ [ x^2 ]
+gap> UnionOp(cls{[1..2]},cls[1]);
+<union of 2 residue classes (mod x^2) of GF(2)[x]> \ [ x^2 ]
+gap> UnionOp(cls,cls[1]);        
+GF(2)[x] \ [ x^2 ]
+gap> cls[4] := Union(cls[4],[x^2]);
+(The residue class x+1 ( mod x^2 ) of GF(2)[x]) U [ x^2 ]
+gap> UnionOp(cls,cls[1]);
+GF(2)[x]
+gap> IncludedElements(UnionOp(cls{[2..4]},cls[1]));
+[ x^2 ]
 gap> Intersection(U2+1,U7);
 (The residue class 12(15) of Z) U [ 8, 23 ] \ [ -3 ]
 gap> Intersection(SparseRep(U2+1),U7);
@@ -360,9 +419,9 @@ Z_( 2 )
 gap> Z_pi(2)*2;
 The residue class 0(2) of Z_( 2 )
 gap> x*R;
-The residue class 0 ( mod x ) of GF(7)[x]
+The residue class 0 ( mod x ) of GF(2)[x]
 gap> R+One(R);
-GF(7)[x]
+GF(2)[x]
 gap> Integers+1;
 Integers
 gap> Z_pi(2)-1;

@@ -29,6 +29,17 @@ gap> Union(last,[[1,-1]]);
 Z^2 \ [ [ 0, 0 ] ]
 gap> Union(last,[[0,0]]);
 ( Integers^2 )
+gap> cls := AllResidueClassesModulo(Integers^2,[[2,0],[0,3]]);;
+gap> UnionOp(cls{[1..3]},cls[1]);
+The residue class (0,0)+(2,0)Z+(0,1)Z of Z^2
+gap> UnionOp(cls,cls[1]);      
+( Integers^2 )
+gap> cls[1] := Difference(cls[1],[[0,0]]);
+(The residue class (0,0)+(2,0)Z+(0,3)Z of Z^2) \ [ [ 0, 0 ] ]
+gap> UnionOp(cls,cls[1]);
+Z^2 \ [ [ 0, 0 ] ]
+gap> UnionOp(cls{[1..3]},cls[1]);
+(The residue class (0,0)+(2,0)Z+(0,1)Z of Z^2) \ [ [ 0, 0 ] ]
 gap> D := Difference(Union(R*[[2,2],[0,4]],[[1,2],[3,4]]),R*[[2,2],[0,4]]);     
 [ [ 1, 2 ], [ 3, 4 ] ]
 gap> Classes(D);
