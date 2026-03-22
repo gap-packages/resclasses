@@ -1622,6 +1622,56 @@ InstallMethod( Union2,
 
 #############################################################################
 ##
+#M  UnionOp( <list>, <U> ) . . . .  for residue class unions in standard rep.
+##
+InstallMethod( UnionOp,
+               "for residue class unions in standard rep. (ResClasses)",
+               IsCollsElms,
+               [ IsList, IsResidueClassUnionInResidueListRep ], 0,
+
+  function ( list, U )
+
+    local  R, m, r, included, excluded, r_exp, allres, i, n;
+
+    R := UnderlyingRing(FamilyObj(U));
+
+    if IsRing(R) then
+      m := Lcm(R,List(list,U->U!.m));
+    elif IsRowModule(R) then
+      m := list[1]!.m;
+      for i in [2..Length(list)] do
+        m := LatticeIntersection(m,list[i]!.m);
+      od;
+    fi;
+
+    r := List(list,U->U!.r);
+    included := Union(List(list,U->U!.included));
+    excluded := [];
+    for i in [1..Length(list)] do
+      for n in list[i]!.excluded do
+        if not ForAny(list,U->n in U) then
+          Add(excluded,n);
+        fi;
+      od;
+    od;
+ 
+    if IsIntegers(R) then
+      r_exp := [];
+      for i in [1..Length(list)] do
+        r_exp[i] := Concatenation(List([0..m/list[i]!.m-1],
+                                       j->j*list[i]!.m+r[i]));
+      od;
+      r := Union(r_exp);
+    else
+      allres := AllResidues(R,m);
+      r := Filtered(allres,n->ForAny([1..Length(list)],
+                                     i->n mod list[i]!.m in r[i]));
+    fi;
+    return ResidueClassUnionNC(R,m,r,included,excluded);
+  end );
+
+#############################################################################
+##
 #M  Union2( <U1>, <U2> ) . . . . . .  for residue class unions in sparse rep.
 ##
 InstallMethod( Union2,
@@ -1640,6 +1690,33 @@ InstallMethod( Union2,
     excluded := Difference(Union(Difference(U1!.excluded,U2),
                                  Difference(U2!.excluded,U1)),included);
     return ResidueClassUnionNC(R,Union(U1!.cls,U2!.cls),included,excluded);
+  end );
+
+#############################################################################
+##
+#M  UnionOp( <list>, <U> ) . . . . .  for residue class unions in sparse rep.
+##
+InstallMethod( UnionOp,
+               "for residue class unions in sparse rep. (ResClasses)",
+               IsCollsElms,
+               [ IsList, IsResidueClassUnionInClassListRep ], 0,
+
+  function ( list, U )
+
+    local  R, m, r, included, excluded, cls, i, n;
+
+    R := UnderlyingRing(FamilyObj(U));
+    included := Union(List(list,U->U!.included));
+    excluded := [];
+    for i in [1..Length(list)] do
+      for n in list[i]!.excluded do
+        if not ForAny(list,U->n in U) then
+          Add(excluded,n);
+        fi;
+      od;
+    od;
+    cls := Union(List(list,U->U!.cls)); 
+    return ResidueClassUnionNC(R,cls,included,excluded);
   end );
 
 #############################################################################
