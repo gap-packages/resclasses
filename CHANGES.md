@@ -1,7 +1,5 @@
 Version history of the ResClasses package
 
-## Unreleased
-
 ## 4.8.0 (2026-10-12)
 
 - Added methods for `UnionOp' for residue class unions.
