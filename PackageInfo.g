@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName      := "ResClasses",
 Subtitle         := "Set-Theoretic Computations with Residue Classes",
-Version          := "4.7.4",
-Date             := "24/09/2025", # dd/mm/yyyy format
+Version          := "4.8.0",
+Date             := "12/10/2026", # dd/mm/yyyy format
 License          := "GPL-2.0-or-later",
 Persons          := [
                       rec( LastName      := "Kohl",
@@ -65,7 +65,7 @@ Keywords         := [ "residue classes", "integers", "number theory" ],
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := """
-&copyright; 2003 - 2017 by Stefan Kohl. <P/>
+&copyright; 2003 - 2026 by Stefan Kohl. <P/>
 
 &ResClasses; is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
